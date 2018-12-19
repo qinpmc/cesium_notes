@@ -1,0 +1,15 @@
+{
+  "name": "cesium_notes",
+  "version": "1.0.0",
+  "description": "1. 下载Cesium安装包（https://cesiumjs.org/downloads/），解压缩（当前版本为Cesium-1.52）\r 2. 切换目录到解压缩的目录(Cesium-1.52文件夹)下，运行 npm install\r 3. 安装完成后，运行node server.js\r 4. 打开 浏览器输入：http://localhost:8080/ 即可看到页面",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
