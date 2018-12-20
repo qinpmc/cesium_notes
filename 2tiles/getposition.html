@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>titleset</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        #getposition {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 600px;
+            background-color: gray
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <script src="getposition.js"></script>
+
+    <div id="getposition">
+        <input type="button" value="x+" onclick="change(0)">
+        <input type="button" value="x-" onclick="change(1)">
+        <input type="button" value="y+" onclick="change(2)">
+        <input type="button" value="y-" onclick="change(3)">
+        <input type="button" value="z+" onclick="change(4)">
+        <input type="button" value="z-" onclick="change(5)">
+        <br />
+        <input type="button" value="rx" onclick="rotate(0)">
+
+
+
+        <input type="button" value="1" onclick="changeStep(1)">
+        <input type="button" value="10" onclick="changeStep(10)">
+        <input type="button" value="100" onclick="changeStep(100)">
+        <br />
+        <input type="button" value="vi" onclick="changevisible()">
+
+        <div id="result" style="background: white;"></div>
+    </div>
+
+
+</body>
+
+</html>

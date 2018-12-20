@@ -21,21 +21,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="add3.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/1界面及小控件/add3.html">
+      <file leaf-file-name="getposition.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2tiles/getposition.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.20107238">
-              <caret line="55" column="40" selection-start-line="55" selection-start-column="40" selection-end-line="55" selection-end-column="40" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="114" column="27" selection-start-line="114" selection-start-column="26" selection-end-line="114" selection-end-column="27" />
+              <folding>
+                <element signature="n#!!block;n#changevisible#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add2.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/1界面及小控件/add2.html">
+      <file leaf-file-name="widget5.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/1界面及小控件/widget5.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="30.147058">
-              <caret line="1" column="0" selection-start-line="78" selection-start-column="23" selection-end-line="78" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.42143726">
+              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -59,6 +61,9 @@
         <option value="$PROJECT_DIR$/1界面及小控件/view1.html" />
         <option value="$PROJECT_DIR$/1界面及小控件/add2.html" />
         <option value="$PROJECT_DIR$/1界面及小控件/add3.html" />
+        <option value="$PROJECT_DIR$/1界面及小控件/addBox3.html" />
+        <option value="$PROJECT_DIR$/2tiles/getposition.js" />
+        <option value="$PROJECT_DIR$/1界面及小控件/widget5.html" />
       </list>
     </option>
   </component>
@@ -68,10 +73,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="593" />
-    <option name="y" value="258" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
     <option name="width" value="1938" />
-    <option name="height" value="600" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -148,6 +153,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\工作资料\gis\Cesium\Cesium_notes\1界面及小控件" />
+      <recent name="E:\工作资料\gis\Cesium\Cesium_notes\2tiles" />
       <recent name="E:\工作资料\gis\Cesium\Cesium_notes" />
     </key>
   </component>
@@ -215,12 +221,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="593" y="258" width="1938" height="600" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09081309" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2312566" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973601" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -266,7 +272,15 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/2tiles/getposition.js</url>
+          <line>78</line>
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -326,16 +340,52 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/1界面及小控件/add2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="30.147058">
-          <caret line="1" column="0" selection-start-line="78" selection-start-column="23" selection-end-line="78" selection-end-column="55" />
+        <state vertical-scroll-proportion="-5.147059">
+          <caret line="49" column="40" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/add3.html">
+    <entry file="file://$PROJECT_DIR$/1界面及小控件/addBox4.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20107238">
-          <caret line="55" column="40" selection-start-line="55" selection-start-column="40" selection-end-line="55" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.6041413">
+          <caret line="61" column="36" selection-start-line="61" selection-start-column="36" selection-end-line="61" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1界面及小控件/addPoint3.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5127893">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2tiles/getposition.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8053435">
+          <caret line="51" column="58" selection-start-line="51" selection-start-column="48" selection-end-line="51" selection-end-column="58" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2tiles/getposition.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="114" column="27" selection-start-line="114" selection-start-column="26" selection-end-line="114" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!block;n#changevisible#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1界面及小控件/widget5.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42143726">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
