@@ -1,3 +1,12 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+.DS_Store
 node_modules
+TODOs.md
+test/e2e/reports
+test/e2e/screenshots
+selenium-debug.log
+dist/*.gz
+dist/*.map
+explorations
+docs/.vuepress/dist
+yarn-error.log
 Build

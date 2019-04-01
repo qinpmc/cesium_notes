@@ -35,16 +35,7 @@
         animation:false,
         timeline:false,
         navigationHelpButton:false,
-         skyBox : new Cesium.SkyBox({
-             sources : {
-             positiveX : 'stars/TychoSkymapII.t3_08192x04096_80_px.jpg',
-             negativeX : 'stars/TychoSkymapII.t3_08192x04096_80_mx.jpg',
-             positiveY : 'stars/TychoSkymapII.t3_08192x04096_80_py.jpg',
-             negativeY : 'stars/TychoSkymapII.t3_08192x04096_80_my.jpg',
-             positiveZ : 'stars/TychoSkymapII.t3_08192x04096_80_pz.jpg',
-             negativeZ : 'stars/TychoSkymapII.t3_08192x04096_80_mz.jpg'
-             }
-         })
+ 
     });
 
     var redEllipse = viewer.entities.add({
@@ -68,18 +59,18 @@
             material : Cesium.Color.BLUE.withAlpha(1),
             //outline : true
         }
-    });
+    }); 
 
-    var yellowEllipsoid = viewer.entities.add({
-        position: Cesium.Cartesian3.fromDegrees(-95.0, 50.0, 100000.0),
-        name : 'Blue translucent, rotated, and extruded ellipse with outline',
-        ellipsoid : {
-            heightReference : 250000.0,
-            outline : true,
-            material : Cesium.Color.YELLOW.withAlpha(1),
-        }
-    });
-
+	var position = Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 400000.0);
+	console.log(position);
+	var yellowEllipsoid = viewer.entities.add({
+		name : 'Blue ellipsoid',
+		position: position,
+		ellipsoid : {
+			radii : new Cesium.Cartesian3(200000.0, 200000.0, 300000.0),
+			material : Cesium.Color.YELLOW
+		}
+	});
     viewer.zoomTo(viewer.entities);
   </script>
 </body>

@@ -26,15 +26,16 @@
 <body>
   <div id="cesiumContainer"></div>
   <script>
+  /*
     var viewer = new Cesium.Viewer('cesiumContainer',{
-        geocoder:false,
-        baseLayerPicker:false,
+        geocoder:true,
+        baseLayerPicker:true,
         fullscreenButton:false,
         homeButton:false,
-        sceneModePicker:false,
-        animation:false,
-        timeline:false,
-        navigationHelpButton:false,
+        sceneModePicker:true,
+        animation:true,
+        timeline:true,
+        navigationHelpButton:true,
          skyBox : new Cesium.SkyBox({
              sources : {
              positiveX : 'stars/TychoSkymapII.t3_08192x04096_80_px.jpg',
@@ -45,7 +46,10 @@
              negativeZ : 'stars/TychoSkymapII.t3_08192x04096_80_mz.jpg'
              }
          })
-    });
+    });*/
+	
+	var widget = new Cesium.CesiumWidget('cesiumContainer');
+	
   </script>
 </body>
 </html>

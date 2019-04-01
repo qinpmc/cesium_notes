@@ -17,7 +17,7 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
 });
 
 // No depth testing against the terrain to avoid z-fighting
-viewer.scene.globe.depthTestAgainstTerrain = true;
+viewer.scene.globe.depthTestAgainstTerrain = false;
 
 // Bounding sphere
 //var boundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.fromDegrees(111.5652101, 38.70350851, 1297.500143), 143.6271004);
@@ -29,7 +29,7 @@ viewer.homeButton.viewModel.command.beforeExecute.addEventListener(function(comm
     viewer.camera.flyToBoundingSphere(boundingSphere);
 
     // Tell the home button not to do anything
-    commandInfo.cancel = false;
+    commandInfo.cancel = true;
 });
 
 // Set custom initial position
