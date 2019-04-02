@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Hello World!</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/CesiumUnminified/Widgets/widgets.css);
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .canvas {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        display:none;
+    }
+    #canvas-a {
+        top: 10px;
+    }
+    #canvas-b {
+        top: 120px;
+    }
+    </style>
+</head>
+
+<body>
+    <button onClick ="rotatex()">rotatex</button>
+    <button onClick ="rotatey()">rotatey</button>
+    <button onClick ="rotatez()">rotatez</button>
+    <div id="cesiumContainer" class="fullSize">
+        <div id="cesiumxin" style="position:fixed;left:0;z-index:99"><a href="http://cesium.xin" style="color:aliceblue;text-decoration:none">cesium中文网 http://cesium.xin </a></div>
+    </div>
+    <div id="loadingOverlay"><h1>Loading...</h1></div>
+    <div id="toolbar"></div>
+    <script>
+        var viewer = new Cesium.Viewer('cesiumContainer', 
+        {
+            imageryProvider: new Cesium.SingleTileImageryProvider({
+               url: './img/worldimage.jpg'
+            }),
+
+            homeButton: false,
+            //sceneModePicker: false,
+            baseLayerPicker: false,
+            navigationHelpButton: false,
+            animation: false,
+            timeline: false,
+            fullscreenButton: false,
+            vrButton: false
+        });
+        
+        var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+            url : 'Tileset/tileset.json',
+            modelMatrix:Cesium.Matrix4.IDENTITY 
+        }));
+
+        tileset.readyPromise.then(function() {
+            var boundingSphere = tileset.boundingSphere;
+            viewer.camera.viewBoundingSphere(boundingSphere, new Cesium.HeadingPitchRange(0.0, -0.5, boundingSphere.radius * 2));
+            viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+        }).otherwise(function(error) {
+            throw(error);
+        });
+
+        var m = tileset.modelMatrix;
+
+        var anglex = 1;
+        function rotatex(){
+            anglex += 1;
+            let m1 = Cesium.Matrix3.fromRotationX(Cesium.Math.toRadians(anglex));   
+            tileset.modelMatrix = Cesium.Matrix4.multiplyByMatrix3(m,m1,new Cesium.Matrix4());
+        }
+
+        var angley = 1;
+        function rotatey(){
+            angley += 1;
+            let m1 = Cesium.Matrix3.fromRotationY(Cesium.Math.toRadians(angley));   
+            tileset.modelMatrix = Cesium.Matrix4.multiplyByMatrix3(m,m1,new Cesium.Matrix4());
+        }
+
+        var anglez = 1;
+        function rotatez(){
+            anglez += 1;
+            let m1 = Cesium.Matrix3.fromRotationZ(Cesium.Math.toRadians(anglez));   
+            tileset.modelMatrix = Cesium.Matrix4.multiplyByMatrix3(m,m1,new Cesium.Matrix4());
+        }
+
+    </script>
+</body>
+
+</html>
