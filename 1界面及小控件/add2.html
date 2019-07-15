@@ -1,77 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Use correct character set. -->
-  <meta charset="utf-8">
-  <!-- Tell IE to use the latest, best version. -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <title>Hello World!</title>
-  <script src="../Build/Cesium/Cesium.js"></script>
-  <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
-      html, body, #cesiumContainer {
-          width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
-      }
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Hello World!</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
 
-      .cesium-viewer-bottom               /* logo信息 */
-      {
-          display: none;
-      }
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .cesium-viewer-bottom /* logo信息 */
+        {
+            display: none;
+        }
 
 
-  </style>
+    </style>
 </head>
 <body>
-  <div id="cesiumContainer"></div>
-  <script>
-    var viewer = new Cesium.Viewer('cesiumContainer',{
-        geocoder:false,
-        baseLayerPicker:false,
-        fullscreenButton:false,
-        homeButton:false,
-        sceneModePicker:false,
-        animation:false,
-        timeline:false,
-        navigationHelpButton:false,
- 
+<div id="cesiumContainer"></div>
+<script>
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        geocoder: false,
+        baseLayerPicker: false,
+        fullscreenButton: false,
+        homeButton: false,
+        sceneModePicker: false,
+        animation: false,
+        timeline: false,
+        navigationHelpButton: false,
+
     });
 
     var redEllipse = viewer.entities.add({
         position: Cesium.Cartesian3.fromDegrees(-100.0, 40.0),
-        name : 'Red ellipse on surface',
-        ellipse : {
-            semiMinorAxis : 250000.0,
-            semiMajorAxis : 400000.0,
-            material : Cesium.Color.RED.withAlpha(0.5)
+        name: 'Red ellipse on surface',
+        ellipse: {
+            semiMinorAxis: 250000.0,
+            semiMajorAxis: 400000.0,
+            material: Cesium.Color.RED.withAlpha(0.5)
         }
     });
 
     var blueEllipse = viewer.entities.add({
         position: Cesium.Cartesian3.fromDegrees(-95.0, 40.0, 100000.0),
-        name : 'Blue translucent, rotated, and extruded ellipse with outline',
-        ellipse : {
-            semiMinorAxis : 150000.0,
-            semiMajorAxis : 300000.0,
-            extrudedHeight : 200000.0,
-            rotation : Cesium.Math.toRadians(45),
-            material : Cesium.Color.BLUE.withAlpha(1),
+        name: 'Blue translucent, rotated, and extruded ellipse with outline',
+        ellipse: {
+            semiMinorAxis: 150000.0,
+            semiMajorAxis: 300000.0,
+            extrudedHeight: 200000.0,
+            rotation: Cesium.Math.toRadians(45),
+            material: Cesium.Color.BLUE.withAlpha(1),
             //outline : true
         }
-    }); 
+    });
 
-	var position = Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 400000.0);
-	console.log(position);
-	var yellowEllipsoid = viewer.entities.add({
-		name : 'Blue ellipsoid',
-		position: position,
-		ellipsoid : {
-			radii : new Cesium.Cartesian3(200000.0, 200000.0, 300000.0),
-			material : Cesium.Color.YELLOW
-		}
-	});
+    var position = Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 400000.0);
+    console.log(position);
+    var yellowEllipsoid = viewer.entities.add({
+        name: 'Blue ellipsoid',
+        position: position,
+        ellipsoid: {
+            radii: new Cesium.Cartesian3(200000.0, 200000.0, 300000.0),
+            material: Cesium.Color.YELLOW
+        }
+    });
     viewer.zoomTo(viewer.entities);
-  </script>
+</script>
 </body>
 </html>
