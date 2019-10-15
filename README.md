@@ -11,7 +11,8 @@
 ###  开发环境搭建
 1. 创建项目，新建文件夹Cesium_notes；
 2. 拷贝Cesium 源码下的 Build文件到 Cesium_notes目录下，拷贝源码Apps目录下的HelloWorld.html到Cesium_notes目录下；     
-	有的Cesium版本下没有Build文件夹，可运行npm run minify / npm run minifyRelease 可生成 需要的Build文件夹
+	有的Cesium版本下没有Build文件夹，可运行npm run minify / npm run 
+	 可生成 需要的Build文件夹
 3. 使用WebStorm编辑器打开Cesium_notes项目，运行HelloWorld.html，即可看到运行效果。
 4. 如果不采用WebStorm编辑器，需要发布项目，编写 server.js,内容如下：
 

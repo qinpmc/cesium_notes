@@ -8,7 +8,7 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>Hello World!</title>
+    <title>倾斜摄影测试</title>
     <script src="../Build/Cesium/Cesium.js"></script>
     <style>
         @import url(../Build/Cesium/Widgets/widgets.css);
@@ -34,6 +34,11 @@
 <script>
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
+        var worldTerrain = Cesium.createWorldTerrain({
+            requestWaterMask: true,
+            requestVertexNormals: true
+        });
+
     var tileMatrixLabels =[];
     for(var i=1;i<18;i++){
         tileMatrixLabels.push(""+i);
@@ -45,10 +50,11 @@
         timeline: false, //是否显示时间线控件
         sceneModePicker: true, //是否显示投影方式控件
         navigationHelpButton: false, //是否显示帮助信息控件
-        infoBox: true,  //是否显示点击要素之后显示的信息
+        infoBox: true,  //是否显示点击要素之后显示的信息,
+
         imageryProvider : new Cesium.WebMapTileServiceImageryProvider({
-            url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&service=WMTS",
-            layer: "vec",
+            url: "http://t0.tianditu.gov.cn/img_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&service=WMTS",
+            layer: "img",
             style: "default",
             format: "tiles",
             tileMatrixSetID: "c",
@@ -58,7 +64,8 @@
                 numberOfLevelZeroTilesY:1
             }),
             show: false
-        })
+        }),
+
     });
 
     var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
@@ -75,6 +82,20 @@
         show: false
     })
     viewer.imageryLayers.addImageryProvider(imageryProvider2);
+
+
+    viewer.terrainProvider=worldTerrain;
+
+    var tileset = new Cesium.Cesium3DTileset({ url: "http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json"});
+    viewer.scene.primitives.add(tileset);
+
+    tileset.readyPromise.then(function(){
+        var boundingSphere = tileset.boundingSphere;
+        viewer.camera.viewBoundingSphere(boundingSphere, new Cesium.HeadingPitchRange(0.0, -0.5, boundingSphere.radius + 500.0));
+        viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+    });
+
+
 
 </script>
 </body>
