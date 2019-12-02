@@ -41,16 +41,16 @@
     <button onClick ="rotatey()">rotatey</button>
     <button onClick ="rotatez()">rotatez</button>
     <div id="cesiumContainer" class="fullSize">
-        <div id="cesiumxin" style="position:fixed;left:0;z-index:99"><a href="http://cesium.xin" style="color:aliceblue;text-decoration:none">cesium中文网 http://cesium.xin </a></div>
+       
     </div>
     <div id="loadingOverlay"><h1>Loading...</h1></div>
     <div id="toolbar"></div>
     <script>
         var viewer = new Cesium.Viewer('cesiumContainer', 
         {
-            imageryProvider: new Cesium.SingleTileImageryProvider({
-               url: './img/worldimage.jpg'
-            }),
+//            imageryProvider: new Cesium.SingleTileImageryProvider({
+//               url: './img/worldimage.jpg'
+//            }),
 
             homeButton: false,
             //sceneModePicker: false,
@@ -77,11 +77,17 @@
 
         var m = tileset.modelMatrix;
 
+        var mc = tileset.modelMatrix.clone();
+
+
         var anglex = 1;
         function rotatex(){
             anglex += 1;
             let m1 = Cesium.Matrix3.fromRotationX(Cesium.Math.toRadians(anglex));   
             tileset.modelMatrix = Cesium.Matrix4.multiplyByMatrix3(m,m1,new Cesium.Matrix4());
+            setTimeout(function () {
+                tileset.modelMatrix =mc
+            },4000)
         }
 
         var angley = 1;

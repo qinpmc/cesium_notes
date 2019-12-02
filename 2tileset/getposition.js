@@ -52,8 +52,7 @@ var m = Cesium.Matrix4.fromArray([
 ]);
 
 var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-    //url: 'Scene/testm3DTiles.json',  // 数据1
-	url:'Tileset/tileset.json',        // 数据2
+    url: 'Scene/testm3DTiles.json',
     maximumScreenSpaceError: 2,
     maximumNumberOfLoadedTiles: 1000,
     modelMatrix: m  //方法一，动态修改modelMatrix
@@ -126,7 +125,7 @@ function changeHeight(height) {
     if (isNaN(height)) {
         return;
     }
-    
+
     var cartographic = Cesium.Cartographic.fromCartesian(tileset.boundingSphere.center);
     var surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, cartographic.height);
     var offset = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude,height);

@@ -2,11 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6d77b63-f932-481c-8b73-ca25dad38f0a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/应急管理一张图/terrain1.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/tianditu1.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/tianditu2.html" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/白图.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/白图2.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/应急管理一张图/terrain1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/应急管理一张图/tianditu1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/应急管理一张图/tianditu2(世界地形).html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/应急管理一张图/wops1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/应急管理一张图/中科星图wmts.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/应急管理一张图/中科星图xyz.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/1界面及小控件/add2.html" afterPath="$PROJECT_DIR$/1界面及小控件/add2.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/1界面及小控件/addBox4.html" afterPath="$PROJECT_DIR$/1界面及小控件/addBox4.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/2tileset/getposition.html" afterPath="$PROJECT_DIR$/2tileset/getposition.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/2tileset/getposition.js" afterPath="$PROJECT_DIR$/2tileset/getposition.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HelloWorld.html" afterPath="$PROJECT_DIR$/HelloWorld.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lesson03/index.html" afterPath="$PROJECT_DIR$/lesson03/index.html" />
     </list>
     <ignored path="Cesium.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,51 +37,83 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="HelloWorld.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HelloWorld.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="486">
+              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view1.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1界面及小控件/view1.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="598">
+              <caret line="51" column="55" lean-forward="false" selection-start-line="51" selection-start-column="40" selection-end-line="51" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="widget5.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1界面及小控件/widget5.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="486">
+              <caret line="27" column="16" lean-forward="false" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addBox4.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1界面及小控件/addBox4.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="688">
+              <caret line="79" column="9" lean-forward="false" selection-start-line="79" selection-start-column="9" selection-end-line="79" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="getposition.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2tileset/getposition.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="74">
+              <caret line="36" column="34" lean-forward="true" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="getposition.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2tileset/getposition.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lesson03/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="202">
+              <caret line="43" column="7" lean-forward="false" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="addPoint3.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/1界面及小控件/addPoint3.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1440">
-              <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tianditu2(世界地形).html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/应急管理一张图/tianditu2(世界地形).html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="terrain1.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/应急管理一张图/terrain1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="614">
-              <caret line="92" column="42" lean-forward="false" selection-start-line="92" selection-start-column="42" selection-end-line="92" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wops1.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/应急管理一张图/wops1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="57" column="29" lean-forward="false" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tianditu1.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/应急管理一张图/tianditu1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="192">
+              <caret line="56" column="39" lean-forward="false" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -78,22 +122,9 @@
       <file leaf-file-name="add2.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/1界面及小控件/add2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="35" column="3" lean-forward="false" selection-start-line="34" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
+            <state relative-caret-position="562">
+              <caret line="104" column="20" lean-forward="false" selection-start-line="104" selection-start-column="20" selection-end-line="104" selection-end-column="20" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="252">
-                <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-                <folding />
-              </first_editor>
-              <second_editor />
             </state>
           </provider>
         </entry>
@@ -111,6 +142,9 @@
     <findStrings>
       <find>far</find>
       <find>worldTerrain</find>
+      <find>version</find>
+      <find>change</find>
+      <find>x</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -120,12 +154,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/start1.html" />
-        <option value="$PROJECT_DIR$/HelloWorld.html" />
         <option value="$PROJECT_DIR$/1界面及小控件/add3.html" />
         <option value="$PROJECT_DIR$/1界面及小控件/addBox3.html" />
         <option value="$PROJECT_DIR$/2tiles/getposition.js" />
-        <option value="$PROJECT_DIR$/1界面及小控件/add2.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/addBox4.html" />
         <option value="$PROJECT_DIR$/1界面及小控件/view1.html" />
         <option value="$PROJECT_DIR$/1界面及小控件/widget5.html" />
         <option value="$PROJECT_DIR$/test/tianditu2.html" />
@@ -135,6 +166,15 @@
         <option value="$PROJECT_DIR$/test/tianditu3.html" />
         <option value="$PROJECT_DIR$/test/中科星图2.html" />
         <option value="$PROJECT_DIR$/应急管理一张图/terrain1.html" />
+        <option value="$PROJECT_DIR$/白图2.html" />
+        <option value="$PROJECT_DIR$/白图.html" />
+        <option value="$PROJECT_DIR$/test.html" />
+        <option value="$PROJECT_DIR$/HelloWorld.html" />
+        <option value="$PROJECT_DIR$/1界面及小控件/add2.html" />
+        <option value="$PROJECT_DIR$/1界面及小控件/addBox4.html" />
+        <option value="$PROJECT_DIR$/2tileset/getposition.js" />
+        <option value="$PROJECT_DIR$/2tileset/getposition.html" />
+        <option value="$PROJECT_DIR$/lesson03/index.html" />
       </list>
     </option>
   </component>
@@ -147,9 +187,9 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="473" />
-    <option name="y" value="70" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-42" />
+    <option name="y" value="240" />
     <option name="width" value="1938" />
     <option name="height" value="1048" />
   </component>
@@ -171,8 +211,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -193,12 +231,20 @@
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="应急管理一张图" type="462c0819:PsiDirectoryNode" />
+              <item name="lesson03" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
+              <item name="lesson03" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -208,14 +254,15 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="js-jscs-nodeInterpreter" value="D:\Program Files\nodejs\node.exe" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\notes\cesium_notes" />
       <recent name="F:\notes\cesium_notes\应急管理一张图" />
       <recent name="F:\notes\cesium_notes\test" />
       <recent name="E:\工作资料\gis\Cesium\Cesium_notes\1界面及小控件" />
       <recent name="E:\工作资料\gis\Cesium\Cesium_notes\2tiles" />
-      <recent name="E:\工作资料\gis\Cesium\Cesium_notes" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -301,15 +348,19 @@
       <workItem from="1571118344153" duration="405000" />
       <workItem from="1571126297316" duration="21000" />
       <workItem from="1571126346659" duration="26000" />
-      <workItem from="1571126435269" duration="7000" />
+      <workItem from="1571126435269" duration="115000" />
+      <workItem from="1571995312312" duration="553000" />
+      <workItem from="1572225004314" duration="645000" />
+      <workItem from="1575020274837" duration="603000" />
+      <workItem from="1575267173220" duration="7623000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16394000" />
+    <option name="totallyTimeSpent" value="25926000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="-42" y="240" width="1938" height="1048" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.250264" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -375,87 +426,11 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/应急管理一张图/wops1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1026">
-          <caret line="57" column="29" lean-forward="true" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/addPoint3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/应急管理一张图/tianditu2(世界地形).html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/应急管理一张图/tianditu1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/add2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="35" column="3" lean-forward="false" selection-start-line="34" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
           <first_editor relative-caret-position="252">
             <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/应急管理一张图/terrain1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1638">
-          <caret line="91" column="42" lean-forward="true" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/addPoint3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/add2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="35" column="3" lean-forward="false" selection-start-line="34" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="252">
-            <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -475,7 +450,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="805">
           <caret line="35" column="3" lean-forward="false" selection-start-line="34" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -484,7 +458,6 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="322">
             <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -505,7 +478,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="805">
           <caret line="35" column="3" lean-forward="true" selection-start-line="34" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -514,7 +486,6 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="322">
             <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -527,7 +498,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="10" column="37" lean-forward="false" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -542,7 +512,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="10488">
           <caret line="456" column="619" lean-forward="false" selection-start-line="456" selection-start-column="614" selection-end-line="456" selection-end-column="619" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -577,20 +546,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/HelloWorld.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/2tiles/getposition.html" />
     <entry file="file://$PROJECT_DIR$/2tiles/getposition.js" />
     <entry file="file://$PROJECT_DIR$/Build/Cesium/Cesium.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="456" column="619" lean-forward="false" selection-start-line="456" selection-start-column="614" selection-end-line="456" selection-end-column="619" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -601,38 +562,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/addBox4.html">
+    <entry file="file://$PROJECT_DIR$/test/tianditu1.html" />
+    <entry file="file://$PROJECT_DIR$/test/tianditu2.html" />
+    <entry file="file://$PROJECT_DIR$/test/tianditu3.html" />
+    <entry file="file://$PROJECT_DIR$/test/中科星图2.html" />
+    <entry file="file://$PROJECT_DIR$/应急管理一张图/tianditu2(世界地形).html" />
+    <entry file="file://$PROJECT_DIR$/应急管理一张图/wops1.html" />
+    <entry file="file://$PROJECT_DIR$/lesson03/gallery-index-add-item.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="25" column="6" lean-forward="true" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/view1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/widget5.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2tileset/getposition.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-621">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/白图2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="29" column="19" lean-forward="false" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/白图.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="172" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/应急管理一张图/terrain1.html" />
+    <entry file="file://$PROJECT_DIR$/应急管理一张图/tianditu1.html" />
+    <entry file="file://$PROJECT_DIR$/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="39" column="20" lean-forward="true" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HelloWorld.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="252">
+          <first_editor relative-caret-position="70">
             <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
             <folding />
           </first_editor>
@@ -640,54 +617,89 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/tianditu1.html" />
-    <entry file="file://$PROJECT_DIR$/test/tianditu2.html" />
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/add2.html">
+    <entry file="file://$PROJECT_DIR$/backup/CesiumUnminified/Cesium.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="35" column="3" lean-forward="false" selection-start-line="34" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backup/Cesium/Cesium.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="449" column="3258" lean-forward="false" selection-start-line="449" selection-start-column="3251" selection-end-line="449" selection-end-column="3258" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1界面及小控件/widget5.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="27" column="16" lean-forward="false" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1界面及小控件/view1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="51" column="55" lean-forward="false" selection-start-line="51" selection-start-column="40" selection-end-line="51" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/1界面及小控件/addPoint3.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+        <state relative-caret-position="192">
+          <caret line="56" column="39" lean-forward="false" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/tianditu3.html" />
-    <entry file="file://$PROJECT_DIR$/test/中科星图2.html" />
-    <entry file="file://$PROJECT_DIR$/应急管理一张图/tianditu2(世界地形).html">
+    <entry file="file://$PROJECT_DIR$/1界面及小控件/add2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="562">
+          <caret line="104" column="20" lean-forward="false" selection-start-line="104" selection-start-column="20" selection-end-line="104" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/应急管理一张图/tianditu1.html">
+    <entry file="file://$PROJECT_DIR$/1界面及小控件/addBox4.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="688">
+          <caret line="79" column="9" lean-forward="false" selection-start-line="79" selection-start-column="9" selection-end-line="79" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/应急管理一张图/terrain1.html">
+    <entry file="file://$PROJECT_DIR$/2tileset/getposition.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
-          <caret line="92" column="42" lean-forward="false" selection-start-line="92" selection-start-column="42" selection-end-line="92" selection-end-column="42" />
+        <state relative-caret-position="74">
+          <caret line="36" column="34" lean-forward="true" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2tileset/getposition.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/应急管理一张图/wops1.html">
+    <entry file="file://$PROJECT_DIR$/lesson03/img/worldimage.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lesson03/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="57" column="29" lean-forward="false" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
+        <state relative-caret-position="202">
+          <caret line="43" column="7" lean-forward="false" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
           <folding />
         </state>
       </provider>
