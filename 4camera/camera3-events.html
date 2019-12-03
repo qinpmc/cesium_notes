@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8">
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>Hello World!</title>
+  <script src="../Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../Build/Cesium/Widgets/widgets.css);
+    html, body, #cesiumContainer {
+      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+    }
+
+    .cesium-viewer-bottom               /* logo信息 */
+    {
+      display: none;
+    }
+
+
+  </style>
+</head>
+<body>
+
+<div id="cesiumContainer"></div>
+
+<script>
+
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+
+
+    var viewer = new Cesium.Viewer('cesiumContainer',{
+        geocoder:true,
+        baseLayerPicker:true,
+        fullscreenButton:false,
+        homeButton:false,
+        sceneModePicker:true,
+        animation:true,
+        timeline:true,
+        navigationHelpButton:true
+    });
+    var camera = viewer.camera;
+    camera.setView({
+        destination : Cesium.Cartesian3.fromDegrees(-75.5847, 40.0397, 1000.0),
+        orientation: {
+            heading : -Cesium.Math.PI_OVER_TWO, //pi/2
+            pitch : -Cesium.Math.PI_OVER_FOUR,  //pi/4
+            roll : 0.0
+        }
+    });
+
+    console.log("heading....."+ camera.heading); //4.71238898038469 = 3.14 + 3.14/2
+    console.log("pitch....."+ camera.pitch);  //-0.7853981633974492  = -3.14/4
+    console.log("roll....."+ camera.roll); //6.283185307179586
+
+
+    camera.moveEnd.addEventListener(function () {
+        console.log("moveEnd",arguments);
+        console.log("heading....."+ camera.heading); //4.71238898038469 = 3.14 + 3.14/2
+        console.log("pitch....."+ camera.pitch);  //-0.7853981633974492  = -3.14/4
+        console.log("roll....."+ camera.roll); //6.283185307179586
+    })
+
+
+    camera.moveStart.addEventListener(function () {
+        console.log("moveStart",arguments);
+        console.log("heading....."+ camera.heading); //4.71238898038469 = 3.14 + 3.14/2
+        console.log("pitch....."+ camera.pitch);  //-0.7853981633974492  = -3.14/4
+        console.log("roll....."+ camera.roll); //6.283185307179586
+    })
+
+</script>
+</body>
+</html>
