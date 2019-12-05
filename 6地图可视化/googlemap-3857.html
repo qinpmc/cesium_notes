@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Hello World!</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .cesium-viewer-bottom /* logo信息 */
+        {
+            display: none;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="cesiumContainer"></div>
+<script>
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false,  //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true,  //是否显示点击要素之后显示的信息
+    });
+
+
+
+
+/*    var google = new Cesium.UrlTemplateImageryProvider({
+        url:"http://mt0.google.cn/maps/vt?lyrs=s%40703&hl=zh-CN&x={x}&y={y}&z={z}",//
+
+
+    });
+
+    viewer.imageryLayers.addImageryProvider(google);*/
+
+
+
+
+
+
+
+    function createGoogleMapsByUrl(Cesium,options) {
+        options = Cesium.defaultValue(options, {});
+
+        var templateUrl = Cesium.defaultValue(options.url, 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}');
+
+        var trailingSlashRegex = /\/$/;
+        var defaultCredit = new Cesium.Credit('Google Maps');
+
+        var tilingScheme = new Cesium.WebMercatorTilingScheme({ ellipsoid : options.ellipsoid });
+
+        var tileWidth = 256;
+        var tileHeight = 256;
+
+        var minimumLevel = Cesium.defaultValue(options.minimumLevel, 0);
+        var maximumLevel = Cesium.defaultValue(options.minimumLevel, 17);
+
+        var rectangle = Cesium.defaultValue(options.rectangle, tilingScheme.rectangle);
+
+        // Check the number of tiles at the minimum level.  If it's more than four,
+        // throw an exception, because starting at the higher minimum
+        // level will cause too many tiles to be downloaded and rendered.
+        var swTile = tilingScheme.positionToTileXY(Cesium.Rectangle.southwest(rectangle), minimumLevel);
+        var neTile = tilingScheme.positionToTileXY(Cesium.Rectangle.northeast(rectangle), minimumLevel);
+        var tileCount = (Math.abs(neTile.x - swTile.x) + 1) * (Math.abs(neTile.y - swTile.y) + 1);
+        //>>includeStart('debug', pragmas.debug);
+        if (tileCount > 4) {
+            throw new Cesium.DeveloperError('The rectangle and minimumLevel indicate that there are ' + tileCount + ' tiles at the minimum level. Imagery providers with more than four tiles at the minimum level are not supported.');
+        }
+        //>>includeEnd('debug');
+
+        var credit = Cesium.defaultValue(options.credit, defaultCredit);
+        if (typeof credit === 'string') {
+            credit = new Cesium.Credit(credit);
+        }
+
+        return new Cesium.UrlTemplateImageryProvider({
+            url: templateUrl,
+            proxy: options.proxy,
+            credit: credit,
+            tilingScheme: tilingScheme,
+            tileWidth: tileWidth,
+            tileHeight: tileHeight,
+            minimumLevel: minimumLevel,
+            maximumLevel: maximumLevel,
+            rectangle: rectangle
+        });
+    }
+
+
+    var googlemap2 = createGoogleMapsByUrl(Cesium,{url:"http://mt1.google.cn/vt/lyrs=s,t,r&x={x}&y={y}&z={z}"});
+    viewer.imageryLayers.addImageryProvider(googlemap2);
+
+
+    viewer.camera.flyTo({
+        destination:Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
+    })
+
+
+</script>
+</body>
+</html>

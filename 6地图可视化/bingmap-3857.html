@@ -46,36 +46,21 @@
         sceneModePicker: true, //是否显示投影方式控件
         navigationHelpButton: false, //是否显示帮助信息控件
         infoBox: true,  //是否显示点击要素之后显示的信息
-        imageryProvider : new Cesium.WebMapTileServiceImageryProvider({
-            url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-            layer: "img",
-            style: "default",
-            format: "tiles",
-            tileMatrixSetID: "w",
-            tileMatrixLabels:tileMatrixLabels,
-            /*tilingScheme:new Cesium.WebMercatorTilingScheme({
-
-            }),*/
-            show: false
-        })
     });
 
-    var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
-        url: "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-        layer: "cta",
-        style: "default",
-        format: "tiles",
-        tileMatrixSetID: "w",
-        tileMatrixLabels:tileMatrixLabels,
-        tilingScheme:new Cesium.WebMercatorTilingScheme({
 
-        }),
-        show: false
+    var bing = new Cesium.BingMapsImageryProvider({
+        url : 'https://ecn.t0.tiles.virtualearth.net',//   https://dev.virtualearth.net
+        key : 'AkjzA7OhS4MIBjutL21bkAop7dc41HSE0CNTR5c6HJy8JKc7U9U9RveWJrylD3XJ',
+
+    });
+
+
+
+    viewer.imageryLayers.addImageryProvider(bing);
+    viewer.camera.flyTo({
+        destination:Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
     })
-
-
-    viewer.imageryLayers.addImageryProvider(imageryProvider2);
-
 
 
 
