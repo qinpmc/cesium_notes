@@ -71,50 +71,54 @@ var resetCameraFunction = function() {
 };
 resetCameraFunction();
 
-var rainParticleSize = 15.0;
-var rainRadius = 100000.0;
-var rainImageSize = new Cesium.Cartesian2(rainParticleSize, rainParticleSize * 2.0);
+console.log(scene.camera === viewer.camera);  //true
 
-var rainSystem;
+console.log("scene.camera.position",scene.camera.position);  //Cartesian3
 
-var rainGravityScratch = new Cesium.Cartesian3();
-var rainUpdate = function(particle, dt) {
-    rainGravityScratch = Cesium.Cartesian3.normalize(particle.position, rainGravityScratch);
-    rainGravityScratch = Cesium.Cartesian3.multiplyByScalar(rainGravityScratch, -1050.0, rainGravityScratch);
+/*
+Cartesian3
+x: 276879.87875197706
+y: 5647911.6056762375
+z: 2985594.3376727775
+*/
 
-    particle.position = Cesium.Cartesian3.add(particle.position, rainGravityScratch, particle.position);
 
-    var distance = Cesium.Cartesian3.distance(scene.camera.position, particle.position);
-    if (distance > rainRadius) {
-        particle.endColor.alpha = 0.0;
-    } else {
-        particle.endColor.alpha = rainSystem.endColor.alpha / (distance / rainRadius + 0.1);
-    }
-};
+console.log("scene.camera.positionCartographic",scene.camera.positionCartographic); //Cartographic
+/*
+Cartographic
+height: 20947.522588325588
+latitude: 0.488554262605814
+longitude: 1.5217731797938847
+*/
 
-rainSystem = new Cesium.ParticleSystem({
-    modelMatrix : new Cesium.Matrix4.fromTranslation(scene.camera.position),
-    speed : -1.0,
-    lifetime : 15.0,
-    emitter : new Cesium.SphereEmitter(rainRadius),
-    startScale : 1.0,
-    endScale : 0.0,
-    image : './circular_particle.png',
-    emissionRate : 9000.0,
-    startColor :new Cesium.Color(0.27, 0.5, 0.70, 0.0),
-    endColor : new Cesium.Color(0.27, 0.5, 0.70, 0.98),
-    imageSize : rainImageSize,
-    updateCallback : rainUpdate
-});
-scene.primitives.add(rainSystem);
-rainSystem.show = true;
 
-scene.skyAtmosphere.hueShift = -0.97;
-scene.skyAtmosphere.saturationShift = 0.25;
-scene.skyAtmosphere.brightnessShift = -0.4;
 
-scene.fog.density = 0.00025;
-scene.fog.minimumBrightness = 0.01;
+var positionCartographic = Cesium.Cartographic.fromCartesian(scene.camera.position, scene.globe.ellipsoid);
+console.log("positionCartographic---",positionCartographic);
+
+/*
+Cartographic
+height: 20947.522588325588
+latitude: 0.488554262605814
+longitude: 1.5217731797938847
+*/
+
+
+
+
+var positionCartographic2 = Cesium.Cartographic.fromCartesian(scene.camera.position);
+console.log("positionCartographic2---",positionCartographic2);
+
+/*
+Cartographic
+height: 20947.522588325588
+latitude: 0.488554262605814
+longitude: 1.5217731797938847
+*/
+
+
+
+
 </script>
 </body>
 </html>
