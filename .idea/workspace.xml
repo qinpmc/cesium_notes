@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f6d77b63-f932-481c-8b73-ca25dad38f0a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6地图可视化/Cesium_Logo_overlay.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6地图可视化/GoogleImageryProvider.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6地图可视化/SingleTileImageryProvider.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6地图可视化/baidumap.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6地图可视化/bingmap-3857.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6地图可视化/googlemap-3857.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6地图可视化/googlemap2-3857.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6地图可视化/tianditu-3857.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6地图可视化/tianditu-4326.html" />
+    <list default="true" id="f6d77b63-f932-481c-8b73-ca25dad38f0a" name="Default" comment="add events and particle system demo">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/7particle/circular_particle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/7particle/snowflake_particle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/坐标系/Cartesian2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/坐标系/Cartesian3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/坐标系/wgs84.webp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/5pick-events/pick1.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/7particle/particle1-rain.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/7particle/particle2-snow.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/坐标系/README.md" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/internetMap/tianditu3857.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/internetMap/tianditu4326.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/yjyzt/tianditu1-3857.html" afterPath="$PROJECT_DIR$/6地图可视化/osm-3857.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick/pick1.html" afterPath="$PROJECT_DIR$/5pick-events/pick2-label.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/internetMap/ArcgisXYZ.html" afterPath="$PROJECT_DIR$/6地图可视化/ArcgisXYZ-3857.html" />
     </list>
     <ignored path="Cesium.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,56 +34,98 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="baidumap.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/6地图可视化/baidumap.html">
+      <file leaf-file-name="particle2-snow.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/7particle/particle2-snow.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="47" column="63" lean-forward="false" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="63" />
+            <state relative-caret-position="652">
+              <caret line="94" column="38" lean-forward="false" selection-start-line="94" selection-start-column="24" selection-end-line="94" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SingleTileImageryProvider.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/6地图可视化/SingleTileImageryProvider.html">
+      <file leaf-file-name="pick2-label.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5pick-events/pick2-label.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="364">
+              <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tianditu-4326.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-4326.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1134">
+              <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="83" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/4camera/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="0">
+                <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tianditu-3857.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-3857.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="562">
-              <caret line="63" column="32" lean-forward="false" selection-start-line="63" selection-start-column="32" selection-end-line="63" selection-end-column="32" />
+              <caret line="62" column="70" lean-forward="false" selection-start-line="62" selection-start-column="38" selection-end-line="62" selection-end-column="70" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GoogleImageryProvider.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/6地图可视化/GoogleImageryProvider.js">
+      <file leaf-file-name="pick1.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5pick-events/pick1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="166" column="10" lean-forward="false" selection-start-line="2" selection-start-column="8" selection-end-line="166" selection-end-column="10" />
-              <folding>
-                <element signature="e#1616#5605#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="googlemap-3857.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/6地图可视化/googlemap-3857.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="51" column="81" lean-forward="false" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="81" />
+            <state relative-caret-position="-374">
+              <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="googlemap2-3857.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/6地图可视化/googlemap2-3857.html">
+      <file leaf-file-name="particle1-rain.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/7particle/particle1-rain.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="209" column="36" lean-forward="false" selection-start-line="209" selection-start-column="36" selection-end-line="209" selection-end-column="36" />
-              <folding>
-                <element signature="e#2318#5779#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="1120">
+              <caret line="71" column="19" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArcgisXYZ-3857.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/6地图可视化/ArcgisXYZ-3857.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/坐标系/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="FIRST">
+              <first_editor relative-caret-position="178">
+                <caret line="62" column="82" lean-forward="true" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="82" />
+                <folding />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -104,6 +149,9 @@
       <find>tilingScheme</find>
       <find>tileMatrixLabels</find>
       <find>buildImageUrl</find>
+      <find>ScreenSpaceEventHandler</find>
+      <find>rainUpdate</find>
+      <find>scene</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -139,7 +187,6 @@
         <option value="$PROJECT_DIR$/4camera/camera3-events.html" />
         <option value="$PROJECT_DIR$/1界面及小控件/view1.html" />
         <option value="$PROJECT_DIR$/1界面及小控件/enties6.html" />
-        <option value="$PROJECT_DIR$/5pick/pick1.html" />
         <option value="$PROJECT_DIR$/yjyzt/中科星图wmts.html" />
         <option value="$PROJECT_DIR$/yjyzt/tianditu1.html" />
         <option value="$PROJECT_DIR$/yjyzt/tianditu1-3857.html" />
@@ -153,6 +200,13 @@
         <option value="$PROJECT_DIR$/6地图可视化/googlemap2-3857.html" />
         <option value="$PROJECT_DIR$/6地图可视化/baidumap.html" />
         <option value="$PROJECT_DIR$/6地图可视化/SingleTileImageryProvider.html" />
+        <option value="$PROJECT_DIR$/7particle/particle1-.html" />
+        <option value="$PROJECT_DIR$/7particle/particle1-rain.html" />
+        <option value="$PROJECT_DIR$/7particle/particle2-snow.html" />
+        <option value="$PROJECT_DIR$/坐标系/README.md" />
+        <option value="$PROJECT_DIR$/5pick/pick1.html" />
+        <option value="$PROJECT_DIR$/5pick/pick2.html" />
+        <option value="$PROJECT_DIR$/internetMap/ArcgisXYZ.html" />
       </list>
     </option>
   </component>
@@ -165,9 +219,9 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="203" />
-    <option name="y" value="89" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="645" />
+    <option name="y" value="477" />
     <option name="width" value="1938" />
     <option name="height" value="759" />
   </component>
@@ -189,6 +243,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,31 +252,14 @@
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="4camera" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="6地图可视化" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="yjyzt" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="E:/work/gis/Cesium/ExamplesforCesium-master/ExamplesforCesium-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -229,12 +268,15 @@
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\notes\cesium_notes\6地图可视化" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\notes\cesium_notes\5pick" />
+      <recent name="F:\notes\cesium_notes\坐标系" />
+      <recent name="F:\notes\cesium_notes\7particle" />
       <recent name="F:\notes\cesium_notes\6地图可视化" />
       <recent name="F:\notes\cesium_notes\yjyzt" />
-      <recent name="F:\notes\cesium_notes\1界面及小控件" />
-      <recent name="F:\notes\cesium_notes\5pick" />
-      <recent name="F:\notes\cesium_notes\4camera" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -327,25 +369,27 @@
       <workItem from="1575267173220" duration="7623000" />
       <workItem from="1575334382251" duration="14975000" />
       <workItem from="1575424391020" duration="13051000" />
+      <workItem from="1575854665524" duration="7461000" />
+      <workItem from="1575870031797" duration="5722000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53952000" />
+    <option name="totallyTimeSpent" value="67135000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="203" y="89" width="1938" height="759" extended-state="0" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.250264" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14255545" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973601" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -387,6 +431,10 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add events and particle system demo" />
+    <option name="LAST_COMMIT_MESSAGE" value="add events and particle system demo" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -400,10 +448,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/tianditu3.html" />
-    <entry file="file://$PROJECT_DIR$/test/中科星图2.html" />
-    <entry file="file://$PROJECT_DIR$/应急管理一张图/tianditu2(世界地形).html" />
-    <entry file="file://$PROJECT_DIR$/应急管理一张图/wops1.html" />
     <entry file="file://$PROJECT_DIR$/3-调整tileset角度/gallery-index-add-item.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -511,41 +555,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internetMap/tianditu4326.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="49" column="33" lean-forward="false" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/internetMap/tianditu3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="44" column="35" lean-forward="false" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/internetMap/ArcgisXYZ.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="47" column="37" lean-forward="false" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/4camera/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="33" lean-forward="false" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/4camera/camera3-events.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="26" column="1" lean-forward="false" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/1界面及小控件/view1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
@@ -557,7 +566,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
           <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="45" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -565,7 +573,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1098">
           <caret line="61" column="15" lean-forward="false" selection-start-line="61" selection-start-column="15" selection-end-line="61" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -574,19 +581,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/5pick/pick1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1944">
-          <caret line="108" column="45" lean-forward="false" selection-start-line="108" selection-start-column="45" selection-end-line="108" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/yjyzt/terrain1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2052">
           <caret line="114" column="45" lean-forward="true" selection-start-line="114" selection-start-column="45" selection-end-line="114" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -594,7 +592,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="522">
           <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -602,7 +599,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -610,7 +606,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1404">
           <caret line="78" column="54" lean-forward="false" selection-start-line="78" selection-start-column="32" selection-end-line="78" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -618,7 +613,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1620">
           <caret line="90" column="70" lean-forward="false" selection-start-line="90" selection-start-column="38" selection-end-line="90" selection-end-column="70" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -626,7 +620,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="666">
           <caret line="37" column="15" lean-forward="false" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -634,43 +627,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="562">
           <caret line="115" column="10" lean-forward="true" selection-start-line="115" selection-start-column="10" selection-end-line="115" selection-end-column="10" />
-          <folding>
-            <element signature="n#style#0;n#button#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/yjyzt/tianditu1-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="60" column="7" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-4326.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="83" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="62" column="70" lean-forward="false" selection-start-line="62" selection-start-column="38" selection-end-line="62" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/yjyzt/tianditu1-3857.html" />
     <entry file="file://$PROJECT_DIR$/6地图可视化/osm-3857.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="51" column="43" lean-forward="false" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -678,31 +642,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="42" column="44" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/BDImageryProvider.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="199" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/6地图可视化/BDImageryProvider.js" />
     <entry file="file://$PROJECT_DIR$/6地图可视化/GoogleImageryProvider.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="166" column="10" lean-forward="false" selection-start-line="2" selection-start-column="8" selection-end-line="166" selection-end-column="10" />
-          <folding>
-            <element signature="e#1616#5605#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/6地图可视化/googlemap-3857.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
+        <state relative-caret-position="918">
           <caret line="51" column="81" lean-forward="false" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="81" />
           <folding />
         </state>
@@ -710,7 +663,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/6地图可视化/googlemap2-3857.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
+        <state relative-caret-position="1386">
           <caret line="209" column="36" lean-forward="false" selection-start-line="209" selection-start-column="36" selection-end-line="209" selection-end-column="36" />
           <folding>
             <element signature="e#2318#5779#0" expanded="false" />
@@ -720,16 +673,122 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/6地图可视化/SingleTileImageryProvider.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
+        <state relative-caret-position="1134">
           <caret line="63" column="32" lean-forward="false" selection-start-line="63" selection-start-column="32" selection-end-line="63" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/4camera/camera3-events.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-234">
+          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/6地图可视化/baidumap.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
+        <state relative-caret-position="0">
           <caret line="47" column="63" lean-forward="false" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/7particle/particle2-snow.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="94" column="38" lean-forward="false" selection-start-line="94" selection-start-column="24" selection-end-line="94" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/坐标系/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="178">
+            <caret line="62" column="82" lean-forward="true" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="82" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5pick-events/pick2-label.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5pick-events/pick1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-374">
+          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/7particle/particle1-rain.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1120">
+          <caret line="71" column="19" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internetMap/tianditu4326.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="526">
+          <caret line="50" column="34" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internetMap/tianditu3857.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="472">
+          <caret line="44" column="35" lean-forward="false" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-3857.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="562">
+          <caret line="62" column="70" lean-forward="false" selection-start-line="62" selection-start-column="38" selection-end-line="62" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-4326.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1134">
+          <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="83" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/4camera/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="33" lean-forward="false" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/6地图可视化/ArcgisXYZ-3857.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
           <folding />
         </state>
       </provider>

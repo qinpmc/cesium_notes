@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-	
   <style>
 
   </style>
-
     <script src="../Build/CesiumUnminified/Cesium.js"></script>
     <link rel="stylesheet" href="../Build/CesiumUnminified/Widgets/widgets.css"/>
 </head>
@@ -22,18 +20,20 @@
 </div>
 <script> 
 
- 
-var matrix = 18;
-var matrixIds = [];
+var tilingScheme= new Cesium.WebMercatorTilingScheme({
+	numberOfLevelZeroTilesX:1,
+	numberOfLevelZeroTilesY:1,
 
-var tilingScheme= new Cesium.GeographicTilingScheme({
- 
- 
+
 })
-for(var i=1;i<matrix;i++){
-	matrixIds.push(""+i)
-	
-}
+
+
+var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
+		url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer', // 3857坐标系
+		tilingScheme:tilingScheme
+	});
+
+
 var viewer = new Cesium.Viewer("cesiumContainer", {
     animation: false,  //是否显示动画控件
     baseLayerPicker: false, //是否显示图层选择控件
@@ -42,24 +42,8 @@ var viewer = new Cesium.Viewer("cesiumContainer", {
     sceneModePicker: true, //是否显示投影方式控件
     navigationHelpButton: false, //是否显示帮助信息控件
     infoBox: true,  //是否显示点击要素之后显示的信息
-    imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-        url: "http://t0.tianditu.gov.cn/img_c/wmts?&tk=4f62e1d82bd46e2ff470b291c2260156",
-        layer: "img",
-        style: "default",
-        format: "tiles",
-		tilingScheme:tilingScheme,
-		tileMatrixLabels:matrixIds,
-		maximumLevel:18,
-		minimumLevel:0,
-        tileMatrixSetID: "c",
-         
-    })
+    imageryProvider : imageryProvider
 });
-
- 
-var imageryLayers = viewer.imageryLayers;
-
-//imageryLayers.addImageryProvider(provider);
 
 </script>
 </body>
