@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Use correct character set. -->
-  <meta charset="utf-8">
-  <!-- Tell IE to use the latest, best version. -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <title>Hello World!</title>
-  <script src="../Build/Cesium/Cesium.js"></script>
-  <style>
-    @import url(../Build/Cesium/Widgets/widgets.css);
-    html, body, #cesiumContainer {
-      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
-    }
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Hello World!</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
 
-    .cesium-viewer-bottom               /* logo信息 */
-    {
-      display: none;
-    }
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .cesium-viewer-bottom /* logo信息 */
+        {
+            display: none;
+        }
 
 
-  </style>
+    </style>
 </head>
 <body>
 
@@ -37,38 +43,39 @@
 
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
-    //绑定单击事件
     handler.setInputAction(function (movement) {
 
-        //Cartesian3
-        var position = viewer.scene.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
-        console.log(position);
-
-        //Cartographic --弧度
-        var coordinate = Cesium.Cartographic.fromCartesian(position, viewer.scene.globe.ellipsoid)
-        console.log(coordinate);
+        if (scene.mode !== Cesium.SceneMode.MORPHING) {
+            //var pickedObject = scene.pick(movement.endPosition);
 
 
+            //根据窗口坐标，从场景的深度缓冲区中拾取相应的位置，返回笛卡尔坐标
+            var cartesian = viewer.scene.pickPosition(movement.position);
 
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+            if (Cesium.defined(cartesian)) {
+                var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+                var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(2);
+                var latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(2);
+                var heightString = cartographic.height.toFixed(2);
+                console.log("viewer.scene.pickPosition: ",longitudeString,latitudeString,heightString)
 
-    //绑定鼠标移动事件
-    handler.setInputAction(function(movement) {
-        // movement.endPosition 屏幕坐标       movement.startPosition屏幕坐标
+            }
 
-        // cartesian   世界坐标系 in world coordinates
-        var cartesian = viewer.camera.pickEllipsoid(movement.endPosition, scene.globe.ellipsoid);
-        if (cartesian) {
 
-            //Cesium.Cartographic(longitude, latitude, height) -----A position defined by longitude, latitude, and height. 弧度单位
+            //获取点击处地球表面的世界坐标
+            var ray = scene.camera.getPickRay(movement.position);
+            var cartesian2 = scene.globe.pick(ray, scene);
 
-            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
-            var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(2);
-            var latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(2);
-            console.log(longitudeString,latitudeString);
+            if (Cesium.defined(cartesian2)) {
+                var cartographic2 = Cesium.Cartographic.fromCartesian(cartesian2);
+                var longitudeString2 = Cesium.Math.toDegrees(cartographic2.longitude).toFixed(2);
+                var latitudeString2 = Cesium.Math.toDegrees(cartographic2.latitude).toFixed(2);
+                var heightString2 = cartographic2.height.toFixed(2);
+                console.log("scene.globe.pick(ray, scene): ",longitudeString2,latitudeString2,heightString2)
+            }
 
         }
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
 
 </script>
