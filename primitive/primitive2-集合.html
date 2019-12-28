@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Hello World!</title>
+    <script src="../Build/CesiumUnminified/Cesium.js"></script>
+    <style>
+        @import url(../Build/CesiumUnminified/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .cesium-viewer-bottom /* logo信息 */
+        {
+            display: none;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="cesiumContainer"></div>
+<script>
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+
+    //4326坐标系从1开始
+    var tileMatrixLabels =[];
+    for(var i=1;i<18;i++){
+        tileMatrixLabels.push(""+i);
+    }
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false,  //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true,  //是否显示点击要素之后显示的信息
+        imageryProvider : new Cesium.WebMapTileServiceImageryProvider({
+            url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            layer: "vec",
+            style: "default",
+            format: "tiles",
+            tileMatrixSetID: "c",
+            tileMatrixLabels:tileMatrixLabels,
+            tilingScheme:new Cesium.GeographicTilingScheme({
+                numberOfLevelZeroTilesX:2,
+                numberOfLevelZeroTilesY:1
+            }),
+            show: false
+        })
+    });
+
+
+    var scene = viewer.scene;
+
+
+
+ // 使用 Primitive 添加  --------------------
+    var rectangleInstance = new Cesium.GeometryInstance({
+        geometry : new Cesium.RectangleGeometry({
+            rectangle : Cesium.Rectangle.fromDegrees(-100.0, 20.0, -90.0, 30.0), //Cesium.Rectangle(west, south, east, north)
+            vertexFormat : Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT
+        })
+    });
+
+    scene.primitives.add(new Cesium.Primitive({
+        geometryInstances : rectangleInstance,
+        appearance : new Cesium.EllipsoidSurfaceAppearance({
+            material : Cesium.Material.fromType('Stripe')
+        })
+    }));
+
+
+
+
+
+    var boxGeometry = new Cesium.BoxGeometry({
+        vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT,
+//        maximum : new Cesium.Cartesian3(2500000.0, 2500000.0, 2500000.0),
+//        minimum : new Cesium.Cartesian3(5000000.0, 5000000.0, 5000000.0)
+        maximum:Cesium.Cartesian3.fromDegrees(-80.0,15,500000),
+        minimum:Cesium.Cartesian3.fromDegrees(-90.0,10,100000)
+    });
+    var geometry = Cesium.BoxGeometry.createGeometry(boxGeometry);
+
+    var boxInstance = new Cesium.GeometryInstance({
+        geometry:boxGeometry,
+        attributes : {
+            color : new Cesium.ColorGeometryInstanceAttribute(1.0, 0.0, 1.0, 0.8)
+        }
+    })
+
+
+    scene.primitives.add(new Cesium.Primitive({
+        geometryInstances : boxInstance,
+        appearance :  new Cesium.PerInstanceColorAppearance()
+    }));
+
+
+
+
+    var boxGeometry2 = new Cesium.BoxGeometry({
+        vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT,
+        maximum:Cesium.Cartesian3.fromDegrees(-78.0,9,500000),
+        minimum:Cesium.Cartesian3.fromDegrees(-70.0,7,100000)
+    });
+    var geometry2 = Cesium.BoxGeometry.createGeometry(boxGeometry);
+
+    var boxInstance2 = new Cesium.GeometryInstance({
+        geometry:boxGeometry2,
+        attributes : {
+            color : new Cesium.ColorGeometryInstanceAttribute(0.0, 0.0, 1.0, 0.8)
+        }
+    })
+
+
+
+    scene.primitives.add(new Cesium.Primitive({
+        geometryInstances : boxInstance2,
+        appearance :  new Cesium.MaterialAppearance({
+            material : Cesium.Material.fromType('Color', {
+                color : new Cesium.Color(0.0, 1.0, 0.0, 1.0)
+            }),
+            faceForward : true
+        })
+    }));
+
+
+
+
+
+    viewer.camera.flyTo({
+        destination:Cesium.Cartesian3.fromDegrees(-95, 20, 9000000)
+        //destination:new Cesium.Cartesian3(5000000.0, 5000000.0, 5000000.0)
+    })
+
+    //viewer.camera.flyToBoundingSphere(geometry.boundingSphere)
+
+
+    var entity = viewer.entities.add({
+        label : {
+            show : false,
+            showBackground : true,
+            font : '14px monospace',
+            horizontalOrigin : Cesium.HorizontalOrigin.LEFT,
+            verticalOrigin : Cesium.VerticalOrigin.TOP,
+            pixelOffset : new Cesium.Cartesian2(15, 0)
+        }
+    });
+
+    // Mouse over the globe to see the cartographic position
+
+    var widget = viewer.cesiumWidget;
+    widget.screenSpaceEventHandler.setInputAction(function(movement) {
+        // movement.endPosition 屏幕坐标       movement.startPosition屏幕坐标
+
+        // cartesian   世界坐标系 in world coordinates
+        var cartesian = viewer.camera.pickEllipsoid(movement.endPosition, scene.globe.ellipsoid);
+        if (cartesian) {
+
+            //Cesium.Cartographic(longitude, latitude, height) -----A position defined by longitude, latitude, and height. 弧度单位
+
+            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+            var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(2);
+            var latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(2);
+
+            entity.position = cartesian;
+            entity.label.show = true;
+            entity.label.text =
+                'Lon: ' + ('   ' + longitudeString).slice(-7) + '\u00B0' +
+                '\nLat: ' + ('   ' + latitudeString).slice(-7) + '\u00B0';
+        } else {
+            entity.label.show = false;
+        }
+    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+</script>
+</body>
+</html>
