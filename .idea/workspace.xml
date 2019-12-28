@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6d77b63-f932-481c-8b73-ca25dad38f0a" name="Default" comment="add events and particle system demo">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/7particle/CesiumMilkTruck-kmc.glb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/7particle/smoke.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/8model/Cesium_Air.glb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/7particle/particle3.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/8model/model1.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/8model/wbms.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/primitive/primitive1.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/primitive/primitive2-集合.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/8model/wbms-数据检查.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/8model/wops.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6地图可视化/tianditu-4326.html" afterPath="$PROJECT_DIR$/6地图可视化/tianditu-4326.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test" afterPath="$PROJECT_DIR$/primitive/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/8model/wbms.html" afterPath="$PROJECT_DIR$/8model/wbms.html" />
     </list>
     <ignored path="Cesium.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,22 +24,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="wbms.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="wbms.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/8model/wbms.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1476">
-              <caret line="231" column="1" lean-forward="false" selection-start-line="231" selection-start-column="1" selection-end-line="231" selection-end-column="1" />
+            <state relative-caret-position="0">
+              <caret line="241" column="11" lean-forward="false" selection-start-line="239" selection-start-column="8" selection-end-line="241" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Cesium.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="wops.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/8model/wops.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="724">
+              <caret line="202" column="65" lean-forward="false" selection-start-line="202" selection-start-column="65" selection-end-line="202" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Cesium.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Build/CesiumUnminified/Cesium.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="15817" column="12" lean-forward="false" selection-start-line="15817" selection-start-column="12" selection-end-line="15817" selection-end-column="12" />
-              <folding />
+            <state relative-caret-position="4497">
+              <caret line="15784" column="16" lean-forward="false" selection-start-line="15784" selection-start-column="8" selection-end-line="15784" selection-end-column="16" />
+              <folding>
+                <element signature="e#648153#652352#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -90,8 +95,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/1界面及小控件/widget5.html" />
-        <option value="$PROJECT_DIR$/test/tianditu2.html" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/test/tianditu1.html" />
         <option value="$PROJECT_DIR$/1界面及小控件/addPoint3.html" />
@@ -141,6 +144,8 @@
         <option value="$PROJECT_DIR$/6地图可视化/tianditu-4326.html" />
         <option value="$PROJECT_DIR$/Build/CesiumUnminified/Cesium.js" />
         <option value="$PROJECT_DIR$/8model/wbms.html" />
+        <option value="$PROJECT_DIR$/8model/wops.html" />
+        <option value="$PROJECT_DIR$/8model/wbms-数据检查.html" />
       </list>
     </option>
   </component>
@@ -154,10 +159,10 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-64" />
-    <option name="y" value="305" />
-    <option name="width" value="1928" />
-    <option name="height" value="886" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="1942" />
+    <option name="height" value="1102" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -177,6 +182,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -235,7 +241,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -248,15 +253,15 @@
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\notes\cesium_notes\6地图可视化" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\notes\cesium_notes\8model" />
       <recent name="F:\notes\cesium_notes\7particle" />
       <recent name="F:\notes\cesium_notes" />
       <recent name="F:\notes\cesium_notes\primitive" />
       <recent name="F:\notes\cesium_notes\5pick" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\notes\cesium_notes\6地图可视化" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -354,12 +359,13 @@
       <workItem from="1577099299500" duration="291000" />
       <workItem from="1577184447303" duration="959000" />
       <workItem from="1577447566426" duration="6874000" />
-      <workItem from="1577498044819" duration="1171000" />
+      <workItem from="1577498044819" duration="3701000" />
+      <workItem from="1577504386818" duration="885000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107290000" />
+    <option name="totallyTimeSpent" value="110705000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -434,20 +440,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/3-调整tileset角度/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-500">
-          <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/add2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="45" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/1界面及小控件/enties6.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1098">
@@ -744,19 +736,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Build/CesiumUnminified/Cesium.js">
+    <entry file="file://$PROJECT_DIR$/8model/wbms.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="15817" column="12" lean-forward="false" selection-start-line="15817" selection-start-column="12" selection-end-line="15817" selection-end-column="12" />
+        <state relative-caret-position="0">
+          <caret line="241" column="11" lean-forward="false" selection-start-line="239" selection-start-column="8" selection-end-line="241" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/8model/wbms.html">
+    <entry file="file://$PROJECT_DIR$/8model/wbms-数据检查.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1476">
-          <caret line="231" column="1" lean-forward="false" selection-start-line="231" selection-start-column="1" selection-end-line="231" selection-end-column="1" />
+        <state relative-caret-position="-1422">
+          <caret line="167" column="32" lean-forward="false" selection-start-line="167" selection-start-column="32" selection-end-line="167" selection-end-column="32" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/8model/wops.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="724">
+          <caret line="202" column="65" lean-forward="false" selection-start-line="202" selection-start-column="65" selection-end-line="202" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Build/CesiumUnminified/Cesium.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4497">
+          <caret line="15784" column="16" lean-forward="false" selection-start-line="15784" selection-start-column="8" selection-end-line="15784" selection-end-column="16" />
+          <folding>
+            <element signature="e#648153#652352#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

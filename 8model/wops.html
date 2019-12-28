@@ -174,113 +174,46 @@ var layerJsonUrl = baseUrl + "/"+layerName+"/layer.json";
 //"http://10.18.17.84:9090/service/api/egis/base/v1/wbms/S-005/layer.json"
 
 
-var contenUrl = baseUrl + "/content/" + layerName;
+var tilesetUrl = "http://10.18.2.222:32254/api/egis-wops/egis/base/v1/wops/guangdong_jinwaanyehua/tileset.json";
 
-
-var heading = Cesium.Math.toRadians(0);
-var pitch = Cesium.Math.toRadians(0);
-var roll = Cesium.Math.toRadians(0);
-var headingPitchRoll = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-var fixedFrameTransform = Cesium.Transforms.localFrameToFixedFrameGenerator('east', 'north');
-
-restHttp.post(attributeUrl, 'json',JSON.stringify({}),"application/json").then(function (attribute) {
-    console.log(attribute);
-
-    restHttp.get(layerJsonUrl, 'json').then(function (layer) {
+var tileset =  new Cesium.Cesium3DTileset({
+    url: tilesetUrl,
+    maximumScreenSpaceError: 16,
+    maximumMemoryUsage: 512
+});
 
 
 
+scene.primitives.add(tileset);
 
-        var modelCollection = [];
-        modelCollection.type = "modelCollection";
+this.tileset.readyPromise.then(function (data) {
+    var sphere = data.boundingSphere;
+    var center = new Cesium.Cartesian3();
+    var center = Cesium.Cartographic.fromCartesian(sphere.center, undefined, center);
+    var x = Cesium.Math.toDegrees(center.longitude);
+    var y = Cesium.Math.toDegrees(center.latitude);
+    var z = center.height;
 
-        if (attribute && attribute.result && attribute.result.models) {
-            var models = attribute.result.models;
-            for (var i = 0; i < models.length; i++) {
-                for (var j = 0; j < layer.length; j++) {
-                    if (layer[j].name.indexOf(models[i].id) > -1) {
-
-                        var point = {
-                            type: "point"
-                        };
-                        point["x"] = layer[j].position[0];
-                        point["y"] = layer[j].position[1];
-                        point["z"] = layer[j].position[2];
-
-                        var model = {
-                            type: "model"
-                        }
-                        model['id'] = models[i].id;
-                        model['shape'] = point;
-                        modelCollection.push(model);
-                    }
-                }
-
-            }
-
-        }
+    var offsetHeight = 0 - z;
 
 
-        var totalCount = modelCollection.length;
-        var collection = new Cesium.PrimitiveCollection();
-        for (var i = 0; i < totalCount; i++) {
-            var model = modelCollection[i];
-            //this.addModel(gModel);
-            var position = model.shape;
-            var gltf = createGltfModel(model, position, model.id);
-            collection.add(gltf);
+    liftHeight(tileset,offsetHeight);
 
-        }
-
-        scene.primitives.add(collection);
-
-        var lastModel = modelCollection[modelCollection.length-1];
-        var lastPoint = lastModel["shape"];
-
-        viewer.camera.flyTo({
-            destination : Cesium.Cartesian3.fromDegrees(lastPoint.x, lastPoint.y, 1000.0)
-        });
-
-
-        function createGltfModel(gModel, position, oid) {
-
-            position = Cesium.Cartesian3.fromDegrees(position.x, position.y, position.z);
-            //var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, headingPitchRoll);
-
-
-            var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position, headingPitchRoll, Cesium.Ellipsoid.WGS84, fixedFrameTransform);
-            var model = null;
-            if (!!contenUrl) {
-                model = Cesium.Model.fromGltf({
-                    cacheKey: oid,
-                    url: contenUrl + "/" + oid,
-                    modelMatrix: modelMatrix,
-                    debugShowBoundingVolume: false,
-                    debugWireframe: false
-                });
-
-
-                model.Mesh = gModel;
-                model.readyPromise.then(function (model) {
-                    model.activeAnimations.addAll({
-                        speedup: 0.5,
-                        loop: Cesium.ModelAnimationLoop.REPEAT
-                    });
-                });
-                return model;
-
-            }
-
-        }
-
-    })
+    viewer.camera.flyTo({
+        destination : Cesium.Cartesian3.fromDegrees(x, y, 1000.0)
+    });
 
 
 });
 
 
-
-
+function liftHeight(tielset,height) {
+    var cartographic = Cesium.Cartographic.fromCartesian(tielset.boundingSphere.center);
+    var surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, 0.0);
+    var offset = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, height);
+    var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3());
+    tielset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
+}
 
 
 </script>
