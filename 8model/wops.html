@@ -188,8 +188,8 @@ scene.primitives.add(tileset);
 
 this.tileset.readyPromise.then(function (data) {
     var sphere = data.boundingSphere;
-    var center = new Cesium.Cartesian3();
-    var center = Cesium.Cartographic.fromCartesian(sphere.center, undefined, center);
+    var cartesian3Center = new Cesium.Cartesian3();
+    var center = Cesium.Cartographic.fromCartesian(sphere.center, undefined, cartesian3Center);
     var x = Cesium.Math.toDegrees(center.longitude);
     var y = Cesium.Math.toDegrees(center.latitude);
     var z = center.height;

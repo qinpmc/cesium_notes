@@ -2,10 +2,788 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6d77b63-f932-481c-8b73-ca25dad38f0a" name="Default" comment="add events and particle system demo">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/8model/wbms-数据检查.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/8model/wops.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/skybox/1024.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/skybox/back.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/skybox/bottom.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/skybox/front.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/skybox/left.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/skybox/right.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/skybox/top.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/skybox/天空盒.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/宇宙.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Images/bing_maps_credit.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Images/cesium_credit.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Images/google_earth_credit.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Images/ion-credit.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/LensFlare/DirtMask.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/LensFlare/StarBurst.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/0/0/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/0/1/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/1/0/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/1/0/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/1/1/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/1/1/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/1/2/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/1/2/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/1/3/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/1/3/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/0/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/0/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/0/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/0/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/1/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/1/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/1/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/1/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/2/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/2/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/2/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/2/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/3/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/3/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/3/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/3/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/4/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/4/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/4/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/4/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/5/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/5/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/5/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/5/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/6/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/6/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/6/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/6/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/7/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/7/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/7/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/2/7/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/SkyBox/tycho2t3_80_mx.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/SkyBox/tycho2t3_80_my.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/SkyBox/tycho2t3_80_mz.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/SkyBox/tycho2t3_80_px.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/SkyBox/tycho2t3_80_py.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/SkyBox/tycho2t3_80_pz.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/airfield.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/airport.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/alcohol-shop.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/america-football.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/art-gallery.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/bakery.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/bank.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/bar.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/baseball.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/basketball.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/beer.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/bicycle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/building.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/bus.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/cafe.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/camera.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/campsite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/car.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/cemetery.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/cesium.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/chemist.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/cinema.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/circle-stroked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/circle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/city.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/clothing-store.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/college.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/commercial.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/cricket.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/cross.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/dam.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/danger.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/disability.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/dog-park.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/embassy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/emergency-telephone.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/entrance.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/farm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/fast-food.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/ferry.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/fire-station.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/fuel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/garden.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/gift.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/golf.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/grocery.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/hairdresser.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/harbor.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/heart.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/heliport.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/hospital.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/ice-cream.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/industrial.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/land-use.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/laundry.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/library.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/lighthouse.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/lodging.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/logging.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/london-underground.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/marker-stroked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/marker.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/minefield.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/mobilephone.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/monument.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/museum.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/music.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/oil-well.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/park.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/park2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/parking-garage.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/parking.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/pharmacy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/pitch.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/place-of-worship.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/playground.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/police.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/polling-place.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/post.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/prison.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/rail-above.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/rail-light.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/rail-metro.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/rail-underground.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/rail.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/religious-christian.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/religious-jewish.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/religious-muslim.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/restaurant.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/roadblock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/rocket.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/school.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/scooter.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/shop.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/skiing.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/slaughterhouse.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/soccer.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/square-stroked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/square.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/star-stroked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/star.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/suitcase.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/swimming.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/telephone.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/tennis.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/theatre.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/toilets.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/town-hall.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/town.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/triangle-stroked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/triangle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/village.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/warehouse.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/waste-basket.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/water.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/wetland.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/maki/zoo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/moonSmall.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/waterNormals.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/waterNormalsSmall.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/ThirdParty/draco_decoder.wasm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/bingAerial.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/bingAerialLabels.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/bingRoads.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/blueMarble.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/earthAtNight.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/esriNationalGeographic.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/esriWorldImagery.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/esriWorldStreetMap.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/mapQuestOpenStreetMap.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/mapboxSatellite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/mapboxStreets.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/mapboxTerrain.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/naturalEarthII.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/openStreetMap.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/sentinel-2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/stamenToner.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/ImageryProviders/stamenWatercolor.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/TerrainProviders/CesiumWorldTerrain.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/TerrainProviders/Ellipsoid.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/TimelineIcons.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/info-loading.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Images/bing_maps_credit.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Images/cesium_credit.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Images/google_earth_credit.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Images/ion-credit.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/LensFlare/DirtMask.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/LensFlare/StarBurst.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/0/0/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/0/1/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/1/0/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/1/0/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/1/1/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/1/1/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/1/2/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/1/2/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/1/3/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/1/3/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/0/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/0/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/0/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/0/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/1/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/1/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/1/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/1/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/2/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/2/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/2/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/2/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/3/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/3/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/3/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/3/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/4/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/4/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/4/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/4/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/5/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/5/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/5/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/5/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/6/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/6/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/6/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/6/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/7/0.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/7/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/7/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/2/7/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/SkyBox/tycho2t3_80_mx.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/SkyBox/tycho2t3_80_my.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/SkyBox/tycho2t3_80_mz.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/SkyBox/tycho2t3_80_px.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/SkyBox/tycho2t3_80_py.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/SkyBox/tycho2t3_80_pz.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/airfield.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/airport.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/alcohol-shop.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/america-football.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/art-gallery.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/bakery.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/bank.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/bar.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/baseball.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/basketball.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/beer.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/bicycle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/building.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/bus.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/cafe.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/camera.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/campsite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/car.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/cemetery.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/cesium.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/chemist.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/cinema.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/circle-stroked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/circle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/city.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/clothing-store.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/college.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/commercial.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/cricket.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/cross.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/dam.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/danger.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/disability.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/dog-park.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/embassy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/emergency-telephone.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/entrance.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/farm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/fast-food.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/ferry.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/fire-station.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/fuel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/garden.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/gift.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/golf.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/grocery.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/hairdresser.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/harbor.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/heart.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/heliport.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/hospital.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/ice-cream.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/industrial.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/land-use.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/laundry.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/library.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/lighthouse.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/lodging.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/logging.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/london-underground.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/marker-stroked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/marker.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/minefield.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/mobilephone.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/monument.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/museum.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/music.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/oil-well.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/park.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/park2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/parking-garage.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/parking.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/pharmacy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/pitch.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/place-of-worship.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/playground.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/police.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/polling-place.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/post.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/prison.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/rail-above.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/rail-light.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/rail-metro.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/rail-underground.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/rail.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/religious-christian.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/religious-jewish.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/religious-muslim.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/restaurant.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/roadblock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/rocket.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/school.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/scooter.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/shop.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/skiing.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/slaughterhouse.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/soccer.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/square-stroked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/square.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/star-stroked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/star.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/suitcase.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/swimming.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/telephone.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/tennis.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/theatre.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/toilets.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/town-hall.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/town.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/triangle-stroked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/triangle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/village.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/warehouse.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/waste-basket.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/water.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/wetland.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/maki/zoo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/moonSmall.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/waterNormals.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/waterNormalsSmall.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/ThirdParty/draco_decoder.wasm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/bingAerial.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/bingAerialLabels.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/bingRoads.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/blueMarble.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/earthAtNight.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/esriNationalGeographic.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/esriWorldImagery.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/esriWorldStreetMap.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/mapQuestOpenStreetMap.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/mapboxSatellite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/mapboxStreets.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/mapboxTerrain.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/naturalEarthII.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/openStreetMap.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/sentinel-2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/stamenToner.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/ImageryProviders/stamenWatercolor.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/TerrainProviders/CesiumWorldTerrain.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/TerrainProviders/Ellipsoid.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/TimelineIcons.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/info-loading.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/Tileset/ll.b3dm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/Tileset/lr.b3dm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/Tileset/parent.b3dm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/Tileset/ul.b3dm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/Tileset/ur.b3dm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/big-buck-bunny_trailer.mp4" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/skybox/1024.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/skybox/back.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/skybox/bottom.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/skybox/front.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/skybox/left.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/skybox/right.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/skybox/top.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/skybox/天空盒.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/天空盒3.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/天空盒4.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/背景1.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9背景/背景2.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_10.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_11.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_12.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_13.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_14.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_15.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_16.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_17.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_18.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_19.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_20.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_21.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_22.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_23.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_24.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_25.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_26.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_27.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_4.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_5.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_6.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_7.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_8.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/IAU2006_XYS/IAU2006_XYS_9.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/NaturalEarthII/tilemapresource.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/Textures/pin.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Assets/approximateTerrainHeights.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Cesium.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/ThirdParty/Workers/deflate.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/ThirdParty/Workers/draco_decoder.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/ThirdParty/Workers/draco_wasm_wrapper.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/ThirdParty/Workers/inflate.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/ThirdParty/google-earth-dbroot-parser.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Animation/Animation.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Animation/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/BaseLayerPicker/BaseLayerPicker.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/BaseLayerPicker/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Cesium3DTilesInspector/Cesium3DTilesInspector.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/CesiumInspector/CesiumInspector.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/CesiumWidget/CesiumWidget.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/CesiumWidget/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/FullscreenButton/FullscreenButton.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Geocoder/Geocoder.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Geocoder/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/NavigationHelp/Mouse.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/NavigationHelp/MouseLeft.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/NavigationHelp/MouseMiddle.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/NavigationHelp/MouseRight.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/NavigationHelp/Touch.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/NavigationHelp/TouchDrag.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/NavigationHelp/TouchRotate.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/NavigationHelp/TouchTilt.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Images/NavigationHelp/TouchZoom.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/InfoBox/InfoBox.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/InfoBox/InfoBoxDescription.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/NavigationHelpButton/NavigationHelpButton.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/NavigationHelpButton/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/PerformanceWatchdog/PerformanceWatchdog.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/ProjectionPicker/ProjectionPicker.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/SceneModePicker/SceneModePicker.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/SelectionIndicator/SelectionIndicator.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Timeline/Timeline.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Timeline/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/VRButton/VRButton.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/Viewer/Viewer.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/lighterShared.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/shared.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Widgets/widgets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/ArcType-c72d871a.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/AttributeCompression-a7396e6f.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/BoundingRectangle-1f97a102.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/BoxGeometry-a7ff8809.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/Cartesian2-40ed5530.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/Check-e6691f86.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/Color-43d6d8f5.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/ComponentDatatype-9477db2c.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/CoplanarPolygonGeometryLibrary-081c9c70.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/CorridorGeometryLibrary-0c7992f3.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/CylinderGeometry-62294306.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/CylinderGeometryLibrary-c0d72f53.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/EllipseGeometry-08da2c60.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/EllipseGeometryLibrary-adc347fa.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/EllipseOutlineGeometry-78291aef.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/EllipsoidGeodesic-b257688e.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/EllipsoidGeometry-c496e8af.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/EllipsoidOutlineGeometry-7065467b.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/EllipsoidRhumbLine-d5ed1c3f.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/EllipsoidTangentPlane-1ba7ce65.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/EllipsoidalOccluder-58305577.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/EncodedCartesian3-e7615897.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/FrustumGeometry-c2369916.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/GeometryAttribute-4754007e.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/GeometryAttributes-c3465b51.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/GeometryInstance-02cd2d29.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/GeometryOffsetAttribute-5aa2ee88.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/GeometryPipeline-bd87b3b1.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/IndexDatatype-668aa2f9.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/IntersectionTests-f6d27a39.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/Math-2145e044.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/OrientedBoundingBox-d258fabd.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/Plane-297770b0.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/PolygonGeometryLibrary-4d2d35e1.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/PolygonPipeline-eaa2424e.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/PolylinePipeline-5ad419cb.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/PolylineVolumeGeometryLibrary-ee24167c.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/PrimitivePipeline-65f37562.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/RectangleGeometryLibrary-70e4007b.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/RuntimeError-d5522ee3.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/TerrainEncoding-b01d1123.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/Transforms-94513c2d.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/VertexFormat-61bc2255.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/WallGeometryLibrary-c3ece839.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/WebGLConstants-554ddbe2.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/WebMercatorProjection-a290a2f5.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/arrayRemoveDuplicates-32bbc2e4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/cesiumWorkerBootstrapper.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/combineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createBoxGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createBoxOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createCircleGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createCircleOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createCoplanarPolygonGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createCoplanarPolygonOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createCorridorGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createCorridorOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createCylinderGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createCylinderOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createEllipseGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createEllipseOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createEllipsoidGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createEllipsoidOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createFrustumGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createFrustumOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createGroundPolylineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createPlaneGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createPlaneOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createPolygonGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createPolygonOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createPolylineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createPolylineVolumeGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createPolylineVolumeOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createRectangleGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createRectangleOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createSimplePolylineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createSphereGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createSphereOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createTaskProcessorWorker.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createVectorTileGeometries.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createVectorTilePoints.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createVectorTilePolygons.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createVectorTilePolylines.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createVerticesFromGoogleEarthEnterpriseBuffer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createVerticesFromHeightmap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createVerticesFromQuantizedTerrainMesh.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createWallGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/createWallOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/decodeDraco.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/decodeGoogleEarthEnterprisePacket.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/defaultValue-199f5aa8.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/defineProperties-ae15c9d5.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/defined-b9ff0e39.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/freezeObject-2d5b18ce.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/transcodeCRNToDXT.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/transferTypedArrayTest.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/upsampleQuantizedTerrainMesh.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_PostProcessStage/Workers/when-c208a7cf.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_10.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_11.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_12.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_13.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_14.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_15.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_16.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_17.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_18.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_19.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_20.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_21.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_22.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_23.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_24.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_25.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_26.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_27.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_4.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_5.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_6.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_7.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_8.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/IAU2006_XYS/IAU2006_XYS_9.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/NaturalEarthII/tilemapresource.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/Textures/pin.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Assets/approximateTerrainHeights.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Cesium.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/ThirdParty/Workers/deflate.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/ThirdParty/Workers/draco_decoder.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/ThirdParty/Workers/draco_wasm_wrapper.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/ThirdParty/Workers/inflate.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/ThirdParty/google-earth-dbroot-parser.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Animation/Animation.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Animation/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/BaseLayerPicker/BaseLayerPicker.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/BaseLayerPicker/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Cesium3DTilesInspector/Cesium3DTilesInspector.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/CesiumInspector/CesiumInspector.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/CesiumWidget/CesiumWidget.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/CesiumWidget/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/FullscreenButton/FullscreenButton.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Geocoder/Geocoder.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Geocoder/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/NavigationHelp/Mouse.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/NavigationHelp/MouseLeft.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/NavigationHelp/MouseMiddle.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/NavigationHelp/MouseRight.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/NavigationHelp/Touch.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/NavigationHelp/TouchDrag.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/NavigationHelp/TouchRotate.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/NavigationHelp/TouchTilt.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Images/NavigationHelp/TouchZoom.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/InfoBox/InfoBox.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/InfoBox/InfoBoxDescription.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/NavigationHelpButton/NavigationHelpButton.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/NavigationHelpButton/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/PerformanceWatchdog/PerformanceWatchdog.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/ProjectionPicker/ProjectionPicker.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/SceneModePicker/SceneModePicker.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/SelectionIndicator/SelectionIndicator.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Timeline/Timeline.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Timeline/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/VRButton/VRButton.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/Viewer/Viewer.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/lighter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/lighterShared.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/shared.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Widgets/widgets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/ArcType-c72d871a.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/AttributeCompression-a7396e6f.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/BoundingRectangle-1f97a102.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/BoxGeometry-a7ff8809.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/Cartesian2-40ed5530.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/Check-e6691f86.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/Color-43d6d8f5.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/ComponentDatatype-9477db2c.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/CoplanarPolygonGeometryLibrary-081c9c70.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/CorridorGeometryLibrary-0c7992f3.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/CylinderGeometry-62294306.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/CylinderGeometryLibrary-c0d72f53.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/EllipseGeometry-08da2c60.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/EllipseGeometryLibrary-adc347fa.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/EllipseOutlineGeometry-78291aef.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/EllipsoidGeodesic-b257688e.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/EllipsoidGeometry-c496e8af.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/EllipsoidOutlineGeometry-7065467b.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/EllipsoidRhumbLine-d5ed1c3f.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/EllipsoidTangentPlane-1ba7ce65.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/EllipsoidalOccluder-58305577.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/EncodedCartesian3-e7615897.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/FrustumGeometry-c2369916.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/GeometryAttribute-4754007e.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/GeometryAttributes-c3465b51.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/GeometryInstance-02cd2d29.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/GeometryOffsetAttribute-5aa2ee88.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/GeometryPipeline-bd87b3b1.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/IndexDatatype-668aa2f9.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/IntersectionTests-f6d27a39.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/Math-2145e044.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/OrientedBoundingBox-d258fabd.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/Plane-297770b0.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/PolygonGeometryLibrary-4d2d35e1.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/PolygonPipeline-eaa2424e.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/PolylinePipeline-5ad419cb.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/PolylineVolumeGeometryLibrary-ee24167c.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/PrimitivePipeline-65f37562.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/RectangleGeometryLibrary-70e4007b.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/RuntimeError-d5522ee3.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/TerrainEncoding-b01d1123.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/Transforms-94513c2d.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/VertexFormat-61bc2255.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/WallGeometryLibrary-c3ece839.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/WebGLConstants-554ddbe2.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/WebMercatorProjection-a290a2f5.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/arrayRemoveDuplicates-32bbc2e4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/cesiumWorkerBootstrapper.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/combineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createBoxGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createBoxOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createCircleGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createCircleOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createCoplanarPolygonGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createCoplanarPolygonOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createCorridorGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createCorridorOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createCylinderGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createCylinderOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createEllipseGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createEllipseOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createEllipsoidGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createEllipsoidOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createFrustumGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createFrustumOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createGroundPolylineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createPlaneGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createPlaneOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createPolygonGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createPolygonOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createPolylineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createPolylineVolumeGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createPolylineVolumeOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createRectangleGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createRectangleOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createSimplePolylineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createSphereGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createSphereOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createTaskProcessorWorker.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createVectorTileGeometries.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createVectorTilePoints.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createVectorTilePolygons.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createVectorTilePolylines.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createVerticesFromGoogleEarthEnterpriseBuffer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createVerticesFromHeightmap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createVerticesFromQuantizedTerrainMesh.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createWallGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/createWallOutlineGeometry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/decodeDraco.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/decodeGoogleEarthEnterprisePacket.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/defaultValue-199f5aa8.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/defineProperties-ae15c9d5.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/defined-b9ff0e39.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/freezeObject-2d5b18ce.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/transcodeCRNToDXT.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/transferTypedArrayTest.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/upsampleQuantizedTerrainMesh.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cesium_skybox/Workers/when-c208a7cf.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/terrain/terrian-全球.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/Tileset/tileset.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/margis-动态立体墙.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/margis-积雪.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/margis-雨雪.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/margis-雾气.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/margis天空盒.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/skybox/雾气1.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/剖面分析.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/卫星.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/卷帘.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/天空盒.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/裁剪效果.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/视频投影.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/视频投影2.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/预研/雾天气.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/8model/wbms.html" afterPath="$PROJECT_DIR$/8model/wbms.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6地图可视化/tianditu-4326.html" afterPath="$PROJECT_DIR$/6地图可视化/tianditu-4326.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/8model/wops.html" afterPath="$PROJECT_DIR$/8model/wops.html" />
     </list>
     <ignored path="Cesium.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,34 +802,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="wbms.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/8model/wbms.html">
+      <file leaf-file-name="视频投影.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/预研/视频投影.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="241" column="11" lean-forward="false" selection-start-line="239" selection-start-column="8" selection-end-line="241" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wops.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/8model/wops.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="724">
-              <caret line="202" column="65" lean-forward="false" selection-start-line="202" selection-start-column="65" selection-end-line="202" selection-end-column="65" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Cesium.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Build/CesiumUnminified/Cesium.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4497">
-              <caret line="15784" column="16" lean-forward="false" selection-start-line="15784" selection-start-column="8" selection-end-line="15784" selection-end-column="16" />
+            <state relative-caret-position="-194">
+              <caret line="44" column="0" lean-forward="true" selection-start-line="43" selection-start-column="4" selection-end-line="44" selection-end-column="0" />
               <folding>
-                <element signature="e#648153#652352#0" expanded="false" />
+                <element signature="n#style#0;n#video#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="视频投影2.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/预研/视频投影2.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="436">
+              <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="72" selection-end-column="3" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -75,7 +843,6 @@
       <find>tilingScheme</find>
       <find>tileMatrixLabels</find>
       <find>buildImageUrl</find>
-      <find>ScreenSpaceEventHandler</find>
       <find>rainUpdate</find>
       <find>scene</find>
       <find>minimumSnowImageSize</find>
@@ -84,7 +851,25 @@
       <find>flyToRectangle</find>
       <find>this</find>
       <find>xhr.onload</find>
+      <find>http</find>
+      <find>mychart</find>
+      <find>ImagerySplitDirection</find>
+      <find>ScreenSpaceEventHandler</find>
+      <find>[_0x190e(&quot;0x7&quot;)]</find>
+      <find>[_0x190e(&quot;0x1d&quot;)]</find>
+      <find>[_0x190e(&quot;0x33&quot;)]</find>
+      <find>initWork</find>
+      <find>u_rotateMatrix</find>
+      <find>LineFlowMaterial</find>
+      <find>origcolor</find>
+      <find>Snow</find>
+      <find>skybox</find>
+      <find>SkyBoxVS</find>
     </findStrings>
+    <replaceStrings>
+      <replace>.scene</replace>
+      <replace>.postRender</replace>
+    </replaceStrings>
     <dirStrings>
       <dir>F:\notes\cesium_notes</dir>
     </dirStrings>
@@ -95,28 +880,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/test/tianditu1.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/addPoint3.html" />
-        <option value="$PROJECT_DIR$/test/tianditu3.html" />
-        <option value="$PROJECT_DIR$/test/中科星图2.html" />
-        <option value="$PROJECT_DIR$/应急管理一张图/terrain1.html" />
-        <option value="$PROJECT_DIR$/白图2.html" />
-        <option value="$PROJECT_DIR$/白图.html" />
-        <option value="$PROJECT_DIR$/test.html" />
-        <option value="$PROJECT_DIR$/HelloWorld.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/add2.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/addBox4.html" />
-        <option value="$PROJECT_DIR$/2tileset/getposition.js" />
-        <option value="$PROJECT_DIR$/2tileset/getposition.html" />
-        <option value="$PROJECT_DIR$/lesson03/index.html" />
-        <option value="$PROJECT_DIR$/4camera/camera1.html" />
-        <option value="$PROJECT_DIR$/4camera/README.md" />
-        <option value="$PROJECT_DIR$/4camera/camera2-rectangle.html" />
-        <option value="$PROJECT_DIR$/4camera/camera3-events.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/view1.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/enties6.html" />
-        <option value="$PROJECT_DIR$/yjyzt/中科星图wmts.html" />
         <option value="$PROJECT_DIR$/yjyzt/tianditu1.html" />
         <option value="$PROJECT_DIR$/yjyzt/tianditu1-3857.html" />
         <option value="$PROJECT_DIR$/6地图可视化/tianditu-3857.html" />
@@ -141,11 +904,33 @@
         <option value="$PROJECT_DIR$/7particle/particle3.html" />
         <option value="$PROJECT_DIR$/8model/model1.html" />
         <option value="$PROJECT_DIR$/primitive/README.md" />
-        <option value="$PROJECT_DIR$/6地图可视化/tianditu-4326.html" />
         <option value="$PROJECT_DIR$/Build/CesiumUnminified/Cesium.js" />
         <option value="$PROJECT_DIR$/8model/wbms.html" />
-        <option value="$PROJECT_DIR$/8model/wops.html" />
         <option value="$PROJECT_DIR$/8model/wbms-数据检查.html" />
+        <option value="$PROJECT_DIR$/8model/wops.html" />
+        <option value="$PROJECT_DIR$/terrain/terrian-全球.html" />
+        <option value="$PROJECT_DIR$/预研/剖面分析.html" />
+        <option value="$PROJECT_DIR$/预研/卷帘.html" />
+        <option value="$PROJECT_DIR$/预研/1.html" />
+        <option value="$PROJECT_DIR$/预研/天空盒.html" />
+        <option value="$PROJECT_DIR$/9背景/天空盒2.html" />
+        <option value="$PROJECT_DIR$/9背景/背景1.html" />
+        <option value="$PROJECT_DIR$/9背景/背景2.html" />
+        <option value="$PROJECT_DIR$/9背景/天空盒3.html" />
+        <option value="$PROJECT_DIR$/9背景/天空盒4.html" />
+        <option value="$PROJECT_DIR$/Cesium_skybox/Cesium.js" />
+        <option value="$PROJECT_DIR$/预研/卫星.html" />
+        <option value="$PROJECT_DIR$/预研/margis-动态立体墙.html" />
+        <option value="$PROJECT_DIR$/预研/margis-雾气.html" />
+        <option value="$PROJECT_DIR$/预研/skybox/雾气1.html" />
+        <option value="$PROJECT_DIR$/预研/margis-积雪.html" />
+        <option value="$PROJECT_DIR$/预研/裁剪效果.html" />
+        <option value="$PROJECT_DIR$/预研/margis-雨雪.html" />
+        <option value="$PROJECT_DIR$/6地图可视化/tianditu-4326.html" />
+        <option value="$PROJECT_DIR$/Cesium_PostProcessStage/Cesium.js" />
+        <option value="$PROJECT_DIR$/预研/雾天气.html" />
+        <option value="$PROJECT_DIR$/预研/视频投影.html" />
+        <option value="$PROJECT_DIR$/预研/视频投影2.html" />
       </list>
     </option>
   </component>
@@ -159,10 +944,10 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-11" />
-    <option name="y" value="-11" />
-    <option name="width" value="1942" />
-    <option name="height" value="1102" />
+    <option name="x" value="96" />
+    <option name="y" value="472" />
+    <option name="width" value="1551" />
+    <option name="height" value="839" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -182,7 +967,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -194,53 +978,23 @@
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="1界面及小控件" type="462c0819:PsiDirectoryNode" />
+              <item name="Cesium_PostProcessStage" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="4camera" type="462c0819:PsiDirectoryNode" />
+              <item name="Cesium_skybox" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="6地图可视化" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="7particle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="8model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="Build" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="Build" type="462c0819:PsiDirectoryNode" />
-              <item name="CesiumUnminified" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="primitive" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="坐标系" type="462c0819:PsiDirectoryNode" />
+              <item name="预研" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -253,15 +1007,16 @@
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\notes\cesium_notes\8model" />
-      <recent name="F:\notes\cesium_notes\7particle" />
-      <recent name="F:\notes\cesium_notes" />
-      <recent name="F:\notes\cesium_notes\primitive" />
-      <recent name="F:\notes\cesium_notes\5pick" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\notes\cesium_notes\预研\skybox" />
       <recent name="F:\notes\cesium_notes\6地图可视化" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\notes\cesium_notes\预研" />
+      <recent name="F:\notes\cesium_notes" />
+      <recent name="F:\notes\cesium_notes\9背景" />
+      <recent name="F:\notes\cesium_notes\预研\skybox" />
+      <recent name="F:\notes\cesium_notes\terrain" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -360,12 +1115,18 @@
       <workItem from="1577184447303" duration="959000" />
       <workItem from="1577447566426" duration="6874000" />
       <workItem from="1577498044819" duration="3701000" />
-      <workItem from="1577504386818" duration="885000" />
+      <workItem from="1577504386818" duration="4220000" />
+      <workItem from="1577712143657" duration="1250000" />
+      <workItem from="1583479208119" duration="17472000" />
+      <workItem from="1583716265377" duration="15621000" />
+      <workItem from="1583985379456" duration="727000" />
+      <workItem from="1584345447622" duration="4420000" />
+      <workItem from="1584407124189" duration="3112000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="110705000" />
+    <option name="totallyTimeSpent" value="156642000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -440,188 +1201,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/enties6.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1098">
-          <caret line="61" column="15" lean-forward="false" selection-start-line="61" selection-start-column="15" selection-end-line="61" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/4camera/headingpitchroll.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yjyzt/terrain1.html" />
-    <entry file="file://$PROJECT_DIR$/yjyzt/wops1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yjyzt/tianditu2(世界地形).html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="39" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yjyzt/中科星图wmts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1620">
-          <caret line="90" column="70" lean-forward="false" selection-start-line="90" selection-start-column="38" selection-end-line="90" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yjyzt/tianditu1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="37" column="15" lean-forward="false" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yjyzt/tianditu1-3857.html" />
-    <entry file="file://$PROJECT_DIR$/6地图可视化/osm-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="51" column="43" lean-forward="false" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/bingmap-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="42" column="44" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/BDImageryProvider.js" />
-    <entry file="file://$PROJECT_DIR$/6地图可视化/GoogleImageryProvider.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="166" column="10" lean-forward="false" selection-start-line="2" selection-start-column="8" selection-end-line="166" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/googlemap-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="51" column="81" lean-forward="false" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/googlemap2-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1386">
-          <caret line="209" column="36" lean-forward="false" selection-start-line="209" selection-start-column="36" selection-end-line="209" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/SingleTileImageryProvider.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1134">
-          <caret line="63" column="32" lean-forward="false" selection-start-line="63" selection-start-column="32" selection-end-line="63" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/baidumap.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="47" column="63" lean-forward="false" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/5pick-events/pick2-label.html" />
-    <entry file="file://$PROJECT_DIR$/5pick-events/pick1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-374">
-          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/internetMap/tianditu4326.html" />
-    <entry file="file://$PROJECT_DIR$/internetMap/tianditu3857.html" />
-    <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
-          <caret line="62" column="70" lean-forward="false" selection-start-line="62" selection-start-column="38" selection-end-line="62" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/ArcgisXYZ-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/5pick-events/pick6-pick-terrain-height.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="3" lean-forward="false" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yjyzt/terrain1-margis-terrain.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="110" column="0" lean-forward="false" selection-start-line="110" selection-start-column="0" selection-end-line="117" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/5pick-events/pick5-pick-entity.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/5pick-events/pick5-2-dirllPick-entity.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="688">
-          <caret line="134" column="0" lean-forward="false" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/5pick-events/pick3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="65" column="45" lean-forward="false" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/view1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="51" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/5pick-events/pick1-2-label.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="87" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/5pick-events/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="162">
-            <caret line="9" column="16" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="9" selection-end-column="16" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/primitive/primitive2-集合.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="143" column="25" lean-forward="true" selection-start-line="143" selection-start-column="25" selection-end-line="143" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/primitive/primitive1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-356">
@@ -670,17 +1249,17 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/4camera/README.md">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="33" lean-forward="false" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
             <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="33" lean-forward="false" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -722,13 +1301,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-4326.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="82" column="25" lean-forward="true" selection-start-line="82" selection-start-column="25" selection-end-line="82" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/8model/model1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2020">
@@ -736,37 +1308,241 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/8model/wbms.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="241" column="11" lean-forward="false" selection-start-line="239" selection-start-column="8" selection-end-line="241" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/8model/wbms-数据检查.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1422">
           <caret line="167" column="32" lean-forward="false" selection-start-line="167" selection-start-column="32" selection-end-line="167" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/8model/wops.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="724">
-          <caret line="202" column="65" lean-forward="false" selection-start-line="202" selection-start-column="65" selection-end-line="202" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Build/CesiumUnminified/Cesium.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4497">
-          <caret line="15784" column="16" lean-forward="false" selection-start-line="15784" selection-start-column="8" selection-end-line="15784" selection-end-column="16" />
+        <state relative-caret-position="-1320306">
+          <caret line="46293" column="11" lean-forward="true" selection-start-line="46293" selection-start-column="11" selection-end-line="46293" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/terrain/terrian-全球.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="91" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/8model/wbms.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="760">
+          <caret line="253" column="47" lean-forward="false" selection-start-line="253" selection-start-column="47" selection-end-line="253" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/卷帘.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="740">
+          <caret line="105" column="0" lean-forward="false" selection-start-line="105" selection-start-column="2" selection-end-line="107" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/2.jpg" />
+    <entry file="file://$PROJECT_DIR$/预研/1.jpg" />
+    <entry file="file://$PROJECT_DIR$/预研/skybox/天空盒.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-3857.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1116">
+          <caret line="62" column="70" lean-forward="false" selection-start-line="62" selection-start-column="38" selection-end-line="62" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/天空盒.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2070">
+          <caret line="115" column="19" lean-forward="true" selection-start-line="115" selection-start-column="19" selection-end-line="115" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9背景/天空盒.jpg" />
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/cesium/Source/Shaders/SkyBoxVS.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="234">
+            <caret line="13" column="28" lean-forward="false" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9背景/skybox/天空盒.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/margis-动态立体墙.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1440">
+          <caret line="140" column="21" lean-forward="true" selection-start-line="140" selection-start-column="21" selection-end-line="140" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/8model/wops.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="155" selection-end-column="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/skybox/雾气1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1206">
+          <caret line="67" column="0" lean-forward="false" selection-start-line="65" selection-start-column="3" selection-end-line="67" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/裁剪效果.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1926">
+          <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/margis-雾气.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="786">
+          <caret line="141" column="42" lean-forward="true" selection-start-line="141" selection-start-column="42" selection-end-line="141" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/margis-雨雪.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1926">
+          <caret line="107" column="57" lean-forward="false" selection-start-line="107" selection-start-column="43" selection-end-line="107" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/margis-积雪.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="165" column="154" lean-forward="false" selection-start-line="165" selection-start-column="140" selection-end-line="165" selection-end-column="154" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/margis天空盒.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1556">
+          <caret line="90" column="190" lean-forward="false" selection-start-line="90" selection-start-column="182" selection-end-line="90" selection-end-column="190" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/卫星.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1080">
+          <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/剖面分析.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="866">
+          <caret line="107" column="38" lean-forward="false" selection-start-line="107" selection-start-column="15" selection-end-line="107" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9背景/天空盒3.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="95" column="41" lean-forward="false" selection-start-line="95" selection-start-column="41" selection-end-line="95" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9背景/天空盒4.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="111" column="41" lean-forward="false" selection-start-line="111" selection-start-column="41" selection-end-line="111" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9背景/宇宙.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9背景/背景2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="110" column="0" lean-forward="true" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9背景/背景1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1040">
+          <caret line="38" column="33" lean-forward="true" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-4326.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cesium_PostProcessStage/Cesium.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174942">
+          <caret line="9719" column="9095" lean-forward="false" selection-start-line="9719" selection-start-column="9091" selection-end-line="9719" selection-end-column="9095" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cesium_skybox/Cesium.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1153764">
+          <caret line="64098" column="16" lean-forward="false" selection-start-line="64098" selection-start-column="8" selection-end-line="64098" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/雾天气.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="684">
+          <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="262" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/视频投影.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-194">
+          <caret line="44" column="0" lean-forward="true" selection-start-line="43" selection-start-column="4" selection-end-line="44" selection-end-column="0" />
           <folding>
-            <element signature="e#648153#652352#0" expanded="false" />
+            <element signature="n#style#0;n#video#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/视频投影2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="72" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>

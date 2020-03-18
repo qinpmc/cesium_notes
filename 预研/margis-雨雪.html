@@ -1,0 +1,143 @@
+<!-- 2020-2-20 21:07:16 | 版权所有 火星科技 http://marsgis.cn -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1,maximum-scale=1">
+    <meta name="author" content="&#x706B;&#x661F;&#x79D1;&#x6280; http://cesium.marsgis.cn ">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="keywords"
+          content="&#x706B;&#x661F;&#x79D1;&#x6280;,cesium,3D,GIS,marsgis,&#x4E09;&#x7EF4;,&#x5730;&#x7403;,&#x5730;&#x56FE;,&#x5F00;&#x53D1;,&#x6846;&#x67B6;,&#x7CFB;&#x7EDF;,&#x793A;&#x4F8B;,&#x8D44;&#x6599;,&#x6A21;&#x578B;,&#x79BB;&#x7EBF;,&#x5916;&#x5305;,&#x5408;&#x80A5;,&#x5B89;&#x5FBD;,&#x4E2D;&#x56FD;">
+    <meta name="description"
+          content="&#x706B;&#x661F;&#x79D1;&#x6280; &#x5408;&#x80A5;&#x706B;&#x661F; &#x5408;&#x80A5;&#x706B;&#x661F;&#x79D1;&#x6280; &#x5408;&#x80A5;&#x706B;&#x661F;&#x79D1;&#x6280;&#x6709;&#x9650;&#x516C;&#x53F8; leaflet leaflet&#x6846;&#x67B6; leaflet&#x5F00;&#x53D1; cesium cesium&#x5F00;&#x53D1; cesium&#x6846;&#x67B6; &#x4E09;&#x7EF4; &#x5730;&#x7403; &#x6A21;&#x578B;  gis marsgis &#x5730;&#x56FE;&#x79BB;&#x7EBF; &#x5730;&#x56FE;&#x5F00;&#x53D1; &#x5730;&#x56FE;&#x6846;&#x67B6; &#x5730;&#x56FE;&#x5916;&#x5305; &#x6846;&#x67B6; &#x5F00;&#x53D1; &#x5916;&#x5305;  &#x5730;&#x56FE;&#x79BB;&#x7EBF; &#x4E8C;&#x7EF4;&#x5730;&#x56FE; &#x4E09;&#x7EF4;&#x5730;&#x56FE; &#x5168;&#x666F;&#x6F2B;&#x6E38; &#x5730;&#x7406;&#x4FE1;&#x606F;&#x7CFB;&#x7EDF; &#x4E91;GIS &#x4E09;&#x7EF4;GIS GIS&#x5E73;&#x53F0; WebGIS">
+    <link rel="shortcut icon" type="image/x-icon" href="http://cesium.marsgis.cn/favicon.ico">
+    <title>&#x96E8;&#x96EA;&#x5929;&#x6C14; |Mars3D ( MarsGIS for Cesium )|&#x4E09;&#x7EF4;&#x5730;&#x56FE;| &#x706B;&#x661F;&#x79D1;&#x6280;|&#x5408;&#x80A5;&#x706B;&#x661F;&#x79D1;&#x6280;|&#x5408;&#x80A5;&#x706B;&#x661F;&#x79D1;&#x6280;&#x6709;&#x9650;&#x516C;&#x53F8;</title>
+    <script src="../lib/include-lib.js" libpath="../lib/"
+            include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="dark">
+<div id="mask" class="signmask" onclick="removeMask()"></div>
+<div id="cesiumContainer" class="cesium-container"></div>
+<div style="position:absolute;bottom:1px;left:190px;color:#e9e9e9;z-index:990">&#x4F5C;&#x8005;: &#x5F20;&#x8A00;&#x54F2;</div>
+<div class="infoview"><input type="button" class="btn btn-primary" value="&#x96E8;" onclick="showRain()"> <input
+        type="button" class="btn btn-primary" value="&#x96EA;" onclick="showSnow()"> <input type="button"
+                                                                                            class="btn btn-primary"
+                                                                                            value="&#x6E05;&#x9664;"
+                                                                                            onclick="removeStage()">
+</div>
+<script>var _0x24f5 = ["SVV4Y1Q=", "5b2T5YmN5rWP6KeI5Zmo5LiN5pSv5oyBV2ViR0zlip/og70=", "Y3JlYXRlTWFw", "UG9zdFByb2Nlc3NTdGFnZQ==", "ZGVuc2l0eQ==", "bWluaW11bUJyaWdodG5lc3M=", "NjAwcHg=", "aHVlU2hpZnQ=", "ekpERmw=", "bVlnYno=", "cmVtb3Zl", "57O757uf5qOA5rWL5Yiw5oKo5L2/55So55qE5rWP6KeI5Zmo5LiN5pSv5oyBV2ViR0zlip/og70=", "U3F0VXE=", "c2t5QXRtb3NwaGVyZQ==", "cG9zdFByb2Nlc3NTdGFnZXM=", "Z2V0UmVxdWVzdEJ5TmFtZQ==", "c3lzdGVt", "dXRpbA==", "c2F0dXJhdGlvblNoaWZ0", "U25vd0ZT", "amdMaGs=", "d2ViZ2xyZXBvcnQ=", "WEtDcEY=", "SHlKdHM=", "UmFpbkZT", "Zm9n", "Y29uZmlnL2NvbmZpZy5qc29u", "dGtpcWM=", "Y29uZmln", "cmVhZHk=", "MjAwcHg=", "c2NlbmU="];
+!function (x, e) {
+    !function (e) {
+        for (; --e;) x.push(x.shift())
+    }(237)
+}(_0x24f5);
+var viewer, lastStage, _0x4928 = function (e, x) {
+    var t, n = _0x24f5[e -= 0];
+    void 0 === _0x4928.Huuxmz && ((t = function () {
+        var x;
+        try {
+            x = Function('return (function() {}.constructor("return this")( ));')()
+        } catch (e) {
+            x = window
+        }
+        return x
+    }()).atob || (t.atob = function (e) {
+        for (var x, t, n = String(e).replace(/=+$/, ""), r = "", i = 0, a = 0; t = n.charAt(a++); ~t && (x = i % 4 ? 64 * x + t : t, i++ % 4) ? r += String.fromCharCode(255 & x >> (-2 * i & 6)) : 0) t = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(t);
+        return r
+    }), _0x4928.vrpmYe = function (e) {
+        for (var x = atob(e), t = [], n = 0, r = x.length; n < r; n++) t += "%" + ("00" + x.charCodeAt(n).toString(16)).slice(-2);
+        return decodeURIComponent(t)
+    }, _0x4928.rVovab = {}, _0x4928.Huuxmz = !0);
+    var r = _0x4928.rVovab[e];
+    return void 0 === r ? (n = _0x4928.vrpmYe(n), _0x4928.rVovab[e] = n) : n = r, n
+};
+
+function removeMask() {
+    $({HyJts: "#mask"}[_0x4928("0xb")])[_0x4928("0x1e")]()
+}
+
+function initMap() {
+    var t = {
+        JwjUA: function (e, x, t) {
+            return e(x, t)
+        }, SqtUq: function (e) {
+            return e()
+        }, fJMJF: _0x4928("0xe")
+    }, e = haoutil[_0x4928("0x4")][_0x4928("0x3")](_0x4928("0x10"), t.fJMJF);
+    mars3d[_0x4928("0x16")]({
+        id: "cesiumContainer",
+        url: e,
+        contextOptions: {
+            webgl: {
+                alpha: !0,
+                depth: !1,
+                stencil: !0,
+                antialias: !0,
+                premultipliedAlpha: !0,
+                preserveDrawingBuffer: !0,
+                failIfMajorPerformanceCaveat: !0
+            }, allowTextureFilterAnisotropic: !0
+        },
+        center: {y: 31.789207, x: 117.214064, z: 603.01, heading: 10.2, pitch: -10.7, roll: 0},
+        success: function (e, x) {
+            viewer = e, t.JwjUA(setTimeout, removeMask, 3e3), t[_0x4928("0x0")](initWork)
+        }
+    })
+}
+
+function initWork() {
+    viewer.scene[_0x4928("0x1")][_0x4928("0x1b")] = -.8, viewer[_0x4928("0x13")][_0x4928("0x1")][_0x4928("0x6")] = -.7, viewer.scene[_0x4928("0x1")].brightnessShift = -.33, viewer[_0x4928("0x13")][_0x4928("0xd")][_0x4928("0x18")] = .001, viewer.scene[_0x4928("0xd")][_0x4928("0x19")] = .8, {
+        jgLhk: function (e) {
+            return e()
+        }
+    }[_0x4928("0x8")](showRain)
+}
+
+function removeStage() {
+    lastStage && viewer[_0x4928("0x13")][_0x4928("0x2")][_0x4928("0x1e")](lastStage), lastStage = null
+}
+
+function showSnow() {
+    removeStage();
+    var e = new (Cesium[_0x4928("0x17")])({fragmentShader: mars3d[_0x4928("0x13")][_0x4928("0x7")]});
+    viewer[_0x4928("0x13")][_0x4928("0x2")].add(e), lastStage = e
+}
+
+function showRain() {
+    ({
+        tkiqc: function (e) {
+            return e()
+        }
+    })[_0x4928("0xf")](removeStage);
+    var e = new (Cesium[_0x4928("0x17")])({fragmentShader: mars3d[_0x4928("0x13")][_0x4928("0xc")]});
+    viewer.scene[_0x4928("0x2")].add(e), lastStage = e
+}
+
+$(document)[_0x4928("0x11")](function () {
+    var e = {
+        IUxcT: _0x4928("0x1f"),
+        mYgbz: _0x4928("0x1a"),
+        zJDFl: _0x4928("0x12"),
+        XKCpF: '<div style="margin: 20px;"><h3>系统检测到您使用的浏览器不支持WebGL功能！</h3>  <p>1、请您检查浏览器版本，安装使用最新版chrome、火狐或IE11以上浏览器！</p> <p>2、WebGL支持取决于GPU支持，请保证客户端电脑已安装显卡驱动程序！</p></div>',
+        ILOxr: function (e) {
+            return e()
+        }
+    };
+    mars3d[_0x4928("0x5")][_0x4928("0x9")]() || (alert(e[_0x4928("0x14")]), layer.open({
+        type: 1,
+        title: _0x4928("0x15"),
+        closeBtn: 0,
+        shadeClose: !1,
+        resize: !1,
+        area: [e[_0x4928("0x1d")], e[_0x4928("0x1c")]],
+        content: e[_0x4928("0xa")]
+    })), e.ILOxr(initMap)
+})</script>
+</body>
+</html>
