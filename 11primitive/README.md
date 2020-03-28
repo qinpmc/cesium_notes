@@ -8,3 +8,5 @@ MaterialAppearance
 PerInstanceColorAppearance
 PolylineColorAppearance
 PolylineMaterialAppearance
+
+矩形： 西南东北

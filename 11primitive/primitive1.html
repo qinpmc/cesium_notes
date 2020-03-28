@@ -57,8 +57,7 @@
             tilingScheme:new Cesium.GeographicTilingScheme({
                 numberOfLevelZeroTilesX:2,
                 numberOfLevelZeroTilesY:1
-            }),
-            show: false
+            })
         })
     });
 
@@ -103,6 +102,7 @@
     })
 
 
+    // 鼠标移动时显示 经纬度坐标 的label
     var entity = viewer.entities.add({
         label : {
             show : false,
@@ -139,6 +139,10 @@
             entity.label.show = false;
         }
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+
+
+
 </script>
 </body>
 </html>

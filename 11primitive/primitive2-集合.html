@@ -57,8 +57,7 @@
             tilingScheme:new Cesium.GeographicTilingScheme({
                 numberOfLevelZeroTilesX:2,
                 numberOfLevelZeroTilesY:1
-            }),
-            show: false
+            })
         })
     });
 
@@ -98,7 +97,7 @@
     var boxInstance = new Cesium.GeometryInstance({
         geometry:boxGeometry,
         attributes : {
-            color : new Cesium.ColorGeometryInstanceAttribute(1.0, 0.0, 1.0, 0.8)
+            color : new Cesium.ColorGeometryInstanceAttribute(1.0, 0.0, 0.0, 1.0)  // 红色？
         }
     })
 
@@ -110,7 +109,7 @@
 
 
 
-
+    // 绿色box
     var boxGeometry2 = new Cesium.BoxGeometry({
         vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT,
         maximum:Cesium.Cartesian3.fromDegrees(-78.0,9,500000),
@@ -126,18 +125,16 @@
     })
 
 
-
+    //添加绿色box
     scene.primitives.add(new Cesium.Primitive({
         geometryInstances : boxInstance2,
         appearance :  new Cesium.MaterialAppearance({
             material : Cesium.Material.fromType('Color', {
-                color : new Cesium.Color(0.0, 1.0, 0.0, 1.0)
+                color : new Cesium.Color(0.0, 1.0, 0.0, 1.0)  // rgba 绿色
             }),
             faceForward : true
         })
     }));
-
-
 
 
 
@@ -149,6 +146,8 @@
     //viewer.camera.flyToBoundingSphere(geometry.boundingSphere)
 
 
+
+    // 鼠标移动时显示 经纬度坐标 的label
     var entity = viewer.entities.add({
         label : {
             show : false,

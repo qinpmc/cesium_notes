@@ -36,16 +36,16 @@
         animation:false,
         timeline:false,
         navigationHelpButton:false,
-         skyBox : new Cesium.SkyBox({
-             sources : {
-             positiveX : 'stars/TychoSkymapII.t3_08192x04096_80_px.jpg',
-             negativeX : 'stars/TychoSkymapII.t3_08192x04096_80_mx.jpg',
-             positiveY : 'stars/TychoSkymapII.t3_08192x04096_80_py.jpg',
-             negativeY : 'stars/TychoSkymapII.t3_08192x04096_80_my.jpg',
-             positiveZ : 'stars/TychoSkymapII.t3_08192x04096_80_pz.jpg',
-             negativeZ : 'stars/TychoSkymapII.t3_08192x04096_80_mz.jpg'
-             }
-         })
+        skyBox : new Cesium.SkyBox({
+           sources : {
+           positiveX : 'stars/TychoSkymapII.t3_08192x04096_80_px.jpg',
+           negativeX : 'stars/TychoSkymapII.t3_08192x04096_80_mx.jpg',
+           positiveY : 'stars/TychoSkymapII.t3_08192x04096_80_py.jpg',
+           negativeY : 'stars/TychoSkymapII.t3_08192x04096_80_my.jpg',
+           positiveZ : 'stars/TychoSkymapII.t3_08192x04096_80_pz.jpg',
+           negativeZ : 'stars/TychoSkymapII.t3_08192x04096_80_mz.jpg'
+           }
+        })
     });
 
      var point = new Cesium.PointGraphics({
@@ -76,8 +76,6 @@
             }
     )
     viewer.entities.add(pointEntity2);
-
-
 
 
     viewer.zoomTo(viewer.entities);

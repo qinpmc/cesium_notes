@@ -2,6 +2,8 @@
 // Cesium.BingMapsApi.defaultKey = 'put your API key here';
 
 // Construct the default list of terrain sources.
+Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+
 var terrainModels = Cesium.createDefaultTerrainProviderViewModels();
 
 // Construct the viewer with just what we need for this base application
