@@ -19,7 +19,7 @@ World Geodetic System 1984，是为GPS全球定位系统使用而建立的坐标
 我们都知道Cesium目前支持两种坐标系WGS84和WebMercator，但是在Cesium中**没有实际的对象来描述WGS84坐标**，都是以**弧度**的方式来进行运用的,也就是Cartographic类：      
 - new Cesium.Cartographic(longitude, latitude, height)，    
 这里的参数也叫longitude、latitude，就是经度和纬度，计算方法：弧度= π/180×经纬度角度。       
-![WGS84坐标系](./wgs84.webp)
+![WGS84坐标系](./wgs84.jpg)
 
 
 

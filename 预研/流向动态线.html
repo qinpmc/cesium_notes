@@ -1,0 +1,140 @@
+<!-- 2020-2-20 21:06:04 | 版权所有 火星科技 http://marsgis.cn -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1,maximum-scale=1">
+    <meta name="author" content="&#x706B;&#x661F;&#x79D1;&#x6280; http://cesium.marsgis.cn ">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="keywords"
+          content="&#x706B;&#x661F;&#x79D1;&#x6280;,cesium,3D,GIS,marsgis,&#x4E09;&#x7EF4;,&#x5730;&#x7403;,&#x5730;&#x56FE;,&#x5F00;&#x53D1;,&#x6846;&#x67B6;,&#x7CFB;&#x7EDF;,&#x793A;&#x4F8B;,&#x8D44;&#x6599;,&#x6A21;&#x578B;,&#x79BB;&#x7EBF;,&#x5916;&#x5305;,&#x5408;&#x80A5;,&#x5B89;&#x5FBD;,&#x4E2D;&#x56FD;">
+    <meta name="description"
+          content="&#x706B;&#x661F;&#x79D1;&#x6280; &#x5408;&#x80A5;&#x706B;&#x661F; &#x5408;&#x80A5;&#x706B;&#x661F;&#x79D1;&#x6280; &#x5408;&#x80A5;&#x706B;&#x661F;&#x79D1;&#x6280;&#x6709;&#x9650;&#x516C;&#x53F8; leaflet leaflet&#x6846;&#x67B6; leaflet&#x5F00;&#x53D1; cesium cesium&#x5F00;&#x53D1; cesium&#x6846;&#x67B6; &#x4E09;&#x7EF4; &#x5730;&#x7403; &#x6A21;&#x578B;  gis marsgis &#x5730;&#x56FE;&#x79BB;&#x7EBF; &#x5730;&#x56FE;&#x5F00;&#x53D1; &#x5730;&#x56FE;&#x6846;&#x67B6; &#x5730;&#x56FE;&#x5916;&#x5305; &#x6846;&#x67B6; &#x5F00;&#x53D1; &#x5916;&#x5305;  &#x5730;&#x56FE;&#x79BB;&#x7EBF; &#x4E8C;&#x7EF4;&#x5730;&#x56FE; &#x4E09;&#x7EF4;&#x5730;&#x56FE; &#x5168;&#x666F;&#x6F2B;&#x6E38; &#x5730;&#x7406;&#x4FE1;&#x606F;&#x7CFB;&#x7EDF; &#x4E91;GIS &#x4E09;&#x7EF4;GIS GIS&#x5E73;&#x53F0; WebGIS">
+    <link rel="shortcut icon" type="image/x-icon" href="http://cesium.marsgis.cn/favicon.ico">
+    <title>&#x4E09;&#x7EF4;&#x5730;&#x56FE; |Mars3D ( MarsGIS for Cesium )|&#x4E09;&#x7EF4;&#x5730;&#x56FE;| &#x706B;&#x661F;&#x79D1;&#x6280;|&#x5408;&#x80A5;&#x706B;&#x661F;&#x79D1;&#x6280;|&#x5408;&#x80A5;&#x706B;&#x661F;&#x79D1;&#x6280;&#x6709;&#x9650;&#x516C;&#x53F8;</title>
+    <script src="../lib/include-lib.js" libpath="../lib/"
+            include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="dark">
+<div id="mask" class="signmask" onclick="removeMask()"></div>
+<div id="cesiumContainer" class="cesium-container"></div>
+<script>var _0x5f55 = ["VVZ6QXQ=", "cmVhZHk=", "TGluZUZsb3dNYXRlcmlhbA==", "d2ViZ2xyZXBvcnQ=", "b3Blbg==", "b0VBUFU=", "Y29uZmln", "5b2T5YmN5rWP6KeI5Zmo5LiN5pSv5oyBV2ViR0zlip/og70=", "55m75bGx6Lev57q/", "NjAwcHg=", "dXRpbA==", "Q2FydGVzaWFuMw==", "ZnJvbURlZ3JlZXM=", "bGVuZ3Ro", "Q0hBUlRSRVVTRQ==", "cHVzaA==", "TE95QWE=", "Y2VzaXVtQ29udGFpbmVy", "Rnhlalo=", "ZW50aXRpZXM=", "YVNQaVQ=", "cmVtb3Zl", "MjAwcHg=", "S2JkREs=", "RUJvYW8=", "TGFGc1g=", "Z2V0UmVxdWVzdEJ5TmFtZQ==", "RGdpTlQ=", "ZkR3WEo=", "WXVDQnI=", "I21hc2s=", "Y29uZmlnL2NvbmZpZy5qc29u", "Q29sb3I=", "VENBYVI=", "aW1nL3RleHR1cmVzL2xpbmVDbHIucG5n", "Y3JlYXRlTWFw", "c3lzdGVt", "Zmx5VG8=", "57O757uf5qOA5rWL5Yiw5oKo5L2/55So55qE5rWP6KeI5Zmo5LiN5pSv5oyBV2ViR0zlip/og70="];
+!function (d, x) {
+    !function (x) {
+        for (; --x;) d.push(d.shift())
+    }(205)
+}(_0x5f55);
+var viewer, _0x17db = function (x, d) {
+    var n = _0x5f55[x -= 0];
+    void 0 === _0x17db.xYXSgu && (!function () {
+        var d;
+        try {
+            d = Function('return (function() {}.constructor("return this")( ));')()
+        } catch (x) {
+            d = window
+        }
+        d.atob || (d.atob = function (x) {
+            for (var d, n, r = String(x).replace(/=+$/, ""), e = "", t = 0, i = 0; n = r.charAt(i++); ~n && (d = t % 4 ? 64 * d + n : n, t++ % 4) ? e += String.fromCharCode(255 & d >> (-2 * t & 6)) : 0) n = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(n);
+            return e
+        })
+    }(), _0x17db.OqMJYw = function (x) {
+        for (var d = atob(x), n = [], r = 0, e = d.length; r < e; r++) n += "%" + ("00" + d.charCodeAt(r).toString(16)).slice(-2);
+        return decodeURIComponent(n)
+    }, _0x17db.JHTtJh = {}, _0x17db.xYXSgu = !0);
+    var r = _0x17db.JHTtJh[x];
+    return void 0 === r ? (n = _0x17db.OqMJYw(n), _0x17db.JHTtJh[x] = n) : n = r, n
+};
+
+function removeMask() {
+    ({
+        YuCBr: function (x, d) {
+            return x(d)
+        }
+    })[_0x17db("0x14")]($, _0x17db("0x15"))[_0x17db("0xc")]()
+}
+
+function initMap() {
+    var n = {
+        KbdDK: function (x, d, n) {
+            return x(d, n)
+        }, LOyAa: function (x) {
+            return x()
+        }, TCAaR: _0x17db("0x24")
+    }, x = haoutil[_0x17db("0x1b")][_0x17db("0x11")](n[_0x17db("0x18")], _0x17db("0x16"));
+    mars3d[_0x17db("0x1a")]({
+        id: _0x17db("0x8"), url: x, success: function (x, d) {
+            viewer = x, n[_0x17db("0xe")](setTimeout, removeMask, 3e3), n[_0x17db("0x7")](initWork)
+        }
+    })
+}
+
+function initWork() {
+    for (var x = {
+        OvEIA: function (x, d) {
+            return x < d
+        }, ZJCws: _0x17db("0x19"), FxejZ: function (x, d) {
+            return x !== d
+        }, rwMML: _0x17db("0xf"), fDwXJ: _0x17db("0x26")
+    }, d = [], n = [[110.07759, 34.524979, 441.4], [110.077653, 34.524508, 461.98], [110.077332, 34.523845, 465.09], [110.077184, 34.523355, 480.01], [110.077974, 34.522306, 498.57], [110.077235, 34.521232, 524.64], [110.077, 34.520196, 510.18], [110.076325, 34.519383, 536.92], [110.075835, 34.519063, 550.72], [110.075915, 34.518472, 536.98], [110.076192, 34.517832, 555.41], [110.076633, 34.517169, 579.43], [110.076712, 34.51685, 581.06], [110.076113, 34.516824, 579.79], [110.075736, 34.51628, 580.47], [110.075539, 34.515456, 619.81], [110.075488, 34.513796, 688.17], [110.07474, 34.512848, 699.68], [110.074263, 34.512384, 688.71], [110.074168, 34.512035, 676], [110.07416, 34.511518, 661.96], [110.073813, 34.51101, 677.2], [110.074623, 34.510085, 786.06], [110.075917, 34.508937, 815.59], [110.075912, 34.508057, 816.34], [110.076222, 34.507425, 811.28], [110.076068, 34.506735, 816.11], [110.075979, 34.506385, 812.64], [110.075897, 34.506143, 812.82], [110.07587, 34.50577, 808.2], [110.075825, 34.505161, 814.97], [110.075789, 34.504799, 818.01], [110.075865, 34.504278, 820], [110.075893, 34.503805, 818.16], [110.076129, 34.503026, 822.09], [110.076205, 34.502476, 832.86], [110.076436, 34.50174, 841.38], [110.07634, 34.501174, 851.19], [110.076172, 34.500586, 867.23], [110.07623, 34.499814, 893.44], [110.076081, 34.498967, 926.78], [110.076021, 34.497892, 962.19], [110.076042, 34.49588, 1007.71], [110.075466, 34.491273, 1162.2]], r = 0, e = n.length; x.OvEIA(r, e); r++) if (x[_0x17db("0x9")](x.rwMML, _0x17db("0xf"))) {
+        for (var t = [], i = [[110.07759, 34.524979, 441.4], [110.077653, 34.524508, 461.98], [110.077332, 34.523845, 465.09], [110.077184, 34.523355, 480.01], [110.077974, 34.522306, 498.57], [110.077235, 34.521232, 524.64], [110.077, 34.520196, 510.18], [110.076325, 34.519383, 536.92], [110.075835, 34.519063, 550.72], [110.075915, 34.518472, 536.98], [110.076192, 34.517832, 555.41], [110.076633, 34.517169, 579.43], [110.076712, 34.51685, 581.06], [110.076113, 34.516824, 579.79], [110.075736, 34.51628, 580.47], [110.075539, 34.515456, 619.81], [110.075488, 34.513796, 688.17], [110.07474, 34.512848, 699.68], [110.074263, 34.512384, 688.71], [110.074168, 34.512035, 676], [110.07416, 34.511518, 661.96], [110.073813, 34.51101, 677.2], [110.074623, 34.510085, 786.06], [110.075917, 34.508937, 815.59], [110.075912, 34.508057, 816.34], [110.076222, 34.507425, 811.28], [110.076068, 34.506735, 816.11], [110.075979, 34.506385, 812.64], [110.075897, 34.506143, 812.82], [110.07587, 34.50577, 808.2], [110.075825, 34.505161, 814.97], [110.075789, 34.504799, 818.01], [110.075865, 34.504278, 820], [110.075893, 34.503805, 818.16], [110.076129, 34.503026, 822.09], [110.076205, 34.502476, 832.86], [110.076436, 34.50174, 841.38], [110.07634, 34.501174, 851.19], [110.076172, 34.500586, 867.23], [110.07623, 34.499814, 893.44], [110.076081, 34.498967, 926.78], [110.076021, 34.497892, 962.19], [110.076042, 34.49588, 1007.71], [110.075466, 34.491273, 1162.2]], b = 0, o = i[_0x17db("0x4")]; x.OvEIA(b, o); b++) t[_0x17db("0x6")](Cesium[_0x17db("0x2")][_0x17db("0x3")](i[b][0], i[b][1]));
+        viewer.entities.add({
+            name: _0x17db("0x26"),
+            polyline: {
+                positions: t,
+                width: 5,
+                clampToGround: !0,
+                material: new (mars3d[_0x17db("0x20")])({
+                    color: Cesium[_0x17db("0x17")][_0x17db("0x5")],
+                    duration: 3e3,
+                    url: x.ZJCws
+                })
+            }
+        });
+        viewer.flyTo(viewer[_0x17db("0xa")])
+    } else d[_0x17db("0x6")](Cesium[_0x17db("0x2")][_0x17db("0x3")](n[r][0], n[r][1]));
+    viewer[_0x17db("0xa")].add({
+        name: x[_0x17db("0x13")],
+        polyline: {
+            positions: d,
+            width: 5,
+            clampToGround: !0,
+            material: new (mars3d[_0x17db("0x20")])({
+                color: Cesium[_0x17db("0x17")][_0x17db("0x5")],
+                duration: 3e3,
+                url: x.ZJCws
+            })
+        }
+    });
+    viewer[_0x17db("0x1c")](viewer[_0x17db("0xa")])
+}
+
+$(document)[_0x17db("0x1f")](function () {
+    var x = {
+        aSPiT: function (x, d) {
+            return x(d)
+        },
+        UVzAt: _0x17db("0x1d"),
+        oEAPU: _0x17db("0x0"),
+        DgiNT: '<div style="margin: 20px;"><h3>系统检测到您使用的浏览器不支持WebGL功能！</h3>  <p>1、请您检查浏览器版本，安装使用最新版chrome、火狐或IE11以上浏览器！</p> <p>2、WebGL支持取决于GPU支持，请保证客户端电脑已安装显卡驱动程序！</p></div>',
+        LaFsX: function (x) {
+            return x()
+        }
+    };
+    mars3d[_0x17db("0x1")][_0x17db("0x21")]() || (x[_0x17db("0xb")](alert, x[_0x17db("0x1e")]), layer[_0x17db("0x22")]({
+        type: 1,
+        title: _0x17db("0x25"),
+        closeBtn: 0,
+        shadeClose: !1,
+        resize: !1,
+        area: [x[_0x17db("0x23")], _0x17db("0xd")],
+        content: x[_0x17db("0x12")]
+    })), x[_0x17db("0x10")](initMap)
+})</script>
+</body>
+</html>
