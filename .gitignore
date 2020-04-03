@@ -15,3 +15,4 @@ docs/.vuepress/dist
 yarn-error.log
 Build
 tileset/Scene
+*.b3dm
