@@ -1,4 +1,4 @@
-## Viewer 的一些有用的组件
+## Viewer 的组件
 
 - Geocoder 地名搜索 : 地名搜索工具，相机飞行到查询地点. 默认使用 Bing Maps 数据.
 - HomeButton 默认视图 : 视图复位，回到默认视图.
@@ -11,3 +11,25 @@
 - FullscreenButton 全屏 : 全屏.
 
 ![控件](./viewerControl.jpg)
+
+
+## 简洁的CesiumWidget
+
+``` 
+var widget = new Cesium.CesiumWidget('cesiumContainer');
+
+```
+
+## 版权信息去除
+
+```
+// css 方式去除
+.cesium-widget-credits              /!* 去掉logo信息 *!/
+    {
+        display: none;
+    }
+   
+// js 方式去除     
+ widget._creditContainer.querySelector(".cesium-widget-credits").style.display = "none"; //去掉版权信息  
+
+```

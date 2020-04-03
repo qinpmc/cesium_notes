@@ -21,12 +21,6 @@
             overflow: hidden;
         }
 
-        .cesium-viewer-bottom /* logo信息 */
-        {
-            display: none;
-        }
-
-
     </style>
 </head>
 <body>
@@ -36,7 +30,7 @@
     <button onclick="toggleGlobeVisible()">显隐地球</button>
     <button onclick="toggleAtmosphereVisible()">显隐大气圈</button>
 </div>
-<div id="cesiumContainer" style="background-image: url(./宇宙.jpg);"></div>
+<div id="cesiumContainer"></div>
 <script>
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
@@ -65,13 +59,7 @@
                 numberOfLevelZeroTilesX:2,
                 numberOfLevelZeroTilesY:1
             })
-        }),
-        //orderIndependentTransclucency:false, // -无用
-        contextOptions:{
-            webgl:{
-                alpha:true
-            }
-        }
+        })
     });
 
 

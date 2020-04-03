@@ -21,12 +21,6 @@
             overflow: hidden;
         }
 
-        .cesium-viewer-bottom /* logo信息 */
-        {
-            display: none;
-        }
-
-
     </style>
 </head>
 <body>
@@ -102,6 +96,7 @@
     layers.add(ctaLayer);
     console.log(viewer.imageryLayers.get(1)); // cta图层
 
+    viewer.scene.debugShowFramePerSecond = true;
 
     viewer.camera.flyTo({
         destination:Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
@@ -125,8 +120,7 @@
         viewer.scene.backgroundColor = new Cesium.Color(0,0,0,0); // 背景设为透明
     }
 
-    viewer.scene.sun.show = false;
-    viewer.scene.moon.show = false;
+
 
 </script>
 </body>

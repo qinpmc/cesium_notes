@@ -21,40 +21,27 @@
             overflow: hidden;
         }
 
+
     </style>
 </head>
 <body>
 <div id="cesiumContainer"></div>
+
 <script>
+    //去掉logo 版权信息----------css方式
+    /*    .cesium-widget-credits              /!* 去掉logo信息 *!/
+        {
+            display: none;
+        }*/
+
 
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
-    //第一种方式
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        geocoder: true,
-        homeButton: true,
-        sceneModePicker: true,
-        baseLayerPicker: true,
-        projectionPicker: true,
-        navigationHelpButton: true,
-        animation: true,
-        timeline: true,
-        fullscreenButton: true,
-        //scene3DOnly:false,//仅仅显示3d,可隐藏右上角2d和3d按钮
-        infoBox: true, //点击模型不显示cesium自带的信息框
-        selectionIndicator: true //点击模型不显示cesium自带的绿色选中框
+    var widget = new Cesium.CesiumWidget('cesiumContainer');
+    console.log(widget);
 
-        skyBox: new Cesium.SkyBox({
-            sources: {
-                positiveX: 'stars/TychoSkymapII.t3_08192x04096_80_px.jpg',
-                negativeX: 'stars/TychoSkymapII.t3_08192x04096_80_mx.jpg',
-                positiveY: 'stars/TychoSkymapII.t3_08192x04096_80_py.jpg',
-                negativeY: 'stars/TychoSkymapII.t3_08192x04096_80_my.jpg',
-                positiveZ: 'stars/TychoSkymapII.t3_08192x04096_80_pz.jpg',
-                negativeZ: 'stars/TychoSkymapII.t3_08192x04096_80_mz.jpg'
-            }
-        })
-    });
+    widget._creditContainer.querySelector(".cesium-widget-credits").style.display = "none"; //去掉版权信息
+
 
 </script>
 </body>

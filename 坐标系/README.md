@@ -131,5 +131,9 @@ handler.setInputAction(function(movement) {
 }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
 
+Cesium.Matrix3（3x3矩阵，用于描述旋转变换）Cesium.Matrix4（4x4矩阵，用于描述旋转加平移变换），     
+Cesium.Quaternion（四元数，用于描述围绕某个向量旋转一定角度的变换）。
+ 
+
 
 
