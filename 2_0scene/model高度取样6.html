@@ -53,24 +53,53 @@
 
     var paintingDom = document.getElementById('painting'); // 绘图对象
     var myChart = null;
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+    var viewer = new Cesium.Viewer('cesiumContainer');
+    var scene = viewer.scene;
 
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+    createModel("../data/model/GroundVehicle.glb");
 
+    function createModel(url, height, heading, pitch, roll) {
+        height = Cesium.defaultValue(height, 0.0);
+        heading = Cesium.defaultValue(heading, 0.0);
+        pitch = Cesium.defaultValue(pitch, 0.0);
+        roll = Cesium.defaultValue(roll, 0.0);
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
 
-    // 地形服务
-    var terrainProvider = Cesium.createWorldTerrain();
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        terrainProvider: terrainProvider
-    });
+        var origin = Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, height);
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(origin, hpr);
 
-    viewer.camera.setView({
-        destination: new Cesium.Cartesian3(-548184.7982559408, 5512367.059463563, 3173625.2210259973),
-        orientation: {
-            heading: 5.683499859605618,
-            pitch: -0.3430291183891061,
-            roll: 6.281444671468591
-        }
-    });
+        scene.primitives.removeAll(); // Remove previous model
+        model = scene.primitives.add(Cesium.Model.fromGltf({
+            url : url,
+            modelMatrix : modelMatrix,
+            minimumPixelSize : 128
+        }));
+
+        model.readyPromise.then(function(model) {
+
+            // Play and loop all animations at half-speed
+            model.activeAnimations.addAll({
+                multiplier : 0.5,
+                loop : Cesium.ModelAnimationLoop.REPEAT
+            });
+
+            var camera = viewer.camera;
+
+            // Zoom to model
+            var controller = scene.screenSpaceCameraController;
+            var r = 2.0 * Math.max(model.boundingSphere.radius, camera.frustum.near);
+            controller.minimumZoomDistance = r * 0.5;
+
+            var center = Cesium.Matrix4.multiplyByPoint(model.modelMatrix, model.boundingSphere.center, new Cesium.Cartesian3());
+            var heading = Cesium.Math.toRadians(230.0);
+            var pitch = Cesium.Math.toRadians(-20.0);
+            camera.lookAt(center, new Cesium.HeadingPitchRange(heading, pitch, r * 2.0));
+        }).otherwise(function(error){
+            window.alert(error);
+        });
+    }
+
 
     var start = null;
     var end = null;
@@ -92,7 +121,7 @@
                     return [start, end]
                 }),
                 material: Cesium.Color.RED,
-                clampToGround: true,
+                //clampToGround: true,
                 classificationType: Cesium.ClassificationType.BOTH
             }
         })
@@ -122,41 +151,57 @@
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     }
 
-    // 插值后使用Cesium.sampleTerrainMostDetailed 获取地形
+    // 插值后使用 clampToHeightMostDetailed 、sampleHeightMostDetailed获取高度
     function profileAnalyse() {
-        var positions = [Cesium.Cartographic.fromCartesian(start)];
+        var positions = [Cesium.Cartographic.fromCartesian(start)]; // cartographic 坐标
+        var cartesians = [start];  // cartesian  坐标
+
         // 插值100个点，点越多模拟越精确，但是效率会低
         var count = 10;
         for (var i = 1; i < count; i++) {
             var cart = Cesium.Cartesian3.lerp(start, end, i / count, new Cesium.Cartesian3());
             positions.push(Cesium.Cartographic.fromCartesian(cart));
+            cartesians.push(cart);
         }
         positions.push(Cesium.Cartographic.fromCartesian(end));
+        cartesians.push(end);
 
-        // 异步使用最精确的地形采样获取地形高度
-        var promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
-        Cesium.when(promise, function (updatedPositions) {
+
+        // 异步使用
+        var promise = scene.clampToHeightMostDetailed(cartesians);
+
+        Cesium.when(promise, function (updatedPositions) { // updatedPositions:<Array.<Cartesian3>>
 
             // 处理返回的数据
             var heights = [];
-            for (var i = 0; i < updatedPositions.length; i++) {
-                heights.push( updatedPositions[i].height.toFixed(1)); // 取得高程值
+            for (var i = 0; i < count; ++i) {
+                heights.push(Cesium.Cartographic.fromCartesian(updatedPositions[i]).height.toFixed(1));
             }
-
             console.log(heights);
 
             // 绘制高程走势图
-            paintingDom.style.display = "block";
+            //paintingDom.style.display = "block";
 
             // 使用Echart等图表工具可视化
             if (myChart == null) {
                 myChart = echarts.init(paintingDom);
-                initChart(heights, false);
+                //initChart(heights, false);
             } else {
-                initChart(heights, true);
+                //initChart(heights, true);
             }
 
         });
+
+
+        //positions	Array.<Cartographic>
+        scene.sampleHeightMostDetailed(positions).then(function (cartographics) { //sampledCartesians:<Array.<Cartographic>>
+            var heights = [];
+            for(var i=0,len=cartographics.length;i<len;i++){
+                heights.push(cartographics[i].height.toFixed(1));
+            }
+            console.log(heights);
+        });
+
     }
 
     function initChart(heights, isMerge) {

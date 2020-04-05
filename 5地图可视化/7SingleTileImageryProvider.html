@@ -8,7 +8,7 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>Hello World!</title>
+    <title> Map</title>
     <script src="../Build/Cesium/Cesium.js"></script>
     <style>
         @import url(../Build/Cesium/Widgets/widgets.css);
@@ -21,23 +21,15 @@
             overflow: hidden;
         }
 
-        .cesium-viewer-bottom /* logo信息 */
-        {
-            display: none;
-        }
-
-
     </style>
 </head>
 <body>
 <div id="cesiumContainer"></div>
 <script>
+
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
-    var tileMatrixLabels =[];
-    for(var i=0;i<18;i++){
-        tileMatrixLabels.push(""+i);
-    }
+
     var viewer = new Cesium.Viewer("cesiumContainer", {
         animation: false,  //是否显示动画控件
         baseLayerPicker: false, //是否显示图层选择控件
@@ -49,18 +41,21 @@
     });
 
 
-    var bing = new Cesium.BingMapsImageryProvider({
-        url : 'https://ecn.t0.tiles.virtualearth.net',//   https://dev.virtualearth.net
-        key : 'AkjzA7OhS4MIBjutL21bkAop7dc41HSE0CNTR5c6HJy8JKc7U9U9RveWJrylD3XJ',
 
-    });
+    var blackMarble = viewer.imageryLayers.addImageryProvider(new Cesium.IonImageryProvider({ assetId: 3812 }));
+
+    blackMarble.alpha = 0.5;
+
+    blackMarble.brightness = 6.0;
 
 
+    viewer.imageryLayers.addImageryProvider(new Cesium.SingleTileImageryProvider({
+        url : './Cesium_Logo_overlay.png',
+        rectangle : Cesium.Rectangle.fromDegrees(-75.0, 28.0, -67.0, 29.75)
+    }));
 
-    viewer.imageryLayers.addImageryProvider(bing);
-    viewer.camera.flyTo({
-        destination:Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
-    })
+
+    console.log(Cesium.knockout)
 
 
 

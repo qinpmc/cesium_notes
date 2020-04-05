@@ -14,13 +14,6 @@
     html, body, #cesiumContainer {
       width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
     }
-
-    .cesium-viewer-bottom               /* logo信息 */
-    {
-      display: none;
-    }
-
-
   </style>
 </head>
 <body>
@@ -45,7 +38,7 @@
         console.log(position);
 
         //Cartographic --弧度
-        var coordinate = Cesium.Cartographic.fromCartesian(position, viewer.scene.globe.ellipsoid)
+        var coordinate = Cesium.Cartographic.fromCartesian(position, viewer.scene.globe.ellipsoid);
         console.log(coordinate);
 
 

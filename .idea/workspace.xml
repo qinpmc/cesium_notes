@@ -2,273 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6d77b63-f932-481c-8b73-ca25dad38f0a" name="Default" comment="add events and particle system demo">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2_0scene/widget.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/model/Cesium_Air.glb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/model/GroundVehicle.glb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2_0scene/3dtiles高度取样5.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2_0scene/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2_0scene/scene-fog2.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2_0scene/scene-fog3(自定义雾气).html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2_0scene/scene1.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2_0scene/地形高度取样-剖面分析4.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L18_000.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000000.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000001.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000010.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000020.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000021.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000022.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000030.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000031.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000032.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000100.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000101.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000110.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000111.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000120.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000121.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000130.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000131.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000200.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000201.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000210.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000211.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000220.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000221.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000230.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000231.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000300.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000301.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000310.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000311.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000320.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000321.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000330.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p000/Tile_p000_p000_L21_000331.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L18_000.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000000.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000001.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000010.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000011.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000020.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000021.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000030.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000031.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000100.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000101.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000102.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000103.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000110.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000111.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000112.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000113.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000114.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000120.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000121.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000122.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000130.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000131.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000132.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000133.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000134.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000135.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000200.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000201.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000210.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000211.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000220.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000221.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000230.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000231.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000300.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000301.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000310.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000311.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000312.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000313.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000314.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000315.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000320.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000321.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000322.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000323.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000324.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000330.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000331.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000340.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000341.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000342.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000343.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000344.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p000_p001/Tile_p000_p001_L21_000345.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L18_000.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000000.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000001.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000010.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000011.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000020.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000021.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000030.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000040.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000041.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000050.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000051.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000100.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000101.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000110.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000111.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000120.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000121.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000130.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000131.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000200.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000201.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000210.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000211.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000220.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000230.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000240.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000250.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000260.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000261.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000300.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000301.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000310.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000311.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000320.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000321.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000322.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000323.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000330.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p000/Tile_p001_p000_L21_000331.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L18_000.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000000.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000001.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000010.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000011.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000100.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000110.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000111.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000120.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000121.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000122.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000123.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000200.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000201.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000210.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000211.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000220.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000221.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000230.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000231.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000300.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000301.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000310.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000311.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000312.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000320.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000321.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000322.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000323.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000330.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000331.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000332.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000333.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000340.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000341.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000342.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000343.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000350.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000351.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000360.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000361.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000362.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000363.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000370.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000371.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000372.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000373.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000374.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000375.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000400.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000401.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000410.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000411.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000420.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000421.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000422.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000430.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000431.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000432.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000440.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000441.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000500.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000501.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000502.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000503.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000510.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000520.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000521.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000530.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000531.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000532.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000533.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000540.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000541.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000542.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000543.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000544.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000550.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000551.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000552.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/Data/Tile_p001_p001/Tile_p001_p001_L21_000553.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Scene/testm3DTiles.json" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/3scene/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/3scene/scene.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/3scene/widget.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tileset/Tileset/ll.b3dm" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tileset/Tileset/lr.b3dm" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tileset/Tileset/parent.b3dm" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tileset/Tileset/ul.b3dm" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tileset/Tileset/ur.b3dm" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2_0scene/model高度取样6.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/5地图可视化/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6terrain/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/6terrain/terrian1-全球.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/terrain/terrian-全球.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yjyzt/tianditu1.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/terrain/terrian-全球.html" afterPath="$PROJECT_DIR$/terrain/terrian-全球.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/2_0scene/3dtiles高度取样5.html" afterPath="$PROJECT_DIR$/2_0scene/3dtiles高度取样5.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/2_0scene/README.md" afterPath="$PROJECT_DIR$/2_0scene/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/2_0scene/地形高度取样-剖面分析4.html" afterPath="$PROJECT_DIR$/2_0scene/地形高度取样-剖面分析4.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/坐标系/README.md" afterPath="$PROJECT_DIR$/坐标系/README.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/README.md" afterPath="$PROJECT_DIR$/3camera/README.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/camera1.html" afterPath="$PROJECT_DIR$/3camera/camera1.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/camera2-属性.html" afterPath="$PROJECT_DIR$/3camera/camera2-属性.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/camera3-flyto.html" afterPath="$PROJECT_DIR$/3camera/camera3-flyto.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/camera4-setView.html" afterPath="$PROJECT_DIR$/3camera/camera4-setView.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/camera5-move-zoom.html" afterPath="$PROJECT_DIR$/3camera/camera5-move-zoom.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/camera6-look_twist.html" afterPath="$PROJECT_DIR$/3camera/camera6-look_twist.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/camera7-lookAt.html" afterPath="$PROJECT_DIR$/3camera/camera7-lookAt.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/camera8-events.html" afterPath="$PROJECT_DIR$/3camera/camera8-events.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/camera9.html" afterPath="$PROJECT_DIR$/3camera/camera9.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/camera_dir_up_right.jpg" afterPath="$PROJECT_DIR$/3camera/camera_dir_up_right.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/fov.gif" afterPath="$PROJECT_DIR$/3camera/fov.gif" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/headingpitchroll.png" afterPath="$PROJECT_DIR$/3camera/headingpitchroll.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/look.png" afterPath="$PROJECT_DIR$/3camera/look.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/rotate.png" afterPath="$PROJECT_DIR$/3camera/rotate.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/2camera/视锥ViewFrustum.png" afterPath="$PROJECT_DIR$/3camera/视锥ViewFrustum.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/README.md" afterPath="$PROJECT_DIR$/2_1scene_背景/README.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/skybox/1024.jpg" afterPath="$PROJECT_DIR$/2_1scene_背景/skybox/1024.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/skybox/back.png" afterPath="$PROJECT_DIR$/2_1scene_背景/skybox/back.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/skybox/bottom.png" afterPath="$PROJECT_DIR$/2_1scene_背景/skybox/bottom.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/skybox/front.png" afterPath="$PROJECT_DIR$/2_1scene_背景/skybox/front.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/skybox/left.png" afterPath="$PROJECT_DIR$/2_1scene_背景/skybox/left.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/skybox/right.png" afterPath="$PROJECT_DIR$/2_1scene_背景/skybox/right.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/skybox/top.png" afterPath="$PROJECT_DIR$/2_1scene_背景/skybox/top.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/skybox/天空盒.jpg" afterPath="$PROJECT_DIR$/2_1scene_背景/skybox/天空盒.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/天空盒3.html" afterPath="$PROJECT_DIR$/2_1scene_背景/天空盒3.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/天空盒4.html" afterPath="$PROJECT_DIR$/2_1scene_背景/天空盒4.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/宇宙.jpg" afterPath="$PROJECT_DIR$/2_1scene_背景/宇宙.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/背景1.html" afterPath="$PROJECT_DIR$/2_1scene_背景/背景1.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/9背景/背景2.html" afterPath="$PROJECT_DIR$/2_1scene_背景/背景2.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tileset/Tileset/tileset.json" afterPath="$PROJECT_DIR$/data/tileset/Tileset/tileset.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/CesiumMilkTruck-kmc.gltf" afterPath="$PROJECT_DIR$/4pick/CesiumMilkTruck-kmc.gltf" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/Cesium_Logo_overlay.png" afterPath="$PROJECT_DIR$/4pick/Cesium_Logo_overlay.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/README.md" afterPath="$PROJECT_DIR$/4pick/README.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/pick1-2-label.html" afterPath="$PROJECT_DIR$/4pick/pick1-2-label.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/pick1.html" afterPath="$PROJECT_DIR$/4pick/pick1.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/pick2-多种pick.html" afterPath="$PROJECT_DIR$/4pick/pick2-多种pick.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/pick3.html" afterPath="$PROJECT_DIR$/4pick/pick3.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/pick4-pick对比.html" afterPath="$PROJECT_DIR$/4pick/pick4-pick对比.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/pick5-2-dirllPick-entity.html" afterPath="$PROJECT_DIR$/4pick/pick5-2-dirllPick-entity.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/pick5-pick-entity.html" afterPath="$PROJECT_DIR$/4pick/pick5-pick-entity.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/5pick-events/pick6-pick-terrain-height.html" afterPath="$PROJECT_DIR$/4pick/pick6-pick-terrain-height.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/ArcgisXYZ-3857.html" afterPath="$PROJECT_DIR$/5地图可视化/3ArcgisXYZ-3857.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/Cesium_Logo_overlay.png" afterPath="$PROJECT_DIR$/5地图可视化/Cesium_Logo_overlay.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/GoogleImageryProvider.js" afterPath="$PROJECT_DIR$/5地图可视化/GoogleImageryProvider.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/SingleTileImageryProvider.html" afterPath="$PROJECT_DIR$/5地图可视化/7SingleTileImageryProvider.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/baidumap.html" afterPath="$PROJECT_DIR$/5地图可视化/4baidumap.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/bingmap-3857.html" afterPath="$PROJECT_DIR$/5地图可视化/2bingmap-3857.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/googlemap-3857.html" afterPath="$PROJECT_DIR$/5地图可视化/5googlemap-3857.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/googlemap2-3857.html" afterPath="$PROJECT_DIR$/5地图可视化/6googlemap2-3857.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/osm-3857.html" afterPath="$PROJECT_DIR$/5地图可视化/1osm-3857.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/tianditu-3857.html" afterPath="$PROJECT_DIR$/5地图可视化/tianditu-3857.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/tianditu-4326(provider添加).html" afterPath="$PROJECT_DIR$/5地图可视化/tianditu-4326(provider添加).html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/tianditu-4326.html" afterPath="$PROJECT_DIR$/5地图可视化/tianditu-4326.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/腾讯地图.html" afterPath="$PROJECT_DIR$/5地图可视化/腾讯地图.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/高德.html" afterPath="$PROJECT_DIR$/5地图可视化/高德.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/6地图可视化/高德街道-层级小有问题.html" afterPath="$PROJECT_DIR$/5地图可视化/高德街道-层级小有问题.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/yjyzt/tianditu2(世界地形).html" afterPath="$PROJECT_DIR$/6terrain/terrian2(移除地形).html" />
     </list>
     <ignored path="Cesium.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -287,50 +58,102 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/2_0scene/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="412">
-                <caret line="156" column="0" lean-forward="true" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
-                <folding />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="地形高度取样-剖面分析4.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/2_0scene/地形高度取样-剖面分析4.html">
+      <file leaf-file-name="7SingleTileImageryProvider.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5地图可视化/7SingleTileImageryProvider.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="61" column="0" lean-forward="false" selection-start-line="61" selection-start-column="0" selection-end-line="63" selection-end-column="7" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#5312#6768#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="scene1.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/2_0scene/scene1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="498">
-              <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="106" selection-end-column="31" />
+            <state relative-caret-position="137">
+              <caret line="10" column="12" lean-forward="false" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="3dtiles高度取样5.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/2_0scene/3dtiles高度取样5.html">
+      <file leaf-file-name="5googlemap-3857.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5地图可视化/5googlemap-3857.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="850">
-              <caret line="152" column="22" lean-forward="false" selection-start-line="152" selection-start-column="13" selection-end-line="152" selection-end-column="22" />
-              <folding>
-                <element signature="e#5084#6540#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="216">
+              <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GoogleImageryProvider.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5地图可视化/GoogleImageryProvider.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2372">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="6googlemap2-3857.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5地图可视化/6googlemap2-3857.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="3ArcgisXYZ-3857.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5地图可视化/3ArcgisXYZ-3857.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="72">
+              <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2bingmap-3857.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5地图可视化/2bingmap-3857.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="810">
+              <caret line="45" column="52" lean-forward="false" selection-start-line="45" selection-start-column="52" selection-end-line="45" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="4baidumap.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5地图可视化/4baidumap.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="10" column="19" lean-forward="false" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tianditu-3857.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/5地图可视化/tianditu-3857.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-284">
+              <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tianditu-4326.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5地图可视化/tianditu-4326.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="468">
+              <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="72" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="高德街道-层级小有问题.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/5地图可视化/高德街道-层级小有问题.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-392">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -347,16 +170,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ScreenSpaceEventHandler</find>
-      <find>[_0x190e(&quot;0x7&quot;)]</find>
-      <find>[_0x190e(&quot;0x1d&quot;)]</find>
-      <find>[_0x190e(&quot;0x33&quot;)]</find>
-      <find>initWork</find>
-      <find>u_rotateMatrix</find>
-      <find>LineFlowMaterial</find>
-      <find>origcolor</find>
-      <find>Snow</find>
-      <find>skybox</find>
       <find>SkyBoxVS</find>
       <find>model</find>
       <find>HeadingPitchRange</find>
@@ -375,8 +188,18 @@
       <find>sse</find>
       <find>requestRenderMode</find>
       <find>screenSpaceErrorFactor</find>
-      <find>wgs84ToWindowCoordinates</find>
       <find>dom</find>
+      <find>height</find>
+      <find>createModel</find>
+      <find>pickSurfacePosition</find>
+      <find>wgs84ToWindowCoordinates</find>
+      <find>margis</find>
+      <find>terrainProvider</find>
+      <find>createWorldTerrain</find>
+      <find>terrainLayer</find>
+      <find>OpenStreetMapImageryProvider</find>
+      <find>tileMatrixLabels</find>
+      <find>https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer</find>
     </findStrings>
     <replaceStrings>
       <replace>.scene</replace>
@@ -393,31 +216,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/预研/热力图-物体2(heatmap).html" />
-        <option value="$PROJECT_DIR$/2tileset/getposition.js" />
-        <option value="$PROJECT_DIR$/1界面及小控件/add2.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/addPoint3.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/enties6.html" />
-        <option value="$PROJECT_DIR$/预研/TerrainClipPlan/TerrainClipPlan.js" />
-        <option value="$PROJECT_DIR$/预研/地形开挖.html" />
-        <option value="$PROJECT_DIR$/预研/FlowLine/FlowLine.js" />
-        <option value="$PROJECT_DIR$/预研/流动线.js" />
-        <option value="$PROJECT_DIR$/预研/流动线.html" />
-        <option value="$PROJECT_DIR$/6地图可视化/ArcgisXYZ-3857.html" />
-        <option value="$PROJECT_DIR$/预研/canvas绘制文本及边框.html" />
-        <option value="$PROJECT_DIR$/预研/标注框.html" />
-        <option value="$PROJECT_DIR$/5pick-events/pick1.html" />
-        <option value="$PROJECT_DIR$/预研/流向动态线.html" />
-        <option value="$PROJECT_DIR$/6地图可视化/googlemap-3857.html" />
-        <option value="$PROJECT_DIR$/6地图可视化/腾讯地图.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/widget3.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/view2.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/view1.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/widget2.html" />
-        <option value="$PROJECT_DIR$/1界面及小控件/README.md" />
-        <option value="$PROJECT_DIR$/2camera/camera2-rectangle.html" />
-        <option value="$PROJECT_DIR$/2camera/camera1.html" />
-        <option value="$PROJECT_DIR$/2camera/camera2-属性.html" />
         <option value="$PROJECT_DIR$/2camera/camera3-flyto.html" />
         <option value="$PROJECT_DIR$/2camera/camera4-move-zoom.html" />
         <option value="$PROJECT_DIR$/2camera/camera4-setView.html" />
@@ -434,7 +232,6 @@
         <option value="$PROJECT_DIR$/9背景/README.md" />
         <option value="$PROJECT_DIR$/9背景/背景1.html" />
         <option value="$PROJECT_DIR$/3scene/README.md" />
-        <option value="$PROJECT_DIR$/terrain/terrian-全球.html" />
         <option value="$PROJECT_DIR$/3_0scene/scene1.html" />
         <option value="$PROJECT_DIR$/3_0scene/scene-fog2.html" />
         <option value="$PROJECT_DIR$/3_0scene/scene-fog3.html" />
@@ -442,8 +239,34 @@
         <option value="$PROJECT_DIR$/3_0scene/3dtiles高度取样5.html" />
         <option value="$PROJECT_DIR$/3_0scene/README.md" />
         <option value="$PROJECT_DIR$/2_0scene/scene-fog3.html" />
+        <option value="$PROJECT_DIR$/2_0scene/地形高度取样-剖面分析4.html" />
+        <option value="$PROJECT_DIR$/2_0scene/3dtiles高度取样5.html" />
+        <option value="$PROJECT_DIR$/2_0scene/model高度取样6.html" />
         <option value="$PROJECT_DIR$/2_0scene/README.md" />
+        <option value="$PROJECT_DIR$/terrain/terrian-全球.html" />
+        <option value="$PROJECT_DIR$/terrain/1.html" />
+        <option value="$PROJECT_DIR$/6地图可视化/tianditu-4326.html" />
+        <option value="$PROJECT_DIR$/5pick/pick1.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/tianditu-3857.html" />
+        <option value="$PROJECT_DIR$/terrain/terrian2.html" />
+        <option value="$PROJECT_DIR$/6terrain/terrian2.html" />
+        <option value="$PROJECT_DIR$/6terrain/terrian-全球.html" />
         <option value="$PROJECT_DIR$/坐标系/README.md" />
+        <option value="$PROJECT_DIR$/6terrain/terrian2(移除地形).html" />
+        <option value="$PROJECT_DIR$/6terrain/README.md" />
+        <option value="$PROJECT_DIR$/yjyzt/tianditu2(世界地形).html" />
+        <option value="$PROJECT_DIR$/6terrain/terrian1-全球.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/osm-3857.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/README.md" />
+        <option value="$PROJECT_DIR$/5地图可视化/bingmap-3857.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/ArcgisXYZ-3857.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/2bingmap-3857.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/googlemap-3857.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/4baidumap.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/3ArcgisXYZ-3857.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/5googlemap-3857.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/6googlemap2-3857.html" />
+        <option value="$PROJECT_DIR$/5地图可视化/7SingleTileImageryProvider.html" />
       </list>
     </option>
   </component>
@@ -457,8 +280,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="598" />
-    <option name="y" value="140" />
+    <option name="x" value="38" />
+    <option name="y" value="434" />
     <option name="width" value="1551" />
     <option name="height" value="839" />
   </component>
@@ -491,59 +314,12 @@
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="2_0scene" type="462c0819:PsiDirectoryNode" />
+              <item name="5地图可视化" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="8model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="10模型" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="tileset" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="entities和primitives" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="terrain" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="tileset" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="坐标系" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="预研" type="462c0819:PsiDirectoryNode" />
+              <item name="6terrain" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -553,7 +329,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="E:/work/项目开发/应急管理一张图/map" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/cesium1.65api版本贴地贴模型标绘工具" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -562,19 +338,19 @@
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\notes\cesium_notes\data\model" />
-      <recent name="F:\notes\cesium_notes\3_0scene" />
-      <recent name="F:\notes\cesium_notes\3scene" />
-      <recent name="F:\notes\cesium_notes\2camera" />
-      <recent name="F:\notes\cesium_notes\1界面及小控件" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\notes\cesium_notes\data\tileset" />
       <recent name="F:\notes\cesium_notes\entities和primitives" />
       <recent name="F:\notes\cesium_notes\预研\heatmap" />
       <recent name="F:\notes\cesium_notes\预研\skybox" />
       <recent name="F:\notes\cesium_notes\6地图可视化" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\notes\cesium_notes\5地图可视化" />
+      <recent name="F:\notes\cesium_notes\6terrain" />
+      <recent name="F:\notes\cesium_notes\terrain" />
+      <recent name="F:\notes\cesium_notes\2_0scene" />
+      <recent name="F:\notes\cesium_notes\data\model" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -690,33 +466,34 @@
       <workItem from="1585831457248" duration="597000" />
       <workItem from="1585875267590" duration="17445000" />
       <workItem from="1585965458283" duration="21930000" />
+      <workItem from="1586048084728" duration="21295000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="256548000" />
+    <option name="totallyTimeSpent" value="277843000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24411134" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25712776" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270809" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270809" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973601" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -769,224 +546,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/6地图可视化/tianditu-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="42" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/googlemap-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="46" column="39" lean-forward="true" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6地图可视化/腾讯地图.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="60" column="101" lean-forward="true" selection-start-line="60" selection-start-column="101" selection-end-line="60" selection-end-column="101" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/view2.html" />
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/widget5.html" />
-    <entry file="file://$PROJECT_DIR$/entities和primitives/addBox4.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="948">
-          <caret line="73" column="13" lean-forward="false" selection-start-line="73" selection-start-column="10" selection-end-line="73" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/entities和primitives/addPoint3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1164">
-          <caret line="78" column="0" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/entities和primitives/enties6.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="786">
-          <caret line="475" column="29" lean-forward="false" selection-start-line="475" selection-start-column="29" selection-end-line="475" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/entities和primitives/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/viewerControl.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/view1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="32" column="55" lean-forward="false" selection-start-line="32" selection-start-column="55" selection-end-line="32" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/5pick-events/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="754">
-            <caret line="44" column="28" lean-forward="false" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="28" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/camera4-setView.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/camera3-flyto.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="37" lean-forward="false" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/camera2-属性.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="954">
-          <caret line="53" column="7" lean-forward="true" selection-start-line="53" selection-start-column="7" selection-end-line="53" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/camera5-move-zoom.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1476">
-          <caret line="94" column="20" lean-forward="false" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/camera6-look_twist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="32" column="19" lean-forward="false" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="30" />
-          <caret line="31" column="19" lean-forward="false" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="30" />
-          <caret line="30" column="19" lean-forward="false" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="30" />
-          <caret line="29" column="19" lean-forward="false" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="30" />
-          <caret line="28" column="19" lean-forward="false" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="30" />
-          <caret line="27" column="19" lean-forward="false" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="30" />
-          <caret line="26" column="19" lean-forward="false" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="30" />
-          <caret line="25" column="19" lean-forward="false" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="30" />
-          <caret line="24" column="19" lean-forward="false" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="30" />
-          <caret line="23" column="19" lean-forward="false" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/look.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/headingpitchroll.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/fov.gif">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/camera_dir_up_right.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/rotate.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/视锥ViewFrustum.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/camera7-lookAt.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
-          <caret line="68" column="95" lean-forward="false" selection-start-line="68" selection-start-column="95" selection-end-line="68" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/camera8-events.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1134">
-          <caret line="63" column="18" lean-forward="false" selection-start-line="63" selection-start-column="11" selection-end-line="63" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="3870">
-            <caret line="215" column="40" lean-forward="false" selection-start-line="215" selection-start-column="13" selection-end-line="215" selection-end-column="40" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2_1scene_背景/背景2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="32" column="25" lean-forward="false" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2_1scene_背景/天空盒3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1512">
-          <caret line="84" column="48" lean-forward="false" selection-start-line="84" selection-start-column="48" selection-end-line="84" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2_1scene_背景/天空盒4.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2052">
-          <caret line="114" column="45" lean-forward="false" selection-start-line="114" selection-start-column="45" selection-end-line="114" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2_1scene_背景/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="162">
-            <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="36" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/2_1scene_背景/背景1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1764">
           <caret line="98" column="41" lean-forward="false" selection-start-line="98" selection-start-column="4" selection-end-line="98" selection-end-column="41" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1005,26 +568,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/terrain/terrian-全球.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="47" column="0" lean-forward="true" selection-start-line="46" selection-start-column="34" selection-end-line="47" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/1界面及小控件/widget2.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="702">
           <caret line="39" column="40" lean-forward="false" selection-start-line="39" selection-start-column="28" selection-end-line="39" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/10模型/tianditu-4326.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="121" column="24" lean-forward="false" selection-start-line="121" selection-start-column="13" selection-end-line="121" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1060,19 +607,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/预研/剖面分析.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="136" column="54" lean-forward="false" selection-start-line="136" selection-start-column="29" selection-end-line="136" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/预研/canvas绘制文本及边框.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1080">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1080,7 +618,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="562">
           <caret line="49" column="89" lean-forward="true" selection-start-line="46" selection-start-column="3" selection-end-line="49" selection-end-column="89" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1088,7 +625,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="48" column="36" lean-forward="false" selection-start-line="48" selection-start-column="14" selection-end-line="48" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1100,10 +636,113 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/3camera/camera1.html">
+    <entry file="file://$PROJECT_DIR$/预研/剖面分析.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="58" column="78" lean-forward="true" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="78" />
+        <state relative-caret-position="216">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="40" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2_0scene/3dtiles高度取样5.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-266">
+          <caret line="24" column="17" lean-forward="false" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
+          <folding>
+            <element signature="e#5696#7153#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/10模型/tianditu-4326.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-191">
+          <caret line="122" column="14" lean-forward="false" selection-start-line="122" selection-start-column="8" selection-end-line="122" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2_0scene/model高度取样6.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1260">
+          <caret line="80" column="27" lean-forward="true" selection-start-line="80" selection-start-column="27" selection-end-line="80" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2_0scene/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="1751">
+            <caret line="227" column="1" lean-forward="false" selection-start-line="227" selection-start-column="1" selection-end-line="227" selection-end-column="1" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/预研/margis-动态立体墙.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-756">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2_0scene/地形高度取样-剖面分析4.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="47" selection-end-column="6" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2_0scene/scene1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="36" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/4pick/CesiumMilkTruck-kmc.gltf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-648">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/4pick/pick1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="41" column="30" lean-forward="false" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/4pick/Cesium_Logo_overlay.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/3camera/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="286">
+            <caret line="215" column="40" lean-forward="false" selection-start-line="215" selection-start-column="13" selection-end-line="215" selection-end-column="40" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/6terrain/1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="114" column="24" lean-forward="false" selection-start-line="114" selection-start-column="24" selection-end-line="114" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1111,51 +750,217 @@
     <entry file="file://$PROJECT_DIR$/坐标系/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="592">
-            <caret line="140" column="25" lean-forward="false" selection-start-line="140" selection-start-column="25" selection-end-line="140" selection-end-column="25" />
+          <first_editor relative-caret-position="718">
+            <caret line="168" column="77" lean-forward="false" selection-start-line="168" selection-start-column="77" selection-end-line="168" selection-end-column="77" />
             <folding />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/2_0scene/地形高度取样-剖面分析4.html">
+    <entry file="file://$PROJECT_DIR$/6terrain/terrian2(移除地形).html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="61" column="0" lean-forward="false" selection-start-line="61" selection-start-column="0" selection-end-line="63" selection-end-column="7" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#5312#6768#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2_0scene/scene1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="106" selection-end-column="31" />
+        <state relative-caret-position="-176">
+          <caret line="27" column="36" lean-forward="false" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/2_0scene/3dtiles高度取样5.html">
+    <entry file="file://$PROJECT_DIR$/6terrain/terrian1-全球.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="152" column="22" lean-forward="false" selection-start-line="152" selection-start-column="13" selection-end-line="152" selection-end-column="22" />
-          <folding>
-            <element signature="e#5084#6540#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="288">
+          <caret line="36" column="38" lean-forward="false" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/2_0scene/README.md">
+    <entry file="file://$PROJECT_DIR$/yjyzt/tianditu2(世界地形).html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-266">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yjyzt/tianditu1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-842">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yjyzt/wops1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1134">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yjyzt/terrain1-margis-terrain.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-844">
+          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="46" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yjyzt/中科星图wmts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1472">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yjyzt/中科星图xyz.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="61" column="47" lean-forward="false" selection-start-line="61" selection-start-column="31" selection-end-line="61" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/3camera/camera1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="34" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/6terrain/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="412">
-            <caret line="156" column="0" lean-forward="true" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+          <first_editor relative-caret-position="448">
+            <caret line="34" column="50" lean-forward="true" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
             <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="358">
+            <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="1" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/1osm-3857.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="864">
+          <caret line="48" column="11" lean-forward="false" selection-start-line="46" selection-start-column="15" selection-end-line="48" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/tianditu-4326(provider添加).html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/高德.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-428">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/腾讯地图.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1188">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/高德街道-层级小有问题.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-392">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/tianditu-4326.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="72" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/GoogleImageryProvider.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2372">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/4baidumap.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="19" lean-forward="false" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/3ArcgisXYZ-3857.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/2bingmap-3857.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="45" column="52" lean-forward="false" selection-start-line="45" selection-start-column="52" selection-end-line="45" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/5googlemap-3857.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/6googlemap2-3857.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/7SingleTileImageryProvider.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="10" column="12" lean-forward="false" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/5地图可视化/tianditu-3857.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-284">
+          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

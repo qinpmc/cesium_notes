@@ -141,4 +141,30 @@ Cesium.SceneTransforms.wgs84ToWindowCoordinates(scene, position, result) → Car
 - position：Cartesian3	，The position in WGS84 (world) coordinates.
 
 
+Cesium.Cartesian3.fromDegreesArrayHeights
+
+scene.primitives.add(new Cesium.Primitive({
+    geometryInstances : new Cesium.GeometryInstance({
+        geometry : new Cesium.PolylineGeometry({
+            positions : Cesium.Cartesian3.fromDegreesArrayHeights([
+                -84.0, 50.0, 0.0,
+                -100.0, 30.0, 1000000.0
+            ]),
+            width : 5.0,
+            vertexFormat : Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+            arcType: Cesium.ArcType.NONE
+        }),
+        attributes: {
+            color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.BLUE)
+        }
+    }),
+    appearance : new Cesium.PolylineColorAppearance()
+}));
+
+
+terrian-全球.html
+ellipsoid.cartographicArrayToCartesianArray(raisedPositionsCartograhpic);
+
+ var cartesian = Cesium.Cartesian3.unpack(flatPositions, i);
+        cartographicArray.push(ellipsoid.cartesianToCartographic(cartesian));
 

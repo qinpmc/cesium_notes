@@ -83,7 +83,7 @@ Scene中有一些内置的图元对象：
 - scene.skyAtmosphere.show : 是否显示Boolean
 
 
-### scene.globe ： Globe
+### scene.globe : Globe
 
 - scene.globe.imageryLayers : ImageryLayerCollection
 - scene.globe.terrainProvider : TerrainProvider
@@ -125,7 +125,7 @@ May be used to clamp objects to the globe, 3D Tiles, or primitives in the scene.
 - scene.clampToHeight(cartesian, objectsToExclude, width, result) → Cartesian3
 - scene.clampToHeightMostDetailed(cartesians, objectsToExclude, width) → Promise.<Array.<Cartesian3>>
 - scene.sampleHeight(position, objectsToExclude, width) → Number
-- scene.sampleHeightMostDetailed(positions, objectsToExclude, width) → Promise.<Array.<Number>>
+- scene.sampleHeightMostDetailed(positions, objectsToExclude, width) → Promise.<Array.<Cartographic>>   positions:Array.<Cartographic>
  
 * scene.clampToHeightSupported : Boolean
 * scene.sampleHeightSupported : Boolean
@@ -225,19 +225,7 @@ globe.prototype.pickSamplePosition = function (pixels) {
 
 
 
-//wgs84ToWindowCoordinates(scene, cartesian, result);
-
-globe.prototype.getPixelFromCoordinate = function (coordinate) {
-    cartesian = Cesium.Cartesian3.fromDegrees(coordinate[0], coordinate[1], coordinate[2] || 0, undefined, cartesian);
-    var scene = this._cesiumWidget.scene;
-    result = WgstoWindowCoordinate.wgs84ToWindowCoordinates(scene, cartesian, result);
-    if (!!result) {
-        return [Math.round(result.x), Math.round(result.y)];
-    }
-    return [0, 0];
-}
-var pixelPos = new Cesium.Cartesian2();
-var coordinates = Cesium.Cartesian4.clone(Cesium.Cartesian4.UNIT_W);
+ 
 
 
 

@@ -8,7 +8,7 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>Hello World!</title>
+    <title>OSM</title>
     <script src="../Build/Cesium/Cesium.js"></script>
     <style>
         @import url(../Build/Cesium/Widgets/widgets.css);
@@ -20,24 +20,18 @@
             padding: 0;
             overflow: hidden;
         }
-
-        .cesium-viewer-bottom /* logo信息 */
-        {
-            display: none;
-        }
-
-
     </style>
 </head>
 <body>
+<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+    <button onclick="toggleOSM()">显隐OSM_3875</button>
+    <button onclick="toggleBaseLayer()">显隐底图</button>
+</div>
 <div id="cesiumContainer"></div>
 <script>
+
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
-    var tileMatrixLabels =[];
-    for(var i=1;i<18;i++){
-        tileMatrixLabels.push(""+i);
-    }
     var viewer = new Cesium.Viewer("cesiumContainer", {
         animation: false,  //是否显示动画控件
         baseLayerPicker: false, //是否显示图层选择控件
@@ -46,38 +40,42 @@
         sceneModePicker: true, //是否显示投影方式控件
         navigationHelpButton: false, //是否显示帮助信息控件
         infoBox: true,  //是否显示点击要素之后显示的信息
-        imageryProvider : new Cesium.WebMapTileServiceImageryProvider({
-            url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&service=WMTS",
-            layer: "vec",
-            style: "default",
-            format: "tiles",
-            tileMatrixSetID: "c",
-            tileMatrixLabels:tileMatrixLabels,
-            tilingScheme:new Cesium.GeographicTilingScheme({
-                numberOfLevelZeroTilesX:2,
-                numberOfLevelZeroTilesY:1
-            }),
-            show: false
-        })
     });
 
-    var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
-        url: "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156&request=GetTile&version=1.0.0&LAYER=cta&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&service=WMTS",
-        layer: "cta",
-        style: "default",
-        format: "tiles",
-        tileMatrixSetID: "c",
-        tileMatrixLabels:tileMatrixLabels,
-        tilingScheme:new Cesium.GeographicTilingScheme({
-            numberOfLevelZeroTilesX:2,
-            numberOfLevelZeroTilesY:1
-        }),
-        show: false
+
+    function createOSMImageryProvider(url) {
+        return new  Cesium.OpenStreetMapImageryProvider({
+            url : url
+        });
+    }
+    
+    
+    function createOSMImageryLayer(imageryProvider) {
+       return  new Cesium.ImageryLayer(imageryProvider)
+    }
+
+    var osmImageryProvider = createOSMImageryProvider('https://a.tile.openstreetmap.org/');
+
+    //1： 使用 ImageryProvider添加
+    //viewer.imageryLayers.addImageryProvider(osmImageryProvider);
+
+    //2： 使用 ImageryLayer添加
+    viewer.imageryLayers.add(createOSMImageryLayer(osmImageryProvider),1); //add(layer, index)
+
+
+    viewer.camera.flyTo({
+        destination:Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
     })
 
+    console.log(viewer.imageryLayers.length);// 2
 
-    viewer.imageryLayers.addImageryProvider(imageryProvider2);
+    function toggleOSM() {
+        viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show;
+    }
 
+    function toggleBaseLayer() {
+        viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show;
+    }
 
 
 

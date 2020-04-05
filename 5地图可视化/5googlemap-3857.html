@@ -10,7 +10,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
-    <title>Hello World!</title>
+    <title>GoogleMap</title>
     <script src="../Build/Cesium/Cesium.js"></script>
     <style>
       @import url(../Build/Cesium/Widgets/widgets.css);
@@ -47,12 +47,18 @@
         infoBox: true //是否显示点击要素之后显示的信息
       });
 
+
+      //y为混合地图，s为卫星地图，m为普通地图
       var google = new Cesium.UrlTemplateImageryProvider({
         url:
           "http://mt0.google.cn/maps/vt?lyrs=s%40703&hl=zh-CN&x={x}&y={y}&z={z}" //
       });
 
       viewer.imageryLayers.addImageryProvider(google);
+
+
+
+
 
       function createGoogleMapsByUrl(Cesium, options) {
         options = Cesium.defaultValue(options, {});

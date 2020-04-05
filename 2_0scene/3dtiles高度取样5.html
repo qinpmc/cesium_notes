@@ -22,7 +22,7 @@
             background-color: #000000;
         }
 
-        #main {
+        #painting {
             z-index: 1;
             position: absolute;
             top: 80px;
@@ -63,6 +63,7 @@
     viewer.scene.primitives.add(tileset);
     viewer.zoomTo(tileset);
 
+    var scene = viewer.scene;
     var start = null;
     var end = null;
 
@@ -113,28 +114,33 @@
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     }
 
-    // 插值后使用Cesium.sampleTerrainMostDetailed 获取地形
+    // 插值后使用 clampToHeightMostDetailed 、sampleHeightMostDetailed获取高度
     function profileAnalyse() {
-        var positions = [Cesium.Cartographic.fromCartesian(start)];
+        var positions = [Cesium.Cartographic.fromCartesian(start)]; // cartographic 坐标
+        var cartesians = [start];  // cartesian  坐标
+
         // 插值100个点，点越多模拟越精确，但是效率会低
         var count = 10;
         for (var i = 1; i < count; i++) {
             var cart = Cesium.Cartesian3.lerp(start, end, i / count, new Cesium.Cartesian3());
             positions.push(Cesium.Cartographic.fromCartesian(cart));
+            cartesians.push(cart);
         }
         positions.push(Cesium.Cartographic.fromCartesian(end));
+        cartesians.push(end);
 
-        // 异步使用最精确的地形采样获取地形高度
-        var promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
-        Cesium.when(promise, function (updatedPositions) {
+
+        // 异步使用
+        var promise = scene.clampToHeightMostDetailed(cartesians);
+
+        Cesium.when(promise, function (updatedPositions) { // updatedPositions:<Array.<Cartesian3>>
 
             // 处理返回的数据
-            var height = [];
-            for (var i = 0; i < updatedPositions.length; i++) {
-                height.push(updatedPositions[i].height); // 取得高程值
+            var heights = [];
+            for (var i = 0; i < count; ++i) {
+                heights.push(Cesium.Cartographic.fromCartesian(updatedPositions[i]).height.toFixed(1));
             }
-
-            console.log(height);
+            console.log(heights);
 
             // 绘制高程走势图
             paintingDom.style.display = "block";
@@ -142,15 +148,26 @@
             // 使用Echart等图表工具可视化
             if (myChart == null) {
                 myChart = echarts.init(paintingDom);
-                initChart(height, false);
+                initChart(heights, false);
             } else {
-                initChart(height, true);
+                initChart(heights, true);
             }
 
         });
+
+
+        //positions	Array.<Cartographic>
+        scene.sampleHeightMostDetailed(positions).then(function (cartographics) { //sampledCartesians:<Array.<Cartographic>>
+            var heights = [];
+            for(var i=0,len=cartographics.length;i<len;i++){
+                heights.push(cartographics[i].height.toFixed(1));
+            }
+            console.log(heights);
+        });
+
     }
 
-    function initChart(height, isMerge) {
+    function initChart(heights, isMerge) {
         var option = {
             title: {
                 text: '海拔走势图'
@@ -201,7 +218,7 @@
                         }
                     },
                     areaStyle: {normal: {}},
-                    data: height
+                    data: heights
                 }
             ]
         };
