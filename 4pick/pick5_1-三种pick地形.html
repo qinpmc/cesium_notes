@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8">
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>Hello World!</title>
+  <script src="../Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../Build/Cesium/Widgets/widgets.css);
+    html, body, #cesiumContainer {
+      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+    }
+
+  </style>
+</head>
+<body>
+
+<div id="cesiumContainer"></div>
+
+<script>
+
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+
+    var viewer = new Cesium.Viewer('cesiumContainer',{
+        terrainProvider: Cesium.createWorldTerrain() // 开启/关闭地形进行不同测试
+    });
+
+    var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+    handler.setInputAction(function (movement) {
+
+        //Cartesian3  获取当前点击视线与椭球面相交处的笛卡尔坐标： camera.pickEllipsoid
+        var cartesian1 = viewer.scene.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
+        console.log("第一种方式camera.pickEllipsoid：",cartesian1);
+        console.log(transCartesian2LonLatHeight(cartesian1).height);// 有地形时height也 总 为0
+
+        // 获取点击处地球表面的世界坐标，不包括模型、倾斜摄影表面： camera.getPickRay + globe.pick
+        var ray=viewer.camera.getPickRay(movement.position);
+        var cartesian2 = viewer.scene.globe.pick(ray, viewer.scene);
+        console.log("第二种方式globe.pick：",cartesian2);
+        console.log(transCartesian2LonLatHeight(cartesian2).height);
+
+        //根据窗口坐标，从场景的深度缓冲区中拾取相应的位置，返回笛卡尔坐标：scene.pickPosition
+        var cartesian3 = viewer.scene.pickPosition(movement.position);
+        console.log("第三种方式scene.pickPosition：",cartesian3)
+        console.log(transCartesian2LonLatHeight(cartesian3).height);
+
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+    function transCartesian2LonLatHeight(cartesian) {
+        var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+        var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(2);
+        var latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(2);
+        var heightString = cartographic.height.toFixed(2);
+
+        return {
+            lon:longitudeString,
+            lat:latitudeString,
+            height:heightString
+        }
+    }
+
+</script>
+</body>
+</html>

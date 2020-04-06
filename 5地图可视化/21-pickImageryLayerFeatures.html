@@ -8,7 +8,7 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>天空盒</title>
+    <title>tianditu</title>
     <script src="../Build/Cesium/Cesium.js"></script>
     <style>
         @import url(../Build/Cesium/Widgets/widgets.css);
@@ -21,18 +21,12 @@
             overflow: hidden;
         }
 
-        .cesium-viewer-bottom /* logo信息 */
-        {
-            display: none;
-        }
-
-
     </style>
 </head>
 <body>
 <div>
     <button onclick="showVec()">显隐天地图矢量</button>
-    <button onclick="showCta()">显隐天地图标注</button>
+    <button onclick="showCta()">显隐天地图标注</button><br>
 </div>
 <div id="cesiumContainer"></div>
 <script>
@@ -66,7 +60,7 @@
         })
     });
 
-    console.log(viewer.imageryLayers.get(0));
+    console.log(viewer.imageryLayers.get(0)); // vec_c
     console.log(viewer.imageryLayers.get(1)); //undefined
 
     // 隐藏默认的图层，显示蓝色地球
@@ -90,19 +84,14 @@
         }
     );
 
-    console.log(viewer.scene.imageryLayers === viewer.imageryLayers ); // true
+
     var layers = viewer.imageryLayers;
     layers.add(ctaLayer);
-    console.log(viewer.imageryLayers.get(1)); // cta图层
-
-
-
 
     viewer.camera.flyTo({
         destination:Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
 
     })
-
 
 
     window.showVec = function () {
@@ -112,6 +101,39 @@
     window.showCta = function () {
         viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show
     }
+
+    var redEllipse = viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(-100.0, 40.0),
+        name: 'Red ellipse on surface',
+        ellipse: {
+            semiMinorAxis: 250000.0,
+            semiMajorAxis: 400000.0,
+            material: Cesium.Color.RED.withAlpha(0.5)
+        }
+    });
+
+    var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+
+    //绑定单击事件
+    handler.setInputAction(function (movement) {
+
+        var pickRay = viewer.camera.getPickRay(movement.position);
+        var featuresPromise = viewer.imageryLayers.pickImageryLayerFeatures(pickRay, viewer.scene);
+        if (!Cesium.defined(featuresPromise)) {
+            console.log('No features picked.');
+        } else {
+            Cesium.when(featuresPromise, function(features) {
+                // This function is called asynchronously when the list if picked features is available.
+                console.log('Number of features: ' + features.length);
+                if (features.length > 0) {
+                    console.log('First feature name: ' + features[0].name);
+                }
+            });
+        }
+
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
 
 
 </script>

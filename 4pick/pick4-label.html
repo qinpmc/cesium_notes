@@ -15,12 +15,6 @@
       width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
     }
 
-    .cesium-viewer-bottom               /* logo信息 */
-    {
-      display: none;
-    }
-
-
   </style>
 </head>
 <body>
@@ -30,7 +24,6 @@
 <script>
 
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
-
 
     var viewer = new Cesium.Viewer('cesiumContainer',{
         geocoder:true,
@@ -48,8 +41,6 @@
         window.alert('This browser does not support pickPosition.');
     }
 
-
-
     var entity = viewer.entities.add({
         label : {
             show : false,
@@ -57,7 +48,10 @@
             font : '14px monospace',
             horizontalOrigin : Cesium.HorizontalOrigin.LEFT,
             verticalOrigin : Cesium.VerticalOrigin.TOP,
-            pixelOffset : new Cesium.Cartesian2(15, 0)
+            pixelOffset : new Cesium.Cartesian2(15, 0),
+            backgroundColor:Cesium.Color.AQUAMARINE,//背景颜色
+            fillColor :Cesium.Color.BLACK, // 字体颜色，
+            distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10, 10000000)
         }
     });
 

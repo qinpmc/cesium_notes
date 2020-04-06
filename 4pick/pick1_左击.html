@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <title>Hello World!</title>
+  <title>左击事件</title>
   <script src="../Build/Cesium/Cesium.js"></script>
   <style>
     @import url(../Build/Cesium/Widgets/widgets.css);
@@ -26,14 +26,30 @@
 
 
     var viewer = new Cesium.Viewer('cesiumContainer');
-    var scene = viewer.scene;
 
-    var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
+
+/*    var scene = viewer.scene;
+    var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
     //绑定单击事件
     handler.setInputAction(function (movement) {
 
-        //Cartesian3
+        //Cartesian3 --笛卡尔坐标
+        var position = viewer.scene.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
+        console.log(position);
+
+        //Cartographic --弧度
+        var coordinate = Cesium.Cartographic.fromCartesian(position, viewer.scene.globe.ellipsoid);
+        console.log(coordinate);
+
+
+
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);*/
+
+
+    viewer.screenSpaceEventHandler.setInputAction(function (movement) {
+
+        //Cartesian3 --笛卡尔坐标
         var position = viewer.scene.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
         console.log(position);
 
@@ -44,25 +60,6 @@
 
 
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-
-    //绑定鼠标移动事件
-/*    handler.setInputAction(function(movement) {
-        // movement.endPosition 屏幕坐标       movement.startPosition屏幕坐标
-
-        // cartesian   世界坐标系 in world coordinates
-        var cartesian = viewer.camera.pickEllipsoid(movement.endPosition, scene.globe.ellipsoid);
-        if (cartesian) {
-
-            //Cesium.Cartographic(longitude, latitude, height) -----A position defined by longitude, latitude, and height. 弧度单位
-
-            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
-            var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(2);
-            var latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(2);
-            console.log(longitudeString,latitudeString);
-
-        }
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);*/
-
 
 </script>
 </body>

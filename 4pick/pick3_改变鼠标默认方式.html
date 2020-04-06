@@ -7,54 +7,35 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <title>Hello World!</title>
+  <title>鼠标默认方式</title>
   <script src="../Build/Cesium/Cesium.js"></script>
   <style>
     @import url(../Build/Cesium/Widgets/widgets.css);
     html, body, #cesiumContainer {
       width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
     }
-
-    .cesium-viewer-bottom               /* logo信息 */
-    {
-      display: none;
-    }
-
-
   </style>
 </head>
 <body>
-
+<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+  <button onclick="toggleZoom()">禁用/开启Zoom</button>
+  <button onclick="toggleTilt()">禁用/开启旋转</button>
+</div>
 <div id="cesiumContainer"></div>
 
 <script>
 
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
-
     var viewer = new Cesium.Viewer('cesiumContainer');
 
-    var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-    handler.setInputAction(function (movement) {
+    function toggleZoom() {
+        viewer.scene.screenSpaceCameraController.enableZoom = !viewer.scene.screenSpaceCameraController.enableZoom;
+    }
 
-        //Cartesian3  获取当前点击视线与椭球面相交处的坐标
-        var position = viewer.scene.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
-        console.log("第一种方式：",position);
-
-
-        // 获取点击处地球表面的世界坐标，不包括模型、倾斜摄影表面
-        var ray=viewer.camera.getPickRay(movement.position);
-        var position = viewer.scene.globe.pick(ray, viewer.scene);
-        console.log("第二种方式：",position);
-
-
-
-        //根据窗口坐标，从场景的深度缓冲区中拾取相应的位置，返回笛卡尔坐标
-        var position = viewer.scene.pickPosition(movement.position);
-        console.log("第三种方式：",position)
-
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-
+    function toggleTilt() {
+        viewer.scene.screenSpaceCameraController.enableTilt = !viewer.scene.screenSpaceCameraController.enableTilt;
+    }
 
 </script>
 </body>
