@@ -111,6 +111,14 @@
                     '\nLat3: ' + ('   ' + res3.lat).slice(-7) + '\u00B0' +
                     '\nAlt3: ' + ('   ' + res3.height).slice(-7) + 'm';
 
+                //第四种：globe.getHeight ----镜头高度太高获取的高度会为错误的负数
+
+                var cartographic4 = Cesium.Cartographic.fromDegrees(res3.lon,res3.lat);
+                var height4 = viewer.scene.globe.getHeight(cartographic4);
+                console.log(height4);
+
+
+
                 if (cartesian || cartesian2 || cartesian3) {
                     labelEntity.position = cartesian || cartesian2 || cartesian3;
                     labelEntity.label.show = true;

@@ -130,9 +130,16 @@ var cartesian2 = scene.globe.pick(ray, scene, tempPos);
  
 - globe.pick的结果相对稳定准确，不论地形深度检测开启与否，不论加载的是默认地形还是别的地形数据；  
 - scene.pickPosition只有在开启地形深度检测，且不使用默认地形时是准确的。  
+- globe.getHeight,镜头高度太高获取的高度会为错误的负数，镜头高度要足够低
  
- 
- 
+```
+var cartographic = Cesium.Cartographic.fromDegrees(lon,lat);
+var height = viewer.scene.globe.getHeight(cartographic);
+```
+
+  
+  
+  
  
  
  

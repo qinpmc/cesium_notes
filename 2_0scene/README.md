@@ -148,19 +148,7 @@ Cesium.when(promise, function(updatedPositions) {
     // updatedPositions is just a reference to positions.
 });
 ```
-
  
-
-
-
- 
-
-
-
-
-
-
-
 
 
 
