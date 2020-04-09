@@ -1,4 +1,4 @@
-
+参考资料：
 https://www.cnblogs.com/telwanggs/p/11289954.html
 https://www.cnblogs.com/arxive/p/10256065.html
 https://blog.csdn.net/qq_34149805/article/details/78393540
@@ -6,7 +6,9 @@ http://www.yanhuangxueyuan.com/doc/Three.js/MatrixRST.html
 
 
 
-## 0 Cesium中的坐标系：
+## 准备知识
+ 
+  Cesium中的坐标系：
 - WGS84经纬度坐标系（没有实际的对象）  
 - WGS84弧度坐标系（Cartographic）,地理坐标系下经纬度的弧度表示,通常情况下通过它和WGS84经纬度坐标系之间互转    
 - 笛卡尔空间直角坐标系（Cartesian3）   
@@ -15,7 +17,7 @@ http://www.yanhuangxueyuan.com/doc/Three.js/MatrixRST.html
 
 
 
-### 0.1 WGS84坐标系
+### 1 WGS84坐标系
 World Geodetic System 1984，是为GPS全球定位系统使用而建立的坐标系统，坐标原点为**地球质心**，   
 其地心空间直角坐标系的**Z轴**指向BIH （国际时间服务机构）1984.O定义的协议地球极（CTP)方向，**X轴**指向BIH 1984.0的零子午面和CTP赤道的交点，Y轴与Z轴、X轴垂直构成右手坐标系。  
 我们平常手机上的指南针显示的经纬度就是这个坐标系下当前的坐标，进度范围[-180，180],纬度范围[-90，90]。   
@@ -26,14 +28,14 @@ World Geodetic System 1984，是为GPS全球定位系统使用而建立的坐标
 
 
 
-### 0.2 笛卡尔空间直角坐标系（Cartesian3）
+### 2 笛卡尔空间直角坐标系（Cartesian3）
 
 笛卡尔空间坐标的原点就是椭球的中心，我们在计算机上进行绘图时，不方便使用经纬度直接进行绘图，一般会将坐标系转换为笛卡尔坐标系，使用计算机图形学中的知识进行绘图。           
 这里的Cartesian3，new Cesium.Cartesian3(x, y, z)，里面三个分量xyz。       
 ![Cartesian3](./Cartesian3.jpg)
 
 
-### 0.3 平面坐标系（Cartesian2)
+### 3 平面坐标系（Cartesian2)
 
 平面坐标系也就是平面直角坐标系，是一个二维笛卡尔坐标系，与Cartesian3相比少了一个z的分量，new Cesium.Cartesian2(x, y)。        
 Cartesian2经常用来描述屏幕坐标系，比如鼠标在电脑屏幕上的点击位置，返回的就是Cartesian2，返回了鼠标点击位置的xy像素点分量。             
@@ -58,9 +60,7 @@ Cartesian2经常用来描述屏幕坐标系，比如鼠标在电脑屏幕上的�
 2. 使用如下方式：
     * Cesium.Cartographic.fromDegrees(longitude, latitude, height, result) → Cartographic 
     * Cesium.Cartographic.fromRadians(longitude, latitude, height, result) → Cartographic
-    
-    
-    
+ 
 
 ### 2.2 WGS84坐标转角度/弧度
 
@@ -144,13 +144,14 @@ Cartesian2经常用来描述屏幕坐标系，比如鼠标在电脑屏幕上的�
 ```
  
 
-Cesium.Matrix3（3x3矩阵，用于描述旋转变换）Cesium.Matrix4（4x4矩阵，用于描述旋转加平移变换），     
-Cesium.Quaternion（四元数，用于描述围绕某个向量旋转一定角度的变换）。
+Cesium.Matrix3（3x3矩阵，用于描述旋转变换）；     
+Cesium.Matrix4（4x4矩阵，用于描述旋转加平移变换）；      
+Cesium.Quaternion（四元数，用于描述围绕某个向量旋转一定角度的变换）；         
 
  
 
 
-### 6 局部坐标系和世界坐标系转换
+### 6 局部坐标系和世界坐标系转换（待修正补充）
 
 #### 6.1 局部坐标系转世界坐标系
 
@@ -227,9 +228,9 @@ Cesium.Matrix4
 Cesium.Quaternion
 
 
+### 7 各类矩阵
 
-
-### 平移矩阵
+#### 7.1 平移矩阵
 平移矩阵T：表示一个顶点坐标沿着X、Y、Z轴分别平移Tx、Ty、Tz
 
 ```
@@ -248,7 +249,7 @@ Cesium.Quaternion
 ```
 
 
-### 缩放矩阵
+#### 7.2 缩放矩阵
 比如一个几何体的所有顶点坐标沿着X、Y、Z轴分别缩放矩阵Sx、Sy、Sz倍，可以用如下矩阵S表示。
 
 ```
@@ -267,7 +268,7 @@ Cesium.Quaternion
 ```
  
 
-### 旋转矩阵:
+#### 7.3 旋转矩阵:
 
 
 绕x轴旋转α度对应的旋转矩阵Rx：    

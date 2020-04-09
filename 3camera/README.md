@@ -72,8 +72,6 @@ var camera = widget.scene.camera; //  var widget = new Cesium.CesiumWidget('cesi
  
  
  
- 
- 
 ### flyTo(options)
 
 options	: 

@@ -18,7 +18,7 @@ CesiumWidget:
 
 ## 场景 Scene 
 
-Scene中有一些内置的图元对象：
+Scene中有一些内置的**图元对象**：
 - globe（地球）  Globe  
        -- imageryLayers : ImageryLayerCollection  
        -- terrainProvider : TerrainProvider  
@@ -91,23 +91,23 @@ Scene中有一些内置的图元对象：
 
 - scene.globe.enableLighting : Boolean
 
-// 饱和度，亮度，色相
-- scene.globe.atmosphereHueShift : Number
-- scene.globe.atmosphereBrightnessShift : Number
-- scene.globe.atmosphereSaturationShift : Number
+// Globe色相，亮度，饱和度      
+- scene.globe.atmosphereHueShift : Number        
+- scene.globe.atmosphereBrightnessShift : Number     
+- scene.globe.atmosphereSaturationShift : Number 
 - scene.globe.
 
-- scene.globe.show : Boolean
+- scene.globe.show : Boolean       
 
-// 性能相关
-- scene.globe.tileCacheSize : Number ，A larger number will consume more memory but will show detail faster 
-- scene.globe.maximumScreenSpaceError : Number ， Higher values will provide better performance but lower visual quality.   
-  较高的maximumScreenSpaceError将会渲染更少的贴图，进而可以提高性能，而较低的值将提高视觉质量。   
+// Globe性能相关      
+- scene.globe.tileCacheSize : Number ，A larger number will consume more memory but will show detail faster       
+- scene.globe.maximumScreenSpaceError : Number ， Higher values will provide better performance but lower visual quality          
+  较高的maximumScreenSpaceError将会渲染更少的贴图，进而可以提高性能，而较低的值将提高视觉质量。           
 
-//方法
-- scene.globe.getHeight(cartographic) → Number|undefined, Get the height of the surface at a given cartographic.
+//Globe方法      
+- scene.globe.getHeight(cartographic) → Number|undefined, Get the height of the surface at a given cartographic           
 
-- scene.globe.pick(ray, scene, result) → Cartesian3|undefined
+- scene.globe.pick(ray, scene, result) → Cartesian3|undefined          
 
 ```
 // find intersection of ray through a pixel and the globe
@@ -116,9 +116,9 @@ var intersection = globe.pick(ray, scene);
 ```
  
  
-## Scene 方法
+## Scene 方法         
 
-### 高度取样
+### 高度取样   
 
 #### 3D Tiles、primitives和地球globe上对象高度取样
 May be used to clamp objects to the globe, 3D Tiles, or primitives in the scene.

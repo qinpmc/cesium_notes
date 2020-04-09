@@ -54,7 +54,7 @@ var m = Cesium.Matrix4.fromArray([
 ]);
 
 var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-    url: 'Scene/testm3DTiles.json',
+    url: '../data/tileset/Scene/testm3DTiles.json',
     maximumScreenSpaceError: 2,
     maximumNumberOfLoadedTiles: 1000,
     modelMatrix: m  //方法一，动态修改modelMatrix

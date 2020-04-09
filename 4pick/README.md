@@ -1,3 +1,4 @@
+ 参考资料： 
  https://blog.csdn.net/caozl1132/article/details/90257043
  https://blog.csdn.net/weitaming1/article/details/95067688
  https://zhuanlan.zhihu.com/p/44767866
@@ -153,9 +154,9 @@ var height = viewer.scene.globe.getHeight(cartographic);
  
  /**
   * 根据两点生成一个射线
-  * @param {egis.sfs.Point}startPosition 射线起点
-  * @param {egis.sfs.Point}endPosition 射线朝向方向上一点
-  * @returns {egis.sfs.Ray} 返回一条射线
+  * @param startPosition 射线起点
+  * @param endPosition 射线朝向方向上一点
+  * @returns Ray 返回一条射线
   */
  globe.prototype.toRay = function (startPosition, endPosition) {
      var start = Cesium.Cartesian3.fromDegrees(startPosition.x, startPosition.y, startPosition.z);
