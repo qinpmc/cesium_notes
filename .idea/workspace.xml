@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f6d77b63-f932-481c-8b73-ca25dad38f0a" name="Default" comment="add events and particle system demo">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/1_0坐标系/README.md" afterPath="$PROJECT_DIR$/1_0坐标系/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/3camera/README.md" afterPath="$PROJECT_DIR$/3camera/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/4pick/README.md" afterPath="$PROJECT_DIR$/4pick/README.md" />
     </list>
     <ignored path="Cesium.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -135,8 +132,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="1" lean-forward="false" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+            <state relative-caret-position="270">
+              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -266,9 +263,9 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="671" />
-    <option name="y" value="86" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="283" />
+    <option name="y" value="105" />
     <option name="width" value="1551" />
     <option name="height" value="958" />
   </component>
@@ -485,15 +482,15 @@
       <workItem from="1586048084728" duration="45956000" />
       <workItem from="1586221953491" duration="17445000" />
       <workItem from="1586304666289" duration="15325000" />
-      <workItem from="1586397477366" duration="2399000" />
+      <workItem from="1586397477366" duration="2537000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="337673000" />
+    <option name="totallyTimeSpent" value="337811000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="671" y="86" width="1551" height="958" extended-state="0" />
+    <frame x="283" y="105" width="1551" height="958" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28865296" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -942,8 +939,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="1" lean-forward="false" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+        <state relative-caret-position="270">
+          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
       </provider>
