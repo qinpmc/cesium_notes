@@ -1,5 +1,5 @@
 
-# 相机
+# 相机    
 The camera is defined by a position, orientation, and view frustum.
 
 视锥体（frustum），是指场景中摄像机的可见的一个锥体范围。它有上、下、左、右、近、远，共6个面组成。       
