@@ -33,6 +33,12 @@
 <div>
     <button onclick="showVec()">显隐天地图矢量</button>
     <button onclick="showCta()">显隐天地图标注</button>
+    <button onclick="addHeading(0.1)">增加heading</button>
+    <button onclick="addHeading(-0.1)">减小heading</button>
+    <button onclick="addPitch(0.1)">增加Pitch</button>
+    <button onclick="addPitch(-0.1)">减小Pitch</button>
+    <button onclick="addRoll(0.1)">增加Roll</button>
+    <button onclick="addRoll(-0.1)">减小Roll</button>
     高度：<input type="range" max="200" min="-200" step="20" id="heightEle">
     经度：<input type="range" max="0.0001" min="-0.0001" step="0.00005" id="lonEle">
     纬度：<input type="range" max="0.0001" min="-0.0001" step="0.00005" id="latEle">
@@ -184,9 +190,36 @@
 
         var transMatrix4 = Cesium.Matrix4.fromTranslation(translation);
 
-        var trans = Cesium.Transforms.eastNorthUpToFixedFrame(cartesianCenter);
+        var trans = Cesium.Transforms.eastNorthUpToFixedFrame(cartesianCenter)
 
         return Cesium.Matrix4.multiply(trans, transMatrix4,trans);
+    }
+
+
+    window.addHeading = function (headingOffset) {
+        heading += headingOffset;
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(origin, hpr);
+        model.modelMatrix = modelMatrix;
+    }
+
+    window.addPitch = function (pitchOffset) {
+        pitch +=pitchOffset;
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(origin, hpr);
+        model.modelMatrix = modelMatrix;
+    }
+
+
+
+    window.addRoll = function (rollOffset) {
+        roll +=rollOffset;
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(origin, hpr);
+        model.modelMatrix = modelMatrix;
     }
 
 </script>

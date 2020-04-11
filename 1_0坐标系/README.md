@@ -156,15 +156,115 @@ Cesium.Quaternion（四元数，用于描述围绕某个向量旋转一定角度
 #### 6.1 局部坐标系转世界坐标系
 
 
-```
-// localOrigin局部坐标系原点  localCoordinates 相对坐标系中的坐标
-var trans = Cesium.Transforms.eastNorthUpToFixedFrame(localOrigin);
-var result = new Cesium.Cartesian3();
-Cesium.Matrix4.multiplyByPoint(trans, localCoordinates, result);
 
 ```
 
+ /**
 
+ * 相对坐标系与世界坐标系转换，相对坐标系的轴方向由可选参数direction控制，默认是eastNorthUp北、东、上为轴线
+
+ *
+
+ * @param {Number} longitude 世界坐标系中的经度
+
+ * @param {Number} latitude 世界坐标系中的纬度
+
+ * @param {Number} height 世界坐标系中的高度
+
+ * @param {Number} direction 坐标轴方向，值是"northEastDown","northUpEast","northWestUp","eastNorthUp"(默认)
+
+ */
+
+var LocalAndWorldTransform = function(longitude,latitude,height,direction){
+
+ 
+
+    var RCSorigincenter = Cesium.Cartesian3.fromDegrees(longitude,latitude,height);
+
+    if (direction == "northEastDown")
+
+        this.RCSMatrix = Cesium.Transforms.northEastDownToFixedFrame(RCSorigincenter);
+
+    else if (direction == "northUpEast")
+
+        this.RCSMatrix = Cesium.Transforms.northUpEastToFixedFrame(RCSorigincenter);
+
+    else if (direction == "northWestUp")
+
+        this.RCSMatrix = Cesium.Transforms.northWestUpToFixedFrame(RCSorigincenter);
+
+    else
+
+        this.RCSMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(RCSorigincenter);
+
+    this.RCSmatrixInverse = Cesium.Matrix4.inverseTransformation(this.RCSMatrix, new Cesium.Matrix4());
+
+ 
+
+  /**
+
+   * 相对坐标转换成对应的世界坐标
+
+   *
+
+   * @param {Cartesian3	} localCoordinates 相对坐标系中的坐标，如 {x:1,y:1,z:1}
+
+   * @param {Cartesian3} result 世界坐标系中的对应坐标，XYZ格式
+
+   * @returns
+
+   */
+
+  this.localToWorldCoordinates = function(localCoordinates, result){
+
+      if (!result) {
+
+          result = new Cesium.Cartesian3();
+
+      }
+
+      Cesium.Matrix4.multiplyByPoint(this.RCSMatrix, localCoordinates, result);
+
+      return result;
+
+  };
+
+ 
+
+  /**
+
+   * 世界坐标转换成对应的相对坐标
+
+   *
+
+   * @param {Cartesian3} WorldCoordinates 世界坐标系中的坐标，XYZ格式
+
+   * @param {Cartesian3} result 相对坐标系中的坐标，XYZ格式
+
+   * @returns
+
+   */
+
+  this.WorldCoordinatesTolocal = function(WorldCoordinates, result){
+
+      if (!result) {
+
+          result = new Cesium.Cartesian3();
+
+      }
+
+      Cesium.Matrix4.multiplyByPoint(this.RCSmatrixInverse, WorldCoordinates, result);
+
+      return result;
+
+  };
+
+};
+ 
+
+```
+
+ 
 
 
 var getModelMatrix = function(lon, lat, rotationZ) {
@@ -186,12 +286,20 @@ var getModelMatrix = function(lon, lat, rotationZ) {
  
 
  
-计算两个三维坐标系之间的距离
+//计算两个三维坐标系之间的距离
 var d = Cesium.Cartesian3.distance(
     new Cesium.Cartesian3(pick1.x, pick1.y, pick1.z), 
     new Cesium.Cartesian3(pick3.x, pick3.y, pick3.z)
 ); //pick1、pick3都是三维坐标系
  
+
+
+
+
+
+
+
+
 
 一个局部坐标为p1(x,y,z)的点，将它的局部坐标原点放置到loc(lng,lat,alt)上，局部坐标的z轴垂直于地表，局部坐标的y轴指向正北，
 并围绕这个z轴旋转angle度，求此时p1(x,y,z)变换成全局坐标笛卡尔坐标p2(x1,y1,z1)是多少？
