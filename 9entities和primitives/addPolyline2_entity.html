@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8">
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>线</title>
+  <script src="../Build/Cesium/Cesium.js"></script>
+  <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+      html, body, #cesiumContainer {
+          width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+      }
+
+  </style>
+</head>
+<body>
+<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+  <button onclick="addPolyline1()">增加红色线1</button>
+  <button onclick="addPolyline2()">增加RHUMB线2-恒向线</button>
+  <button onclick="addPolyline3()">增加发光线3-透明度+高度</button>
+  <button onclick="addPolyline4()">增加边框线4</button>
+  <button onclick="addPolyline5()">增加箭头线5</button>
+  <button onclick="addPolyline6()">增加虚线6-distanceDisplayCondition</button>
+</div>
+  <div id="cesiumContainer"></div>
+  <script>
+      Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+      var viewer = new Cesium.Viewer('cesiumContainer',{
+        geocoder:false,
+        baseLayerPicker:false,
+        fullscreenButton:false,
+        homeButton:false,
+        sceneModePicker:false,
+        animation:false,
+        timeline:false,
+        navigationHelpButton:false,
+        terrainProvider: Cesium.createWorldTerrain({
+            requestWaterMask: true,
+            requestVertexNormals: true
+        })
+    });
+
+      //普通线
+      function addPolyline1() {
+          viewer.entities.add({
+              name : "红色普通线",
+              polyline : {
+                  positions : Cesium.Cartesian3.fromDegreesArray([114, 30, 70, 30]),
+                  width : 5,
+                  material : Cesium.Color.RED,
+                  clampToGround : true //贴地形
+              }
+          });
+      }
+
+
+      //恒向线
+      //该线条则描述的是恒向线，任意位置的延伸方向都是恒定的。起点和终点的纬度都是30，所以线条是和30度纬度线是重合的。
+      function addPolyline2() {
+          viewer.entities.add({
+              name : "绿色恒向线",
+              polyline : {
+                  positions : Cesium.Cartesian3.fromDegreesArray([114, 30, 70, 30]),
+                  width : 5,
+                  material : Cesium.Color.BLUE,
+                  arcType : Cesium.ArcType.RHUMB,
+                  clampToGround : true //贴地形
+              }
+          });
+      }
+
+      //发光线
+      function addPolyline3() {
+          viewer.entities.add({
+              name : "发光线",
+              polyline : {
+                  positions : Cesium.Cartesian3.fromDegreesArray([114, 33, 70, 33]),
+                  width : 5,
+                  material :  new Cesium.PolylineGlowMaterialProperty({
+                      glowPower : 0.6,  //发光强度，是线宽的百分比
+                      taperPower : 0.5, //变窄锥化效果
+                      color : Cesium.Color.CORNFLOWERBLUE
+                  })
+              }
+          });
+      }
+
+
+      //边框线
+      function addPolyline4() {
+          viewer.entities.add({
+              polyline : {
+                  positions : Cesium.Cartesian3.fromDegreesArrayHeights([114, 34, 250000,
+                      70, 34,  0]),
+                  width : 8,
+                  material : new Cesium.PolylineOutlineMaterialProperty({
+                      color : Cesium.Color.ORANGE,
+                      outlineWidth : 4,
+                      outlineColor : Cesium.Color.RED
+                  })
+              }
+          });
+      }
+
+      //紫色箭头线
+      function addPolyline5() {
+          viewer.entities.add({
+              name:"紫色箭头线",
+              polyline : {
+                  positions : Cesium.Cartesian3.fromDegreesArrayHeights([114, 36, 250000,
+                      70, 36,  250000]),
+                  width : 8,
+                  arcType : Cesium.ArcType.NONE,
+                  material : new Cesium.PolylineArrowMaterialProperty(Cesium.Color.PURPLE)
+              }
+          });
+
+      }
+
+
+      //虚线
+      function addPolyline6() {
+          viewer.entities.add({
+              name:"虚线",
+              polyline : {
+                  positions : Cesium.Cartesian3.fromDegreesArrayHeights([114, 37, 500000,
+                      70, 37, 500000]),
+                  width : 4,
+                  material : new Cesium.PolylineDashMaterialProperty({
+                      color: Cesium.Color.CYAN
+                  }),
+                  arcType : Cesium.ArcType.NONE,
+                  distanceDisplayCondition : new Cesium.DistanceDisplayCondition(1.5e2, 1.5e7)
+              }
+          });
+      }
+
+
+    viewer.zoomTo(viewer.entities);
+  </script>
+</body>
+</html>

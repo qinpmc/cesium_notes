@@ -9,9 +9,9 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Hello World!</title>
-    <script src="../Build/CesiumUnminified/Cesium.js"></script>
+    <script src="../Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/CesiumUnminified/Widgets/widgets.css);
+        @import url(../Build/Cesium/Widgets/widgets.css);
 
         html, body, #cesiumContainer {
             width: 100%;
@@ -20,13 +20,6 @@
             padding: 0;
             overflow: hidden;
         }
-
-        .cesium-viewer-bottom /* logo信息 */
-        {
-            display: none;
-        }
-
-
     </style>
 </head>
 <body>
@@ -42,30 +35,18 @@
     var viewer = new Cesium.Viewer("cesiumContainer", {
         animation: false,  //是否显示动画控件
         baseLayerPicker: false, //是否显示图层选择控件
-        geocoder: true, //是否显示地名查找控件
+        geocoder: false, //是否显示地名查找控件
         timeline: false, //是否显示时间线控件
         sceneModePicker: true, //是否显示投影方式控件
         navigationHelpButton: false, //是否显示帮助信息控件
         infoBox: true,  //是否显示点击要素之后显示的信息
-        imageryProvider : new Cesium.WebMapTileServiceImageryProvider({
-            url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-            layer: "vec",
-            style: "default",
-            format: "tiles",
-            tileMatrixSetID: "c",
-            tileMatrixLabels:tileMatrixLabels,
-            tilingScheme:new Cesium.GeographicTilingScheme({
-                numberOfLevelZeroTilesX:2,
-                numberOfLevelZeroTilesY:1
-            })
-        })
     });
 
 
     var scene = viewer.scene;
 
 
-    /*
+
     // 使用 entities 添加 ----------------------
     viewer.entities.add({
         rectangle : {
@@ -77,25 +58,6 @@
             })
         }
     });
-
-    */
-
-
- // 使用 Primitive 添加  --------------------
-    var instance = new Cesium.GeometryInstance({
-        geometry : new Cesium.RectangleGeometry({
-            rectangle : Cesium.Rectangle.fromDegrees(-100.0, 20.0, -90.0, 30.0), //Cesium.Rectangle(west, south, east, north)
-            vertexFormat : Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT
-        })
-    });
-
-    scene.primitives.add(new Cesium.Primitive({
-        geometryInstances : instance,
-        appearance : new Cesium.EllipsoidSurfaceAppearance({
-            material : Cesium.Material.fromType('Stripe')
-        })
-    }));
-
 
     viewer.camera.flyTo({
         destination:Cesium.Cartesian3.fromDegrees(-95, 20, 9000000)
