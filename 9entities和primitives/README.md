@@ -29,24 +29,24 @@ options:
 - orientation : Property	 
 - viewFrom : Property	 
 - parent : Entity	 
-- billboard : BillboardGraphics 
-- box : BoxGraphics 
-- corridor : CorridorGraphics	 
-- cylinder : CylinderGraphics	 
-- ellipse : EllipseGraphics	 
-- ellipsoid : EllipsoidGraphics 
-- label : LabelGraphics	 
-- model : ModelGraphics	 
-- tileset : Cesium3DTilesetGraphics	 
-- path : PathGraphics	 
-- plane : PlaneGraphics	 
-- point : PointGraphics	 
-- polygon : PolygonGraphics	 
-- polyline : PolylineGraphics	 
+- billboard : BillboardGraphics  广告牌
+- box : BoxGraphics              盒子
+- corridor : CorridorGraphics	 通道
+- cylinder : CylinderGraphics	 圆柱
+- ellipse : EllipseGraphics	     椭圆
+- ellipsoid : EllipsoidGraphics  椭球体
+- label : LabelGraphics	         标签
+- model : ModelGraphics	         模型
+- tileset : Cesium3DTilesetGraphics	 3dTiles模型
+- path : PathGraphics	         路径
+- plane : PlaneGraphics	         平板
+- point : PointGraphics	         点
+- polygon : PolygonGraphics	     面
+- polyline : PolylineGraphics	 线 
 - properties : PropertyBag	 
-- polylineVolume : PolylineVolumeGraphics	 
-- rectangle : RectangleGraphics	 
-- wall : WallGraphics
+- polylineVolume : PolylineVolumeGraphics	 折线体
+- rectangle : RectangleGraphics	 矩形
+- wall : WallGraphics            墙体
 
 
 
