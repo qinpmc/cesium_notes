@@ -81,3 +81,26 @@ PolylineColorAppearance
 PolylineMaterialAppearance
 
 矩形： 西南东北
+
+
+```
+var greenLine = viewer.entities.add({
+    polyline : {
+        positions : [startPosition, endPosition],
+        width : 5,
+        material : Cesium.Color.SPRINGGREEN
+    }
+});
+ 
+var polylines = scene.primitives.add(new Cesium.PolylineCollection());
+var polyline = polylines.add({
+    positions : Cesium.PolylinePipeline.generateCartesianArc({
+        positions : [startPosition, endPosition]
+    }),
+    material : Cesium.Material.fromType('Color', {
+        color : Cesium.Color.SPRINGGREEN
+    }),
+    width: 5
+});
+
+```

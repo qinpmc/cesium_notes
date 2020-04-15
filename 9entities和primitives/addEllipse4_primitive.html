@@ -26,6 +26,7 @@
 <body>
 <div style="position: absolute;z-index: 9999;left: 10px;top:10px">
     <button onclick="addCircle1()">增加普通绿圆形1</button>
+    <button onclick="addCircle1_1()">增加普蓝色圆形1_1贴地</button>
     <button onclick="addEllipse2()">增加椭圆面2</button>
     <button onclick="addEllipse3()">增加拉伸椭圆面3</button>
 </div>
@@ -42,19 +43,88 @@
 
 
 
-    //普通绿圆形--默认贴地?
+    //普通绿圆形--默认不贴地
     function addCircle1() {
+
+//        scene.primitives.add(new Cesium.Primitive({
+//            geometryInstances: new Cesium.GeometryInstance({
+//                geometry: new Cesium.EllipseGeometry({
+//                    center: Cesium.Cartesian3.fromDegrees(-111.0, 40.0),
+//                    semiMinorAxis : 300000.0,
+//                    semiMajorAxis : 300000.0,
+//                    vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT
+//                }),
+//                attributes: {
+//                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(0.0, 1.0, 0.0, 1.0))
+//                }
+//            }),
+//            appearance: new Cesium.PerInstanceColorAppearance({
+//                closed: true,
+//                translucent: true
+//            })
+//
+//        }));
+
+        //边框---圆形存在时，边框看不到--看不清？
+        var ellipse = new Cesium.EllipseOutlineGeometry({
+            center : Cesium.Cartesian3.fromDegrees(-111.0, 40.0),
+            semiMajorAxis : 300000.0,
+            semiMinorAxis : 300000.0,
+
+        });
+
+        var geometryOutline = Cesium.EllipseOutlineGeometry.createGeometry(ellipse);
+
+        //var material =
+        //polygon.material.uniforms.color = new Cesium.Color(1.0, 1.0, 0.0, 1.0);
+
 
         scene.primitives.add(new Cesium.Primitive({
             geometryInstances: new Cesium.GeometryInstance({
+                geometry: geometryOutline,
+                attributes: {
+                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)
+                }
+            }),
+            appearance : new Cesium.MaterialAppearance({
+                material : new Cesium.Material({
+                    fabric : {
+                        type : 'Color',
+                        uniforms : {
+                            color : new Cesium.Color(1.0, 1.0, 0.0, 1.0)
+                        }
+                    }
+                }),
+                faceForward : true
+            })
+
+/*            appearance: new Cesium.PerInstanceColorAppearance({
+                renderState : {
+                    flat : true,
+                    lineWidth : Math.max(8.0, scene.maximumAliasedLineWidth)
+                }
+            })*/
+
+        }));
+
+
+
+
+
+    }
+
+    //蓝色圆形1_1贴地
+    function addCircle1_1(){
+        scene.primitives.add(new Cesium.GroundPrimitive({
+            geometryInstances: new Cesium.GeometryInstance({
                 geometry: new Cesium.EllipseGeometry({
-                    center: Cesium.Cartesian3.fromDegrees(-111.0, 40.0),
-                    semiMinorAxis : 300000.0,
-                    semiMajorAxis : 300000.0,
+                    center: Cesium.Cartesian3.fromDegrees(-111.0, 35.0),
+                    semiMinorAxis : 100000.0,
+                    semiMajorAxis : 100000.0,
                     vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT
                 }),
                 attributes: {
-                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(0.0, 1.0, 0.0, 1.0))
+                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(0.0, 0.0, 1.0, 1.0))
                 }
             }),
             appearance: new Cesium.PerInstanceColorAppearance({
@@ -63,35 +133,8 @@
             })
 
         }));
-
-        //红色边框---边框 粗细如何控制？
-        var ellipse = new Cesium.EllipseOutlineGeometry({
-            center : Cesium.Cartesian3.fromDegrees(-111.0, 40.0),
-            semiMajorAxis : 300000.0,
-            semiMinorAxis : 300000.0,
-
-        });
-        var geometryOutline = Cesium.EllipseOutlineGeometry.createGeometry(ellipse);
-
-
-        scene.primitives.add(new Cesium.Primitive({
-            geometryInstances: new Cesium.GeometryInstance({
-                geometry: geometryOutline,
-                attributes: {
-                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(1.0, 0.0, 0.0, 1.0))
-                }
-            }),
-            appearance: new Cesium.PerInstanceColorAppearance({
-                renderState : {
-                    flat : true,
-                    lineWidth : Math.max(8.0, scene.maximumAliasedLineWidth)
-                }
-            })
-
-        }));
-
-
     }
+
 
     //椭圆面2--
     function addEllipse2() {
@@ -132,19 +175,37 @@
 
     //椭圆面3-- 拉伸
     function addEllipse3() {
-//        viewer.entities.add({
-//            position:Cesium.Cartesian3.fromDegrees(-95.0, 40.0),
-//            name:"蓝色椭球",
-//            ellipse:{
-//                semiMinorAxis : 150000.0,
-//                semiMajorAxis : 300000.0,
-//                //height: 100000.0,
-//                extrudedHeight : 200000.0,
-//                rotation : Cesium.Math.toRadians(45),
-//                material : Cesium.Color.BLUE.withAlpha(0.5),
-//                outline : true
-//            }
-//        })
+
+        //构造边框
+        ellipseOutlineGeometry = new Cesium.EllipseOutlineGeometry({
+            center : Cesium.Cartesian3.fromDegrees(-95.0, 40.0),
+            semiMinorAxis : 150000.0,
+            semiMajorAxis : 300000.0,
+            height: 100000.0,
+            extrudedHeight : 200000.0,
+            rotation : Cesium.Math.toRadians(30),
+            numberOfVerticalLines: 20
+        });
+
+        var extrudedEllipseOutlineInstance = new Cesium.GeometryInstance({
+            geometry : ellipseOutlineGeometry,
+            attributes : {
+                color : Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.WHITE)
+            }
+        });
+
+        //添加边框
+        scene.primitives.add(new Cesium.Primitive({
+            geometryInstances :extrudedEllipseOutlineInstance,
+            appearance : new Cesium.PerInstanceColorAppearance({
+                flat : true,
+                renderState : {
+                    lineWidth : Math.max(4.0, scene.maximumAliasedLineWidth)
+                }
+            })
+        }));
+
+
 
         scene.primitives.add(new Cesium.Primitive({
             geometryInstances: new Cesium.GeometryInstance({
@@ -170,7 +231,6 @@
 
     }
 
-    //viewer.zoomTo(viewer.entities);
 </script>
 </body>
 </html>

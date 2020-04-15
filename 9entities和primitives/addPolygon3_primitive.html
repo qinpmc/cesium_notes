@@ -166,51 +166,51 @@
     function addPolygon2() {
 
         // 第一种边框方式---- PolygonOutlineGeometry
-               //scene.primitives.add(new Cesium.GroundPrimitive({ ------使用GroundPrimitive 报错
-               scene.primitives.add(new Cesium.Primitive({
-                   geometryInstances : new Cesium.GeometryInstance({
-                       geometry : new Cesium.PolygonOutlineGeometry({
-                           polygonHierarchy:new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArray([-75.61309, 40.04453,
-                               -75.61109, 40.04453,
-                               -75.61109, 42.05653,
-                               -75.61309, 42.05653,
-                           ])),
-                           vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT
+        //scene.primitives.add(new Cesium.GroundPrimitive({ ------使用GroundPrimitive 报错？
+        scene.primitives.add(new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+                geometry: new Cesium.PolygonOutlineGeometry({
+                    polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArray([-75.61309, 40.04453,
+                        -75.61109, 40.04453,
+                        -75.61109, 42.05653,
+                        -75.61309, 42.05653,
+                    ])),
+                    vertexFormat: Cesium.PerInstanceColorAppearance.VERTEX_FORMAT
 
-                       }),
-                       attributes: {
-                           color: Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(1.0, 0.0, 0.0, 1.0))
-                       }
-                   }),
-                   appearance : new Cesium.PerInstanceColorAppearance({
+                }),
+                attributes: {
+                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(1.0, 1.0, 0.0, 1.0))
+                }
+            }),
+            appearance: new Cesium.PerInstanceColorAppearance({
 
-                       //flat : true,
-                       renderState : {
-                           lineWidth : Math.max(10.0, scene.maximumAliasedLineWidth)
-                       }
-                   })
+                flat: true,
+                renderState: {
+                    lineWidth: Math.max(10.0, scene.maximumAliasedLineWidth)
+                }
+            })
 
-               }));
+        }));
 
 
         // 第二种边框方式---- polylinePrimitive
-//        var cartesian = Cesium.Cartesian3.fromDegreesArray([-75.61309, 40.04453,
-//            -75.61109, 40.04453,
-//            -75.61109, 42.05653,
-//            -75.61309, 42.05653,
-//        ]);
-//        var outlineColor = Cesium.Color.RED;
-//        var polylinePrimitive = new Cesium.PolylineCollection();
-//        polylinePrimitive.add({
-//            positions: cartesian,
-//            width: 3.0,
-//            loop: true,
-//            material: new Cesium.Material.fromType('Color', {
-//                color: outlineColor
-//            })
-//        });
+        /*        var cartesian = Cesium.Cartesian3.fromDegreesArray([-75.61309, 40.04453,
+                    -75.61109, 40.04453,
+                    -75.61109, 42.05653,
+                    -75.61309, 42.05653,
+                ]);
+                var outlineColor = Cesium.Color.RED;
+                var polylinePrimitive = new Cesium.PolylineCollection();
+                polylinePrimitive.add({
+                    positions: cartesian,
+                    width: 3.0,
+                    loop: true,
+                    material: new Cesium.Material.fromType('Color', {
+                        color: outlineColor
+                    })
+                });
 
-        scene.primitives.add(polylinePrimitive);
+                scene.primitives.add(polylinePrimitive);*/
 
 
         //填充面
@@ -336,18 +336,18 @@
 
     //拉伸绿色面
     function addPolygon6() {
-/*        var greenPolygon = viewer.entities.add({
-            name: 'Green extruded polygon',
-            polygon: {
-                hierarchy: Cesium.Cartesian3.fromDegreesArray([-108.0, 42.0,
-                    -100.0, 42.0,
-                    -104.0, 40.0]),
-                extrudedHeight: 500000.0,
-                material: Cesium.Color.GREEN,
-                closeTop: false,
-                closeBottom: true
-            }
-        });*/
+        /*        var greenPolygon = viewer.entities.add({
+                    name: 'Green extruded polygon',
+                    polygon: {
+                        hierarchy: Cesium.Cartesian3.fromDegreesArray([-108.0, 42.0,
+                            -100.0, 42.0,
+                            -104.0, 40.0]),
+                        extrudedHeight: 500000.0,
+                        material: Cesium.Color.GREEN,
+                        closeTop: false,
+                        closeBottom: true
+                    }
+                });*/
 
 
         scene.primitives.add(new Cesium.Primitive({
@@ -377,20 +377,20 @@
 
     //拉伸紫色面-使用恒向线
     function addPolygon7() {
-/*        var purplePolygonUsingRhumbLines = viewer.entities.add({
-            name: 'Purple polygon using rhumb lines with outline',
-            polygon: {
-                hierarchy: Cesium.Cartesian3.fromDegreesArray([-120.0, 45.0,
-                    -80.0, 45.0,
-                    -80.0, 55.0,
-                    -120.0, 55.0]),
-                extrudedHeight: 50000,
-                material: Cesium.Color.PURPLE,
-                outline: true,
-                outlineColor: Cesium.Color.MAGENTA,
-                arcType: Cesium.ArcType.RHUMB // 使用恒向线
-            }
-        });*/
+        /*        var purplePolygonUsingRhumbLines = viewer.entities.add({
+                    name: 'Purple polygon using rhumb lines with outline',
+                    polygon: {
+                        hierarchy: Cesium.Cartesian3.fromDegreesArray([-120.0, 45.0,
+                            -80.0, 45.0,
+                            -80.0, 55.0,
+                            -120.0, 55.0]),
+                        extrudedHeight: 50000,
+                        material: Cesium.Color.PURPLE,
+                        outline: true,
+                        outlineColor: Cesium.Color.MAGENTA,
+                        arcType: Cesium.ArcType.RHUMB // 使用恒向线
+                    }
+                });*/
 
 
         scene.primitives.add(new Cesium.Primitive({

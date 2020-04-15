@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>椭球体</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+    <button onclick="addEllipsoid1()">增加蓝色椭球体1</button>
+    <button onclick="addEllipsoid1_1()">增加黄色椭球体1</button>
+    <button onclick="addEllipsoid2()">增加椭球体2（球体）</button>
+    <button onclick="addEllipsoid3()">增加椭球体3-纯轮廓</button>
+
+</div>
+<div id="cesiumContainer"></div>
+<script>
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        geocoder: false,
+        baseLayerPicker: false,
+        fullscreenButton: false,
+        homeButton: false,
+        sceneModePicker: false,
+        animation: false,
+        timeline: false,
+        navigationHelpButton: false,
+        terrainProvider: Cesium.createWorldTerrain({
+            requestWaterMask: true,
+            requestVertexNormals: true
+        })
+    });
+
+
+    //椭球体1
+    function addEllipsoid1() {
+
+        var blueEllipsoid = viewer.entities.add({
+            name : 'Blue ellipsoid',
+            position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 300000.0),
+            ellipsoid : {
+                radii : new Cesium.Cartesian3(200000.0, 200000.0, 100000.0),
+                material : Cesium.Color.BLUE
+            }
+        });
+    }
+
+    function addEllipsoid1_1() {
+
+        var ellipsoidGraphics = new Cesium.EllipsoidGraphics({
+            radii : new Cesium.Cartesian3(200000.0, 200000.0, 100000.0),
+            material : Cesium.Color.YELLOW
+        })
+
+        var blueEllipsoid = viewer.entities.add({
+            name : 'Blue ellipsoid',
+            position: Cesium.Cartesian3.fromDegrees(-121.0, 40.0, 200000.0),
+            ellipsoid : ellipsoidGraphics
+        });
+    }
+
+
+
+    //椭球体2（球体）-带轮廓线
+    function addEllipsoid2() {
+        var redSphere = viewer.entities.add({
+            name : 'Red sphere with black outline',
+            position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 400000.0),
+            ellipsoid : {
+                radii : new Cesium.Cartesian3(300000.0, 300000.0, 300000.0),
+                material : Cesium.Color.RED.withAlpha(0.5),
+                outline : true,
+                outlineColor : Cesium.Color.BLACK
+            }
+        });
+    }
+
+    //椭球体3
+    function addEllipsoid3() {
+
+        var outlineOnly = viewer.entities.add({
+            name : 'Yellow ellipsoid outline',
+            position: Cesium.Cartesian3.fromDegrees(-100.0, 40.0, 300000.0),
+            ellipsoid : {
+                radii : new Cesium.Cartesian3(200000.0, 200000.0, 300000.0),
+                fill : false, //不填充，无material属性
+                outline : true,
+                outlineColor : Cesium.Color.YELLOW,
+                slicePartitions : 10, //径向切片数
+                stackPartitions : 136 //堆栈横向切片数
+            }
+        });
+    }
+
+
+
+
+
+    viewer.zoomTo(viewer.entities);
+
+
+</script>
+</body>
+</html>

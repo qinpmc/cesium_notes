@@ -15,7 +15,24 @@
 - requestVertexNormals：Boolean，默认alse	 
 - requestWaterMask：Boolean，false	 
  
+- 使用requestWaterMask以类似的方式启用水体效果.
+
+- 若要启用地形照明，请将requestVertexNormals设为true并开启全球光照.
+
+```
+var viewer = new Cesium.Viewer('cesiumContainer', {
+    terrainProvider : Cesium.createWorldTerrain({
+        requestVertexNormals: true
+    })
+});
+viewer.scene.globe.enableLighting = true;
+```
+
+
  
+
+
+
 ### Cesium.sampleTerrain(terrainProvider, level, positions) → Promise.<Array.<Cartographic>>
 
 - terrainProvider： TerrainProvider	   The terrain provider from which to query heights.
@@ -45,3 +62,4 @@ Cesium.when(promise, function(updatedPositions) {
 
 
 ```
+

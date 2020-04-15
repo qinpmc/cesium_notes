@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>墙体</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+    <button onclick="addWall1()">增加墙体1</button>
+    <button onclick="addWall2()">增加墙体2</button>
+    <button onclick="addWall3()">增加墙体3</button>
+
+</div>
+<div id="cesiumContainer"></div>
+<script>
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        geocoder: false,
+        baseLayerPicker: false,
+        fullscreenButton: false,
+        homeButton: false,
+        sceneModePicker: false,
+        animation: false,
+        timeline: false,
+        navigationHelpButton: false,
+        terrainProvider: Cesium.createWorldTerrain({
+            requestWaterMask: true,
+            requestVertexNormals: true
+        })
+    });
+
+
+    //墙体1
+    function addWall1() {
+        var redRectangle = viewer.entities.add({
+            name : 'Red translucent rectangle',
+            wall:{
+                positions:Cesium.Cartesian3.fromDegreesArrayHeights([
+                    -115.0, 44.0, 200000.0,
+                    -90.0, 44.0, 200000.0
+                ]),
+                minimumHeights : [100000.0, 100000.0],
+                material : Cesium.Color.RED
+            }
+        });
+
+    }
+
+    //墙体2 --默认minimumHeights最小高度0--贴地面
+    function addWall2() {
+        var greenWall = viewer.entities.add({
+            name : 'Green wall from surface with outline',
+            wall : {
+                positions : Cesium.Cartesian3.fromDegreesArrayHeights([-107.0, 43.0, 100000.0,
+                    -97.0, 43.0, 100000.0,
+                    -97.0, 40.0, 100000.0,
+                    -107.0, 40.0, 100000.0,
+                    -107.0, 43.0, 100000.0]),
+                material : Cesium.Color.GREEN,
+                outline : true
+            }
+        });
+    }
+
+    //墙体3
+    function addWall3() {
+        var blueWall = viewer.entities.add({
+            name : 'Blue wall with sawtooth heights and outline',
+            wall : {
+                positions : Cesium.Cartesian3.fromDegreesArray([-115.0, 50.0,
+                    -112.5, 50.0,
+                    -110.0, 50.0,
+                    -107.5, 50.0,
+                    -105.0, 50.0,
+                    -102.5, 50.0,
+                    -100.0, 50.0,
+                    -97.5, 50.0,
+                    -95.0, 50.0,
+                    -92.5, 50.0,
+                    -90.0, 50.0]),
+                maximumHeights : [100000, 200000, 100000, 200000, 100000, 200000, 100000, 200000, 100000, 200000, 100000],
+                minimumHeights : [0, 100000,  0, 100000, 0, 100000, 0, 100000, 0, 100000, 0],
+                material : Cesium.Color.BLUE.withAlpha(0.5),
+                outline : true,
+                outlineColor : Cesium.Color.BLACK
+            }
+        });
+
+    }
+
+
+
+    viewer.zoomTo(viewer.entities);
+
+
+</script>
+</body>
+</html>
