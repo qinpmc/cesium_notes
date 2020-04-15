@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>盒子</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+    <button onclick="addBox1()">增加盒子1</button>
+    <button onclick="addBox2()">增加盒子2</button>
+</div>
+<div id="cesiumContainer"></div>
+<script>
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+    var widget = new Cesium.CesiumWidget('cesiumContainer');
+    var scene = widget.scene;
+    scene.terrainProvider = Cesium.createWorldTerrain({
+        requestWaterMask: true,
+        requestVertexNormals: true
+    });
+
+
+    //不贴地
+    function addBox1() {
+
+
+        var box = new Cesium.BoxGeometry({
+            vertexFormat : Cesium.VertexFormat.POSITION_ONLY,
+            maximum : new Cesium.Cartesian3(250000.0, 250000.0, 250000.0),
+            minimum : new Cesium.Cartesian3(-250000.0, -250000.0, -250000.0)
+        });
+        //var geometry = Cesium.BoxGeometry.createGeometry(box);
+
+        var positionOnEllipsoid = Cesium.Cartesian3.fromDegrees(-107.0, 40.0);
+        var modelMatrix = Cesium.Matrix4.multiplyByTranslation(
+            Cesium.Transforms.eastNorthUpToFixedFrame(positionOnEllipsoid),
+            new Cesium.Cartesian3(0.0, 0.0, 300000), new Cesium.Matrix4()
+        );
+
+        scene.primitives.add(new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+                geometry: box,
+                modelMatrix: modelMatrix,
+
+            }),
+            appearance: new Cesium.MaterialAppearance({
+                material: new Cesium.Material({
+                    fabric: {
+                        type: 'Color',
+                        uniforms: {
+                            color: new Cesium.Color(0.0, 0.0, 1.0, 1.0)
+                        },
+                    }
+                }),
+                faceForward: true
+            })
+        }))
+
+    }
+
+
+    //
+    function addBox2() {
+
+        var dimensions = new Cesium.Cartesian3(400000.0, 300000.0, 500000.0);
+
+        var positionOnEllipsoid = Cesium.Cartesian3.fromDegrees(-100.0, 40.0);
+        var boxModelMatrix = Cesium.Matrix4.multiplyByTranslation(
+            Cesium.Transforms.eastNorthUpToFixedFrame(positionOnEllipsoid),
+            new Cesium.Cartesian3(0.0, 0.0, 300000), new Cesium.Matrix4());
+
+        var boxGeometry = Cesium.BoxGeometry.fromDimensions({
+            vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT,
+            dimensions : dimensions
+        });
+
+        var boxGeometryInstance = new Cesium.GeometryInstance({
+            geometry : boxGeometry,
+            modelMatrix : boxModelMatrix,
+            attributes : {
+                color : Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(1.0, 1.0, 0.0, 0.5))
+            }
+        });
+
+        scene.primitives.add(new Cesium.Primitive({
+            geometryInstances : boxGeometryInstance,
+            appearance : new Cesium.PerInstanceColorAppearance({
+                closed: true
+            })
+        }));
+    }
+
+
+</script>
+</body>
+</html>

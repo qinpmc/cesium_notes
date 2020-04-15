@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6d77b63-f932-481c-8b73-ca25dad38f0a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addCircle5_entity.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addCircle5_primitive.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addEllipsoid8_entity.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addEllipsoid8_primitive.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addRectangle6_entity.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addRectangle6_primitive.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addWall7_entity.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addWall7_primitive.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addBox11_entity.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addBox11_primitive.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addCylinder9_entity.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addCylinder9_primitive.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/9entities和primitives/addPlan10_entity.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6terrain/README.md" afterPath="$PROJECT_DIR$/6terrain/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/9entities和primitives/README.md" afterPath="$PROJECT_DIR$/9entities和primitives/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/9entities和primitives/addEllipse4_primitive.html" afterPath="$PROJECT_DIR$/9entities和primitives/addEllipse4_primitive.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/9entities和primitives/addPolygon3_primitive.html" afterPath="$PROJECT_DIR$/9entities和primitives/addPolygon3_primitive.html" />
     </list>
     <ignored path="Cesium.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,32 +26,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="addEllipsoid8_primitive.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/9entities和primitives/addEllipsoid8_primitive.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="82" column="78" lean-forward="false" selection-start-line="82" selection-start-column="78" selection-end-line="82" selection-end-column="78" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="addEllipsoid8_entity.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/9entities和primitives/addEllipsoid8_entity.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="30" column="48" lean-forward="false" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/9entities和primitives/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="-218">
-                <caret line="36" column="2" lean-forward="true" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="11" />
+              <first_editor relative-caret-position="108">
+                <caret line="32" column="19" lean-forward="false" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="19" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -66,37 +39,73 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/yjyzt/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="304">
-                <caret line="56" column="11" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="11" />
-                <folding />
-              </first_editor>
-              <second_editor />
+      <file leaf-file-name="addBox11_entity.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/9entities和primitives/addBox11_entity.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="67" column="23" lean-forward="false" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="flat_true.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/yjyzt/flat_true.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
+      <file leaf-file-name="addBox11_primitive.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/9entities和primitives/addBox11_primitive.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1516">
+              <caret line="108" column="12" lean-forward="false" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="12" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="faceForward_false.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/yjyzt/faceForward_false.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
+      <file leaf-file-name="addPlan10_entity.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/9entities和primitives/addPlan10_entity.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="46" column="7" lean-forward="true" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="faceForward_true.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/yjyzt/faceForward_true.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
+      <file leaf-file-name="addPoint1_entity.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/9entities和primitives/addPoint1_entity.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="786">
+              <caret line="139" column="4" lean-forward="false" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addCylinder9_primitive.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/9entities和primitives/addCylinder9_primitive.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="606">
+              <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="110" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addEllipsoid8_primitive.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/9entities和primitives/addEllipsoid8_primitive.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="45" column="75" lean-forward="true" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="75" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addWall7_primitive.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/9entities和primitives/addWall7_primitive.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2262">
+              <caret line="162" column="63" lean-forward="false" selection-start-line="162" selection-start-column="63" selection-end-line="162" selection-end-column="63" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -162,11 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/10模型/模型飞机-headingpitchroll.html" />
-        <option value="$PROJECT_DIR$/1_0坐标系/coordinate1-3857.html" />
-        <option value="$PROJECT_DIR$/1_0坐标系/coordinate1-4326.html" />
-        <option value="$PROJECT_DIR$/1_0坐标系/coordinate3-局部-全球.html" />
-        <option value="$PROJECT_DIR$/8model/tileset-平移.html" />
         <option value="$PROJECT_DIR$/8model/tileset-旋转.html" />
         <option value="$PROJECT_DIR$/5地图可视化/3ArcgisXYZ-3857.html" />
         <option value="$PROJECT_DIR$/data/tileset/Scene/testm3DTiles.json" />
@@ -213,6 +217,11 @@
         <option value="$PROJECT_DIR$/6terrain/README.md" />
         <option value="$PROJECT_DIR$/9entities和primitives/addEllipsoid8_entity.html" />
         <option value="$PROJECT_DIR$/9entities和primitives/addEllipsoid8_primitive.html" />
+        <option value="$PROJECT_DIR$/9entities和primitives/addCylinder9_entity.html" />
+        <option value="$PROJECT_DIR$/9entities和primitives/addCylinder9_primitive.html" />
+        <option value="$PROJECT_DIR$/9entities和primitives/addPlan10_entity.html" />
+        <option value="$PROJECT_DIR$/9entities和primitives/addBox11_entity.html" />
+        <option value="$PROJECT_DIR$/9entities和primitives/addBox11_primitive.html" />
       </list>
     </option>
   </component>
@@ -225,8 +234,9 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="480" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="382" />
+    <option name="y" value="77" />
     <option name="width" value="1551" />
     <option name="height" value="958" />
   </component>
@@ -248,17 +258,14 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="1_0坐标系" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
@@ -278,19 +285,12 @@
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="yjyzt" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
               <item name="调整tileset角度" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -303,19 +303,19 @@
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\notes\cesium_notes\9entities和primitives\old" />
-      <recent name="F:\notes\cesium_notes\yjyzt" />
-      <recent name="F:\notes\cesium_notes\8model" />
-      <recent name="F:\notes\cesium_notes\data\model" />
-      <recent name="F:\notes\cesium_notes\6terrain" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\notes\cesium_notes\9entities和primitives" />
       <recent name="F:\notes\cesium_notes\yjyzt" />
       <recent name="F:\notes\cesium_notes\1_0坐标系" />
       <recent name="F:\notes\cesium_notes\8model" />
       <recent name="F:\notes\cesium_notes\5地图可视化" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\notes\cesium_notes\9entities和primitives\old" />
+      <recent name="F:\notes\cesium_notes\yjyzt" />
+      <recent name="F:\notes\cesium_notes\8model" />
+      <recent name="F:\notes\cesium_notes\data\model" />
+      <recent name="F:\notes\cesium_notes\6terrain" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -440,7 +440,9 @@
       <workItem from="1586580504628" duration="11092000" />
       <workItem from="1586655565265" duration="31609000" />
       <workItem from="1586824708191" duration="17288000" />
-      <workItem from="1586910416676" duration="21939000" />
+      <workItem from="1586910416676" duration="22636000" />
+      <workItem from="1586953410443" duration="69000" />
+      <workItem from="1586954429998" duration="3565000" />
     </task>
     <task id="LOCAL-00001" summary="add notes">
       <created>1586602612624</created>
@@ -453,16 +455,15 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="423623000" />
+    <option name="totallyTimeSpent" value="427954000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25501585" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270809" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973601" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -476,6 +477,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -529,39 +531,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/1_0坐标系/coordinate1-3857.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="25" column="24" lean-forward="false" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1_0坐标系/coordinate2-4326.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="70" column="2" lean-forward="false" selection-start-line="70" selection-start-column="2" selection-end-line="70" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/8model/model2_3_平移_旋转.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-186">
-          <caret line="162" column="0" lean-forward="false" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1_0坐标系/wgs84.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/8model/model2_2-平移.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="186" column="79" lean-forward="false" selection-start-line="186" selection-start-column="79" selection-end-line="186" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/8model/model2-调整headingpitchroll.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="516">
@@ -686,7 +655,6 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="216">
             <caret line="48" column="21" lean-forward="true" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="52" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -696,7 +664,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
           <caret line="53" column="14" lean-forward="true" selection-start-line="53" selection-start-column="14" selection-end-line="53" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -704,7 +671,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1008">
           <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -712,7 +678,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-810">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -720,7 +685,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-270">
           <caret line="174" column="48" lean-forward="false" selection-start-line="174" selection-start-column="38" selection-end-line="174" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -728,7 +692,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="53" column="20" lean-forward="false" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -736,7 +699,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="41" column="20" lean-forward="true" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -744,7 +706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-450">
           <caret line="87" column="19" lean-forward="false" selection-start-line="87" selection-start-column="8" selection-end-line="87" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -752,7 +713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="966">
           <caret line="120" column="0" lean-forward="false" selection-start-line="119" selection-start-column="6" selection-end-line="120" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -760,7 +720,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="55" column="56" lean-forward="false" selection-start-line="55" selection-start-column="40" selection-end-line="55" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -768,15 +727,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1224">
           <caret line="68" column="0" lean-forward="true" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/9entities和primitives/addCircle5_primitive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="55" column="32" lean-forward="false" selection-start-line="55" selection-start-column="26" selection-end-line="55" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -784,7 +734,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="786">
           <caret line="48" column="45" lean-forward="true" selection-start-line="48" selection-start-column="45" selection-end-line="48" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -792,7 +741,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
           <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="190" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -801,17 +749,8 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="180">
             <caret line="19" column="47" lean-forward="false" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
-            <folding />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/9entities和primitives/addPoint1_entity.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="786">
-          <caret line="139" column="4" lean-forward="false" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -819,7 +758,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="68" column="29" lean-forward="false" selection-start-line="68" selection-start-column="29" selection-end-line="68" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -827,7 +765,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="95" column="11" lean-forward="false" selection-start-line="84" selection-start-column="8" selection-end-line="95" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -835,15 +772,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1008">
           <caret line="10" column="12" lean-forward="false" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/9entities和primitives/addWall7_primitive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="162" column="63" lean-forward="false" selection-start-line="162" selection-start-column="63" selection-end-line="162" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -851,7 +779,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-114">
           <caret line="67" column="28" lean-forward="false" selection-start-line="67" selection-start-column="28" selection-end-line="67" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -859,7 +786,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="454">
           <caret line="82" column="15" lean-forward="true" selection-start-line="82" selection-start-column="15" selection-end-line="82" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -867,15 +793,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="558">
           <caret line="98" column="14" lean-forward="true" selection-start-line="81" selection-start-column="8" selection-end-line="98" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/9entities和primitives/addEllipsoid8_entity.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="30" column="48" lean-forward="false" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -899,27 +816,98 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="304">
             <caret line="56" column="11" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="11" />
-            <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addCylinder9_entity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="796">
+          <caret line="73" column="34" lean-forward="false" selection-start-line="73" selection-start-column="34" selection-end-line="73" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addEllipsoid8_entity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="30" column="48" lean-forward="false" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/9entities和primitives/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="-218">
-            <caret line="36" column="2" lean-forward="true" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="11" />
+          <first_editor relative-caret-position="108">
+            <caret line="32" column="19" lean-forward="false" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="19" />
             <folding />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addBox11_entity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="67" column="23" lean-forward="false" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addCircle5_primitive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="34" column="1" lean-forward="true" selection-start-line="34" selection-start-column="1" selection-end-line="39" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addBox11_primitive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1516">
+          <caret line="108" column="12" lean-forward="false" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addPoint1_entity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="786">
+          <caret line="139" column="4" lean-forward="false" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addPlan10_entity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="46" column="7" lean-forward="true" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addCylinder9_primitive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="606">
+          <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="110" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/9entities和primitives/addEllipsoid8_primitive.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="82" column="78" lean-forward="false" selection-start-line="82" selection-start-column="78" selection-end-line="82" selection-end-column="78" />
+        <state relative-caret-position="90">
+          <caret line="45" column="75" lean-forward="true" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addWall7_primitive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2262">
+          <caret line="162" column="63" lean-forward="false" selection-start-line="162" selection-start-column="63" selection-end-line="162" selection-end-column="63" />
           <folding />
         </state>
       </provider>
