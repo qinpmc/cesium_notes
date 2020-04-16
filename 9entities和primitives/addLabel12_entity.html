@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>标签</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+    <button onclick="addLabel1()">增加标签1</button>
+    <button onclick="addLabel2()">增加标签2(像素偏移随 距离变化)</button>
+    <button onclick="addLabel3()">增加标签3(随距离变透明、缩放)</button>
+    <button onclick="removeLabel()">删除标签3</button>
+</div>
+<div id="cesiumContainer"></div>
+<script>
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        geocoder: false,
+        baseLayerPicker: false,
+        fullscreenButton: false,
+        homeButton: false,
+        sceneModePicker: false,
+        animation: false,
+        timeline: false,
+        navigationHelpButton: false,
+        terrainProvider: Cesium.createWorldTerrain({
+            requestWaterMask: true,
+            requestVertexNormals: true
+        })
+    });
+
+
+    //
+    function addLabel1() {
+        viewer.entities.add({
+            position : Cesium.Cartesian3.fromDegrees(114, 30),
+            label : {
+                text : 'Philadelphia',
+                font : '24px Helvetica',
+                fillColor : Cesium.Color.BLUE,
+                outlineColor : Cesium.Color.RED,
+                outlineWidth : 2,
+                style : Cesium.LabelStyle.FILL_AND_OUTLINE  // 3 种： FILL  OUTLINE FILL_AND_OUTLINE
+            }
+        });
+
+        viewer.entities.add({
+            position : Cesium.Cartesian3.fromDegrees(114, 33,3000000),
+            label : {
+                text : 'Cesium',
+                font : '20px Helvetica',
+                fillColor : Cesium.Color.SKYBLUE,
+                outlineColor : Cesium.Color.BLACK,
+                outlineWidth : 2,
+                style : Cesium.LabelStyle.FILL_AND_OUTLINE,  // 3 种： FILL  OUTLINE FILL_AND_OUTLINE
+                showBackground:true,
+                backgroundColor:Cesium.Color.YELLOW
+            }
+        });
+    }
+
+
+    //label 像素偏移随 距离变化而变化， pixelOffsetScaleByDistance + pixelOffset
+    function addLabel2() {
+        viewer.entities.add({
+            position : Cesium.Cartesian3.fromDegrees(-75.1641667, 39.9522222),
+            billboard : {
+                scaleByDistance : new Cesium.NearFarScalar(1.5e2, 5.0, 1.5e7, 0.5),
+                image : "./facility.gif"
+            },
+            label : {
+                text : 'Label on top of scaling billboard',
+                font : '20px sans-serif',
+                showBackground : true,
+                horizontalOrigin : Cesium.HorizontalOrigin.CENTER,
+                pixelOffset : new Cesium.Cartesian2(0.0, -16), // image.height = 16
+                pixelOffsetScaleByDistance : new Cesium.NearFarScalar(1.5e2, 3.0, 1.5e7, 0.5)
+            }
+        });
+
+    }
+
+    var label = null;
+
+    // label 随距离变透明、缩放,支持换行
+    function addLabel3() {
+        label = viewer.entities.add({
+            position : Cesium.Cartesian3.fromDegrees(-84.39, 33.75),
+            label : {
+                text : 'Atlanta\nNext Line',
+                translucencyByDistance : new Cesium.NearFarScalar(1.5e5, 1.0, 1.5e7, 0.0),
+                scaleByDistance : new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5)
+            }
+        });
+    }
+
+    function removeLabel() {
+        viewer.entities.remove(label);
+        label = null;
+    }
+
+
+    viewer.zoomTo(viewer.entities);
+
+
+</script>
+</body>
+</html>

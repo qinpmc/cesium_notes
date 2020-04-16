@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>折线体</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+    <button onclick="addPolylineVolume1()">增加圆形折线体1</button>
+    <button onclick="addPolylineVolume2()">增加方形折线体2</button>
+    <button onclick="addPolylineVolume3()">增加星形折线体3/button>
+</div>
+<div id="cesiumContainer"></div>
+<script>
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+    var widget = new Cesium.CesiumWidget('cesiumContainer');
+    var scene = widget.scene;
+    scene.terrainProvider = Cesium.createWorldTerrain({
+        requestWaterMask: true,
+        requestVertexNormals: true
+    });
+
+
+    //圆形折线体
+    function addPolylineVolume1() {
+
+        //构造圆形横截面 ---二维坐标 构成的数组
+        function computeCircle(radius) {
+            var positions = [];
+            for (var i = 0; i < 360; i++) {
+                var radians = Cesium.Math.toRadians(i);
+                positions.push(new Cesium.Cartesian2(radius * Math.cos(radians), radius * Math.sin(radians)));
+            }
+            return positions;
+        }
+
+        // 注意 ：primitive的方式与 entity的方式：
+        // polylinePositions --- positions
+        // shapePositions    --- shape
+
+        var redTube = new Cesium.GeometryInstance({
+            geometry : new Cesium.PolylineVolumeGeometry({
+                polylinePositions : Cesium.Cartesian3.fromDegreesArray([
+                    -85.0, 32.0,
+                    -85.0, 36.0,
+                    -89.0, 36.0
+                ]),
+                vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT,
+                shapePositions : computeCircle(60000.0)
+            }),
+            attributes : {
+                color : Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)
+            }
+        });
+        scene.primitives.add(new Cesium.Primitive({
+            geometryInstances:redTube,
+            appearance:new Cesium.PerInstanceColorAppearance({
+                closed: false,
+                translucent: true //
+            })
+        }))
+
+
+    }
+
+
+    // 方形折线体
+    function addPolylineVolume2() {
+        function computeRec(minx,miny,maxx,maxy) {
+            var coord1 = new Cesium.Cartesian2(minx,miny);
+            var coord2 = new Cesium.Cartesian2(maxx,miny);
+            var coord3 = new Cesium.Cartesian2(maxx,maxy);
+            var coord4 = new Cesium.Cartesian2(minx,maxy);
+            var positions = [coord1,coord2,coord3,coord4];
+            return positions;
+        }
+
+        scene.primitives.add(new Cesium.Primitive({
+            geometryInstances:new Cesium.GeometryInstance({
+                geometry : new Cesium.PolylineVolumeGeometry({
+                    polylinePositions : Cesium.Cartesian3.fromDegreesArrayHeights([
+                        -90.0, 32.0, 0.0,
+                        -90.0, 36.0, 100000.0,
+                        -94.0, 36.0, 0.0
+                    ]),
+                    vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT,
+                    shapePositions : computeRec(-50000,-50000,90000,50000),
+                    cornerType : Cesium.CornerType.BEVELED,// 斜角的 倒角
+                }),
+                attributes : {
+                    color : Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.GREEN.withAlpha(0.5))
+                }
+            }),
+            appearance:new Cesium.PerInstanceColorAppearance({
+                closed: false,
+                translucent: true //
+            })
+        }))
+
+
+    }
+
+
+    //  星形折线体
+    function addPolylineVolume3() {
+
+        function computeStar(arms, rOuter, rInner) {
+            var angle = Math.PI / arms;
+            var length = 2 * arms;
+            var positions = new Array(length);
+            for (var i = 0; i < length; i++) {
+                var r = (i % 2) === 0 ? rOuter : rInner;
+                positions[i] = new Cesium.Cartesian2(Math.cos(i * angle) * r, Math.sin(i * angle) * r);
+            }
+            return positions;
+        }
+
+        scene.primitives.add(new Cesium.Primitive({
+            geometryInstances:new Cesium.GeometryInstance({
+                geometry : new Cesium.PolylineVolumeGeometry({
+                    polylinePositions : Cesium.Cartesian3.fromDegreesArrayHeights([
+                        -95.0, 32.0, 0.0,
+                        -95.0, 36.0, 100000.0,
+                        -99.0, 36.0, 200000.0
+                    ]),
+                    vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT,
+                    shapePositions :computeStar(5, 70000, 50000),
+                    cornerType : Cesium.CornerType.MITERED, //斜接的 倒角
+                }),
+                attributes : {
+                    color : Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.BLUE)
+                }
+            }),
+            appearance:new Cesium.PerInstanceColorAppearance({
+                closed: false,
+                translucent: true //
+            })
+        }))
+    }
+
+</script>
+</body>
+</html>

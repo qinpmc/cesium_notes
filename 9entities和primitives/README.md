@@ -53,8 +53,7 @@ options:
 scene.primitives: PrimitiveCollection
 
 ### PrimitiveCollection
-
-
+ 
 
 ### PointPrimitiveCollection(options)
 
@@ -104,3 +103,14 @@ var polyline = polylines.add({
 });
 
 ```
+
+
+
+把线条贴到3dtiles上需要用到两个属性：clampToGround和classificationType。
+
+clampToGround属性用来表示该线段要贴地。1.54版以后贴地中的地字同时指代地形和3dtiles数据。
+
+还有一个属性classificationType，则用来描述是否只贴地形（ClassificationType.TERRAIN），或者只贴3dtiles数据（ClassificationType.CESIUM_3D_TILE），或者二者都贴（ClassificationType.BOTH）。默认情况下是二者都贴。
+ 
+链接：https://www.jianshu.com/p/aab4a0bb0d0e
+ 
