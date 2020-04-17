@@ -205,11 +205,35 @@ var range = 5000.0;
 viewer.camera.lookAt(center, new Cesium.HeadingPitchRange(heading, pitch, range));
 
 ```
-### 相机的控制参数
+## 相机的控制参数screenSpaceCameraController
 
-screenSpaceCameraController中控制相机的参数：
+screenSpaceCameraController（屏幕控件相机控制器）把屏幕空间的用户输入（鼠标拖拽点击或触摸事件等）转换为三维世界的相机移动。   
+它包含一些属性，可以启用/禁用某种用户输入、修改惯性、最小最大缩放距离等。
 
 
+screenSpaceCameraController 中控制相机的参数：
+- enableLook 
+- enableRotate 
+- enableTilt  
+- enableZoom
+- maximumMovementRati 
+- maximumZoomDistance
+- minimumCollisionTerrainHeight  
+- minimumPickingTerrainHeight  
+- minimumTrackBallHeight  
+- minimumZoomDistance
+
+### 制鼠标的视图控制
+ // 禁用放大缩小和自由旋转视图
+ viewer.scene.screenSpaceCameraController.enableZoom = false;
+ viewer.scene.screenSpaceCameraController.enableTilt = false;
+ 
+ 
+### 修改视图默认鼠标操作方式
+ // 修改默认的鼠标视图控制方式。
+ viewer.scene.screenSpaceCameraController.zoomEventTypes = [Cesium.CameraEventType.WHEEL, Cesium.CameraEventType.PINCH];
+ viewer.scene.screenSpaceCameraController.tiltEventTypes = [Cesium.CameraEventType.PINCH, Cesium.CameraEventType.RIGHT_DRAG];
+ 
 ```
 viewer.scene.screenSpaceCameraController.minimumZoomDistance = 250000;//相机的高度的最小值
 viewer.scene.screenSpaceCameraController.maximumZoomDistance = 22000000;  //相机高度的最大值
@@ -226,10 +250,35 @@ scene.screenSpaceCameraController.enableZoom = false;
 // 如果为true，则允许用户倾斜相机。如果为假，相机将锁定到当前位置。这个标志只适用于3D和哥伦布视图。
 scene.screenSpaceCameraController.enableTilt = false;
 ```
+ 
+
+## 相机的事件
+
+- changed : Event
+ 
+- moveEnd : Event
+  
+- moveStart : Event
+
+```
+ camera.moveEnd.addEventListener(function () {
+        console.log("moveEnd",arguments);
+        console.log("heading....."+ camera.heading); //4.71238898038469 = 3.14 + 3.14/2
+        console.log("pitch....."+ camera.pitch);  //-0.7853981633974492  = -3.14/4
+        console.log("roll....."+ camera.roll); //6.283185307179586
+    })
 
 
+camera.moveStart.addEventListener(function () {
+    console.log("moveStart",arguments);
+    console.log("heading....."+ camera.heading); //4.71238898038469 = 3.14 + 3.14/2
+    console.log("pitch....."+ camera.pitch);  //-0.7853981633974492  = -3.14/4
+    console.log("roll....."+ camera.roll); //6.283185307179586
+})
 
+camera.changed.addEventListener(function() {
+    console.log("changed",arguments);
+})
 
-
-
+```
 

@@ -29,6 +29,7 @@
     <button onclick="addBillboard2()">增加广告牌2(eyeOffset+sizeInMeters+disableDepthTestDistance)</button>
     <button onclick="addBillboard3()">增加广告牌3(随距离变透明、缩放)</button>
     <button onclick="removeBillBoard()">删除广告牌3</button>
+    <button onclick="addBillboard4()">添加广告牌4(canvas)</button>
 </div>
 <div id="cesiumContainer"></div>
 <script>
@@ -51,7 +52,7 @@
 
         billboardCollection.add({
             position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
-            image: '../4pick/Cesium_Logo_overlay.png', // default: undefined
+            image: '../4pick_events/Cesium_Logo_overlay.png', // default: undefined
             show: true, // default
             pixelOffset: new Cesium.Cartesian2(0, -50), // default: (0, 0)
             eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
@@ -78,7 +79,7 @@
 
         billboardCollection.add({
             position: Cesium.Cartesian3.fromDegrees(-78.59777, 40.03883),
-            image: '../4pick/Cesium_Logo_overlay.png', // default: undefined
+            image: '../4pick_events/Cesium_Logo_overlay.png', // default: undefined
             show: true, // default
 
             //  指定 billboard's 尺寸是否是米为单位（如果是，地球缩小，billboard不随之放大）.
@@ -108,7 +109,7 @@
     function addBillboard3() {
         billBoard = billboardCollection.add({
             position: Cesium.Cartesian3.fromDegrees(-80.59777, 40.03883),
-            image: '../4pick/Cesium_Logo_overlay.png', // default: undefined
+            image: '../4pick_events/Cesium_Logo_overlay.png', // default: undefined
             show: true, // default
             translucencyByDistance: new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5),
             scaleByDistance: new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5)
@@ -119,6 +120,29 @@
     function removeBillBoard() {
         billboardCollection.remove(billBoard);
         billBoard = null;
+    }
+
+
+
+    function addBillboard4() {
+
+        var canvas = document.createElement('canvas');
+        canvas.width = 16;
+        canvas.height = 16;
+        var context2D = canvas.getContext('2d');
+        context2D.beginPath();
+        context2D.arc(8, 8, 8, 0, Cesium.Math.TWO_PI, true);
+        context2D.closePath();
+        context2D.fillStyle = 'rgb(255, 0, 0)';
+        context2D.fill();
+
+        billBoard = billboardCollection.add({
+            position: Cesium.Cartesian3.fromDegrees(-80.59777, 41.03883),
+            image: canvas, // default: undefined
+            show: true, // default
+            translucencyByDistance: new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5),
+            scaleByDistance: new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5)
+        })
     }
 
 

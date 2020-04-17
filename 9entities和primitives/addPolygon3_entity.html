@@ -186,7 +186,7 @@
         });
     }
 
-    //拉伸绿色面
+    //拉伸绿色面-------- 拉伸后实际的体的高度 为 extrudedHeight-height
     function addPolygon6() {
         var greenPolygon = viewer.entities.add({
             name: 'Green extruded polygon',
@@ -194,7 +194,8 @@
                 hierarchy: Cesium.Cartesian3.fromDegreesArray([-108.0, 42.0,
                     -100.0, 42.0,
                     -104.0, 40.0]),
-                extrudedHeight: 500000.0,
+                height:20000,
+                extrudedHeight: 20000.0,
                 material: Cesium.Color.GREEN,
                 closeTop: false,
                 closeBottom: true

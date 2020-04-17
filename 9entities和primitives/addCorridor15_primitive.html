@@ -110,7 +110,7 @@
     }
 
 
-    // 拉伸的corridor---贴地GroundPrimitive
+    // 拉伸的corridor---使用 GroundPrimitive，则拉伸无效果（此时贴地）
     function addCorridor3() {
 
         var corridorGeometry = new Cesium.CorridorGeometry({
@@ -120,9 +120,9 @@
                 -85.0, 35.0
             ]),
             width : 200000.0,
-            //height:200000,
+            height:200000,
             cornerType: Cesium.CornerType.BEVELED, //斜角的 倒角
-            extrudedHeight : 100000.0,
+            extrudedHeight : 400000.0,
             vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT
         });
 
@@ -133,7 +133,10 @@
             }
         });
 
-        scene.primitives.add(new Cesium.GroundPrimitive({
+
+        scene.primitives.add(new Cesium.Primitive({
+        // 使用 GroundPrimitive，则拉伸无效果（此时贴地）
+        //scene.primitives.add(new Cesium.GroundPrimitive({
             geometryInstances : blueCorridorInstance,
             appearance : new Cesium.PerInstanceColorAppearance({
                 closed : true

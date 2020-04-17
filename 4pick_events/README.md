@@ -5,7 +5,7 @@
  
  
  
-##  ScreenSpaceEventType
+## 1 ScreenSpaceEventType
 
 - Cesium.ScreenSpaceEventType.LEFT_CLICK: 鼠标左键单击击事件
 - Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK:  鼠标左键双击事件
@@ -24,18 +24,19 @@
  
  
  
+## 2 Cesium.ScreenSpaceEventHandler(element)
+- element： Canvas， The element to add events to.
+
+### 2.1 setInputAction(action, type, modifier)
+
+- action : function , Function to be executed when the input event occurs.
+- type : Number	, The ScreenSpaceEventType of input event.
+- modifier : Number, optionalA KeyboardEventModifier key that is held when a type event occurs.
  
-### 制鼠标的视图控制
- // 禁用放大缩小和自由旋转视图
- viewer.scene.screenSpaceCameraController.enableZoom = false;
- viewer.scene.screenSpaceCameraController.enableTilt = false;
- 
- 
-### 修改视图默认鼠标操作方式
- // 修改默认的鼠标视图控制方式。
- viewer.scene.screenSpaceCameraController.zoomEventTypes = [Cesium.CameraEventType.WHEEL, Cesium.CameraEventType.PINCH];
- viewer.scene.screenSpaceCameraController.tiltEventTypes = [Cesium.CameraEventType.PINCH, Cesium.CameraEventType.RIGHT_DRAG];
- 
+### 2.2 removeInputAction(type, modifier)
+
+- type : Number	, The ScreenSpaceEventType of input event.
+- modifier : Number, optionalA KeyboardEventModifier key that is held when a type event occurs.
  
  
 ## 拾取
