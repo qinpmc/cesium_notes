@@ -1,7 +1,28 @@
-## 
+#  
 
-### glTF规范 
+## glTF规范 
 https://github.com/KhronosGroup/glTF
+https://github.com/KhronosGroup/glTF-Tutorials/tree/master/gltfTutorial
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### 3d-tiles规范 
@@ -28,3 +49,20 @@ location /mapdata {
     
     expires 30d;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

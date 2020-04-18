@@ -48,8 +48,8 @@
 
     // 北西
     var position2 = Cesium.Cartesian3.fromDegrees(114.001, 30.001, 5900.0);
-    var nwUpConverter = Cesium.Transforms.localFrameToFixedFrameGenerator('north', 'west');
-    var modelMatrix2 = Cesium.Transforms.headingPitchRollToFixedFrame(position2, hprRollZero, Cesium.Ellipsoid.WGS84, nwUpConverter);
+    var  = Cesium.Transforms.localFrameToFixedFrameGenerator('north', 'west');
+    var modelnwUpConverterMatrix2 = Cesium.Transforms.headingPitchRollToFixedFrame(position2, hprRollZero, Cesium.Ellipsoid.WGS84, nwUpConverter);
     scene.primitives.add(new Cesium.DebugModelMatrixPrimitive({
         modelMatrix : modelMatrix2,
         length : 500.0,
