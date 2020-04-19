@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6d77b63-f932-481c-8b73-ca25dad38f0a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/tileset/Tileset2/tileset.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/material/data/LogoDXT1.ktx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/8model/data/tileset.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/8model/裁剪效果-model.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/8model/裁剪效果.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/material/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/material/material1.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/1_0坐标系/localCoordinate5.html" afterPath="$PROJECT_DIR$/1_0坐标系/localCoordinate5.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/8model/model1_entity.html" afterPath="$PROJECT_DIR$/8model/model1_entity.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/8model/model2_2-平移.html" afterPath="$PROJECT_DIR$/8model/model2_2-平移.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/9entities和primitives/addPolyline2_primitive.html" afterPath="$PROJECT_DIR$/9entities和primitives/addPolyline2_primitive.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/README.md" afterPath="$PROJECT_DIR$/data/README.md" />
     </list>
     <ignored path="Cesium.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,12 +28,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="126">
-                <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <first_editor relative-caret-position="0">
+                <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -40,10 +41,46 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="三维数据.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/三维数据.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
+      <file leaf-file-name="裁剪效果-model.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/8model/裁剪效果-model.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="542">
+              <caret line="95" column="86" lean-forward="false" selection-start-line="95" selection-start-column="86" selection-end-line="95" selection-end-column="86" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="material1.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/material/material1.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="292">
+              <caret line="163" column="22" lean-forward="false" selection-start-line="163" selection-start-column="16" selection-end-line="163" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/material/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="FIRST">
+              <first_editor relative-caret-position="468">
+                <caret line="26" column="51" lean-forward="false" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pick4-label.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/4pick_events/pick4-label.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-864">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -59,11 +96,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>CesiumMilkTruck-kmc</find>
-      <find>point</find>
-      <find>terrian</find>
-      <find>tileset.json</find>
-      <find>lookAt</find>
       <find>123.0744619</find>
       <find>tileset</find>
       <find>testm3DTiles.json</find>
@@ -75,7 +107,6 @@
       <find>addPolyline5</find>
       <find>PolylineGeometry</find>
       <find>j</find>
-      <find>Cesium_Logo</find>
       <find>createGeometry</find>
       <find>setView</find>
       <find>Material.fromType</find>
@@ -89,6 +120,12 @@
       <find>cartographicArrayToCartesianArray</find>
       <find>flat</find>
       <find>surface</find>
+      <find>icon.js</find>
+      <find>token</find>
+      <find>access_token</find>
+      <find>withCredentials</find>
+      <find>createPlaneUpdateFunction</find>
+      <find>Cesium_Logo</find>
     </findStrings>
     <replaceStrings>
       <replace>.scene</replace>
@@ -102,8 +139,11 @@
       <dir>F:\notes\cesium_notes\2_0scene</dir>
       <dir>F:\notes\cesium_notes\4pick</dir>
       <dir>F:\notes\cesium_notes\5地图可视化</dir>
-      <dir>F:\notes\cesium_notes\9entities和primitives</dir>
       <dir>F:\notes\cesium_notes</dir>
+      <dir>F:\notes\cesium_notes\Build\CesiumUnminified</dir>
+      <dir>F:\notes\cesium_notes\Build</dir>
+      <dir>F:\notes\cesium_notes\Build\Cesium</dir>
+      <dir>F:\notes\cesium_notes\9entities和primitives</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -112,11 +152,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/yjyzt/README.md" />
-        <option value="$PROJECT_DIR$/9entities和primitives/addWall7_primitive.html" />
-        <option value="$PROJECT_DIR$/9entities和primitives/addEllipsoid7_entity.html" />
-        <option value="$PROJECT_DIR$/6terrain/README.md" />
-        <option value="$PROJECT_DIR$/9entities和primitives/addEllipsoid8_entity.html" />
         <option value="$PROJECT_DIR$/9entities和primitives/addEllipsoid8_primitive.html" />
         <option value="$PROJECT_DIR$/9entities和primitives/addCylinder9_entity.html" />
         <option value="$PROJECT_DIR$/9entities和primitives/addCylinder9_primitive.html" />
@@ -157,12 +192,17 @@
         <option value="$PROJECT_DIR$/9entities和primitives/addBox11_primitive.html" />
         <option value="$PROJECT_DIR$/9entities和primitives/addCorridor15_primitive.html" />
         <option value="$PROJECT_DIR$/9entities和primitives/addPolyline2_primitive.html" />
-        <option value="$PROJECT_DIR$/8model/model1_entity.html" />
         <option value="$PROJECT_DIR$/1_0坐标系/localCoordinate5.html" />
         <option value="$PROJECT_DIR$/8model/model2_2-平移.html" />
         <option value="$PROJECT_DIR$/data/tileset/Tileset2/tileset.json" />
         <option value="$PROJECT_DIR$/8model/tileset3-平移.html" />
         <option value="$PROJECT_DIR$/data/README.md" />
+        <option value="$PROJECT_DIR$/8model/data/tileset.json" />
+        <option value="$PROJECT_DIR$/8model/裁剪效果.html" />
+        <option value="$PROJECT_DIR$/8model/model1_entity.html" />
+        <option value="$PROJECT_DIR$/8model/裁剪效果-model.html" />
+        <option value="$PROJECT_DIR$/material/material1.html" />
+        <option value="$PROJECT_DIR$/material/README.md" />
       </list>
     </option>
   </component>
@@ -176,8 +216,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="52" />
-    <option name="y" value="271" />
+    <option name="x" value="545" />
+    <option name="y" value="76" />
     <option name="width" value="1938" />
     <option name="height" value="1048" />
   </component>
@@ -199,7 +239,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -210,16 +250,22 @@
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="1_0坐标系" type="462c0819:PsiDirectoryNode" />
+              <item name="1界面及小控件" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
-              <item name="8model" type="462c0819:PsiDirectoryNode" />
+              <item name="4pick_events" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
               <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
+              <item name="material" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cesium_notes" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cesium_notes" type="462c0819:PsiDirectoryNode" />
+              <item name="material" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -231,11 +277,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="E:/work/产品开发/tsgis_map" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -252,11 +298,11 @@
       <recent name="F:\notes\cesium_notes\data\model" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\notes\cesium_notes\material\data" />
+      <recent name="F:\notes\cesium_notes\material" />
       <recent name="F:\notes\cesium_notes\8model" />
       <recent name="F:\notes\cesium_notes\data\tileset" />
       <recent name="F:\notes\cesium_notes\9entities和primitives" />
-      <recent name="F:\notes\cesium_notes\1_0坐标系" />
-      <recent name="F:\notes\cesium_notes\1界面及小控件" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -389,6 +435,8 @@
       <workItem from="1587041364796" duration="3861000" />
       <workItem from="1587083315108" duration="26435000" />
       <workItem from="1587199928206" duration="9267000" />
+      <workItem from="1587261605166" duration="11760000" />
+      <workItem from="1587286601218" duration="4658000" />
     </task>
     <task id="LOCAL-00001" summary="add notes">
       <created>1586602612624</created>
@@ -401,7 +449,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="483146000" />
+    <option name="totallyTimeSpent" value="499564000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -410,6 +458,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25501585" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270809" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973601" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -423,7 +472,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -472,65 +520,11 @@
           <line>78</line>
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="4" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/5地图可视化/Cesium_Logo_overlay.png" />
-    <entry file="file://$PROJECT_DIR$/4pick_events/pick4_2-html.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-50">
-          <caret line="20" column="29" lean-forward="true" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/4pick_events/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="216">
-            <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2_0scene/scene_event.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/9entities和primitives/addPoint1_primitive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="52" column="43" lean-forward="true" selection-start-line="52" selection-start-column="43" selection-end-line="52" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/9entities和primitives/addBox11_entity.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-392">
-          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="29" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/4pick_events/pick1_左击.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="52" column="56" lean-forward="false" selection-start-line="52" selection-start-column="43" selection-end-line="52" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/viewerControl.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1界面及小控件/viewer.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/1界面及小控件/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
@@ -576,13 +570,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1490">
           <caret line="31" column="40" lean-forward="false" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/9entities和primitives/addBillBoard13_entity.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="113" column="25" lean-forward="false" selection-start-line="113" selection-start-column="25" selection-end-line="113" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -649,14 +636,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1800">
           <caret line="100" column="40" lean-forward="false" selection-start-line="100" selection-start-column="26" selection-end-line="100" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/9entities和primitives/addPlan10_entity.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1004">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -664,7 +643,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1602">
           <caret line="89" column="62" lean-forward="false" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -672,7 +650,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="954">
           <caret line="53" column="23" lean-forward="false" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -680,7 +657,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="138" column="10" lean-forward="false" selection-start-line="138" selection-start-column="10" selection-end-line="138" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -688,7 +664,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="46" column="39" lean-forward="false" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -696,7 +671,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -704,7 +678,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -712,7 +685,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="26" column="50" lean-forward="false" selection-start-line="26" selection-start-column="50" selection-end-line="26" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -720,7 +692,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="93" column="65" lean-forward="false" selection-start-line="93" selection-start-column="65" selection-end-line="93" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -728,7 +699,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -736,7 +706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
           <caret line="34" column="4" lean-forward="true" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -745,7 +714,6 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="162">
             <caret line="49" column="42" lean-forward="false" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="42" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -755,23 +723,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-108">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/8model/model2_2_1-平移.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1112">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/8model/model2_2_1-平移.html" />
     <entry file="file://$PROJECT_DIR$/8model/model2_3_平移_旋转.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3398">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -779,7 +738,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1242">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -787,7 +745,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-18">
           <caret line="23" column="18" lean-forward="false" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -795,7 +752,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
           <caret line="71" column="28" lean-forward="true" selection-start-line="71" selection-start-column="28" selection-end-line="71" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -803,7 +759,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1892">
           <caret line="160" column="77" lean-forward="false" selection-start-line="160" selection-start-column="69" selection-end-line="160" selection-end-column="77" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -811,23 +766,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="454">
           <caret line="182" column="15" lean-forward="false" selection-start-line="182" selection-start-column="12" selection-end-line="182" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/8model/model1_primitive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="66" column="20" lean-forward="false" selection-start-line="66" selection-start-column="12" selection-end-line="66" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/8model/model1_entity.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-212">
-          <caret line="66" column="31" lean-forward="false" selection-start-line="66" selection-start-column="31" selection-end-line="66" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -839,8 +777,113 @@
     <entry file="file://$PROJECT_DIR$/data/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="126">
-            <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <first_editor relative-caret-position="0">
+            <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/8model/data/tileset.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-576">
+          <caret line="10" column="6" lean-forward="true" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/8model/裁剪效果.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2376">
+          <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/8model/model1_primitive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addPlan10_entity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="66" column="76" lean-forward="true" selection-start-line="66" selection-start-column="43" selection-end-line="66" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/8model/裁剪效果-model.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="542">
+          <caret line="95" column="86" lean-forward="false" selection-start-line="95" selection-start-column="86" selection-end-line="95" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addPolygon3_primitive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="45" column="0" lean-forward="true" selection-start-line="45" selection-start-column="0" selection-end-line="48" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/4pick_events/pick2_移动.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-428">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/4pick_events/pick1_左击.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="52" column="56" lean-forward="false" selection-start-line="52" selection-start-column="43" selection-end-line="52" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/4pick_events/pick4-label.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-864">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/8model/model1_entity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/9entities和primitives/addBillBoard13_entity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="55" column="24" lean-forward="false" selection-start-line="55" selection-start-column="24" selection-end-line="55" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/material/material1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="163" column="22" lean-forward="false" selection-start-line="163" selection-start-column="16" selection-end-line="163" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/material/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="468">
+            <caret line="26" column="51" lean-forward="false" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
             <folding />
           </first_editor>
           <second_editor />

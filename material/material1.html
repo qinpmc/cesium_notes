@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Hello World!</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="cesiumContainer"></div>
+
+<script>
+
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+    var widget = new Cesium.CesiumWidget('cesiumContainer');
+
+    widget._creditContainer.querySelector(".cesium-widget-credits").style.display = "none"; //去掉版权信息
+    var scene = widget.scene;
+
+    //color
+    var rectangle = scene.primitives.add(new Cesium.Primitive({
+        geometryInstances : new Cesium.GeometryInstance({
+            geometry : new Cesium.RectangleGeometry({
+                rectangle : Cesium.Rectangle.fromDegrees(50.0, 30.0, 54.0, 40.0),
+                vertexFormat : Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT
+            })
+        }),
+        appearance : new Cesium.EllipsoidSurfaceAppearance({
+            aboveGround : false,
+            material: Cesium.Material.fromType('Color', {
+                color : new Cesium.Color(0.0, 1.0, 0.0, 1.0)
+            })
+        })
+    }));
+
+
+    // image
+    var rectangle2 = scene.primitives.add(new Cesium.Primitive({
+        geometryInstances : new Cesium.GeometryInstance({
+            geometry : new Cesium.RectangleGeometry({
+                rectangle : Cesium.Rectangle.fromDegrees(-120.0, 20.0, -60.0, 40.0),
+                vertexFormat : Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT
+            })
+        }),
+        appearance : new Cesium.EllipsoidSurfaceAppearance({
+            aboveGround : false,
+            material: new Cesium.Material({
+                fabric : {
+                    type : 'Image',
+                    uniforms : {
+                        image : '../4pick_events/Cesium_Logo_overlay.png'
+                    }
+                }
+            })
+        })
+    }));
+
+    // compressed Image
+    var rectangle = scene.primitives.add(new Cesium.Primitive({
+        geometryInstances : new Cesium.GeometryInstance({
+            geometry : new Cesium.RectangleGeometry({
+                rectangle : Cesium.Rectangle.fromDegrees(56.0, 30.0, 60.0, 40.0),
+                //vertexFormat : Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT
+            })
+        }),
+        //appearance : new Cesium.EllipsoidSurfaceAppearance({
+        appearance : new Cesium.MaterialAppearance({
+            aboveGround : false,
+            material:new Cesium.Material({
+                fabric : {
+                    type : 'Image',
+                    uniforms : {
+                        image : "./data/LogoDXT1.ktx"
+                    }
+                }
+            })
+        })
+
+    }));
+
+    // Checkerboard
+    var rectangle3 = scene.primitives.add(new Cesium.Primitive({
+        geometryInstances : new Cesium.GeometryInstance({
+            geometry : new Cesium.RectangleGeometry({
+                rectangle : Cesium.Rectangle.fromDegrees(61.0, 30.0, 65.0, 40.0),
+
+            })
+        }),
+        appearance : new Cesium.MaterialAppearance({
+            aboveGround : false,
+            material:new Cesium.Material({
+                fabric : {
+                    type : 'Checkerboard',
+                    uniforms : {
+                        lightColor:  new Cesium.Color(1.0, 1.0, 0.0, 1.0),//黄色
+                        darkColor:  new Cesium.Color(0.0, 0.0, 1.0, 1.0),//绿色
+                        repeat:{
+                            x: 5,
+                            y:10
+                        }
+                    }
+                }
+            })
+        })
+
+    }));
+
+    // Dot
+    var rectangle4 = scene.primitives.add(new Cesium.Primitive({
+        geometryInstances : new Cesium.GeometryInstance({
+            geometry : new Cesium.RectangleGeometry({
+                rectangle : Cesium.Rectangle.fromDegrees(66.0, 30.0, 70.0, 40.0),
+
+            })
+        }),
+        appearance : new Cesium.MaterialAppearance({
+            aboveGround : false,
+            material:new Cesium.Material({
+                fabric : {
+                    type : 'Dot',
+                    uniforms : {
+                        lightColor:  new Cesium.Color(0.0, 1.0, 0.0, 1.0),//绿色
+                        darkColor:  new Cesium.Color(1.0, 1.0, 0.0, 1.0),//黄色
+                        repeat:{
+                            x: 10,
+                            y:5
+                        }
+                    }
+                }
+            })
+        })
+
+    }));
+
+    // Grid
+    var rectangle5 = scene.primitives.add(new Cesium.Primitive({
+        geometryInstances : new Cesium.GeometryInstance({
+            geometry : new Cesium.RectangleGeometry({
+                rectangle : Cesium.Rectangle.fromDegrees(71.0, 30.0, 75.0, 40.0),
+
+            })
+        }),
+        appearance : new Cesium.MaterialAppearance({
+            aboveGround : false,
+            material:new Cesium.Material({
+                fabric : {
+                    type : 'Grid',
+                    uniforms : {
+                        color: new Cesium.Color(0.0, 1.0, 0.0, 1.0),
+                        cellAlpha: 0.1,
+                        lineCount: {
+                            x:7,
+                            y:7
+                        },
+
+                        lineThickness:{
+                            x:1,
+                            y:1
+                        },
+                        lineOffset:{
+                            x:0,
+                            y:0.5
+                        }
+                    }
+                }
+            })
+        })
+
+    }));
+
+    // Stripe
+    var rectangle6 = scene.primitives.add(new Cesium.Primitive({
+        geometryInstances : new Cesium.GeometryInstance({
+            geometry : new Cesium.RectangleGeometry({
+                rectangle : Cesium.Rectangle.fromDegrees(71.0, 30.0, 75.0, 40.0),
+
+            })
+        }),
+        appearance : new Cesium.MaterialAppearance({
+            aboveGround : false,
+            material:new Cesium.Material({
+                fabric : {
+                    type : 'Stripe',
+                    uniforms : {
+                        horizontal:false,
+                        evenColor:  new Cesium.Color(0.0, 1.0, 0.0, 1.0),
+                        oddColor: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+                        offset: 0,
+                        repeat: 10
+                    }
+                }
+            })
+        })
+
+    }));
+
+</script>
+</body>
+</html>
