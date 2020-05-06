@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8">
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>通视</title>
+  <script src="../Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../Build/Cesium/Widgets/widgets.css);
+    html, body, #cesiumContainer {
+      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+<div id="cesiumContainer"></div>
+
+<script>
+
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+
+
+    var viewer = new Cesium.Viewer('cesiumContainer');
+
+    // 开启地形深度监测
+    viewer.scene.globe.depthTestAgainstTerrain = true;
+
+    // 加载3dtile模型
+    var tileset = new Cesium.Cesium3DTileset({
+        url: '../data/tileset/Tileset/tileset.json',
+    });
+    viewer.scene.primitives.add(tileset);
+    tileset.readyPromise.then(function (argument) {
+        // 更改相机状态
+        viewer.camera.flyToBoundingSphere(tileset.boundingSphere);
+        pickFromRay()
+    });
+
+    // entity集合
+    var parentEntity = viewer.entities.add(new Cesium.Entity());
+
+    var lng = -75.61209430782448;
+    var lat = 40.04253062359163;
+    var height = 0;  // 43.99684395160711
+
+    // 视域点
+    var viewPoint = Cesium.Cartesian3.fromDegrees(lng, lat, height); // (自己的经纬度)
+
+    var viewPointEntity = viewer.entities.add({
+        parent: parentEntity,
+        position: viewPoint,
+        ellipsoid: {
+            radii: new Cesium.Cartesian3(5, 5, 5),
+            material: Cesium.Color.GREEN
+        }
+    });
+
+    // 加载坐标轴,便于测试
+    var transform = Cesium.Transforms.eastNorthUpToFixedFrame(viewPoint);
+    var modelMatrixPrimitive = viewer.scene.primitives.add(new Cesium.DebugModelMatrixPrimitive({
+        modelMatrix: transform,
+        length: 1000.0
+    }));
+
+    // 世界坐标转换为投影坐标
+    var webMercatorProjection = new Cesium.WebMercatorProjection(viewer.scene.globe.ellipsoid);
+    var viewPointWebMercator = webMercatorProjection.project(Cesium.Cartographic.fromCartesian(viewPoint));
+
+    // 排除碰撞监测的对象
+    var objectsToExclude = [viewPointEntity, modelMatrixPrimitive];
+
+    // 目标点集合
+    var destPoints = [];
+
+    // 视域点和目标点的距离
+    var radius = 1000; // 视距1000米
+
+    // 计算一圈
+    for (var i = 0; i <= 2; i++) {
+        // 度数转弧度
+        var radians = Cesium.Math.toRadians(i);
+        // 计算目标点
+        var toPoint = new Cesium.Cartesian3(viewPointWebMercator.x + radius * Math.cos(radians), viewPointWebMercator.y + radius * Math.sin(radians), 30);
+        // 投影坐标转世界坐标
+        toPoint = webMercatorProjection.unproject(toPoint);
+        destPoints.push(Cesium.Cartographic.toCartesian(toPoint.clone()));
+
+        // 添加排除的辅助对象
+        objectsToExclude.push(viewer.entities.add({
+            parent: parentEntity,
+            name: i,
+            position: Cesium.Cartesian3.fromDegrees(Cesium.Math.toDegrees(toPoint.longitude), Cesium.Math.toDegrees(toPoint.latitude), 30),
+            ellipsoid: {
+                radii: new Cesium.Cartesian3(5, 5, 5),
+                material: Cesium.Color.RED
+            }
+        }));
+
+    }
+
+
+    // 绘制线
+    function drawLine(leftPoint, secPoint, color) {
+        viewer.entities.add({
+            polyline: {
+                positions: [leftPoint, secPoint],
+                arcType: Cesium.ArcType.NONE,
+                width: 5,
+                material: color,
+                depthFailMaterial: color
+            }
+        })
+    }
+
+    function pickFromRay() {
+        for (var i = 0; i < destPoints.length; i++) {
+            // 计算射线的方向，目标点left 视域点right
+            var direction = Cesium.Cartesian3.normalize(Cesium.Cartesian3.subtract(destPoints[i], viewPoint, new Cesium.Cartesian3()), new Cesium.Cartesian3());
+            // 建立射线
+            var ray = new Cesium.Ray(viewPoint, direction);
+            var result = viewer.scene.pickFromRay(ray, objectsToExclude); // 计算交互点，返回第一个
+            showIntersection(result, destPoints[i], viewPoint);
+        }
+    }
+
+    // 处理交互点
+    function showIntersection(result, destPoint, viewPoint) {
+        // 如果是场景模型的交互点，排除交互点是地球表面
+        if (Cesium.defined(result) && Cesium.defined(result.object)) {
+            drawLine(result.position, viewPoint, Cesium.Color.GREEN); // 可视区域
+            drawLine(result.position, destPoint, Cesium.Color.RED); // 不可视区域
+        } else {
+            drawLine(viewPoint, destPoint, Cesium.Color.GREEN);
+        }
+    }
+
+</script>
+</body>
+</html>
