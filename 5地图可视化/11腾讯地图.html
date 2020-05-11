@@ -54,7 +54,7 @@
     viewer.imageryLayers.addImageryProvider(
         new Cesium.UrlTemplateImageryProvider({
             url: "https://rt2.map.gtimg.com/tile?z={sz}&x={sx}&y={sy}&styleid=2&version=402", //腾讯路网
-            //"http://rt1.map.gtimg.com/realtimerender?z={sz}&x={x}&y={sy}&type=vector&style=0", //矢量
+            //"http://rt1.map.gtimg.com/realtimerender?z={sz}&x={sx}&y={sy}&type=vector&style=0", //矢量
             customTags: {
                 sz: function (imageryProvider, x, y, level) {
                     return level ;
