@@ -117,7 +117,7 @@ Cartesian2经常用来描述屏幕坐标系，比如鼠标在电脑屏幕上的�
    var cartesian3= viewer.scene.pickPosition(Cartesian2)，目前IE浏览器不支持深度拾取，所以用不了这个方法    
 
 2. camera.getPickRay + globe.pick     → Cartesian3  
-   幕坐标转地表坐标，这里是地球表面的WGS84坐标，包含地形，不包括模型、倾斜摄影表面 
+   屏幕坐标转地表坐标，这里是地球表面的WGS84坐标，包含地形，不包括模型、倾斜摄影表面 
 
 ```
  var cartesian3= viewer.scene.globe.pick(viewer.camera.getPickRay(Cartesian2),viewer.scene);

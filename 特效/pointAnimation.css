@@ -1,0 +1,344 @@
+@charset "utf-8";
+
+.animation-point, .animation-point:after, .animation-point:before, .animation-point p, .animation-point p:after, .animation-point p:before {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.animation-point {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid hsla(0, 0%, 100%, .5);
+    cursor: pointer;
+    color: #0ff;
+    background: currentColor;
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    box-shadow: 0 0 2em currentColor, 0 0 .5em currentColor
+}
+
+.animation-point.mapError {
+    color: red
+}
+
+.animation-point.mapWarn {
+    color: #b5a603
+}
+
+.animation-point.mapSuccess {
+    color: #239233
+}
+
+.animation-point.mapOrange {
+    color: #8c4d34
+}
+
+.animation-point:after, .animation-point:before, .animation-point p:after, .animation-point p:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%
+}
+
+.animation-point:after, .animation-point:before {
+    border: 1px solid;
+    left: 50%;
+    top: 50%;
+    -webkit-animation: mapAni 1s ease infinite;
+    -moz-animation: mapAni 1s ease infinite;
+    -o-animation: mapAni 1s ease infinite;
+    -ms-animation: mapAni 1s ease infinite;
+    animation: mapAni 1s ease infinite
+}
+
+.animation-point p:before {
+    border: 1px solid
+}
+
+.animation-point p {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    -webkit-animation: mapAni 2s ease infinite;
+    -moz-animation: mapAni 2s ease infinite;
+    -o-animation: mapAni 2s ease infinite;
+    -ms-animation: mapAni 2s ease infinite;
+    animation: mapAni 2s ease infinite
+}
+
+@-webkit-keyframes mapAni {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        filter: alpha(opacity=1)
+    }
+    25% {
+        width: 12px;
+        height: 12px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .7;
+        filter: alpha(opacity=70)
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .5;
+        filter: alpha(opacity=50)
+    }
+    75% {
+        width: 30px;
+        height: 30px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .2;
+        filter: alpha(opacity=20)
+    }
+    to {
+        width: 40px;
+        height: 40px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+}
+
+@-moz-keyframes mapAni {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        filter: alpha(opacity=1)
+    }
+    25% {
+        width: 12px;
+        height: 12px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .7;
+        filter: alpha(opacity=70)
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .5;
+        filter: alpha(opacity=50)
+    }
+    75% {
+        width: 30px;
+        height: 30px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .2;
+        filter: alpha(opacity=20)
+    }
+    to {
+        width: 40px;
+        height: 40px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+}
+
+@-o-keyframes mapAni {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        filter: alpha(opacity=1)
+    }
+    25% {
+        width: 12px;
+        height: 12px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .7;
+        filter: alpha(opacity=70)
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .5;
+        filter: alpha(opacity=50)
+    }
+    75% {
+        width: 30px;
+        height: 30px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .2;
+        filter: alpha(opacity=20)
+    }
+    to {
+        width: 40px;
+        height: 40px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+}
+
+@-ms-keyframes mapAni {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        filter: alpha(opacity=1)
+    }
+    25% {
+        width: 12px;
+        height: 12px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .7;
+        filter: alpha(opacity=70)
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .5;
+        filter: alpha(opacity=50)
+    }
+    75% {
+        width: 30px;
+        height: 30px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .2;
+        filter: alpha(opacity=20)
+    }
+    to {
+        width: 40px;
+        height: 40px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+}
+
+@keyframes mapAni {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        filter: alpha(opacity=1)
+    }
+    25% {
+        width: 12px;
+        height: 12px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .7;
+        filter: alpha(opacity=70)
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .5;
+        filter: alpha(opacity=50)
+    }
+    75% {
+        width: 30px;
+        height: 30px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: .2;
+        filter: alpha(opacity=20)
+    }
+    to {
+        width: 40px;
+        height: 40px;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+}

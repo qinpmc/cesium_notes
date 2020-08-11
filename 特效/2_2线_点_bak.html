@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>tianditu</title>
+
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="./tool.js"></script>
+    <script src="./proj4.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+    <link rel="stylesheet" href="./pointAnimation.css" />
+  </head>
+  <body>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+
+                  }),*/
+        }),
+        terrainProvider: Cesium.createWorldTerrain({
+          requestWaterMask: true,
+          requestVertexNormals: true,
+        }),
+      });
+
+      var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "cta",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+      });
+
+      viewer.imageryLayers.addImageryProvider(imageryProvider);
+
+      var source = new proj4.Proj("EPSG:" + 4326);
+      var dest = new proj4.Proj("EPSG:" + 3857);
+      function trans4326To3857(coords) {
+        var pnt = proj4.toPoint(coords);
+        var result = proj4.transform(source, dest, pnt);
+        return [result.x, result.y];
+      }
+
+      function trans3857To4326(coords) {
+        var pnt = proj4.toPoint(coords);
+        var result = proj4.transform(dest, source, pnt);
+        return [result.x, result.y];
+      }
+
+      /////////////////////////////////////////////////////////////////
+      var center = {
+        x: 80.21937006144049,
+        y: 32.83146820405586,
+        z: 4991.485051942769,
+      };
+      var pointArr = [
+        {
+          x: 102.31074877555041,
+          y: 23.09089005759723,
+          z: 1268.0537180778522,
+        },
+      ];
+      var direction = "out";
+      var lineArr = tool.getCurveDynamicPointsAndLine(
+        center,
+        pointArr,
+        direction
+      );
+
+      var lineString3857 = new tool.LineString({ spatialReference: 3857 });
+
+      var pointsArr = [];
+      for (var i = 0; i < lineArr.length; i++) {
+        var line = lineArr[i];
+        var points = line.points;
+        for (var j = 0; j < points.length; j++) {
+          pointsArr.push(points[j].x);
+          pointsArr.push(points[j].y);
+          pointsArr.push(points[j].z);
+
+          var Point3857 = trans4326To3857([points[j].x, points[j].y]);
+
+          lineString3857.addPoint({
+            x: Point3857[0],
+            y: Point3857[1],
+            z: 0,
+            spatialReference: 3857,
+          });
+        }
+      }
+      var positions = Cesium.Cartesian3.fromDegreesArrayHeights(pointsArr);
+
+      var dataSource = new Cesium.CustomDataSource("myLine");
+
+      var g = {
+        zIndex: new Cesium.CallbackProperty(function () {
+          return 1;
+        }),
+        show: new Cesium.CallbackProperty(function () {
+          return true;
+        }),
+        width: new Cesium.CallbackProperty(function () {
+          return 6;
+        }),
+        classificationType: new Cesium.CallbackProperty(function () {
+          return 2;
+        }),
+        clampToGround: new Cesium.CallbackProperty(function () {
+          return true;
+        }),
+        positions: new Cesium.CallbackProperty(function () {
+          return positions;
+        }),
+        material: new Cesium.PolylineOutlineMaterialProperty({
+          color: new Cesium.CallbackProperty(function () {
+            var color = Cesium.Color.clone(
+              new Cesium.Color(1, 1, 1, 1),
+              new Cesium.Color(1, 1, 1, 1)
+            );
+            return color;
+          }),
+          outlineWidth: new Cesium.CallbackProperty(function () {
+            return 1;
+          }),
+          outlineColor: new Cesium.CallbackProperty(function () {
+            return new Cesium.Color(1, 1, 1, 1);
+          }),
+        }),
+      };
+
+      var entity = new Cesium.Entity({
+        id: "111",
+        polyline: g,
+      });
+      dataSource.entities.add(entity);
+      viewer.dataSources.add(dataSource);
+
+      var length3857 = lineString3857.length();
+
+      var points = addInsertPointByLine(lineString3857);
+
+      ////////////////////////////////////////////////////////////////////
+
+      function addInsertPointByLine(lineString) {
+        var elements = [],
+          points = [],
+          positions = [];
+
+        //var line3857 = projService.transform(lineGeometry, 3857);
+        var line3857 = lineString;
+        var length = line3857.length();
+        var count = 40;
+        var end = length / count;
+        for (var i = 0; i < count; ++i) {
+          var point3857 = line3857.getPartPoint(i * end);
+          //var point = projService.transform(point3857, 4326);
+
+          var point = trans3857To4326([point3857.x, point3857.y]);
+          points.push(point);
+        }
+        //return points;
+        var that = this;
+
+        for (var i = 0, len = points.length; i < len; i++) {
+          var point = points[i];
+          positions.push(Cesium.Cartographic.fromDegrees(point[0], point[1]));
+        }
+
+        // 异步使用最精确的地形采样获取地形高度
+        var promise = Cesium.sampleTerrainMostDetailed(
+          viewer.terrainProvider,
+          positions
+        );
+        var imgbase64 =
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAABKklEQVQ4T2P8////fwYk8PnJc4Z9RY0MN1ZvQRbGytYI9WHwXzUDQ44R2dCnx88ybAzLYAAZTAqIObaRQdrSGK4FbijIwCVW/qSYhaIW2WC4odNkTUl2IbKpvDKSDLHHNzGAaLChIC8TE4aEvAELY7ChnYwyhNQTLZ/1+DQD4/VVm8EupRZw6qtnYNwQmv6fGl6HOQqUChg7GKRR0imlLgZHFLGGBqyeybAhNJ0oO2lj6FQZk/+k5iBCzmVcbOn3H5SbqAVAaZXxVN+s/6AChFoAVMAwfnr87D8oi1ILlP9/QsNsCoqoxZZ+FBcooCwKArQt+kA2kFOmgnIQKHKwFtLIEUVsUQhKPqACBGQwMkCpTpAlQK4+0z8bLIRc4IAMABlmWpSGYRhMPwBmKa4i5ekmLAAAAABJRU5ErkJggg==";
+        Cesium.when(promise, function (updatedPositions) {
+          // 处理返回的数据
+          var heights = [];
+          for (var i = 0; i < updatedPositions.length; i++) {
+            heights.push(updatedPositions[i].height.toFixed(1)); // 取得高程值
+
+            var g = {
+              zIndex: new Cesium.CallbackProperty(function () {
+                return 2;
+              }),
+              show: new Cesium.CallbackProperty(function () {
+                return true;
+              }),
+              pixelOffset: new Cesium.CallbackProperty(function () {
+                return new Cesium.Cartesian2(0.5, -1);
+              }),
+              scale: new Cesium.CallbackProperty(function () {
+                return 1;
+              }),
+              width: new Cesium.CallbackProperty(function () {
+                return 5;
+              }),
+              height: new Cesium.CallbackProperty(function () {
+                return 5;
+              }),
+              image: new Cesium.CallbackProperty(function () {
+                return imgbase64;
+              }),
+              color: new Cesium.CallbackProperty(function () {
+                return new Cesium.Color(1, 0, 0, 1);
+              }),
+              rotation: new Cesium.CallbackProperty(function () {
+                return 0;
+              }),
+            };
+
+            var entity = new Cesium.Entity({
+              // position: Cesium.CallbackProperty(function () {
+              //   return updatedPositions[i];
+              // }),
+              position: Cesium.Cartographic.toCartesian(updatedPositions[i]),
+              billboard: g,
+              heightReference: new Cesium.CallbackProperty(function () {
+                return 1;
+              }),
+            });
+            dataSource.entities.add(entity);
+          }
+          viewer.dataSources.add(dataSource);
+          viewer.camera.flyTo({
+            destination: Cesium.Cartographic.toCartesian(
+              updatedPositions[i - 1]
+            ),
+          });
+          console.log(heights);
+        });
+      }
+
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(
+          pointsArr[0],
+          pointsArr[1],
+          900000
+        ),
+      });
+    </script>
+  </body>
+</html>
