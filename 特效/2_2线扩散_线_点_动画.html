@@ -198,6 +198,8 @@
         return lines3857;
       }
 
+      var map = new Map();
+
       function addInsertPointByLine(lineString3857) {
         var points = [],
           positions = [];
@@ -221,22 +223,24 @@
         );
         var imgbase64 =
           "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAABKklEQVQ4T2P8////fwYk8PnJc4Z9RY0MN1ZvQRbGytYI9WHwXzUDQ44R2dCnx88ybAzLYAAZTAqIObaRQdrSGK4FbijIwCVW/qSYhaIW2WC4odNkTUl2IbKpvDKSDLHHNzGAaLChIC8TE4aEvAELY7ChnYwyhNQTLZ/1+DQD4/VVm8EupRZw6qtnYNwQmv6fGl6HOQqUChg7GKRR0imlLgZHFLGGBqyeybAhNJ0oO2lj6FQZk/+k5iBCzmVcbOn3H5SbqAVAaZXxVN+s/6AChFoAVMAwfnr87D8oi1ILlP9/QsNsCoqoxZZ+FBcooCwKArQt+kA2kFOmgnIQKHKwFtLIEUVsUQhKPqACBGQwMkCpTpAlQK4+0z8bLIRc4IAMABlmWpSGYRhMPwBmKa4i5ekmLAAAAABJRU5ErkJggg==";
+
         Cesium.when(promise, function (updatedPositions) {
           // 处理返回的数据
 
           for (var i = 0; i < updatedPositions.length; i++) {
-            var name = "entityTool" + i;
-            var name = {
+            var entityTool = {
               show: true,
               opacity: 1,
+              id: i,
             };
+
             var g = {
               zIndex: new Cesium.CallbackProperty(function () {
                 return 2;
               }),
               show: (function (index) {
                 return new Cesium.CallbackProperty(function () {
-                  var entityTool = "entityTool" + index;
+                  var entityTool = map.get(index);
                   return entityTool.show;
                 });
               })(i),
@@ -256,9 +260,14 @@
               image: new Cesium.CallbackProperty(function () {
                 return imgbase64;
               }),
-              color: new Cesium.CallbackProperty(function () {
-                return new Cesium.Color(1, 0, 0, 1);
-              }),
+              color: (function (index) {
+                return new Cesium.CallbackProperty(function () {
+                  var entityTool = map.get(index);
+                  var opacity = entityTool.opacity;
+                  return new Cesium.Color(1, 0, 0, opacity);
+                });
+              })(i),
+
               rotation: new Cesium.CallbackProperty(function () {
                 return 0;
               }),
@@ -280,20 +289,51 @@
               })(i),
             });
 
-            entity.entityTool = name;
+            map.set(i, entityTool);
+
             dataSource.entities.add(entity);
             pointEnties.push(entity);
           }
           viewer.dataSources.add(dataSource);
         });
       }
+
+      function getVisibleFunc(time, duration, flowCount, count, value) {
+        var i = (time.getTime() / duration) % count;
+        return i && value > i - flowCount && value < i;
+      }
+
+      function getOpacityFunc(time, duration, flowCount, count, value) {
+        var i = (time.getTime() / duration) % count;
+        return (0.8 * (value - i + flowCount)) / flowCount;
+      }
+      var count = 40;
+      var duration = 75;
+      var flowCount = 5;
+
       dataSource.update = function () {
-        pointEnties.forEach(function (entity) {
-          console.log(entity.id);
-          if (entity.id % 2 == 0) {
-            setTimeout(function () {
-              entity.entityTool.show = false;
-            }, 2000);
+        pointEnties.forEach(function (entity, index) {
+          var time = new Date();
+          var isShow = getVisibleFunc(
+            time,
+            duration,
+            flowCount,
+            count,
+            entity.id
+          );
+
+          var entityTool = map.get(entity.id);
+          entityTool.show = isShow;
+          if (isShow) {
+            var opacity = getOpacityFunc(
+              time,
+              duration,
+              flowCount,
+              count,
+              entity.id
+            );
+            entityTool.opacity = opacity;
+            console.log(opacity);
           }
         });
       };
