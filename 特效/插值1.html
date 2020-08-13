@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>tianditu</title>
+
+    <script src="../Build/CesiumUnminified/Cesium.js"></script>
+    <script src="./proj4.js"></script>
+    <script src="./tool.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+    <link rel="stylesheet" href="./pointAnimation.css" />
+  </head>
+  <body>
+    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px;">
+      <button onclick="addLinearSpline()">增加LinearSpline插值</button>
+      <button onclick="addHermiteSpline()">增加HermiteSpline插值</button>
+      
+        增加虚线6-distanceDisplayCondition
+      </button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer;
+      init();
+
+      function init() {
+        viewer = new Cesium.Viewer("cesiumContainer", {
+          animation: false, //是否显示动画控件
+          baseLayerPicker: false, //是否显示图层选择控件
+          geocoder: true, //是否显示地名查找控件
+          timeline: false, //是否显示时间线控件
+          sceneModePicker: true, //是否显示投影方式控件
+          navigationHelpButton: false, //是否显示帮助信息控件
+          infoBox: true, //是否显示点击要素之后显示的信息
+          imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+            url:
+              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            layer: "vec",
+            style: "default",
+            format: "tiles",
+            tileMatrixSetID: "w",
+            /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+
+                        }),*/
+          }),
+          terrainProvider: Cesium.createWorldTerrain({
+            requestWaterMask: true,
+            requestVertexNormals: true,
+          }),
+        });
+
+        var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+        });
+
+        viewer.imageryLayers.addImageryProvider(imageryProvider);
+      }
+
+      /////////////////////////////////////////////////////////////////
+      var start = {
+        x: 80.21937006144049,
+        y: 32.83146820405586,
+        z: 4991.485051942769,
+      };
+      var end = {
+        x: 102.31074877555041,
+        y: 23.09089005759723,
+        z: 1268.0537180778522,
+      };
+
+      viewer.entities.add({
+        polyline: {
+          positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+            start.x,
+            start.y,
+            start.z,
+            end.x,
+            end.y,
+            end.z,
+          ]),
+          width: 5,
+          material: Cesium.Color.RED,
+          clampToGround: true, //贴地形
+        },
+      });
+
+
+      function addLinearSpline(){
+        var controls = [
+        Cesium.Cartesian3.fromDegrees(start.x, start.y, start.z),
+        Cesium.Cartesian3.fromDegrees(end.x, end.y, end.z),
+        // Cesium.Cartesian3.fromDegrees(110, 10),
+        // Cesium.Cartesian3.fromDegrees(111, 11),
+        // Cesium.Cartesian3.fromDegrees(112, 9),
+        // Cesium.Cartesian3.fromDegrees(114, 10),
+        // Cesium.Cartesian3.fromDegrees(113, 8),
+        ];
+        for (var i = 0; i < controls.length; i++) {
+          viewer.entities.add({
+            position: controls[i],
+            point: {
+              color: Cesium.Color.RED,
+              pixelSize: 10,
+            },
+          });
+        }
+        viewer.zoomTo(viewer.entities);
+
+        var spline = new Cesium.LinearSpline({
+          times: [0.0, 1],
+          //times: [0.0, 0.25, 0.5, 0.75, 1], //controls需要5个点
+          points: controls,
+        });
+
+        var positions = [];
+        for (var i = 0; i <= 100; i++) {
+          var cartesian3 = spline.evaluate(i / 100);
+          positions.push(cartesian3);
+          viewer.entities.add({
+            position: cartesian3,
+            point: {
+              color: Cesium.Color.YELLOW,
+              pixelSize: 6,
+            },
+          });
+        }
+      }
+
+      function addHermiteSpline(){
+        var controls = [
+        Cesium.Cartesian3.fromDegrees(start.x, start.y, start.z),
+        Cesium.Cartesian3.fromDegrees(end.x, end.y, end.z),
+        // Cesium.Cartesian3.fromDegrees(110, 10),
+        // Cesium.Cartesian3.fromDegrees(111, 11),
+        // Cesium.Cartesian3.fromDegrees(112, 9),
+        // Cesium.Cartesian3.fromDegrees(114, 10),
+        // Cesium.Cartesian3.fromDegrees(113, 8),
+        ];
+        for (var i = 0; i < controls.length; i++) {
+          viewer.entities.add({
+            position: controls[i],
+            point: {
+              color: Cesium.Color.RED,
+              pixelSize: 10,
+            },
+          });
+        }
+        viewer.zoomTo(viewer.entities);
+
+        var spline = new Cesium.QuaternionSpline({
+          times: [0.0, 1],
+          //times: [0.0, 0.25, 0.5, 0.75, 1], //controls需要5个点
+          points: controls,
+        });
+
+        var positions = [];
+        for (var i = 0; i <= 100; i++) {
+          var cartesian3 = spline.evaluate(i / 100);
+          positions.push(cartesian3);
+          viewer.entities.add({
+            position: cartesian3,
+            point: {
+              color: Cesium.Color.GREEN,
+              pixelSize: 6,
+            },
+          });
+        }
+      }
+      
+    </script>
+  </body>
+</html>
