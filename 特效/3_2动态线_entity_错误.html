@@ -227,40 +227,18 @@
       // 根据线数组生成cesium所需的位置
       function addLine() {
         var g = {
-          zIndex: new Cesium.CallbackProperty(function () {
-            return 0;
-          }, false), // 使用CesiumUnminified 必须传参isConstant
-          show: new Cesium.CallbackProperty(function () {
-            return true;
-          }, false),
-          width: new Cesium.CallbackProperty(function () {
-            return 12;
-          }, false),
-          classificationType: new Cesium.CallbackProperty(function () {
-            return undefined;
-          }, false),
-          clampToGround: new Cesium.CallbackProperty(function () {
-            return true;
-          }, false),
-          positions: new Cesium.CallbackProperty(function () {
-            return [startCartesian, endCartesian];
-          }, false),
+          zIndex: 1,
+          show: true,
+          width: 22,
+          classificationType: undefined,
+          clampToGround: true,
+          positions: [startCartesian, endCartesian],
           material: new GroundLineFlowMaterialProperty({
-            image: new Cesium.CallbackProperty(function () {
-              return "./arrow.png";
-            }, false),
-            color: new Cesium.CallbackProperty(function () {
-              return new Cesium.Color(0, 0, 1, 1);
-            }, false),
-            speed: new Cesium.CallbackProperty(function () {
-              return 1;
-            }, false),
-            repeat: new Cesium.CallbackProperty(function () {
-              return new Cesium.Cartesian2(10, 1);
-            }, false),
-            axisY: new Cesium.CallbackProperty(function () {
-              return false;
-            }, false),
+            image: "./arrow.png",
+            color: new Cesium.Color(1, 0, 1, 1),
+            speed: 10,
+            repeat: new Cesium.Cartesian2(10, 1),
+            axisY: false,
           }),
         };
 

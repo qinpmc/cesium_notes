@@ -78,39 +78,57 @@
       }
 
       /////////////////////////////////////////////////////////////////
-      var center = {
+      var start = {
         x: 80.21937006144049,
         y: 32.83146820405586,
         z: 4991.485051942769,
       };
-      var pointArr = [
-        {
-          x: 102.31074877555041,
-          y: 23.09089005759723,
-          z: 1268.0537180778522,
-        },
-      ];
+      var end = {
+        x: 102.31074877555041,
+        y: 23.09089005759723,
+        z: 1268.0537180778522,
+      };
       var direction = "out";
       var id = new Date().getTime() + "";
       var dataSource = new Cesium.CustomDataSource(id);
-      // 根据线数组生成cesium所需的位置
-      function getLinePositions(linesArr) {
-        var linesPostions = [];
-        for (var i = 0; i < linesArr.length; i++) {
-          var pointsArr = [];
-          var line = linesArr[i];
-          var points = line.points;
-          for (var j = 0; j < points.length; j++) {
-            pointsArr.push(points[j].x);
-            pointsArr.push(points[j].y);
-            pointsArr.push(points[j].z);
-          }
-          // 线坐标
-          var positions = Cesium.Cartesian3.fromDegreesArrayHeights(pointsArr);
-          linesPostions.push(positions);
-        }
-        return linesPostions;
+
+      var linesArr = [];
+      var line = new tool.LineString({
+        spatialReference: 4326,
+      });
+
+      line.addPoint(start);
+      line.addPoint(end);
+      linesArr.push(line);
+
+      //
+      var linesPostions = [
+        [
+          Cesium.Cartesian3.fromDegrees(start.x, start.y, start.z),
+          Cesium.Cartesian3.fromDegrees(end.x, end.y, end.z),
+        ],
+      ];
+
+      for (var i = 0; i < linesPostions.length; i++) {
+        var linePostions = linesPostions[i];
+        addLine(linePostions);
       }
+
+      viewer.entities.add({
+        name: "蓝色恒向线",
+        polyline: {
+          positions: Cesium.Cartesian3.fromDegreesArray([
+            start.x,
+            start.y,
+            end.x,
+            end.y,
+          ]),
+          width: 5,
+          material: Cesium.Color.WHITE,
+          arcType: Cesium.ArcType.RHUMB,
+          clampToGround: true, //贴地形
+        },
+      });
 
       function addLine(linePostions) {
         var g = {
@@ -155,20 +173,6 @@
         });
         dataSource.entities.add(entity);
         viewer.dataSources.add(dataSource);
-      }
-
-      // 根据中心点，四周点（四周点可以为多个）生成线集合
-      var linesArr = tool.getCurveDynamicPointsAndLine(
-        center,
-        pointArr,
-        direction
-      );
-
-      //根据中点和四周点生成插值点，然后添加线
-      var linesPostions = getLinePositions(linesArr);
-      for (var i = 0; i < linesPostions.length; i++) {
-        var linePostions = linesPostions[i];
-        addLine(linePostions);
       }
 
       // 添加动画点
