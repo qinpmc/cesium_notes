@@ -58,10 +58,10 @@
 
                   }),*/
           }),
-          terrainProvider: Cesium.createWorldTerrain({
-            requestWaterMask: true,
-            requestVertexNormals: true,
-          }),
+          // terrainProvider: Cesium.createWorldTerrain({
+          //   requestWaterMask: true,
+          //   requestVertexNormals: true,
+          // }),
         });
 
         var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
@@ -162,15 +162,9 @@
       })();
 
       var start = {
-        x: 87.62351554109509,
-        y: 33.093658750846046,
-        z: 3066.0259345970176,
-      };
-
-      var end = {
-        x: 115.00526041502901,
-        y: 35.410162041439676,
-        z: -449.7932971096863,
+        x: 114,
+        y: 30,
+        z: 10000,
       };
 
       var startCartesian = Cesium.Cartesian3.fromDegrees(
@@ -178,16 +172,12 @@
         start.y,
         start.z
       );
-      var endCartesian = Cesium.Cartesian3.fromDegrees(end.x, end.y, end.z);
-
-      //var startCartesian = new Cesium.Cartesian3(500817.86125988414,5434725.225977344,3296242.6614917596);
-
-      //var endCartesian = new Cesium.Cartesian3(-2213770.1348571097,4812873.673401284,3537755.359447691);
 
       var id = new Date().getTime() + "";
       var dataSource = new Cesium.CustomDataSource(id);
       // 根据线数组生成cesium所需的位置
-      function addLine() {
+      function addCircleScan() {
+        var i = 0;
         var g = {
           zIndex: new Cesium.CallbackProperty(function () {
             return 0;
@@ -195,50 +185,45 @@
           show: new Cesium.CallbackProperty(function () {
             return true;
           }, false),
-          width: new Cesium.CallbackProperty(function () {
-            return 12;
+          semiMinorAxis: new Cesium.CallbackProperty(function () {
+            return 500;
           }, false),
-          classificationType: new Cesium.CallbackProperty(function () {
-            return undefined;
+          semiMajorAxis: new Cesium.CallbackProperty(function () {
+            return 500;
           }, false),
           clampToGround: new Cesium.CallbackProperty(function () {
-            return true;
+            return false;
           }, false),
-          positions: new Cesium.CallbackProperty(function () {
-            return [startCartesian, endCartesian];
+          stRotation: new Cesium.CallbackProperty(function () {
+            return (i -= 0.1);
           }, false),
-          material: new GroundLineFlowMaterialProperty({
-            image: new Cesium.CallbackProperty(function () {
-              return "./arrow.png";
+          material: new CircleScanMaterialProperty({
+            scanImg: new Cesium.CallbackProperty(function () {
+              return "./circleScan.png";
             }, false),
             color: new Cesium.CallbackProperty(function () {
               return new Cesium.Color(0, 0, 1, 1);
-            }, false),
-            speed: new Cesium.CallbackProperty(function () {
-              return 1;
-            }, false),
-            repeat: new Cesium.CallbackProperty(function () {
-              return new Cesium.Cartesian2(10, 1);
-            }, false),
-            axisY: new Cesium.CallbackProperty(function () {
-              return false;
             }, false),
           }),
         };
 
         var entity = new Cesium.Entity({
           id: "1",
-          polyline: g,
+          position: new Cesium.CallbackProperty(function () {
+            return startCartesian;
+          }, false),
+          ellipse: g,
         });
 
-        var entity = new Cesium.Entity({
-          id: new Date().getTime() + "",
-          polyline: g,
-        });
         dataSource.entities.add(entity);
         viewer.dataSources.add(dataSource);
       }
-      addLine();
+
+      addCircleScan();
+
+      viewer.camera.flyTo({
+        destination: startCartesian,
+      });
     </script>
   </body>
 </html>
