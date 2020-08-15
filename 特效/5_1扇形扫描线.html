@@ -58,10 +58,10 @@
 
                   }),*/
           }),
-          // terrainProvider: Cesium.createWorldTerrain({
-          //   requestWaterMask: true,
-          //   requestVertexNormals: true,
-          // }),
+          terrainProvider: Cesium.createWorldTerrain({
+            requestWaterMask: true,
+            requestVertexNormals: true,
+          }),
         });
 
         var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
@@ -162,7 +162,7 @@
       })();
 
       var start = {
-        x: 114,
+        x: 94,
         y: 30,
         z: 10000,
       };
@@ -192,7 +192,7 @@
             return 500;
           }, false),
           clampToGround: new Cesium.CallbackProperty(function () {
-            return false;
+            return true; //总是贴地
           }, false),
           stRotation: new Cesium.CallbackProperty(function () {
             return (i -= 0.1);
