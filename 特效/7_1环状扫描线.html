@@ -205,13 +205,6 @@
       var dataSource = new Cesium.CustomDataSource(id);
 
       function addCirculareScan() {
-        var entity = new Cesium.Entity({
-          id: "1",
-          position: new Cesium.CallbackProperty(function () {
-            return startCartesian;
-          }, false),
-          ellipse: g,
-        });
         var g = {
           zIndex: new Cesium.CallbackProperty(function () {
             return 0;
