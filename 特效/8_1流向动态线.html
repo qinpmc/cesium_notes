@@ -12,9 +12,8 @@
     />
     <title>tianditu</title>
 
-    <script src="../Build/Cesium/Cesium.js"></script>
-    <script src="./proj4.js"></script>
-    <script src="./tool.js"></script>
+    <!-- <script src="../Build/Cesium/Cesium.js"></script> -->
+    <script src="../Cesiumtsgis/Cesium/Cesium.js"></script>
     <style>
       @import url(../Build/Cesium/Widgets/widgets.css);
 
@@ -28,7 +27,6 @@
         overflow: hidden;
       }
     </style>
-    <link rel="stylesheet" href="./pointAnimation.css" />
   </head>
   <body>
     <div id="cesiumContainer"></div>
@@ -40,6 +38,7 @@
       var clock = new Cesium.Clock();
       clock.shouldAnimate = true;
       clock.canAnimate = true;
+      clock.multiplier = 100;
       function init() {
         viewer = new Cesium.Viewer("cesiumContainer", {
           clock: clock,
@@ -78,6 +77,10 @@
         });
 
         viewer.imageryLayers.addImageryProvider(imageryProvider);
+        viewer.clock.shouldAnimate = true;
+        viewer.clock.canAnimate = true;
+        viewer.clock.multiplier = 1;
+        console.log(viewer.clock);
       }
 
       /////////////////////////////////////////////////////////////////
@@ -154,9 +157,9 @@
             defaultRepeat,
             result.repeat
           );
-          //result.time = (1e3 * (time.secondsOfDay - this._time)) / duration;
+          result.time = (1e3 * (time.secondsOfDay - this._time)) / duration;
 
-          result.time += 10 ;
+          //result.time += 10;
           return result;
         };
 
@@ -240,7 +243,7 @@
             return true;
           }),
           width: new Cesium.CallbackProperty(function () {
-            return 12;
+            return 4;
           }),
           classificationType: new Cesium.CallbackProperty(function () {
             return undefined;
