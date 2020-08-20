@@ -154,7 +154,9 @@
             defaultRepeat,
             result.repeat
           );
-          result.time = (1e3 * (time.secondsOfDay - this._time)) / duration;
+          //result.time = (1e3 * (time.secondsOfDay - this._time)) / duration;
+
+          result.time += 10 ;
           return result;
         };
 

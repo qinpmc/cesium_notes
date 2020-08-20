@@ -271,6 +271,9 @@
               rotation: new Cesium.CallbackProperty(function () {
                 return 0;
               }),
+              heightReference: new Cesium.CallbackProperty(function () {
+                return 1;
+              }),
             };
             var entity = new Cesium.Entity({
               position: (function (index) {
@@ -281,9 +284,6 @@
                 });
               })(i),
               billboard: g,
-              heightReference: new Cesium.CallbackProperty(function () {
-                return 1;
-              }),
               id: (function (index) {
                 return index;
               })(i),

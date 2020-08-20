@@ -47,7 +47,7 @@
             tileMatrixLabels.push(""+i);
         }
 
-/*        var earthAtNight = layers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+        var earthAtNight = layers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
             url: "http://t0.tianditu.gov.cn/img_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
             layer: "img",
             style: "default",
@@ -61,9 +61,9 @@
             }),
             show: false
 
-        }));*/
+        }));
 
-        var earthAtNight = layers.addImageryProvider(new Cesium.IonImageryProvider({ assetId: 3812 }));
+        //var earthAtNight = layers.addImageryProvider(new Cesium.IonImageryProvider({ assetId: 3812 }));
         earthAtNight.splitDirection = Cesium.ImagerySplitDirection.LEFT; // Only show to the left of the slider.
 
         // Sync the position of the slider with the split position
