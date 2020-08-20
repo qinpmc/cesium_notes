@@ -12,8 +12,8 @@
     />
     <title>tianditu</title>
 
-    <!-- <script src="../Build/Cesium/Cesium.js"></script> -->
-    <script src="../Cesiumtsgis/Cesium/Cesium.js"></script>
+    <script src="../Build/Cesium/Cesium.js"></script>
+
     <style>
       @import url(../Build/Cesium/Widgets/widgets.css);
 
@@ -34,14 +34,17 @@
       Cesium.Ion.defaultAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
       var viewer;
+
+      var clock = new Cesium.Clock({
+        shouldAnimate: true,
+        canAnimate: true, //默认开启
+      });
+
       init();
-      var clock = new Cesium.Clock();
-      clock.shouldAnimate = true;
-      clock.canAnimate = true;
-      clock.multiplier = 100;
+
+      //clock.multiplier = 100;
       function init() {
         viewer = new Cesium.Viewer("cesiumContainer", {
-          clock: clock,
           animation: true, //是否显示动画控件
           baseLayerPicker: false, //是否显示图层选择控件
           geocoder: true, //是否显示地名查找控件
@@ -77,8 +80,9 @@
         });
 
         viewer.imageryLayers.addImageryProvider(imageryProvider);
-        viewer.clock.shouldAnimate = true;
-        viewer.clock.canAnimate = true;
+
+        console.log(viewer.clock === clock); //false ??
+        viewer.clock.shouldAnimate = true; // viewer.cesiumWidget.clock.shouldAnimate = true  等同
         viewer.clock.multiplier = 1;
         console.log(viewer.clock);
       }
