@@ -67,10 +67,18 @@
           //   requestWaterMask: true,
           //   requestVertexNormals: true,
           // }),
+
+          terrainProvider: new Cesium.CesiumTerrainProvider({
+            url: "http://172.18.7.60:8088/data/terrain/",
+            requestVertexNormals: true,
+            requestWaterMask: true,
+          }),
         });
 
         addBuildings("http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json");
       }
+
+      var heightOffset = 0;
 
       function addBuildings(url) {
         var tileset = new Cesium.Cesium3DTileset({
@@ -79,6 +87,7 @@
 
         tileset.readyPromise.then(function (tileset) {
           viewer.scene.primitives.add(tileset);
+
           viewer.zoomTo(
             tileset,
             new Cesium.HeadingPitchRange(
@@ -88,6 +97,26 @@
             )
           );
 
+          var cartographic = Cesium.Cartographic.fromCartesian(
+            tileset.boundingSphere.center
+          );
+          var x = Cesium.Math.toDegrees(cartographic.longitude);
+          var y = Cesium.Math.toDegrees(cartographic.latitude);
+          var point = {
+            x: x,
+            y: y,
+            z: 0,
+          };
+
+          calculateHeight(tileset).then(function (res) {
+            console.log("11111111111111111111111");
+            console.log(res);
+            heightOffset = res[0][0].z - res[1][0].z;
+
+            liftHeight(heightOffset, tileset);
+          });
+
+          //////////////////////////////////
           var start = {
             x: 119.48176174692804,
             y: 28.43975992407655,
@@ -157,6 +186,96 @@
             };
           }
         });
+      }
+
+      function calculateHeight(tileset) {
+        var cartographic = Cesium.Cartographic.fromCartesian(
+          tileset.boundingSphere.center
+        );
+        var x = Cesium.Math.toDegrees(cartographic.longitude);
+        var y = Cesium.Math.toDegrees(cartographic.latitude);
+
+        var promise1 = getTerrainHeight([{ x: x, y: y }]);
+        var promise2 = get3DTilesHeight([{ x: x, y: y }]);
+
+        return Promise.all([promise1, promise2]).then(function (values) {
+          console.log(values);
+          return values;
+        });
+      }
+
+      /**
+       * points: Array[point]  point:{x:114,y:30,z:1000}
+       */
+      function getTerrainHeight(points) {
+        var terrainProvider = viewer.scene.terrainProvider;
+
+        if (terrainProvider instanceof Cesium.CesiumTerrainProvider) {
+          var pointsCopy = [];
+          for (var i = 0, len = points.length; i < len; i++) {
+            var point = points[i];
+
+            pointsCopy.push(Cesium.Cartographic.fromDegrees(point.x, point.y));
+          }
+
+          var promise = Cesium.sampleTerrainMostDetailed(
+            terrainProvider,
+            pointsCopy
+          ).then(function (positions) {
+            for (var i = 0, len = positions.length; i < len; ++i) {
+              points[i].z = positions[i].height;
+            }
+            return points;
+          });
+          return promise;
+        } else {
+          points.forEach(function (point) {
+            point.z = 0;
+          });
+          return new Promise(function (resolve, reject) {
+            return resolve(points);
+          });
+        }
+      }
+
+      /**
+       * points: Array[point]  point:{x:114,y:30,z:1000}
+       */
+      function get3DTilesHeight(points) {
+        var pointsCopy = [];
+        for (var i = 0, len = points.length; i < len; i++) {
+          var point = points[i];
+
+          pointsCopy.push(Cesium.Cartesian3.fromDegrees(point.x, point.y, 0));
+        }
+        var cartographic = new Cesium.Cartographic();
+
+        var promise = viewer.scene.clampToHeightMostDetailed(pointsCopy).then(
+          function (result) {
+            for (var i = 0, len = result.length; i < len; ++i) {
+              if (!!result[i]) {
+                cartographic = Cesium.Cartographic.fromCartesian(
+                  result[i],
+                  undefined,
+                  cartographic
+                );
+                points[i].z = cartographic.height;
+              } else {
+                points[i].z = 0;
+              }
+            }
+            return points;
+          },
+          function (error) {
+            console.error(error);
+          }
+        );
+        return promise;
+      }
+
+      function liftHeight(heightOffset, tileset) {
+        var translation = Cesium.Cartesian3.fromArray([0, 0, heightOffset]);
+        tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
       }
 
       /////////////////////////////////////////////////////////////////
