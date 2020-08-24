@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+
+    <style></style>
+
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <link rel="stylesheet" href="../Build/Cesium/Widgets/widgets.css" />
+  </head>
+  <body>
+    <style>
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var widget = new Cesium.CesiumWidget("cesiumContainer");
+      var scene = widget.scene;
+
+      // 动画生效
+      widget.clock.shouldAnimate = true;
+
+      var satelliteParams = {
+        heading: 0,
+        pitch: 0,
+        roll: 0,
+        x: 114,
+        y: 30,
+        z: 90000,
+        url: "./weixin.glb",
+      };
+      var headingPitchRoll = new Cesium.HeadingPitchRoll(0, 0, 0);
+      var matrix3Temp = new Cesium.Matrix3();
+
+      var primitives = new Cesium.PrimitiveCollection();
+
+      fetch(satelliteParams.url)
+        .then(function (stream) {
+          return stream.arrayBuffer();
+        })
+        .then(function (res) {
+          addSatellite(res);
+        });
+
+      function addSatellite(satelliteArrayBuffer) {
+        headingPitchRoll.heading = satelliteParams.heading;
+        headingPitchRoll.pitch = satelliteParams.pitch;
+        headingPitchRoll.roll = satelliteParams.roll;
+
+        var position = Cesium.Cartesian3.fromDegrees(
+          satelliteParams.x,
+          satelliteParams.y,
+          satelliteParams.z
+        );
+
+        var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+          position,
+          headingPitchRoll
+        );
+        var modelMatrix = Cesium.Matrix4.fromRotationTranslation(
+          Cesium.Matrix3.fromQuaternion(orientation, matrix3Temp),
+          position
+        );
+        var options = {
+          modelMatrix: modelMatrix,
+          gltf: satelliteArrayBuffer,
+          scale: 50,
+          silhouetteColor: Cesium.Color.BLUE,
+          silhouetteSize: 4.0,
+          minimumPixelSize: 64,
+          maximumScale: 256,
+        };
+
+        var model = new Cesium.Model(options);
+        model.readyPromise.then(function (model) {
+          model.activeAnimations.addAll({
+            speedup: 0.5,
+            loop: Cesium.ModelAnimationLoop.REPEAT,
+          });
+        });
+        primitives.add(model);
+
+        //scene.primitives.add(model); //也 ok
+        scene.primitives.add(primitives);
+
+        scene.camera.flyTo({
+          destination: position,
+        });
+      }
+    </script>
+  </body>
+</html>
