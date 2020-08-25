@@ -79,6 +79,9 @@
       }
 
       var heightOffset = 0;
+
+      //viewer.scene.globe.depthTestAgainstTerrain = true;
+
       addBuildings("http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json");
 
       function addBuildings(url) {
@@ -236,20 +239,28 @@
 
         var obstaclePoint = pickObj[0].position;
 
-        var lerpPoints = lerp(startCartesian, endCartesian);
+        var lerpPoints = lerp(startCartesian, endCartesian, 200);
         var pointsCopy = copyPoints(lerpPoints);
 
-        modifyObstaclePoint(obstaclePoint, pointsCopy).then(function (res) {
+        var s = Cesium.Cartographic.fromDegrees(start.x, start.y, start.z);
+        var e = Cesium.Cartographic.fromDegrees(end.x, end.y, end.z);
+
+        modifyObstaclePoint(obstaclePoint, pointsCopy, s, e).then(function (
+          res
+        ) {
           console.log(res);
+          viewer.entities.add({
+            position: Cesium.Cartographic.toCartesian(res),
+            point: {
+              pixelSize: 10,
+              color: Cesium.Color.YELLOW,
+            },
+          });
         });
-        // viewer.entities.add({
-        //   position: obstaclePoint,
-        //   point: {
-        //     pixelSize: 10,
-        //     color: Cesium.Color.YELLOW,
-        //   },
-        // });
-        // addDebugPointAndLine(startCartesian, endCartesian);
+
+        
+
+        addDebugPointAndLine(startCartesian, endCartesian);
       }
 
       function getPick(startCartesian, endCartesian) {
@@ -302,67 +313,83 @@
       /////////////////////////////////////////////////////////////////
 
       function lerp(start, end, count) {
-        var distance = Cesium.Cartesian3.distance(startPos, endPos);
+        var distance = Cesium.Cartesian3.distance(start, end);
         var t = distance / (count - 1);
         var pointArray = [];
-        pointArray.push(start);
+        pointArray.push(Cesium.Cartographic.fromCartesian(start));
         for (var i = 1; i < count - 1; i++) {
           var step = (t * i) / distance;
           var temp = Cesium.Cartesian3.lerp(
-            startPos,
-            endPos,
+            start,
+            end,
             step,
             new Cesium.Cartesian3()
           );
           var carto = Cesium.Cartographic.fromCartesian(temp);
-          var innerPoint = new Point({
-            x: Cesium.Math.toDegrees(carto.longitude),
-            y: Cesium.Math.toDegrees(carto.latitude),
-            z: carto.height,
-            spatialReference: 4326,
-          });
-          pointArray.push(innerPoint);
+          // var innerPoint = {
+          //   x: Cesium.Math.toDegrees(carto.longitude),
+          //   y: Cesium.Math.toDegrees(carto.latitude),
+          //   z: carto.height,
+          //   spatialReference: 4326,
+          // };
+          pointArray.push(carto);
         }
-        pointArray.push(end);
+        pointArray.push(Cesium.Cartographic.fromCartesian(end));
         return pointArray;
       }
 
       function copyPoints(points) {
         var pointsCopy = [];
         points.forEach(function (point) {
-          pointsCopy.push({
-            x: point.x,
-            y: point.y,
-            z: point.z,
-          });
+          var carto = new Cesium.Cartographic(
+            point.longitude,
+            point.latitude,
+            point.height
+          );
+
+          pointsCopy.push(carto);
         });
         return pointsCopy;
       }
 
-      function modifyObstaclePoint(originObstacle, points) {
-        return Cesium.sampleTerrainMostDetailed(points).then(function (
-          positions
-        ) {
+      function modifyObstaclePoint(
+        originObstacle,
+        points,
+        startPosition,
+        endPosition
+      ) {
+        return Cesium.sampleTerrainMostDetailed(
+          viewer.scene.terrainProvider,
+          points
+        ).then(function (positions) {
           var flag = true,
             ratio1 = 1,
             ratio2 = 1,
             temp;
-          if (!!result) {
+
+          var modifyObstaclePointCarto = Cesium.Cartographic.fromCartesian(
+            originObstacle
+          );
+
+          if (!!originObstacle) {
             ratio1 =
-              (result.x - startPosition.x) / (endPosition.x - startPosition.x);
+              (modifyObstaclePointCarto.longitude - startPosition.longitude) /
+              (endPosition.longitude - startPosition.longitude);
           }
           for (var i = 1; i < points.length - 1; i++) {
             temp = points[i];
-            if (temp.z < positions[i].z) {
+            if (temp.height < positions[i].height) {
               ratio2 =
-                (temp.x - startPosition.x) / (endPosition.x - startPosition.x);
+                (temp.longitude - startPosition.longitude) /
+                (endPosition.longitude - startPosition.longitude);
               break;
             }
           }
           if (ratio1 < ratio2) {
-            result.z =
-              ratio1 * (endPosition.z - startPosition.z) + startPosition.z;
-            return result;
+            modifyObstaclePointCarto.height =
+              ratio1 * (endPosition.height - startPosition.height) +
+              startPosition.height;
+            return modifyObstaclePointCarto;
           } else if (ratio2 < ratio1) {
             return temp;
           }
