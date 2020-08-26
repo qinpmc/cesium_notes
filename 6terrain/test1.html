@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>开挖地形</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <!--<script src="https://cesiumjs.org/releases/1.57/Build/Cesium/Cesium.js"></script>-->
+    <link
+      href="https://cesiumjs.org/releases/1.57/Build/Cesium/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #000000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="cesiumContainer"></div>
+    <script>
+      (function () {
+        /**
+         * @class
+         * @classdesc
+         * 三维向量类
+         * @alias g2.sfs.Vector3
+         * @param {Object} [options]
+         * @param {Number} [options.x = 0] 三维向量在x轴投影的长度
+         * @param {Number} [options.y = 0] 三维向量在y轴投影的长度
+         * @param {Number} [options.z = 0] 三维向量在z轴投影的长度
+         * @returns {g2.sfs.Vector3} 返回三维向量类
+         * @example  <caption>下面的代码片段主要是创建一个三维向量对象</caption>
+         * var vector3 = new g2.sfs.Vector3({
+         *     x: 1,
+         *     y: 1,
+         *     z: 1
+         * })
+         */
+        var vector3 = function (options) {
+          var opts = options || {};
+          /**
+           * 三维向量在x轴投影的长度,默认初始化为0
+           * @type {Number}
+           * @default 0
+           */
+          this.x = opts.x === undefined ? 0 : opts.x;
+          /**
+           * 三维向量在y轴投影的长度,默认初始化为0
+           * @type {Number}
+           * @default 0
+           */
+          this.y = opts.y === undefined ? 0 : opts.y;
+          /**
+           * 三维向量在z轴投影的长度,默认初始化为0
+           * @type {Number}
+           * @default 0
+           */
+          this.z = opts.z === undefined ? 0 : opts.z;
+        };
+        /**
+         * @ignore
+         * 转换为单位向量
+         */
+        vector3.prototype.normalize = function (result) {
+          /*var len = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
+            this.x = this.x / len;
+            this.y = this.y / len;
+            this.z = this.z / len;*/
+          var distance = Math.sqrt(
+            Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2)
+          );
+          result = result || new vector3();
+          result.x = this.x / distance;
+          result.y = this.y / distance;
+          result.z = this.z / distance;
+          return result;
+        };
+
+        /**
+         * 根据两点生成向量
+         * @param start {g2.sfs.Point} 起始点位
+         * @param end {g2.sfs.Point} 终止点位
+         * @returns {g2.sfs.Vector3}
+         */
+        vector3.fromPoint = function (start, end) {
+          return new vector3({
+            x: end.x - start.x,
+            y: end.y - start.y,
+            z: end.z - start.z,
+          });
+        };
+
+        /**
+         * 对向量取反
+         * @ignore
+         * @param {g2.sfs.Vector3} matrix 三维向量
+         * @returns {g2.sfs.Matrix4} 返回=取反后的向量
+         */
+        vector3.negate = function (vector) {
+          if (!vector) return new vector3();
+          var x = -vector.x;
+          var y = -vector.y;
+          var z = -vector.z;
+          return new vector3({ x: x, y: y, z: z });
+        };
+        /**
+         * 计算两个向量的和
+         * @param {g2.sfs.Vector3} left 第一个向量
+         * @param {g2.sfs.Vector3} right 第二个向量
+         * @returns {g2.sfs.Vector3} 返回两个向量的求和结果
+         */
+        vector3.add = function (left, right) {
+          if (!left) left = new vector3();
+          if (!right) right = new vector3();
+          var x = left.x + right.x;
+          var y = left.y + right.y;
+          var z = left.z + right.z;
+          return new vector3({ x: x, y: y, z: z });
+        };
+        /**
+         * 计算两个向量的差
+         * @param {g2.sfs.Vector3} left 第一个向量
+         * @param {g2.sfs.Vector3} right 第二个向量
+         * @returns {g2.sfs.Vector3} 返回两个向量的求差结果
+         */
+        vector3.subtract = function (left, right) {
+          right = vector3.negate(right);
+          return vector3.add(left, right);
+        };
+        /**
+         * 计算两个向量的点积
+         *
+         * @param {g2.sfs.Vector3} left 第一个向量
+         * @param {g2.sfs.Vector3} right 第二个向量
+         * @returns {Number} 返回两个向量的点积结果
+         */
+        vector3.dot = function (left, right) {
+          if (!left || !right) return 0;
+          return left.x * right.x + left.y * right.y + left.z * right.z;
+        };
+        /**
+         * 计算两个向量的叉积
+         *
+         * @param {g2.sfs.Vector3} left 第一个向量
+         * @param {g2.sfs.Vector3} right 第二个向量
+         * @returns {g2.sfs.Vector3} 返回两个向量的叉积结果
+         */
+        vector3.cross = function (left, right) {
+          if (!left || !right) return new vector3();
+          var leftX = left.x;
+          var leftY = left.y;
+          var leftZ = left.z;
+          var rightX = right.x;
+          var rightY = right.y;
+          var rightZ = right.z;
+          var x = leftY * rightZ - leftZ * rightY;
+          var y = leftZ * rightX - leftX * rightZ;
+          var z = leftX * rightY - leftY * rightX;
+          return new vector3({ x: x, y: y, z: z });
+        };
+        /**
+         * 计算两个向量的夹角
+         *
+         * @param {g2.sfs.Vector3} left 第一个向量
+         * @param {g2.sfs.Vector3} right 第二个向量
+         * @returns {Number} 返回两个向量的夹角，单位：弧度
+         */
+        vector3.angleBetween = function (left, right) {
+          var normal1 = left.normalize();
+          var normal2 = right.normalize();
+          var cosine = vector3.dot(normal1, normal2);
+          var sine = vector3.magnitude(vector3.cross(normal1, normal2));
+          return Math.atan2(sine, cosine);
+        };
+        /**
+         * 计算向量的模，即长度
+         * @param {g2.sfs.Vector3} vector 向量
+         * @returns {Number} 返回向量的模
+         */
+        vector3.magnitude = function (vector) {
+          if (!vector) return 0;
+          return Math.sqrt(
+            Math.pow(vector.x, 2) +
+              Math.pow(vector.y, 2) +
+              Math.pow(vector.z, 2)
+          );
+        };
+
+        vector3.applyMatrix3 = function (vector, matrix) {
+          var x = vector.x,
+            y = vector.y,
+            z = vector.z;
+          vector.x = matrix[0] * x + matrix[3] * y + matrix[6] * z;
+          vector.y = matrix[1] * x + matrix[4] * y + matrix[7] * z;
+          vector.z = matrix[2] * x + matrix[5] * y + matrix[8] * z;
+          return vector;
+        };
+
+        vector3.applyMatrix4 = function (vector, matrix) {
+          var x = vector.x,
+            y = vector.y,
+            z = vector.z;
+          vector.x = matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12];
+          vector.y = matrix[1] * x + matrix[5] * y + matrix[9] * z + matrix[13];
+          vector.z =
+            matrix[2] * x + matrix[6] * y + matrix[10] * z + matrix[14];
+          return vector;
+        };
+
+        window.Vector3 = vector3;
+      })();
+
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        imageryProvider: new Cesium.UrlTemplateImageryProvider({
+          url:
+            "http://mt0.google.cn/maps/vt?lyrs=s%40703&hl=zh-CN&x={x}&y={y}&z={z}",
+        }),
+        terrainProvider: Cesium.createWorldTerrain({
+          requestVertexNormals: true,
+          requestWaterMask: true,
+        }),
+      });
+
+      viewer.scene.globe.depthTestAgainstTerrain = true; //添加后图片被遮挡
+
+      var p0 = {
+          x: 97.22519784389078,
+          y: 29.266256251792516,
+          z: 4852.668209882725,
+        },
+        p1 = {
+          x: 97.23766110513291,
+          y: 29.179371298616086,
+          z: 4820.826671703968,
+        },
+        p2 = {
+          x: 97.33417404315622,
+          y: 29.18780564222556,
+          z: 5100.1083173437155,
+        },
+        p3 = {
+          x: 97.28088382722139,
+          y: 29.2611731324722,
+          z: 4852.668209882725,
+        };
+
+      var points = [p0, p1, p2, p3];
+      function convertPoint2Cartesian(point) {
+        var cartesian = Cesium.Cartesian3.fromDegrees(
+          point.x,
+          point.y,
+          point.z
+        );
+        return cartesian;
+      }
+
+      var midPoint,
+        planes = [],
+        cartesian,
+        cartesian2;
+      for (var i = 0; i < points.length; i++) {
+        cartesian = convertPoint2Cartesian(points[i]);
+        cartesian2 = convertPoint2Cartesian(points[i + 1]);
+        midPoint = new Vector3({
+          x: (p1.x + p2.x) / 2,
+          y: (p1.y + p2.y) / 2,
+          z: (p1.z + p2.z) / 2,
+        });
+        var up = midPoint.normalize();
+        var right = new Vector3({
+          x: p2.x - midPoint.x,
+          y: p2.y - midPoint.y,
+          z: p2.z - midPoint.z,
+        });
+        right = right.normalize(right);
+        var normal = Vector3.cross(right, up);
+        normal = normal.normalize(normal);
+        // if (isClockwise) {
+        //   normal = Vector3.negate(normal);
+        // }
+        planes.push(normal);
+      }
+
+      console.log(planes);
+
+      // for (var i = 0; i < length; ++i) {
+      //   var nextIndex = (i + 1) % length;
+      //   p1 = points[i];
+      //   p2 = points[nextIndex];
+
+      //   if (isClockwise) {
+      //     normal = Vector3.negate(normal);
+      //   }
+      //   // var originCenteredPlane = new Plane({normal: normal, distance: 0});
+      //   // var distance = originCenteredPlane.getPointDistance(midPoint);
+      //   // planes.push(new ClippingPlane({normal: normal, distance: distance}));
+      // }
+
+      var position = Cesium.Cartographic.toCartesian(
+        new Cesium.Cartographic.fromDegrees(-113.2665534, 36.0939345, 100)
+      );
+      var distance = -3000.0; // 开挖距离
+      var boundingSphere = new Cesium.BoundingSphere(position, distance);
+
+      // viewer.scene.globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
+      //   modelMatrix: Cesium.Transforms.eastNorthUpToFixedFrame(position),
+      //   planes: [
+      //     new Cesium.ClippingPlane(
+      //       new Cesium.Cartesian3(1.0, 0.0, 0.0),
+      //       distance
+      //     ),
+      //     new Cesium.ClippingPlane(
+      //       new Cesium.Cartesian3(-1.0, 0.0, 0.0),
+      //       distance
+      //     ),
+      //     new Cesium.ClippingPlane(
+      //       new Cesium.Cartesian3(0.0, 1.0, 0.0),
+      //       distance
+      //     ),
+      //     new Cesium.ClippingPlane(
+      //       new Cesium.Cartesian3(0.0, -1.0, 0.0),
+      //       distance
+      //     ),
+      //   ],
+      //   edgeWidth: 0.0,
+      //   edgeColor: Cesium.Color.WHITE,
+      // });
+      // viewer.camera.viewBoundingSphere(
+      //   boundingSphere,
+      //   new Cesium.HeadingPitchRange(0.5, 1.0, boundingSphere.radius * 5.0)
+      // );
+      // viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+
+      // //错误--未显示
+      // var redPolygon = viewer.entities.add({
+      //   name: "面",
+      //   polygon: {
+      //     hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights([
+      //       //-113.2665534, 36.0939345
+      //       -113.2665534,
+      //       36.0939345,
+      //       -100,
+      //       -113.27709,
+      //       36.08153,
+      //       -100,
+      //       -113.25509,
+      //       36.08153,
+      //       -100,
+      //       -113.25509,
+      //       36.10353,
+      //       -100,
+      //       -113.27709,
+      //       36.10353,
+      //       -100,
+      //     ]),
+      //     material: new Cesium.Material({
+      //       fabric: {
+      //         type: "Image",
+      //         uniforms: {
+      //           image: "./TerrainClipPlan/excavate_bottom_min.jpg",
+      //         },
+      //       },
+      //     }),
+      //     //material: Cesium.Color.RED,
+      //     //classificationType:Cesium.ClassificationType.CESIUM_3D_TILE
+      //   },
+      // });
+    </script>
+  </body>
+</html>
