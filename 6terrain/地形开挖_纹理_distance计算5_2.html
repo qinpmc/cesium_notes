@@ -9,6 +9,7 @@
     />
     <title>开挖地形</title>
     <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../turf5.min.js"></script>
     <!--<script src="https://cesiumjs.org/releases/1.57/Build/Cesium/Cesium.js"></script>-->
     <link
       href="https://cesiumjs.org/releases/1.57/Build/Cesium/Widgets/widgets.css"
@@ -239,148 +240,184 @@
 
       viewer.scene.globe.depthTestAgainstTerrain = true; //添加后图片被遮挡
 
+      //手动构造开挖点
       var p0 = {
-          x: 97.22519784389078,
-          y: 29.266256251792516,
-          z: 4852.668209882725,
+          x: 97.20928922925265,
+          y: 29.26268123394501,
+          z: 5052.150303723741,
         },
         p1 = {
-          x: 97.23766110513291,
-          y: 29.179371298616086,
-          z: 4820.826671703968,
+          x: 97.26506521125799,
+          y: 29.158022806807345,
+          z: 5108.01222881701,
         },
         p2 = {
-          x: 97.33417404315622,
-          y: 29.18780564222556,
-          z: 5100.1083173437155,
+          x: 97.3920063535399,
+          y: 29.179759708273167,
+          z: 4439.607332479499,
         },
         p3 = {
-          x: 97.28088382722139,
-          y: 29.2611731324722,
-          z: 4852.668209882725,
+          x: 97.37078963846872,
+          y: 29.319529028209132,
+          z: 5052.150303723741,
         };
 
+      // 逆时针
       var points = [p0, p1, p2, p3];
-      function convertPoint2Cartesian(point) {
-        var cartesian = Cesium.Cartesian3.fromDegrees(
-          point.x,
-          point.y,
-          point.z
-        );
-        return cartesian;
-      }
+
+      // 顺时针
+      //var points = [p0, p3, p2, p1];
 
       var midPoint,
         planes = [],
         cartesian,
         cartesian2;
+
+      function converPoints2Turfformat(points) {
+        var temp = [];
+        for (var i = 0; i < points.length; i++) {
+          temp.push([points[i].x, points[i].y]);
+          if (i == points.length - 1) {
+            temp.push([points[0].x, points[0].y]);
+          }
+        }
+        return temp;
+      }
+
+      //生成开挖plane
       for (var i = 0; i < points.length; i++) {
+        var nextIndex = (i + 1) % points.length;
         cartesian = convertPoint2Cartesian(points[i]);
-        cartesian2 = convertPoint2Cartesian(points[i + 1]);
+        cartesian2 = convertPoint2Cartesian(points[nextIndex]);
         midPoint = new Vector3({
-          x: (p1.x + p2.x) / 2,
-          y: (p1.y + p2.y) / 2,
-          z: (p1.z + p2.z) / 2,
+          x: (cartesian.x + cartesian2.x) / 2,
+          y: (cartesian.y + cartesian2.y) / 2,
+          z: (cartesian.z + cartesian2.z) / 2,
         });
         var up = midPoint.normalize();
         var right = new Vector3({
-          x: p2.x - midPoint.x,
-          y: p2.y - midPoint.y,
-          z: p2.z - midPoint.z,
+          x: cartesian2.x - midPoint.x,
+          y: cartesian2.y - midPoint.y,
+          z: cartesian2.z - midPoint.z,
         });
         right = right.normalize(right);
         var normal = Vector3.cross(right, up);
         normal = normal.normalize(normal);
-        // if (isClockwise) {
-        //   normal = Vector3.negate(normal);
-        // }
-        planes.push(normal);
+
+        //判断开挖的面是顺时针还是逆时针
+        var turfPoints = converPoints2Turfformat(points);
+        if (isClockwise(turfPoints)) {
+          normal = Vector3.negate(normal);
+        }
+
+        var distance = getPointDistance(midPoint, normal);
+
+        var plane = new Cesium.ClippingPlane(
+          new Cesium.Cartesian3(normal.x, normal.y, normal.z),
+          distance
+        );
+        planes.push(plane);
+
+        function getPointDistance(point, normal) {
+          var right = new Vector3(point);
+          return Vector3.dot(normal, right);
+        }
+
+        function convertPoint2Cartesian(point) {
+          var cartesian = Cesium.Cartesian3.fromDegrees(
+            point.x,
+            point.y,
+            point.z
+          );
+          return cartesian;
+        }
+
+        function isClockwise(ring) {
+          return turf.booleanClockwise(ring);
+        }
       }
 
       console.log(planes);
 
-      // for (var i = 0; i < length; ++i) {
-      //   var nextIndex = (i + 1) % length;
-      //   p1 = points[i];
-      //   p2 = points[nextIndex];
+      viewer.scene.globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
+        planes: planes,
+        edgeWidth: 2.0,
+        edgeColor: Cesium.Color.RED,
+        enabled: true,
+      });
 
-      //   if (isClockwise) {
-      //     normal = Vector3.negate(normal);
-      //   }
-      //   // var originCenteredPlane = new Plane({normal: normal, distance: 0});
-      //   // var distance = originCenteredPlane.getPointDistance(midPoint);
-      //   // planes.push(new ClippingPlane({normal: normal, distance: distance}));
-      // }
+      ////////////////////////////////////////////////////
+      //添加开挖纹理
+      var splitNum = 200;
+      var positions = [];
+      var excavateMinHeight = 9999;
+      var depth = 500;
+      for (var i = 0; i < points.length; ++i) {
+        positions.push(points[i]);
+      }
 
-      var position = Cesium.Cartographic.toCartesian(
-        new Cesium.Cartographic.fromDegrees(-113.2665534, 36.0939345, 100)
-      );
-      var distance = -3000.0; // 开挖距离
-      var boundingSphere = new Cesium.BoundingSphere(position, distance);
+      var point1, point2;
+      var pointArr = [];
+      for (var i = 0, len = positions.length; i < len; ++i) {
+        point1 = positions[i % len];
+        point2 = positions[(i + 1) % len];
+        if (excavateMinHeight >= point1.z) excavateMinHeight = point1.z;
+        /*   var points = this.globe.lerp(point1, point2, this.splitNum);
+                points.forEach(function (point) {
+                    //pointArr.push(point);
+                })*/
+        var lerpx = (point2.x - point1.x) / splitNum;
+        var lerpy = (point2.y - point1.y) / splitNum;
+        for (var j = 0; j < splitNum; j++) {
+          var x = point1.x + j * lerpx;
+          var y = point1.y + j * lerpy;
+          var point = {
+            spatialReference: 4326,
+            x: x,
+            y: y,
+          };
+          pointArr.push(point);
+        }
+      }
+      pointArr.push(point2);
+      var bottomAtitude = excavateMinHeight - depth;
+      var minimumHeights = [],
+        maximumHeights = [];
 
-      // viewer.scene.globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
-      //   modelMatrix: Cesium.Transforms.eastNorthUpToFixedFrame(position),
-      //   planes: [
-      //     new Cesium.ClippingPlane(
-      //       new Cesium.Cartesian3(1.0, 0.0, 0.0),
-      //       distance
-      //     ),
-      //     new Cesium.ClippingPlane(
-      //       new Cesium.Cartesian3(-1.0, 0.0, 0.0),
-      //       distance
-      //     ),
-      //     new Cesium.ClippingPlane(
-      //       new Cesium.Cartesian3(0.0, 1.0, 0.0),
-      //       distance
-      //     ),
-      //     new Cesium.ClippingPlane(
-      //       new Cesium.Cartesian3(0.0, -1.0, 0.0),
-      //       distance
-      //     ),
-      //   ],
-      //   edgeWidth: 0.0,
-      //   edgeColor: Cesium.Color.WHITE,
-      // });
-      // viewer.camera.viewBoundingSphere(
-      //   boundingSphere,
-      //   new Cesium.HeadingPitchRange(0.5, 1.0, boundingSphere.radius * 5.0)
-      // );
-      // viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+      Cesium.sampleTerrainMostDetailed(
+        viewer.scene.terrainProvider,
+        pointArr
+      ).then(function (updatedPositions) {
+        //构造底面
+        for (var i = 0; i < positions.length; i++) {
+          positions[i].z = bottomAtitude;
+        }
 
-      // //错误--未显示
-      // var redPolygon = viewer.entities.add({
-      //   name: "面",
-      //   polygon: {
-      //     hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights([
-      //       //-113.2665534, 36.0939345
-      //       -113.2665534,
-      //       36.0939345,
-      //       -100,
-      //       -113.27709,
-      //       36.08153,
-      //       -100,
-      //       -113.25509,
-      //       36.08153,
-      //       -100,
-      //       -113.25509,
-      //       36.10353,
-      //       -100,
-      //       -113.27709,
-      //       36.10353,
-      //       -100,
-      //     ]),
-      //     material: new Cesium.Material({
-      //       fabric: {
-      //         type: "Image",
-      //         uniforms: {
-      //           image: "./TerrainClipPlan/excavate_bottom_min.jpg",
-      //         },
-      //       },
-      //     }),
-      //     //material: Cesium.Color.RED,
-      //     //classificationType:Cesium.ClassificationType.CESIUM_3D_TILE
-      //   },
-      // });
+        for (var i = 0; i < updatedPositions.length; ++i) {
+          maximumHeights.push(updatedPositions[i].height);
+          minimumHeights.push(bottomAtitude);
+        }
+
+        updatedCartesians = aa(updatedPositions);
+
+        var wall = viewer.entities.add({
+          name: "wall",
+          wall: {
+            positions: updatedCartesians,
+            minimumHeights: minimumHeights,
+            minimumHeights: maximumHeights,
+            material: Cesium.Color.RED,
+          },
+        });
+      });
+
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(
+          97.20928922925265,
+          29.26268123394501,
+          15052
+        ),
+      });
     </script>
   </body>
 </html>
