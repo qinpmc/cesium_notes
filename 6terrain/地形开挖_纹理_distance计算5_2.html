@@ -376,10 +376,12 @@
             x: x,
             y: y,
           };
-          pointArr.push(point);
+
+          var pointCarto = Cesium.Cartographic.fromDegrees(point.x, point.y, 0);
+          pointArr.push(pointCarto);
         }
       }
-      pointArr.push(point2);
+      pointArr.push(Cesium.Cartographic.fromDegrees(point2.x, point2.y, 0));
       var bottomAtitude = excavateMinHeight - depth;
       var minimumHeights = [],
         maximumHeights = [];
@@ -389,26 +391,103 @@
         pointArr
       ).then(function (updatedPositions) {
         //构造底面
+        var bottomPolygon = [];
         for (var i = 0; i < positions.length; i++) {
           positions[i].z = bottomAtitude;
+          bottomPolygon.push(positions[i].x, positions[i].y, positions[i].z);
         }
 
+        var updatedCartesians = [];
         for (var i = 0; i < updatedPositions.length; ++i) {
           maximumHeights.push(updatedPositions[i].height);
           minimumHeights.push(bottomAtitude);
+          updatedCartesians.push(
+            Cesium.Cartographic.toCartesian(updatedPositions[i])
+          );
         }
 
-        updatedCartesians = aa(updatedPositions);
+        // var wall = viewer.entities.add({
+        //   name: "wall",
+        //   wall: {
+        //     positions: updatedCartesians,
+        //     minimumHeights: minimumHeights,
+        //     maximumHeights: maximumHeights,
+        //     //material: Cesium.Color.RED,
+        //     material: new Cesium.Material({
+        //       fabric: {
+        //         type: "Image",
+        //         uniforms: {
+        //           image: "./TerrainClipPlan/excavate_side_min.jpg",
+        //         },
+        //       },
+        //     }),
+        //   },
+        // });
 
-        var wall = viewer.entities.add({
-          name: "wall",
-          wall: {
-            positions: updatedCartesians,
-            minimumHeights: minimumHeights,
-            minimumHeights: maximumHeights,
-            material: Cesium.Color.RED,
-          },
+        var wall = new Cesium.WallGeometry({
+          positions: updatedCartesians,
+          maximumHeights: maximumHeights,
+          minimumHeights: minimumHeights,
         });
+        var geometry = Cesium.WallGeometry.createGeometry(wall);
+        var a = new Cesium.Material({
+            fabric: {
+              type: "Image",
+              uniforms: {
+                image: "./TerrainClipPlan/excavate_side_min.jpg",
+              },
+            },
+          }),
+          n = new Cesium.MaterialAppearance({
+            translucent: !1,
+            flat: !0,
+            material: a,
+          });
+        var wellWall = new Cesium.Primitive({
+          geometryInstances: new Cesium.GeometryInstance({
+            geometry: geometry,
+            attributes: {
+              color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+                Cesium.Color.GREY
+              ),
+            },
+            id: "PitWall",
+          }),
+          appearance: n,
+          asynchronous: !1,
+        });
+        viewer.scene.primitives.add(wellWall);
+
+        //viewer.zoomTo(wall);
+
+        var polygon = new Cesium.PolygonGeometry({
+          polygonHierarchy: new Cesium.PolygonHierarchy(
+            Cesium.Cartesian3.fromDegreesArrayHeights(bottomPolygon)
+          ),
+        });
+        var geometry2 = Cesium.PolygonGeometry.createGeometry(polygon);
+
+        var i = new Cesium.Material({
+            fabric: {
+              type: "Image",
+              uniforms: {
+                image: "./TerrainClipPlan/excavate_bottom_min.jpg",
+              },
+            },
+          }),
+          a = new Cesium.MaterialAppearance({
+            translucent: !1,
+            flat: !0,
+            material: i,
+          });
+        var bottomSurface = new Cesium.Primitive({
+          geometryInstances: new Cesium.GeometryInstance({
+            geometry: geometry2,
+          }),
+          appearance: a,
+          asynchronous: !1,
+        });
+        viewer.scene.primitives.add(bottomSurface);
       });
 
       viewer.camera.flyTo({
