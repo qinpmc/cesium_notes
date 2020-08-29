@@ -38,7 +38,7 @@
   </head>
 
   <body>
-    <div style="position: absolute; z-index: 9999;"></div>
+    <div style="position: absolute; z-index: 9999"></div>
     <div id="cesiumContainer"></div>
 
     <script>
@@ -56,7 +56,7 @@
 
       let viewer = new Cesium.Viewer("cesiumContainer", {
         imageryProvider: osm,
-        // terrainProvider: terrain,//地形数据源
+        terrainProvider: terrain, //地形数据源
         selectionIndicator: false,
         animation: false, //是否显示动画控件
         baseLayerPicker: false, //是否显示图层选择控件
@@ -73,38 +73,13 @@
         // },
       });
 
-      var lat = 42.006;
-      var lon = 128.055;
-      //取消双击事件
-      viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
-        Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
-      );
-      //设置homebutton的位置
-      Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(
-        lon - 1,
-        lat - 1,
-        lon + 1,
-        lat + 1
-      ); //Rectangle(west, south, east, north)
       //设置初始位置
-      viewer.camera.setView({
-        destination: Cesium.Cartesian3.fromDegrees(lon, lat, 300000),
-      });
-
-      //取消双击事件
-      viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
-        Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
-      );
-      //设置homebutton的位置
-      Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(
-        116.15,
-        40.54,
-        116.25,
-        40.56
-      ); //Rectangle(west, south, east, north)
-      //设置初始位置
-      viewer.camera.setView({
-        destination: Cesium.Cartesian3.fromDegrees(117.220108, 31.834937, 3000),
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(
+          117.220108,
+          31.834937,
+          10000
+        ),
       });
 
       //开启深度检测
@@ -117,12 +92,25 @@
         bottomImg: "./TerrainClipPlan/excavate_bottom_min.jpg",
       });
 
-      terrainClipPlan.updateData([
+      var positions = [
         { x: -2480825.779644006, y: 4823039.348573122, z: 3344998.9734951435 },
         { x: -2481057.6623671586, y: 4822939.719360245, z: 3344970.8291531955 },
         { x: -2481026.5803391673, y: 4823096.907581604, z: 3344768.5949868727 },
         { x: -2480854.0689538443, y: 4823168.905374106, z: 3344792.5711652176 },
-      ]);
+      ];
+
+      terrainClipPlan.updateData(positions);
+
+      for (var i = 0; i < positions.length; i++) {
+        var position = positions[i];
+        viewer.entities.add({
+          position: new Cesium.Cartesian3(position.x, position.y, position.z),
+          point: {
+            pixelSize: 10,
+            color: Cesium.Color.RED,
+          },
+        });
+      }
     </script>
   </body>
 </html>

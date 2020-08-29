@@ -406,6 +406,7 @@
           );
         }
 
+        //侧面使用红色材质 - 测试
         // var wall = viewer.entities.add({
         //   name: "wall",
         //   wall: {
@@ -464,6 +465,7 @@
           polygonHierarchy: new Cesium.PolygonHierarchy(
             Cesium.Cartesian3.fromDegreesArrayHeights(bottomPolygon)
           ),
+          extrudedHeight: bottomAtitude,
         });
         var geometry2 = Cesium.PolygonGeometry.createGeometry(polygon);
 
