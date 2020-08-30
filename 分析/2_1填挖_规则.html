@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>填挖方分析</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      var terrainProvider = Cesium.createWorldTerrain({
+        requestWaterMask: true,
+        requestVertexNormals: true,
+      });
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        imageryProvider: new Cesium.UrlTemplateImageryProvider({
+          url:
+            "http://mt0.google.cn/maps/vt?lyrs=s%40703&hl=zh-CN&x={x}&y={y}&z={z}", //
+        }),
+        terrainProvider: terrainProvider,
+      });
+
+      viewer.scene.globe.depthTestAgainstTerrain = true;
+
+      var excavateHeight = 2300; // 开挖高度
+      var buryHeight = 6000; // 填埋高度
+
+      var scope = [
+        Cesium.Cartesian3.fromDegrees(99, 29),
+        Cesium.Cartesian3.fromDegrees(100, 29),
+        Cesium.Cartesian3.fromDegrees(100, 30),
+        Cesium.Cartesian3.fromDegrees(99, 30),
+      ];
+
+      // 显示施工区域
+      var entity = viewer.entities.add({
+        polygon: {
+          hierarchy: scope,
+          height: buryHeight,
+          extrudedHeight: excavateHeight,
+          material: Cesium.Color.RED.withAlpha(0.5),
+          outline: true,
+          closeTop: false,
+        },
+      });
+
+      viewer.trackedEntity = entity;
+
+      function calc() {
+        //===============================计算 开挖/填埋 的 开挖量/填方量 的 核心思想就是 剖分 微积分==========================//
+
+        // 设置剖分最小单元 0.01°
+        var subdivisionCell = 0.01;
+
+        // 所有的剖分矩形
+        var subRectangles = [];
+
+        for (var i = 99; i <= 100; i = i + subdivisionCell) {
+          for (var j = 29; j <= 30; j = j + subdivisionCell) {
+            var subRectangle = new Cesium.Rectangle(
+              Cesium.Math.toRadians(i),
+              Cesium.Math.toRadians(j),
+              Cesium.Math.toRadians(i + subdivisionCell),
+              Cesium.Math.toRadians(j + subdivisionCell)
+            );
+            subRectangles.push(subRectangle);
+
+            // 可视化部分
+            viewer.entities.add({
+              rectangle: {
+                coordinates: subRectangle,
+                material: Cesium.Color.fromRandom().withAlpha(0.5),
+                height: 6000,
+                extrudedHeight: 2300,
+              },
+            });
+          }
+        }
+
+        // 计算每个矩形的中心点作为这个矩形的代表
+
+        var subRectanglesCenterPoints = [];
+        subRectangles.forEach((subRectangle) => {
+          var centerPoint = Cesium.Cartographic.fromRadians(
+            (subRectangle.west + subRectangle.east) / 2,
+            (subRectangle.north + subRectangle.south) / 2
+          );
+
+          subRectanglesCenterPoints.push(centerPoint);
+
+          // 可视化部分
+          var position = centerPoint.clone();
+          position.height = buryHeight;
+
+          var position1 = centerPoint.clone();
+          position1.height = excavateHeight;
+
+          viewer.entities.add({
+            polyline: {
+              positions: [Cesium.Cartographic.toCartesian(position), Cesium.Cartographic.toCartesian(position1)],
+              material: Cesium.Color.fromRandom().withAlpha(0.5),
+              width: 5
+            }
+          });
+        });
+
+        // 计算每个中心点到达地表的高度
+        // var promise = Cesium.sampleTerrainMostDetailed(terrainProvider, subRectanglesCenterPoints);
+        var promise = Cesium.sampleTerrain(
+          terrainProvider,
+          7,
+          subRectanglesCenterPoints
+        );
+        Cesium.when(promise, function (updatedPositions) {
+          // 所有高度
+          var heights = [];
+          updatedPositions.forEach((point) => {
+            heights.push(point.height);
+          });
+
+          // 开始计算土方
+          var excavateVolumes = 0; // 挖方
+          var buryVolumes = 0; // 填埋
+
+          // 1.计算每个矩形的长、宽
+          for (var i = 0; i < subRectangles.length; i++) {
+            var subRectangle = subRectangles[i];
+            var leftBottom = Cesium.Cartesian3.fromRadians(
+              subRectangle.west,
+              subRectangle.south
+            );
+            var leftTop = Cesium.Cartesian3.fromRadians(
+              subRectangle.west,
+              subRectangle.north
+            );
+            var rightBottom = Cesium.Cartesian3.fromRadians(
+              subRectangle.east,
+              subRectangle.south
+            );
+            var height = Cesium.Cartesian3.distance(leftBottom, leftTop); // 宽
+            var width = Cesium.Cartesian3.distance(leftBottom, rightBottom); // 长
+
+            // 挖方
+            if (heights[i] > excavateHeight) {
+              // 如果地形高度大于开挖高度才需要开挖
+              var excavateVolume =
+                width * height * (heights[i] - excavateHeight);
+              excavateVolumes += excavateVolume;
+            }
+
+            // 填埋
+            if (heights[i] < buryHeight) {
+              // 如果地形高度小于填埋高度才需要填埋
+              var buryVolume = width * height * (buryHeight - heights[i]);
+              buryVolumes += buryVolume;
+            }
+          }
+
+          console.log("挖方：" + excavateVolumes + "立方米(m³)");
+          console.log("填埋：" + buryVolumes + "立方米(m³)");
+        });
+      }
+
+      calc();
+    </script>
+  </body>
+</html>
