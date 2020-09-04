@@ -24,7 +24,6 @@
         padding: 0;
         overflow: hidden;
       }
-
     </style>
   </head>
   <body>
@@ -32,7 +31,6 @@
     <script>
       Cesium.Ion.defaultAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
-
 
       var viewer = new Cesium.Viewer("cesiumContainer", {
         animation: false, //是否显示动画控件
@@ -52,7 +50,7 @@
           /*tilingScheme:new Cesium.WebMercatorTilingScheme({
 
             }),*/
-        })
+        }),
       });
 
       var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
@@ -62,12 +60,12 @@
         style: "default",
         format: "tiles",
         tileMatrixSetID: "w",
-        tilingScheme: new Cesium.WebMercatorTilingScheme({})
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
       });
 
       viewer.imageryLayers.addImageryProvider(imageryProvider2);
       viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
+        destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000),
       });
     </script>
   </body>
