@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>Hello World!</title>
+    <!-- <script src="../Build/Cesium/Cesium.js"></script> -->
+
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .tools {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="cesiumContainer"></div>
+      <div class="tools">
+        Opacity:
+        <input
+          id="btnImageryAlpha"
+          type="range"
+          min="0"
+          max="10"
+          value="10"
+          oninput="change()"
+        />
+      </div>
+    </div>
+    <script type="module">
+      window.change = function change() {
+        var value = document.getElementById("btnImageryAlpha").value;
+        if (viewer.imageryLayers) {
+          for (var i = 0; i < viewer.imageryLayers.length; i++) {
+            viewer.imageryLayers.get(i).alpha = value / 10;
+          }
+        }
+        console.log(value);
+      };
+
+      window.CESIUM_BASE_URL = "../Source/";
+      import * as Cesium from "../Source/Cesium.js";
+
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      let terrainProvider = new Cesium.CesiumTerrainProvider({
+        //url: "../Source/Terrain/beijing/"
+        url: "http://data.marsgis.cn/terrain/",
+      });
+
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        //skyAtmosphere: false,
+        //orderIndependentTranslucency: false,
+        baseLayerPicker: false,
+        terrainProvider: terrainProvider,
+      });
+      //viewer.scene.globe.depthTestAgainstTerrain = false;
+      //change the ugly blue color to black
+      viewer.scene.globe.baseColor = new Cesium.Color(0, 0, 0, 0);
+      //default is 1
+      //viewer.scene.globe.imageryLayers.get(0).alpha = 0.5;
+
+      // var blueBox = viewer.entities.add({
+      //   name: "Blue box",
+      //   position: Cesium.Cartesian3.fromDegrees(94.0, 30.0, 5),
+      //   box: {
+      //     dimensions: new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+      //     material: Cesium.Color.BLUE,
+      //   },
+      // });
+
+      // viewer.zoomTo(blueBox);
+
+      //构造圆形横截面 ---二维坐标 构成的数组
+      function computeCircle(radius) {
+        var positions = [];
+        for (var i = 0; i < 360; i++) {
+          var radians = Cesium.Math.toRadians(i);
+          positions.push(
+            new Cesium.Cartesian2(
+              radius * Math.cos(radians),
+              radius * Math.sin(radians)
+            )
+          );
+        }
+        return positions;
+      }
+
+      var redTube = viewer.entities.add({
+        name: "Red tube with rounded corners",
+        polylineVolume: {
+          positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+            94.0,
+            29.5,
+            -1000,
+            94.0,
+            30.0,
+            -1000,
+            93.5,
+            30.0,
+            -1000,
+            93.5,
+            30.5,
+            -1000,
+          ]),
+          shape: computeCircle(600.0),
+          cornerType: Cesium.CornerType.ROUNDED, // 圆形的 倒角
+          material: Cesium.Color.RED,
+        },
+      });
+      viewer.zoomTo(redTube);
+    </script>
+  </body>
+</html>
