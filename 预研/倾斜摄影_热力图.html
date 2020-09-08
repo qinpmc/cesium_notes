@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>倾斜摄影测试</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="./heatmap/heatmap.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .cesium-viewer-bottom /* logo信息 */ {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cesiumContainer"></div>
+    <div
+      id="heatmap"
+      style="height: 400px; width: 600px"
+      style="display: none"
+    ></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      var viewer;
+
+      init();
+
+      addBuilding("http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json");
+
+      function init() {
+        var worldTerrain = Cesium.createWorldTerrain({
+          requestWaterMask: true,
+          requestVertexNormals: true,
+        });
+
+        var tileMatrixLabels = [];
+        for (var i = 1; i < 18; i++) {
+          tileMatrixLabels.push("" + i);
+        }
+        viewer = new Cesium.Viewer("cesiumContainer", {
+          animation: false, //是否显示动画控件
+          baseLayerPicker: false, //是否显示图层选择控件
+          geocoder: true, //是否显示地名查找控件
+          timeline: false, //是否显示时间线控件
+          sceneModePicker: true, //是否显示投影方式控件
+          navigationHelpButton: false, //是否显示帮助信息控件
+          infoBox: true, //是否显示点击要素之后显示的信息,
+
+          imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+            url:
+              "http://t0.tianditu.gov.cn/img_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&service=WMTS",
+            layer: "img",
+            style: "default",
+            format: "tiles",
+            tileMatrixSetID: "c",
+            tileMatrixLabels: tileMatrixLabels,
+            tilingScheme: new Cesium.GeographicTilingScheme({
+              numberOfLevelZeroTilesX: 2,
+              numberOfLevelZeroTilesY: 1,
+            }),
+            show: false,
+          }),
+        });
+
+        var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156&request=GetTile&version=1.0.0&LAYER=cta&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&service=WMTS",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+          show: false,
+        });
+        viewer.imageryLayers.addImageryProvider(imageryProvider2);
+
+        viewer.terrainProvider = worldTerrain;
+      }
+
+      function addBuilding(url) {
+        var tileset = new Cesium.Cesium3DTileset({
+          url: url,
+        });
+
+        viewer.scene.primitives.add(tileset);
+
+        tileset.readyPromise.then(function () {
+          var boundingSphere = tileset.boundingSphere;
+          viewer.camera.viewBoundingSphere(
+            boundingSphere,
+            new Cesium.HeadingPitchRange(
+              0.0,
+              -0.5,
+              boundingSphere.radius + 500.0
+            )
+          );
+          viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+        });
+      }
+
+      /////////////////////////////////////
+      var len = 300;
+      var points = [];
+      var max = 100;
+      var width = 600;
+      var height = 400;
+
+      var latMin = 28.336931894639386;
+      var latMax = 28.44076266947862;
+      var lonMin = 119.47537716018985;
+      var lonMax = 119.48535570195445;
+
+      var dataRaw = [];
+      for (var i = 0; i < len; i++) {
+        var point = {
+          lat: latMin + Math.random() * (latMax - latMin),
+          lon: lonMin + Math.random() * (lonMax - lonMin),
+          value: Math.floor(Math.random() * 100),
+        };
+        dataRaw.push(point);
+      }
+      //
+      for (var i = 0; i < len; i++) {
+        var dataItem = dataRaw[i];
+        var point = {
+          x: Math.floor(((dataItem.lat - latMin) / (latMax - latMin)) * width),
+          y: Math.floor(((dataItem.lon - lonMin) / (lonMax - lonMin)) * height),
+          value: Math.floor(dataItem.value),
+        };
+        max = Math.max(max, dataItem.value);
+        points.push(point);
+      }
+
+      var heatmapInstance = h337.create({
+        container: document.querySelector("#heatmap"),
+      });
+
+      var data = {
+        max: max,
+        data: points,
+      };
+      //
+      heatmapInstance.setData(data);
+
+      var canvas = document.getElementsByClassName("heatmap-canvas");
+      console.log(canvas);
+
+      var redRectangle = viewer.entities.add({
+        name: "rectangle",
+        rectangle: {
+          coordinates: Cesium.Rectangle.fromDegrees(
+            lonMin,
+            latMin,
+            lonMax,
+            latMax
+          ),
+          //material: Cesium.Color.RED.withAlpha(0.5),
+          material: new Cesium.ImageMaterialProperty({
+            image: canvas[0],
+            //transparent: true
+          }),
+        },
+      });
+
+      viewer.camera.lookAt(
+        new Cesium.Cartesian3.fromDegrees(
+          (lonMax + lonMin) / 2,
+          (latMax + latMin) / 2
+        ),
+        new Cesium.HeadingPitchRange(0, -50, 10000000)
+      );
+    </script>
+  </body>
+</html>
