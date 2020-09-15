@@ -45,7 +45,7 @@
           min="0"
           max="1"
           value="0.5"
-          step="0.1"
+          step="0.01"
           oninput="change()"
         />
       </div>
@@ -67,16 +67,29 @@
       });
 
       var viewer = new Cesium.Viewer("cesiumContainer", {
-        //skyAtmosphere: false,
-        //orderIndependentTranslucency: false,
-        baseLayerPicker: false,
+        //baseLayerPicker: false, //影响地下的显示，地形度透明度为1，反而地形物体显示
         terrainProvider: terrainProvider,
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+        }),
+      });
+      var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "cta",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
       });
 
+      viewer.imageryLayers.addImageryProvider(imageryProvider2);
       var globe = viewer.scene.globe;
-      //viewer.scene.globe.depthTestAgainstTerrain = false;
-
-      viewer.scene.globe.baseColor = new Cesium.Color(0, 0, 0, 0);
 
       //构造圆形横截面 ---二维坐标 构成的数组
       function computeCircle(radius) {
@@ -93,38 +106,35 @@
         return positions;
       }
 
-      // var redTube = viewer.entities.add({
-      //   name: "Red tube with rounded corners",
-      //   polylineVolume: {
-      //     positions: Cesium.Cartesian3.fromDegreesArrayHeights([
-      //       94.0,
-      //       29.5,
-      //       5000,
-      //       94.0,
-      //       30.0,
-      //       -1000,
-      //       93.5,
-      //       30.0,
-      //       -1000,
-      //       93.5,
-      //       30.5,
-      //       5000,
-      //     ]),
-      //     shape: computeCircle(600.0),
-      //     cornerType: Cesium.CornerType.ROUNDED, // 圆形的 倒角
-      //     material: Cesium.Color.RED,
-      //   },
-      // });
-      // viewer.zoomTo(redTube);
+      var redTube = viewer.entities.add({
+        name: "Red tube with rounded corners",
+        polylineVolume: {
+          positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+            94.0,
+            29.5,
+            5000,
+            94.0,
+            30.0,
+            -1000,
+            93.5,
+            30.0,
+            -1000,
+            93.5,
+            30.5,
+            5000,
+          ]),
+          shape: computeCircle(600.0),
+          cornerType: Cesium.CornerType.ROUNDED, // 圆形的 倒角
+          material: Cesium.Color.RED,
+        },
+      });
+      viewer.zoomTo(redTube);
 
       function addParcLeadMine() {
         var longitude = 94.01;
         var latitude = 30;
         var height = 72.8;
 
-        var longitude = -3.82518;
-        var latitude = 53.11728;
-        var height = 72.8;
         var position = Cesium.Cartesian3.fromDegrees(
           longitude,
           latitude,
@@ -139,35 +149,7 @@
             uri: url,
           },
         });
-
-        viewer.scene.camera.setView({
-          destination: new Cesium.Cartesian3(
-            3826465.9884728403,
-            -254831.02751468265,
-            5081387.671561018
-          ),
-          orientation: new Cesium.HeadingPitchRoll(
-            3.3889450556243754,
-            -0.5276382514771969,
-            6.282272566663295
-          ),
-          endTransform: Cesium.Matrix4.IDENTITY,
-        });
-
-        //viewer.zoomTo(entity);
-        viewer.scene.camera.flyTo({
-          destination: new Cesium.Cartesian3(
-            3827270.552916987,
-            -255123.18143177085,
-            5079147.091351856
-          ),
-          orientation: new Cesium.HeadingPitchRoll(
-            3.2624281242239963,
-            -0.22213535190506972,
-            6.282786783842843
-          ),
-          duration: 5.0,
-        });
+        viewer.zoomTo(entity);
       }
       addParcLeadMine();
 
