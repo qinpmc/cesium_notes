@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>Hello World!</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .tools {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="cesiumContainer"></div>
+      <div class="tools">
+        Opacity:
+        <input
+          id="btnImageryAlpha"
+          type="range"
+          min="0"
+          max="1"
+          value="0.5"
+          step="0.1"
+          oninput="change()"
+        />
+      </div>
+    </div>
+    <script type="module">
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      // var terrainProvider = new Cesium.CesiumTerrainProvider({
+      //   url: "http://data.marsgis.cn/terrain/",
+      // });
+
+      var terrainProvider = Cesium.createWorldTerrain({
+        //requestVertexNormals: true,
+        //requestWaterMask: true,
+      });
+
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+          terrainProvider: Cesium.createWorldTerrain(),
+        });
+
+      var globe = viewer.scene.globe;
+      //viewer.scene.globe.depthTestAgainstTerrain = false;
+
+      viewer.scene.globe.baseColor = new Cesium.Color(0, 0, 0, 0);
+
+      //构造圆形横截面 ---二维坐标 构成的数组
+      function computeCircle(radius) {
+        var positions = [];
+        for (var i = 0; i < 360; i++) {
+          var radians = Cesium.Math.toRadians(i);
+          positions.push(
+            new Cesium.Cartesian2(
+              radius * Math.cos(radians),
+              radius * Math.sin(radians)
+            )
+          );
+        }
+        return positions;
+      }
+
+      // var redTube = viewer.entities.add({
+      //   name: "Red tube with rounded corners",
+      //   polylineVolume: {
+      //     positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+      //       94.0,
+      //       29.5,
+      //       5000,
+      //       94.0,
+      //       30.0,
+      //       -1000,
+      //       93.5,
+      //       30.0,
+      //       -1000,
+      //       93.5,
+      //       30.5,
+      //       5000,
+      //     ]),
+      //     shape: computeCircle(600.0),
+      //     cornerType: Cesium.CornerType.ROUNDED, // 圆形的 倒角
+      //     material: Cesium.Color.RED,
+      //   },
+      // });
+      // viewer.zoomTo(redTube);
+
+      function addParcLeadMine() {
+        var longitude = 94.01;
+        var latitude = 30;
+        var height = 72.8;
+
+        var longitude = -3.82518;
+        var latitude = 53.11728;
+        var height = 72.8;
+        var position = Cesium.Cartesian3.fromDegrees(
+          longitude,
+          latitude,
+          height
+        );
+        var url = "../data/model/ParcLeadMine.glb";
+
+        var entity = viewer.entities.add({
+          name: url,
+          position: position,
+          model: {
+            uri: url,
+          },
+        });
+
+        viewer.scene.camera.setView({
+          destination: new Cesium.Cartesian3(
+            3826465.9884728403,
+            -254831.02751468265,
+            5081387.671561018
+          ),
+          orientation: new Cesium.HeadingPitchRoll(
+            3.3889450556243754,
+            -0.5276382514771969,
+            6.282272566663295
+          ),
+          endTransform: Cesium.Matrix4.IDENTITY,
+        });
+
+        //viewer.zoomTo(entity);
+        viewer.scene.camera.flyTo({
+          destination: new Cesium.Cartesian3(
+            3827270.552916987,
+            -255123.18143177085,
+            5079147.091351856
+          ),
+          orientation: new Cesium.HeadingPitchRoll(
+            3.2624281242239963,
+            -0.22213535190506972,
+            6.282786783842843
+          ),
+          duration: 5.0,
+        });
+      }
+      addParcLeadMine();
+
+      viewer.scene.screenSpaceCameraController.enableCollisionDetection = true;
+      globe.translucency.frontFaceAlphaByDistance = new Cesium.NearFarScalar(
+        400.0,
+        0.0,
+        800.0,
+        1.0
+      );
+      window.change = function change() {
+        globe.translucency.enabled = true;
+        var alpha = parseFloat(
+          document.getElementById("btnImageryAlpha").value
+        );
+        alpha = Cesium.Math.clamp(alpha, 0.0, 1.0);
+        globe.translucency.frontFaceAlphaByDistance.nearValue = alpha;
+        globe.translucency.frontFaceAlphaByDistance.farValue = false
+          ? 1.0
+          : alpha;
+
+        console.log(alpha);
+      };
+    </script>
+  </body>
+</html>
