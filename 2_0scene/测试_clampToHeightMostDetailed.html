@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>地形高度取样-剖面分析</title>
+    <!--<script src="https://cesiumjs.org/releases/1.57/Build/Cesium/Cesium.js"></script>-->
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.2.1/echarts.js"></script>
+    <link
+      href="https://cesiumjs.org/releases/1.57/Build/Cesium/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #000000;
+      }
+
+      #painting {
+        z-index: 1;
+        position: absolute;
+        top: 80px;
+        left: 10px;
+        background-color: white;
+      }
+
+      .toolBar {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #303336;
+        opacity: 0.6;
+        padding: 6px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="cesiumContainer">
+      <div
+        id="painting"
+        style="width: 600px; height: 400px; display: none"
+      ></div>
+    </div>
+    <div class="toolBar">
+      <button class="cesium-button" onclick="profileAnalyse()">开始取值</button>
+    </div>
+    <script>
+      var paintingDom = document.getElementById("painting"); // 绘图对象
+      var myChart = null;
+
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      var viewer = new Cesium.Viewer("cesiumContainer");
+
+      var scene = viewer.scene;
+      var start = null;
+      var end = null;
+
+      var terrainLayer = new Cesium.CesiumTerrainProvider({
+        url: "http://data.marsgis.cn/terrain",
+        requestWaterMask: true,
+        requestVertexNormals: true,
+      });
+
+      var terrainProvider = Cesium.createWorldTerrain({
+        requestVertexNormals: true,
+        requestWaterMask: true,
+      });
+
+      viewer.terrainProvider = terrainProvider;
+
+      var points = [
+        {
+          x: 96.69809359675664,
+          y: 29.76479997655816,
+          z: 0,
+        },
+        {
+          x: 97.26251624459285,
+          y: 29.178749324549372,
+          z: 0,
+        },
+      ];
+
+      // 插值后使用 clampToHeightMostDetailed 、sampleHeightMostDetailed获取高度
+      function profileAnalyse() {
+        var positions = [],
+          pnts = [];
+        for (var i = 0, len = points.length; i < len; i++) {
+          var point = points[i];
+
+          positions.push(Cesium.Cartesian3.fromDegrees(point.x, point.y, 0));
+          //pnts.push(Cesium.Cartesian3.fromDegrees(point.x, point.y, 0));
+          pnts.push(Cesium.Cartographic.fromDegrees(point.x, point.y, 0));
+        }
+
+        console.log(positions);
+        // 异步使用
+        // var promise = scene.clampToHeightMostDetailed(pnts);
+
+        // Cesium.when(promise, function (updatedPositions) {
+        //   // updatedPositions:<Array.<Cartesian3>>
+
+        //   // 处理返回的数据
+        //   var res = [];
+        //   for (var i = 0; i < updatedPositions.length; ++i) {
+        //     res.push(Cesium.Cartographic.fromCartesian(updatedPositions[i]));
+        //   }
+        //   console.log(res);
+        // });
+
+        // 异步使用最精确的地形采样获取地形高度
+        var promise = Cesium.sampleTerrainMostDetailed(terrainProvider, pnts);
+        Cesium.when(promise, function (updatedPositions) {
+          console.log(updatedPositions);
+        });
+      }
+
+ 
+    </script>
+  </body>
+</html>
