@@ -13,6 +13,7 @@
     <title>tianditu</title>
 
     <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="./OceanTexture.js"></script>
     <style>
       @import url(../Build/Cesium/Widgets/widgets.css);
 
@@ -29,14 +30,20 @@
  
   </head>
   <body>
+    <div>
+      开启：<input type="radio" name="ocean" value="on" id="oceanOn" /><br />
+      关闭：<input type="radio" name="ocean" value="off" id="oceanOff" />
+    </div>
     <div id="cesiumContainer"></div>
+    <div
+      id="aniContainer"
+      style="position: absolute; z-index: 9; top: 0px; left: 0px"
+    ></div>
     <script>
       Cesium.Ion.defaultAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
       var viewer;
-      init();
-
-      function init() {
+      !(function () {
         viewer = new Cesium.Viewer("cesiumContainer", {
           animation: false, //是否显示动画控件
           baseLayerPicker: false, //是否显示图层选择控件
@@ -54,15 +61,15 @@
             tileMatrixSetID: "w",
             /*tilingScheme:new Cesium.WebMercatorTilingScheme({
 
-                  }),*/
+            }),*/
           }),
           terrainProvider: Cesium.createWorldTerrain({
-            requestWaterMask: true,
             requestVertexNormals: true,
+            //requestWaterMask: true,
           }),
         });
 
-        var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+        var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
           url:
             "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
           layer: "cta",
@@ -72,76 +79,54 @@
           tilingScheme: new Cesium.WebMercatorTilingScheme({}),
         });
 
-        viewer.imageryLayers.addImageryProvider(imageryProvider);
-      }
+        viewer.imageryLayers.addImageryProvider(imageryProvider2);
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(0, 0, 10000000),
+        });
+      })();
 
-      /////////////////////////////////////////////////////////////////
-
-      var start = {
-        x: 80.21937006144049,
-        y: 32.83146820405586,
-        z: 4991.485051942769,
-      };
-      var end = {
-        x: 102.31074877555041,
-        y: 23.09089005759723,
-        z: 1268.0537180778522,
-      };
-      var startCartesian = Cesium.Cartesian3.fromDegrees(
-        start.x,
-        start.y,
-        start.z
+      var oceanEffectPrimitive = viewer.scene.primitives.add(
+        new Cesium.Primitive({
+          geometryInstances: new Cesium.GeometryInstance({
+            geometry: new Cesium.RectangleGeometry({
+              rectangle: Cesium.Rectangle.fromDegrees(
+                -180.0,
+                -90.0,
+                180.0,
+                90.0
+              ),
+              vertexFormat: Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT,
+            }),
+          }),
+          appearance: new Cesium.EllipsoidSurfaceAppearance({
+            aboveGround: false,
+            material: new Cesium.Material({
+              fabric: {
+                type: "Water",
+                uniforms: {
+                  specularMap: Oceantexture.specularMap,
+                  normalMap: Oceantexture.normalMap,
+                  frequency: 10000.0,
+                  animationSpeed: 0.01,
+                  amplitude: 1.0,
+                },
+              },
+            }),
+          }),
+          show: false,
+        })
       );
 
-      var endCartesian = Cesium.Cartesian3.fromDegrees(end.x, end.y, end.z);
+      var oceanOnELe = document.querySelector("#oceanOn");
+      var oceanOffELe = document.querySelector("#oceanOff");
 
-      var id = new Date().getTime() + "";
-      var dataSource = new Cesium.CustomDataSource(id);
+      oceanOnELe.addEventListener("click", function () {
+        oceanEffectPrimitive.show = true;
+      });
 
-      function addGlowLineScan() {
-        var g = {
-          zIndex: new Cesium.CallbackProperty(function () {
-            return 0;
-          }),
-          show: new Cesium.CallbackProperty(function () {
-            return true;
-          }),
-          width: new Cesium.CallbackProperty(function () {
-            return 30;
-          }),
-          classificationType: new Cesium.CallbackProperty(function () {
-            return undefined;
-          }),
-          clampToGround: new Cesium.CallbackProperty(function () {
-            // return polylineGraphics.clampToGround;
-            return true;
-          }),
-          positions: new Cesium.CallbackProperty(function () {
-            return [startCartesian, endCartesian];
-          }),
-          material: new Cesium.PolylineGlowMaterialProperty({
-            color: new Cesium.CallbackProperty(function () {
-              return new Cesium.Color(0, 0, 1, 1);
-            }),
-            glowPower: new Cesium.CallbackProperty(function () {
-              return 0.2;
-            }),
-            taperPower: new Cesium.CallbackProperty(function () {
-              return 1; //锥化效果，如果1.0或更高，则不使用锥度效果
-            }),
-          }),
-        };
-
-        var entity = new Cesium.Entity({
-          id: "1",
-          polyline: g,
-        });
-
-        dataSource.entities.add(entity);
-        viewer.dataSources.add(dataSource);
-      }
-
-      addGlowLineScan();
+      oceanOffELe.addEventListener("click", function () {
+        oceanEffectPrimitive.show = false;
+      });
     </script>
   </body>
 </html>

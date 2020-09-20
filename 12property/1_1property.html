@@ -26,13 +26,12 @@
         overflow: hidden;
       }
     </style>
- 
   </head>
   <body>
-    <div>
-      开启：<input type="radio" name="light" value="on" id="lightOn" />
-      时间：<input type="range" min="0" max="23" step="1" / id="timeLine"><br />
-      关闭：<input type="radio" name="light" value="off" id="lightOff" />
+    <div style="position: absolute; z-index: 999">
+      <button onclick="change_constant_new()">Constant new</button>
+      <button onclick="change_constant_set()">constant_set</button>
+      <button onclick="change_sampled()">change sampled</button>
     </div>
     <div id="cesiumContainer"></div>
     <div
@@ -45,12 +44,13 @@
       var viewer;
       !(function () {
         viewer = new Cesium.Viewer("cesiumContainer", {
-          animation: false, //是否显示动画控件
-          baseLayerPicker: false, //是否显示图层选择控件
+          animation: true, //是否显示动画控件
+          //baseLayerPicker: false, //是否显示图层选择控件
           geocoder: true, //是否显示地名查找控件
-          timeline: false, //是否显示时间线控件
+          timeline: true, //是否显示时间线控件
+          shouldAnimate: true,
           sceneModePicker: true, //是否显示投影方式控件
-          navigationHelpButton: false, //是否显示帮助信息控件
+          //navigationHelpButton: false, //是否显示帮助信息控件
           infoBox: true, //是否显示点击要素之后显示的信息
           imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
             url:
@@ -77,35 +77,63 @@
 
         viewer.imageryLayers.addImageryProvider(imageryProvider2);
         viewer.camera.flyTo({
-          destination: Cesium.Cartesian3.fromDegrees(114, 30, 10000000),
+          destination: Cesium.Cartesian3.fromDegrees(114, 30, 1000),
         });
       })();
 
-      var timeLineELe = document.querySelector("#timeLine");
-      var lightOnELe = document.querySelector("#lightOn");
-      var ligthOffELe = document.querySelector("#lightOff");
+      // 设置时间
+      var start = Cesium.JulianDate.fromIso8601("2020-09-20T00:00:00.00Z");
+      var stop = Cesium.JulianDate.fromIso8601("2020-09-20T23:00:00.00Z");
+      //Make sure viewer is at the desired time.
+      viewer.clock.startTime = start.clone();
+      viewer.clock.stopTime = stop.clone();
+      viewer.clock.currentTime = start.clone();
+      viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //Loop at the end
+      viewer.clock.multiplier = 10000;
+      viewer.timeline.zoomTo(start, stop);
 
-      lightOnELe.addEventListener("click", function () {
-        toggleLightEffect(true);
+      var blueBox = viewer.entities.add({
+        name: "Blue box",
+        //id: 'blueBox',
+        position: Cesium.Cartesian3.fromDegrees(114.0, 30.0, 300.0),
+        box: {
+          dimensions: new Cesium.Cartesian3(400.0, 300.0, 600.0),
+          material: Cesium.Color.BLUE,
+          outline: true,
+        },
+        path: {
+          show: true,
+        },
       });
 
-      ligthOffELe.addEventListener("click", function () {
-        toggleLightEffect(false);
-        var date = new Date();
-        viewer.clock.currentTime = Cesium.JulianDate.fromDate(date);
-      });
-
-      function toggleLightEffect(turnOn) {
-        viewer.scene.shadowMap.enabled = turnOn;
-        viewer.scene.globe.enableLighting = turnOn;
+      function change_constant_new() {
+        blueBox.box.dimensions = new Cesium.ConstantProperty(
+          new Cesium.Cartesian3(400.0, 300.0, 200.0)
+        );
       }
 
-      timeLineELe.addEventListener("change", function () {
-        var time = parseFloat(this.value);
-        var date = new Date();
-        date.setHours(time);
-        viewer.clock.currentTime = Cesium.JulianDate.fromDate(date);
-      });
+      function change_constant_set() {
+        blueBox.box.dimensions &&
+          blueBox.box.dimensions.setValue(
+            new Cesium.Cartesian3(400.0, 300.0, 800.0)
+          );
+      }
+
+      function change_sampled() {
+        var property = new Cesium.SampledProperty(Cesium.Cartesian3);
+
+        property.addSample(
+          Cesium.JulianDate.fromIso8601("2020-09-20T00:00:00.00Z"),
+          new Cesium.Cartesian3(400.0, 300.0, 200.0)
+        );
+
+        property.addSample(
+          Cesium.JulianDate.fromIso8601("2020-09-29T23:00:00.00Z"),
+          new Cesium.Cartesian3(400.0, 300.0, 8000.0)
+        );
+
+        blueBox.box.dimensions = property;
+      }
     </script>
   </body>
 </html>
