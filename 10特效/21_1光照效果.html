@@ -30,15 +30,15 @@
   </head>
   <body>
     <div>
-      时间：<input type="range" min="0" max="23" step="1" / id="timeLine">
+      开启：<input type="radio" name="light" value="on" id="lightOn" />
+      时间：<input type="range" min="0" max="23" step="1" / id="timeLine"><br />
+      关闭：<input type="radio" name="light" value="off" id="lightOff" />
     </div>
     <div id="cesiumContainer"></div>
     <div
       id="aniContainer"
       style="position: absolute; z-index: 9; top: 0px; left: 0px"
-    >
-      ddd
-    </div>
+    ></div>
     <script>
       Cesium.Ion.defaultAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
@@ -77,14 +77,29 @@
 
         viewer.imageryLayers.addImageryProvider(imageryProvider2);
         viewer.camera.flyTo({
-          destination: Cesium.Cartesian3.fromDegrees(114, 30, 100000),
+          destination: Cesium.Cartesian3.fromDegrees(114, 30, 10000000),
         });
       })();
 
       var timeLineELe = document.querySelector("#timeLine");
-      viewer.scene.shadowMap.enabled = true;
+      var lightOnELe = document.querySelector("#lightOn");
+      var ligthOffELe = document.querySelector("#lightOff");
 
-      viewer.scene.globe.enableLighting = true;
+      lightOnELe.addEventListener("click", function () {
+        toggleLightEffect(true);
+      });
+
+      ligthOffELe.addEventListener("click", function () {
+        toggleLightEffect(false);
+        var date = new Date();
+        viewer.clock.currentTime = Cesium.JulianDate.fromDate(date);
+      });
+
+      function toggleLightEffect(turnOn) {
+        viewer.scene.shadowMap.enabled = turnOn;
+        viewer.scene.globe.enableLighting = turnOn;
+      }
+
       timeLineELe.addEventListener("change", function () {
         var time = parseFloat(this.value);
         var date = new Date();
