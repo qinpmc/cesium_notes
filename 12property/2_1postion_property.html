@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>tianditu</title>
+
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="position: absolute; z-index: 999">
+      <button onclick="change_constant_new()">Constant new</button>
+      <button onclick="change_constant_set()">constant_set</button>
+      <button onclick="change_sampled()">change sampled</button>
+      <button onclick="change_timeIntervalCollection()">
+        change_timeIntervalCollection change_timeIntervalCollection
+      </button>
+      <button onclick="change_composit()">change_composit</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <div
+      id="aniContainer"
+      style="position: absolute; z-index: 9; top: 0px; left: 0px"
+    ></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer;
+      !(function () {
+        viewer = new Cesium.Viewer("cesiumContainer", {
+          animation: true, //是否显示动画控件
+          //baseLayerPicker: false, //是否显示图层选择控件
+          geocoder: true, //是否显示地名查找控件
+          timeline: true, //是否显示时间线控件
+          shouldAnimate: true,
+          sceneModePicker: true, //是否显示投影方式控件
+          //navigationHelpButton: false, //是否显示帮助信息控件
+          infoBox: true, //是否显示点击要素之后显示的信息
+          imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+            url:
+              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            layer: "vec",
+            style: "default",
+            format: "tiles",
+            tileMatrixSetID: "w",
+            /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+
+            }),*/
+          }),
+        });
+
+        var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+        });
+
+        viewer.imageryLayers.addImageryProvider(imageryProvider2);
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(115, 2, 4556976),
+          orientation: {
+            heading: Cesium.Math.toRadians(355),
+            pitch: Cesium.Math.toRadians(-63.6),
+            roll: 0,
+          },
+        });
+      })();
+
+      // viewer.camera.changed.addEventListener(function () {
+      //   console.log(viewer.camera.heading);
+      //   console.log(viewer.camera.pitch);
+      //   console.log(viewer.camera.roll);
+      //   console.log(viewer.camera.positionCartographic);
+      // });
+
+      // 设置时间
+      var start = Cesium.JulianDate.fromIso8601("2019-01-01T00:00:00.00Z");
+      var stop = Cesium.JulianDate.fromIso8601("2019-01-03T00:00:00.00Z");
+      //Make sure viewer is at the desired time.
+      viewer.clock.startTime = start.clone();
+      viewer.clock.stopTime = stop.clone();
+      viewer.clock.currentTime = start.clone();
+      viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //Loop at the end
+      viewer.clock.multiplier = 10000;
+      viewer.timeline.zoomTo(start, stop);
+
+      var blueBox = viewer.entities.add({
+        name: "Blue box",
+        //id: 'blueBox',
+        position: Cesium.Cartesian3.fromDegrees(114.0, 30.0, 300000.0),
+        box: {
+          dimensions: new Cesium.Cartesian3(400000.0, 300000.0, 600000.0),
+          material: Cesium.Color.BLUE,
+          outline: true,
+        },
+        path: {
+          show: true,
+        },
+      });
+
+      function change_constant_new() {
+        blueBox.position = new Cesium.ConstantProperty(
+          Cesium.Cartesian3.fromDegrees(115.0, 31.0, 300000.0)
+        );
+      }
+
+      function change_constant_set() {
+        blueBox.position.setValue(
+          Cesium.Cartesian3.fromDegrees(113.0, 29.0, 300000.0)
+        );
+      }
+
+      function change_sampled() {
+        var property = new Cesium.SampledPositionProperty();
+
+        property.addSample(
+          Cesium.JulianDate.fromIso8601("2019-01-01T00:00:00.00Z"),
+          Cesium.Cartesian3.fromDegrees(114.0, 30.0, 300000.0)
+        );
+
+        property.addSample(
+          Cesium.JulianDate.fromIso8601("2019-01-03T00:00:00.00Z"),
+          Cesium.Cartesian3.fromDegrees(114.0, 35.0, 300000.0)
+        );
+
+        blueBox.position = property;
+      }
+
+      function change_timeIntervalCollection() {
+        var property = new Cesium.TimeIntervalCollectionProperty(
+          Cesium.Cartesian3
+        );
+
+        property.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-01T00:00:00.00Z/2019-01-01T12:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: Cesium.Cartesian3.fromDegrees(114.0, 30.0, 300000.0),
+          })
+        );
+        property.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-01T12:00:01.00Z/2019-01-02T00:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: Cesium.Cartesian3.fromDegrees(116.0, 30.0, 300000.0),
+          })
+        );
+        property.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T00:00:01.00Z/2019-01-02T12:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: Cesium.Cartesian3.fromDegrees(118.0, 30.0, 300000.0),
+          })
+        );
+        property.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T12:00:01.00Z/2019-01-03T00:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: true,
+            data: Cesium.Cartesian3.fromDegrees(120.0, 30.0, 300000.0),
+          })
+        );
+
+        blueBox.position = property;
+      }
+
+      function change_composit() {
+        // 1 sampledProperty
+        var sampledProperty = new Cesium.SampledProperty(Cesium.Cartesian3);
+        sampledProperty.addSample(
+          Cesium.JulianDate.fromIso8601("2019-01-01T00:00:00.00Z"),
+          Cesium.Cartesian3.fromDegrees(114.0, 30.0, 300000.0)
+        );
+
+        sampledProperty.addSample(
+          Cesium.JulianDate.fromIso8601("2019-01-02T00:00:00.00Z"),
+          Cesium.Cartesian3.fromDegrees(114.0, 35.0, 300000.0)
+        );
+
+        // 2 ticProperty
+        var ticProperty = new Cesium.TimeIntervalCollectionProperty();
+        ticProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T00:00:00.00Z/2019-01-02T06:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: Cesium.Cartesian3.fromDegrees(116.0, 35.0, 300000.0),
+          })
+        );
+        ticProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T06:00:00.00Z/2019-01-02T12:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: Cesium.Cartesian3.fromDegrees(118.0, 35.0, 300000.0),
+          })
+        );
+        ticProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T12:00:00.00Z/2019-01-02T18:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: Cesium.Cartesian3.fromDegrees(120.0, 35.0, 300000.0),
+          })
+        );
+        ticProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T18:00:00.00Z/2019-01-03T23:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: true,
+            data: Cesium.Cartesian3.fromDegrees(122.0, 35.0, 300000.0),
+          })
+        );
+
+        // 3 compositeProperty
+        var compositeProperty = new Cesium.CompositeProperty();
+        compositeProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-01T00:00:00.00Z/2019-01-02T00:00:00.00Z",
+            data: sampledProperty,
+          })
+        );
+        compositeProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T00:00:00.00Z/2019-01-03T00:00:00.00Z",
+            isStartIncluded: false,
+            isStopIncluded: false,
+            data: ticProperty,
+          })
+        );
+
+        // 4 设置position
+        blueBox.position = compositeProperty;
+      }
+    </script>
+  </body>
+</html>
