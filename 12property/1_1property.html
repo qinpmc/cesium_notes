@@ -32,6 +32,10 @@
       <button onclick="change_constant_new()">Constant new</button>
       <button onclick="change_constant_set()">constant_set</button>
       <button onclick="change_sampled()">change sampled</button>
+      <button onclick="change_timeIntervalCollection()">
+        change_timeIntervalCollection change_timeIntervalCollection
+      </button>
+      <button onclick="change_composit()">change_composit</button>
     </div>
     <div id="cesiumContainer"></div>
     <div
@@ -77,13 +81,25 @@
 
         viewer.imageryLayers.addImageryProvider(imageryProvider2);
         viewer.camera.flyTo({
-          destination: Cesium.Cartesian3.fromDegrees(114, 30, 1000),
+          destination: Cesium.Cartesian3.fromDegrees(115, 2, 4556976),
+          orientation: {
+            heading: Cesium.Math.toRadians(355),
+            pitch: Cesium.Math.toRadians(-63.6),
+            roll: 0,
+          },
         });
       })();
 
+      // viewer.camera.changed.addEventListener(function () {
+      //   console.log(viewer.camera.heading);
+      //   console.log(viewer.camera.pitch);
+      //   console.log(viewer.camera.roll);
+      //   console.log(viewer.camera.positionCartographic);
+      // });
+
       // 设置时间
-      var start = Cesium.JulianDate.fromIso8601("2020-09-20T00:00:00.00Z");
-      var stop = Cesium.JulianDate.fromIso8601("2020-09-20T23:00:00.00Z");
+      var start = Cesium.JulianDate.fromIso8601("2019-01-01T00:00:00.00Z");
+      var stop = Cesium.JulianDate.fromIso8601("2019-01-03T00:00:00.00Z");
       //Make sure viewer is at the desired time.
       viewer.clock.startTime = start.clone();
       viewer.clock.stopTime = stop.clone();
@@ -95,9 +111,9 @@
       var blueBox = viewer.entities.add({
         name: "Blue box",
         //id: 'blueBox',
-        position: Cesium.Cartesian3.fromDegrees(114.0, 30.0, 300.0),
+        position: Cesium.Cartesian3.fromDegrees(114.0, 30.0, 300000.0),
         box: {
-          dimensions: new Cesium.Cartesian3(400.0, 300.0, 600.0),
+          dimensions: new Cesium.Cartesian3(400000.0, 300000.0, 600000.0),
           material: Cesium.Color.BLUE,
           outline: true,
         },
@@ -108,14 +124,14 @@
 
       function change_constant_new() {
         blueBox.box.dimensions = new Cesium.ConstantProperty(
-          new Cesium.Cartesian3(400.0, 300.0, 200.0)
+          new Cesium.Cartesian3(400000.0, 300000.0, 200000.0)
         );
       }
 
       function change_constant_set() {
         blueBox.box.dimensions &&
           blueBox.box.dimensions.setValue(
-            new Cesium.Cartesian3(400.0, 300.0, 800.0)
+            new Cesium.Cartesian3(400000.0, 300000.0, 800000.0)
           );
       }
 
@@ -123,16 +139,126 @@
         var property = new Cesium.SampledProperty(Cesium.Cartesian3);
 
         property.addSample(
-          Cesium.JulianDate.fromIso8601("2020-09-20T00:00:00.00Z"),
-          new Cesium.Cartesian3(400.0, 300.0, 200.0)
+          Cesium.JulianDate.fromIso8601("2019-01-01T00:00:00.00Z"),
+          new Cesium.Cartesian3(400000.0, 300000.0, 200000.0)
         );
 
         property.addSample(
-          Cesium.JulianDate.fromIso8601("2020-09-29T23:00:00.00Z"),
-          new Cesium.Cartesian3(400.0, 300.0, 8000.0)
+          Cesium.JulianDate.fromIso8601("2019-01-03T00:00:00.00Z"),
+          new Cesium.Cartesian3(400000.0, 300000.0, 800000.0)
         );
 
         blueBox.box.dimensions = property;
+      }
+
+      function change_timeIntervalCollection() {
+        var property = new Cesium.TimeIntervalCollectionProperty(
+          Cesium.Cartesian3
+        );
+
+        property.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-01T00:00:00.00Z/2019-01-01T12:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: new Cesium.Cartesian3(400000.0, 300000.0, 200000.0),
+          })
+        );
+        property.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-01T12:00:01.00Z/2019-01-02T00:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: new Cesium.Cartesian3(400000.0, 300000.0, 400000.0),
+          })
+        );
+        property.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T00:00:01.00Z/2019-01-02T12:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+          })
+        );
+        property.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T12:00:01.00Z/2019-01-03T00:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: true,
+            data: new Cesium.Cartesian3(400000.0, 300000.0, 700000.0),
+          })
+        );
+
+        blueBox.box.dimensions = property;
+      }
+
+      function change_composit() {
+        // 1 sampledProperty
+        var sampledProperty = new Cesium.SampledProperty(Cesium.Cartesian3);
+        sampledProperty.addSample(
+          Cesium.JulianDate.fromIso8601("2019-01-01T00:00:00.00Z"),
+          new Cesium.Cartesian3(400000.0, 300000.0, 200000.0)
+        );
+
+        sampledProperty.addSample(
+          Cesium.JulianDate.fromIso8601("2019-01-02T00:00:00.00Z"),
+          new Cesium.Cartesian3(400000.0, 300000.0, 400000.0)
+        );
+
+        // 2 ticProperty
+        var ticProperty = new Cesium.TimeIntervalCollectionProperty();
+        ticProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T00:00:00.00Z/2019-01-02T06:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: new Cesium.Cartesian3(400000.0, 300000.0, 400000.0),
+          })
+        );
+        ticProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T06:00:00.00Z/2019-01-02T12:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+          })
+        );
+        ticProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T12:00:00.00Z/2019-01-02T18:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: false,
+            data: new Cesium.Cartesian3(400000.0, 300000.0, 600000.0),
+          })
+        );
+        ticProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T18:00:00.00Z/2019-01-03T23:00:00.00Z",
+            isStartIncluded: true,
+            isStopIncluded: true,
+            data: new Cesium.Cartesian3(400000.0, 300000.0, 700000.0),
+          })
+        );
+
+        // 3 compositeProperty
+        var compositeProperty = new Cesium.CompositeProperty();
+        compositeProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-01T00:00:00.00Z/2019-01-02T00:00:00.00Z",
+            data: sampledProperty,
+          })
+        );
+        compositeProperty.intervals.addInterval(
+          Cesium.TimeInterval.fromIso8601({
+            iso8601: "2019-01-02T00:00:00.00Z/2019-01-03T00:00:00.00Z",
+            isStartIncluded: false,
+            isStopIncluded: false,
+            data: ticProperty,
+          })
+        );
+
+        // 4 设置position
+        blueBox.box.dimensions = compositeProperty;
       }
     </script>
   </body>
