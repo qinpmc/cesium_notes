@@ -113,17 +113,41 @@ PositionProperty 和 Property 一样，是一个虚类，并不能直接实例�
 - SampledPositionProperty
 - TimeIntervalCollectionPositionProperty
 
-referenceFrame是用来表示position的参考架。目前Cesium有以下两种参考架。
+referenceFrame 是用来表示 position 的参考架。目前 Cesium 有以下两种参考架。
 
 ```
-ReferenceFrame :  
+ReferenceFrame :
 Constants for identifying well-known reference frames(用于识别已知参考系的常数).
- 
- 
+
+
 - FIXED	Number	The fixed frame.
 - INERTIAL	Number	The inertial frame.
 ```
 
-
-
 ## MaterialProperty
+
+- MaterialProperty 也是一个虚基类，派生类有：
+- CheckerboardMaterialProperty
+- ColorMaterialProperty
+- CompositeMaterialProperty
+- GridMaterialProperty
+- ImageMaterialProperty
+- MaterialProperty
+- PolylineArrowMaterialProperty
+- PolylineDashMaterialProperty
+- PolylineGlowMaterialProperty
+- PolylineOutlineMaterialProperty
+- StripeMaterialProperty
+
+## CallbackProperty
+
+CallbackProperty 是自由度最高的一种 Property，让用户通过自定义，回调函数，来返回需要的值。回调函数中，用户可以使用 time 来给定 value，也可以以自己的方式给给定.
+
+## ReferenceProperty
+
+该 Property 可以直接链接到别的对象的 Property 上，相当于引用，省得自己构建了。比如这里我创建了一个红色的盒子 redBox，希望它和之前的蓝色盒子一起变大.
+
+```
+var collection = viewer.entities;
+redBox.box.dimensions = new Cesium.ReferenceProperty(collection, blueBox.id, ['box', 'dimensions']);
+```
