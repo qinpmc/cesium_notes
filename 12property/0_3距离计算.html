@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>tianditu</title>
+
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="position: absolute; z-index: 999">
+      <button onclick="linear_Interpolation()">Linear_Interpolation</button>
+      <button onclick="lagrange_Interpolation()">Lagrange_Interpolation</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <div
+      id="aniContainer"
+      style="position: absolute; z-index: 9; top: 0px; left: 0px"
+    ></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer;
+      !(function () {
+        viewer = new Cesium.Viewer("cesiumContainer", {
+          //animation: true, //是否显示动画控件
+          //baseLayerPicker: false, //是否显示图层选择控件
+          geocoder: true, //是否显示地名查找控件
+          timeline: true, //是否显示时间线控件
+          shouldAnimate: true,
+          sceneModePicker: true, //是否显示投影方式控件
+          //navigationHelpButton: false, //是否显示帮助信息控件
+          infoBox: true, //是否显示点击要素之后显示的信息
+          imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+            url:
+              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            layer: "vec",
+            style: "default",
+            format: "tiles",
+            tileMatrixSetID: "w",
+            /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+
+            }),*/
+          }),
+          terrainProvider: Cesium.createWorldTerrain(),
+        });
+
+        var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+        });
+
+        viewer.imageryLayers.addImageryProvider(imageryProvider2);
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(115, 2, 4556976),
+          orientation: {
+            heading: Cesium.Math.toRadians(355),
+            pitch: Cesium.Math.toRadians(-63.6),
+            roll: 0,
+          },
+        });
+      })();
+
+      /*
+       *根据2点(经纬度)计算地球表面距离
+       **/
+      function distance(lon1, lat1, lon2, lat2) {
+        var a, b, R;
+        R = 6378137; // 地球半径
+        lat1 = (lat1 * Math.PI) / 180.0;
+        lat2 = (lat2 * Math.PI) / 180.0;
+        a = lat1 - lat2;
+        b = ((lon1 - lon2) * Math.PI) / 180.0;
+        var d;
+        var sa2, sb2;
+        sa2 = Math.sin(a / 2.0);
+        sb2 = Math.sin(b / 2.0);
+        d =
+          2 *
+          R *
+          Math.asin(
+            Math.sqrt(sa2 * sa2 + Math.cos(lat1) * Math.cos(lat2) * sb2 * sb2)
+          );
+        return d;
+      }
+
+      /*
+       *米转度----
+       **/
+      function meter2Degree(length, lat) {
+        lat = lat || 0;
+        var factor =
+          360 / (2 * Math.PI * 6378137) / Math.cos(lat * (Math.PI / 180)); //单位-度/米 ：1m多少度
+        var length_in_degree = factor * length;
+        return length_in_degree;
+      }
+
+      var point1 = {
+        // x: 0,
+        // y: 0,
+        x: 113,
+        y: 30,
+      };
+
+      var point2 = {
+        // x: 1,
+        // y: 0,
+        x: 114,
+        y: 30,
+      };
+
+      var distance = distance(point1.x, point1.y, point2.x, point2.y);
+      console.log(distance);
+      console.log(meter2Degree(distance, point1.y));
+
+      //if(circle.spatialReference === 4326 || circle.spatialReference === 4490){
+      //circle.newradius = circle.radius/Math.cos(center.y*Math.PI/180)
+      //}
+
+      /**
+       *   标绘图形中根据圆的半径变化重新计算控制点
+       *
+       */
+      function calculatePointByRadius(pnt1, radius, spatialReference) {
+        var result = {
+          x: 0,
+          y: 0,
+        };
+        if (spatialReference == 3857) {
+          result.y = pnt1.y;
+          result.x = pnt1.x - radius;
+          return result;
+        } else {
+          //https://www.iteye.com/blog/sheng-2114397
+          // 角度转换为弧度
+          var latRad = (pnt1.y * Math.PI) / 180;
+          var sinNs = Math.sin(latRad);
+          var cosNs = Math.cos(latRad);
+          var cosTmp = Math.cos(radius / (6378.137 * 1000));
+          // 经度的差值
+          var lonDif =
+            Math.acos((cosTmp - sinNs * sinNs) / (cosNs * cosNs)) /
+            (Math.PI / 180);
+
+          result.x = pnt1.x + lonDif;
+          result.y = pnt1.y;
+          return result;
+        }
+      }
+
+      var res = calculatePointByRadius(point1, distance, 4326);
+      console.log(res);
+    </script>
+  </body>
+</html>
