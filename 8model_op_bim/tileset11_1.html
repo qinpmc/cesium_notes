@@ -101,13 +101,7 @@
       //     console.log(viewer.camera.roll);
       //     console.log(viewer.camera.positionCartographic);
       //   });
-
-      // Information about the currently selected feature
-      var selected = {
-        feature: undefined,
-        originalColor: new Cesium.Color(),
-      };
-
+  
       // An entity object which will hold info about the currently selected feature for infobox display
       var selectedEntity = new Cesium.Entity();
 
@@ -149,15 +143,10 @@
           if (!Cesium.defined(pickedFeature)) {
             return;
           }
-
-          // A feature was picked, so show it's overlay content
-
-          var name = pickedFeature.getProperty("BIN");
-
+ 
           // Highlight the feature if it's not already selected.
-          if (pickedFeature !== selected.feature) {
             silhouetteBlue.selected = [pickedFeature];
-          }
+ 
         },
         Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
@@ -189,10 +178,7 @@
           // Highlight newly selected feature
           silhouetteGreen.selected = [pickedFeature];
 
-          // Set feature infobox description
-          // pickedFeature.getProperty("name"); //pickedFeature.getProperty("BIN")  pickedFeature.getProperty("DOITT_ID") pickedFeature.getProperty("SOURCE_ID")
-          // On mouse over, display all the properties for a feature in the console log.
-
+    
           if (pickedFeature instanceof Cesium.Cesium3DTileFeature) {
             var propertyNames = pickedFeature.getPropertyNames();
             var length = propertyNames.length;
