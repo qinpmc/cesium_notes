@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>tianditu</title>
+
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="./OceanTexture.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="position: absolute; z-index: 9999; color: red">
+      <button onclick="addGlobeWater()">全球水波纹</button>
+      <button onclick="addPolygonWater()">面水波纹</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer;
+      init();
+
+      function init() {
+        viewer = new Cesium.Viewer("cesiumContainer", {
+          animation: false, //是否显示动画控件
+          baseLayerPicker: false, //是否显示图层选择控件
+          geocoder: true, //是否显示地名查找控件
+          timeline: false, //是否显示时间线控件
+          sceneModePicker: true, //是否显示投影方式控件
+          navigationHelpButton: false, //是否显示帮助信息控件
+          infoBox: true, //是否显示点击要素之后显示的信息
+          imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+            url:
+              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            layer: "vec",
+            style: "default",
+            format: "tiles",
+            tileMatrixSetID: "w",
+            /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+
+                  }),*/
+          }),
+          terrainProvider: Cesium.createWorldTerrain({
+            requestWaterMask: true,
+            requestVertexNormals: true,
+          }),
+        });
+
+        var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+        });
+
+        viewer.imageryLayers.addImageryProvider(imageryProvider);
+      }
+
+      /////////////////////////////////////////////////////////////////
+
+      function addGlobeWater() {
+        function applyWaterMaterial(primitive, scene) {
+          primitive.appearance.material = new Cesium.Material({
+            fabric: {
+              type: "Water",
+
+              uniforms: {
+                specularMap: Oceantexture.specularMap,
+                normalMap: Oceantexture.normalMap,
+                frequency: 10000.0,
+                animationSpeed: 0.01,
+                amplitude: 1.0,
+              },
+            },
+          });
+        }
+
+        var worldRectangle = viewer.scene.primitives.add(
+          new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.RectangleGeometry({
+                rectangle: Cesium.Rectangle.fromDegrees(-180, -90, 180.0, 90.0),
+
+                vertexFormat: Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT,
+              }),
+            }),
+
+            appearance: new Cesium.EllipsoidSurfaceAppearance({
+              aboveGround: false,
+            }),
+
+            show: true,
+          })
+        );
+
+        applyWaterMaterial(worldRectangle, viewer.scene);
+      }
+
+      function addPolygonWater() {
+        function applydjk_WaterMaterial(primitive, scene) {
+          primitive.appearance.material = new Cesium.Material({
+            fabric: {
+              type: "Water",
+              uniforms: {
+                specularMap: Oceantexture.specularMap,
+                normalMap: Oceantexture.normalMap,
+                frequency: 10000.0,
+                animationSpeed: 0.01,
+                amplitude: 50,
+              },
+            },
+          });
+        }
+
+        var djk_Polygon = viewer.scene.primitives.add(
+          new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.PolygonGeometry({
+                polygonHierarchy: new Cesium.PolygonHierarchy(
+                  Cesium.Cartesian3.fromDegreesArray([
+                    111.48894522023063,
+                    32.55843610413914,
+                    111.48869238776277,
+                    32.55602570974643,
+                    111.49004745721604,
+                    32.5548361448687,
+                    111.49250635559537,
+                    32.5526581917131,
+                    111.49401017612676,
+                    32.55129837476868,
+                    111.49557557543416,
+                    32.549965127681524,
+                    111.49805874806115,
+                    32.550219820173126,
+                    111.49881935514881,
+                    32.550823388219456,
+                    111.49893286824275,
+                    32.55195597852755,
+                    111.4983164393889,
+                    32.5535655841798,
+                    111.49817521853979,
+                    32.554570336381104,
+                    111.49914284747027,
+                    32.55554277243855,
+                    111.49967950821859,
+                    32.555814392110264,
+                    111.50062151969038,
+                    32.556517275179836,
+                    111.50149914222958,
+                    32.55731250438687,
+                    111.50207800636986,
+                    32.55757396515373,
+                    111.50386396090245,
+                    32.55781206769338,
+                    111.50391371888884,
+                    32.559650818164926,
+                    111.50077307397399,
+                    32.56013340913413,
+                    111.49625702141412,
+                    32.560250133340446,
+                    111.49171532588734,
+                    32.560183453792156,
+                    111.48920373670329,
+                    32.56015020231049,
+                    111.48844043918616,
+                    32.55981856869106,
+                    111.48743657311691,
+                    32.55945303779285,
+                    111.48760383414758,
+                    32.55863069835514,
+                    111.48812831262538,
+                    32.55837951411848,
+                  ])
+                ),
+
+                vertexFormat: Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT,
+              }),
+            }),
+
+            appearance: new Cesium.EllipsoidSurfaceAppearance({
+              aboveGround: false,
+            }),
+            show: true,
+          })
+        );
+
+        applydjk_WaterMaterial(djk_Polygon, viewer.scene);
+
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            111.49893286824275,
+            32.55195597852755,
+            10000
+          ),
+          orientation: {
+            heading: Cesium.Math.toRadians(355),
+            pitch: Cesium.Math.toRadians(-89),
+            roll: 0,
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
