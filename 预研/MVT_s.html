@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>MVT</title>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./css/pretty.css" rel="stylesheet" />
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/tooltip.js"></script>
+    <script src="./js/config.js"></script>
+    <script type="text/javascript" src="./Build_s/Cesium/Cesium.js"></script>
+  </head>
+  <body>
+    <div id="cesiumContainer"></div>
+
+    <div id="loadingbar" class="spinner">
+      <div class="spinner-container container1">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+      </div>
+      <div class="spinner-container container2">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+      </div>
+      <div class="spinner-container container3">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+      </div>
+    </div>
+
+    <div id="toolbar" class="param-container tool-bar">
+      <div class="param-item">
+        <button type="button" id="addMap" class="button black">添加</button>
+        <button type="button" id="visibleMap" class="button black">隐藏</button>
+        <button type="button" id="refresh" class="button black">刷新</button>
+        <button type="button" id="removeMap" class="button black">移除</button>
+        <br />
+
+        <b>透明度：</b>
+        <input
+          type="range"
+          id="layerAlpha"
+          min="0.0"
+          max="1.0"
+          value="1.0"
+          step="0.01"
+          style="margin-left: 15px; width: 200px"
+        />
+      </div>
+
+      <div class="param-item">
+        <b>选择图层：</b>
+        <select
+          id="layersList"
+          class="form-control"
+          style="width: 200px"
+        ></select>
+      </div>
+
+      <div class="param-item">
+        <button type="button" id="changeLayerStyle" class="button black">
+          修改图层风格
+        </button>
+        <button
+          type="button"
+          id="changeFeatureStyle"
+          class="button black"
+          style="margin-left: 30px"
+        >
+          修改对象风格
+        </button>
+        <br />
+
+        <button
+          type="button"
+          id="hideLayer"
+          class="button black"
+          style="width: 116px"
+        >
+          隐藏图层
+        </button>
+        <button
+          type="button"
+          id="hideFeature"
+          class="button black"
+          style="margin-left: 30px; width: 116px"
+        >
+          隐藏对象
+        </button>
+        <br />
+
+        <button
+          type="button"
+          id="attributeQuery"
+          class="button black"
+          style="width: 116px"
+        >
+          属性查询
+        </button>
+        <button
+          type="button"
+          id="spatialQuery"
+          class="button black"
+          style="margin-left: 30px; width: 116px"
+        >
+          空间查询
+        </button>
+        <br />
+      </div>
+    </div>
+
+    <!-- 气泡HTML -->
+    <div
+      id="bubble"
+      class="bubble"
+      style="
+        overflow: auto;
+        bottom: 0;
+        left: 82%;
+        display: none;
+        border: #666 1px solid;
+      "
+    >
+      <div id="tools" style="text-align: right">
+        <span
+          style="
+            color: rgb(95, 74, 121);
+            padding: 5px;
+            position: absolute;
+            left: 10px;
+            top: 4px;
+          "
+          >对象属性</span
+        >
+        <span
+          class="fui-export"
+          id="bubblePosition"
+          style="color: darkgrey; padding: 5px"
+          title="停靠"
+        ></span>
+        <span
+          class="fui-cross"
+          title="关闭"
+          id="close"
+          style="color: darkgrey; padding: 5px"
+        ></span>
+      </div>
+      <div style="overflow-y: auto" id="tableContainer">
+        <table id="tab" style="height: 100px"></table>
+      </div>
+    </div>
+
+    <script>
+      function onload(Cesium) {
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+          contextOptions: {
+            msaaLevel: 4,
+            requestWebgl2: true,
+          },
+          orderIndependentTranslucency: false,
+        });
+
+        window.viewer = viewer;
+        window.scene = viewer.scene;
+        viewer.scene.debugShowFramesPerSecond = true;
+
+        var infoboxContainer = document.getElementById("bubble");
+        viewer.customInfobox = infoboxContainer;
+
+        viewer.scene.logarithmicDepthBuffer = false;
+        viewer.scene.globe.show = true;
+        viewer.scene.postProcessStages.fxaa.enabled = false;
+
+        var scene = viewer.scene;
+
+        var url =
+          "http://www.supermapol.com/realspace/services/map-mvt-JingJinDiQuDiTu/restjsr/v1/vectortile/maps/%E4%BA%AC%E6%B4%A5%E5%9C%B0%E5%8C%BA%E5%9C%B0%E5%9B%BE";
+
+        var mvtMap;
+        // var mvtLayer;
+        var selectLayer; //选择图层
+        var highlightLayers = {}; //高亮图层
+
+        mvtMap = scene.addVectorTilesMap({
+          url: url,
+          canvasWidth: 512,
+          name: "testMVT",
+          viewer: viewer,
+        });
+
+        //定位至图层范围
+        var layerReadyPromise = mvtMap.readyPromise;
+        Cesium.when(layerReadyPromise, function (data) {
+          var bounds = mvtMap.rectangle;
+          scene.camera.setView({
+            destination: new Cesium.Cartesian3.fromRadians(
+              (bounds.east + bounds.west) * 0.5,
+              (bounds.north + bounds.south) * 0.5,
+              10000
+            ),
+            orientation: {
+              heading: 0,
+              roll: 0,
+            },
+          });
+        });
+      }
+
+      if (typeof Cesium !== "undefined") {
+        window.startupCalled = true;
+        onload(Cesium);
+      }
+    </script>
+  </body>
+</html>
