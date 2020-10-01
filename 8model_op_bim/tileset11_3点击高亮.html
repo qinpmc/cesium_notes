@@ -51,7 +51,7 @@
             tileMatrixSetID: "w",
             /*tilingScheme:new Cesium.WebMercatorTilingScheme({
 
-            }),*/
+                  }),*/
           }),
         });
 
@@ -101,100 +101,73 @@
       //     console.log(viewer.camera.roll);
       //     console.log(viewer.camera.positionCartographic);
       //   });
-  
-      // An entity object which will hold info about the currently selected feature for infobox display
-      var selectedEntity = new Cesium.Entity();
 
-      // Get default left click handler for when a feature is not picked on left click
-      var clickHandler = viewer.screenSpaceEventHandler.getInputAction(
-        Cesium.ScreenSpaceEventType.LEFT_CLICK
-      );
+      viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(
+        movement
+      ) {
+        var pickedFeature = viewer.scene.pick(movement.position);
+        if (pickedFeature) {
+          selectFeature(pickedFeature);
+          return;
+        }
 
-      // If silhouettes are supported, silhouette features in blue on mouse over and silhouette green on mouse click.
-      // If silhouettes are not supported, change the feature color to yellow on mouse over and green on mouse click.
-      if (Cesium.PostProcessStageLibrary.isSilhouetteSupported(viewer.scene)) {
-        // Silhouettes are supported
-        var silhouetteBlue = Cesium.PostProcessStageLibrary.createEdgeDetectionStage();
-        silhouetteBlue.uniforms.color = Cesium.Color.BLUE;
-        silhouetteBlue.uniforms.length = 0.01;
-        silhouetteBlue.selected = [];
-
-        var silhouetteGreen = Cesium.PostProcessStageLibrary.createEdgeDetectionStage();
-        silhouetteGreen.uniforms.color = Cesium.Color.LIME;
-        silhouetteGreen.uniforms.length = 0.01;
-        silhouetteGreen.selected = [];
-
-        viewer.scene.postProcessStages.add(
-          Cesium.PostProcessStageLibrary.createSilhouetteStage([
-            silhouetteBlue,
-            silhouetteGreen,
-          ])
-        );
-
-        // Silhouette a feature blue on hover.
-        viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(
-          movement
-        ) {
-          // If a feature was previously highlighted, undo the highlight
-          silhouetteBlue.selected = [];
-
-          // Pick a new feature
-          var pickedFeature = viewer.scene.pick(movement.endPosition);
-          if (!Cesium.defined(pickedFeature)) {
-            return;
-          }
- 
-          // Highlight the feature if it's not already selected.
-            silhouetteBlue.selected = [pickedFeature];
- 
-        },
-        Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-
-        // Silhouette a feature on selection and show metadata in the InfoBox.
-        viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(
-          movement
-        ) {
-          // If a feature was previously selected, undo the highlight
-          silhouetteGreen.selected = [];
-
-          // Pick a new feature
-          var pickedFeature = viewer.scene.pick(movement.position);
-          if (!Cesium.defined(pickedFeature)) {
-            clickHandler(movement);
-            return;
+        if (pickedFeature instanceof Cesium.Cesium3DTileFeature) {
+          var propertyNames = pickedFeature.getPropertyNames();
+          var length = propertyNames.length;
+          for (var i = 0; i < length; ++i) {
+            var propertyName = propertyNames[i];
+            console.log(
+              propertyName + ": " + pickedFeature.getProperty(propertyName)
+            );
           }
 
-          // Select the feature if it's not already selected
-          if (silhouetteGreen.selected[0] === pickedFeature) {
-            return;
-          }
-
-          // Save the selected feature's original color
-          var highlightedFeature = silhouetteBlue.selected[0];
-          if (pickedFeature === highlightedFeature) {
-            silhouetteBlue.selected = [];
-          }
-
-          // Highlight newly selected feature
-          silhouetteGreen.selected = [pickedFeature];
-
-    
-          if (pickedFeature instanceof Cesium.Cesium3DTileFeature) {
-            var propertyNames = pickedFeature.getPropertyNames();
-            var length = propertyNames.length;
-            for (var i = 0; i < length; ++i) {
-              var propertyName = propertyNames[i];
-              console.log(
-                propertyName + ": " + pickedFeature.getProperty(propertyName)
-              );
-            }
-          }
           console.log(pickedFeature);
-          viewer.selectedEntity = selectedEntity;
-        },
-        Cesium.ScreenSpaceEventType.LEFT_CLICK);
-      } else {
-        alert("silhouettes are not supported");
+
+          // BIN
+          //["${Height} >= 300", "rgba(45, 0, 75, 0.5)"],
+
+          var selectBin = pickedFeature.getProperty("DOITT_ID");
+          var highlightCondition = "${DOITT_ID} === " + selectBin;
+
+          console.log(highlightCondition);
+
+          var selectcontent = highlightCondition;
+          tileset.style = new Cesium.Cesium3DTileStyle({
+            color: {
+              conditions: [
+                [selectcontent, "rgb(255,0,0)"],
+                ["true", "rgb(255, 255, 255)"],
+                //true表示剩余的显示的对象,
+              ],
+            },
+          });
+
+          //viewer.selectedEntity = selectedEntity;
+        }
+      },
+      Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+      function selectFeature(feature) {
+        var selectbuilding = feature.getProperty("DOITT_ID");
+        var s = "${DOITT_ID} ===" + selectbuilding;
+        console.log(s);
+        var selectcontent = s;
+        var transparentStyle = new Cesium.Cesium3DTileStyle({
+          color: {
+            conditions: [
+              [selectcontent, "rgb(255,255,0)"],
+              // ["${Height} >= 300", "rgba(45, 0, 75, 0.5)"],
+              // ["${Height} >= 200", "rgb(102, 71, 151)"],
+              // ["${Height} >= 100", "rgb(170, 162, 204)"],
+              // ["${Height} >= 50", "rgb(224, 226, 238)"],
+              // ["${Height} >= 25", "rgb(252, 230, 200)"],
+              // ["${Height} >= 10", "rgb(248, 176, 87)"],
+              // ["${Height} >= 5", "rgb(198, 106, 11)"],
+              //["true", "rgb(255, 0, 0)"], //true表示剩余的显示的对象
+            ],
+          },
+        });
+        tileset.style = transparentStyle;
       }
     </script>
   </body>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>模型</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyOGYxMWEyYS1hMzc5LTQ0MDEtOGYxOC04ZDc4ODcyNTdiZTUiLCJpZCI6MjU5LCJpYXQiOjE1OTg5NTg3MjR9.HjqOnTvUuTIKotbUF7cfYxfOLR9UaKAfYcQAqZQblGs";
+      var viewer;
+      !(function () {
+        viewer = new Cesium.Viewer("cesiumContainer", {
+          animation: true, //是否显示动画控件
+          //baseLayerPicker: false, //是否显示图层选择控件
+          geocoder: true, //是否显示地名查找控件
+          timeline: true, //是否显示时间线控件
+          shouldAnimate: true,
+          sceneModePicker: true, //是否显示投影方式控件
+          //navigationHelpButton: false, //是否显示帮助信息控件
+          infoBox: true, //是否显示点击要素之后显示的信息
+          imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+            url:
+              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            layer: "vec",
+            style: "default",
+            format: "tiles",
+            tileMatrixSetID: "w",
+            /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+
+            }),*/
+          }),
+        });
+
+        var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+        });
+
+        viewer.imageryLayers.addImageryProvider(imageryProvider2);
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(115, 2, 4556976),
+          orientation: {
+            heading: Cesium.Math.toRadians(355),
+            pitch: Cesium.Math.toRadians(-63.6),
+            roll: 0,
+          },
+        });
+      })();
+
+      viewer.scene.globe.depthTestAgainstTerrain = true;
+
+      // Set the initial camera view to look at Manhattan
+      var initialPosition = Cesium.Cartesian3.fromDegrees(
+        -74.05616,
+        40.70047,
+        2745
+      );
+
+      viewer.scene.camera.flyTo({
+        destination: initialPosition,
+      });
+
+      // Load the NYC buildings tileset
+      var tileset = new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(75343),
+      });
+      viewer.scene.primitives.add(tileset);
+
+      //   viewer.camera.changed.addEventListener(function () {
+      //     console.log(viewer.camera.heading);
+      //     console.log(viewer.camera.pitch);
+      //     console.log(viewer.camera.roll);
+      //     console.log(viewer.camera.positionCartographic);
+      //   });
+
+      // An entity object which will hold info about the currently selected feature for infobox display
+      var selectedEntity = new Cesium.Entity();
+
+      // Get default left click handler for when a feature is not picked on left click
+      var clickHandler = viewer.screenSpaceEventHandler.getInputAction(
+        Cesium.ScreenSpaceEventType.LEFT_CLICK
+      );
+
+      // If silhouettes are supported, silhouette features in blue on mouse over and silhouette green on mouse click.
+      // If silhouettes are not supported, change the feature color to yellow on mouse over and green on mouse click.
+      if (Cesium.PostProcessStageLibrary.isSilhouetteSupported(viewer.scene)) {
+        // Silhouettes are supported
+        var silhouetteBlue = Cesium.PostProcessStageLibrary.createEdgeDetectionStage();
+        silhouetteBlue.uniforms.color = Cesium.Color.BLUE;
+        silhouetteBlue.uniforms.length = 0.01;
+        silhouetteBlue.selected = [];
+
+        var silhouetteGreen = Cesium.PostProcessStageLibrary.createEdgeDetectionStage();
+        silhouetteGreen.uniforms.color = Cesium.Color.LIME;
+        silhouetteGreen.uniforms.length = 0.01;
+        silhouetteGreen.selected = [];
+
+        viewer.scene.postProcessStages.add(
+          Cesium.PostProcessStageLibrary.createSilhouetteStage([
+            silhouetteBlue,
+            silhouetteGreen,
+          ])
+        );
+
+        // Silhouette a feature blue on hover.
+        viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(
+          movement
+        ) {
+          // If a feature was previously highlighted, undo the highlight
+          silhouetteBlue.selected = [];
+
+          // Pick a new feature
+          var pickedFeature = viewer.scene.pick(movement.endPosition);
+          if (!Cesium.defined(pickedFeature)) {
+            return;
+          }
+
+          // Highlight the feature if it's not already selected.
+          silhouetteBlue.selected = [pickedFeature];
+        },
+        Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+        // Silhouette a feature on selection and show metadata in the InfoBox.
+        viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(
+          movement
+        ) {
+          // If a feature was previously selected, undo the highlight
+          silhouetteGreen.selected = [];
+
+          // Pick a new feature
+          var pickedFeature = viewer.scene.pick(movement.position);
+          if (!Cesium.defined(pickedFeature)) {
+            clickHandler(movement);
+            return;
+          }
+
+          // Select the feature if it's not already selected
+          if (silhouetteGreen.selected[0] === pickedFeature) {
+            return;
+          }
+
+          // Save the selected feature's original color
+          var highlightedFeature = silhouetteBlue.selected[0];
+          if (pickedFeature === highlightedFeature) {
+            silhouetteBlue.selected = [];
+          }
+
+          // Highlight newly selected feature
+          silhouetteGreen.selected = [pickedFeature];
+
+          if (pickedFeature instanceof Cesium.Cesium3DTileFeature) {
+            var propertyNames = pickedFeature.getPropertyNames();
+            var length = propertyNames.length;
+            for (var i = 0; i < length; ++i) {
+              var propertyName = propertyNames[i];
+              console.log(
+                propertyName + ": " + pickedFeature.getProperty(propertyName)
+              );
+            }
+          }
+          console.log(pickedFeature);
+
+          var bin = pickedFeature.getProperty("BIN");
+          // BIN
+          //["${Height} >= 300", "rgba(45, 0, 75, 0.5)"],
+
+          var selectBin = pickedFeature.getProperty("BIN");
+          var highlightCondition = "${BIN} ===" + selectBin;
+
+          console.log(highlightCondition);
+
+          tileset.style = new Cesium.Cesium3DTileStyle({
+            color: {
+              conditions: [
+                [highlightCondition, "rgb(255,0,0)"],
+                ["true", "rgb(255, 255, 255)"],
+                //true表示剩余的显示的对象,
+              ],
+            },
+          });
+
+          viewer.selectedEntity = selectedEntity;
+        },
+        Cesium.ScreenSpaceEventType.LEFT_CLICK);
+      } else {
+        alert("silhouettes are not supported");
+      }
+    </script>
+  </body>
+</html>
