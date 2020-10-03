@@ -194,7 +194,7 @@
           //["${Height} >= 300", "rgba(45, 0, 75, 0.5)"],
 
           var selectBin = pickedFeature.getProperty("BIN");
-          var highlightCondition = "${BIN} ===" + selectBin;
+          var highlightCondition = "${BIN} === " + selectBin;
 
           console.log(highlightCondition);
 

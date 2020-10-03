@@ -11,7 +11,7 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
     <title>模型</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../Build/CesiumUnminified/Cesium.js"></script>
     <style>
       @import url(../Build/Cesium/Widgets/widgets.css);
 
@@ -106,10 +106,6 @@
         movement
       ) {
         var pickedFeature = viewer.scene.pick(movement.position);
-        if (pickedFeature) {
-          selectFeature(pickedFeature);
-          return;
-        }
 
         if (pickedFeature instanceof Cesium.Cesium3DTileFeature) {
           var propertyNames = pickedFeature.getPropertyNames();
@@ -120,42 +116,24 @@
               propertyName + ": " + pickedFeature.getProperty(propertyName)
             );
           }
-
-          console.log(pickedFeature);
-
-          // BIN
-          //["${Height} >= 300", "rgba(45, 0, 75, 0.5)"],
-
-          var selectBin = pickedFeature.getProperty("DOITT_ID");
-          var highlightCondition = "${DOITT_ID} === " + selectBin;
-
-          console.log(highlightCondition);
-
-          var selectcontent = highlightCondition;
-          tileset.style = new Cesium.Cesium3DTileStyle({
-            color: {
-              conditions: [
-                [selectcontent, "rgb(255,0,0)"],
-                ["true", "rgb(255, 255, 255)"],
-                //true表示剩余的显示的对象,
-              ],
-            },
-          });
-
-          //viewer.selectedEntity = selectedEntity;
+        }
+        if (pickedFeature) {
+          selectFeature(pickedFeature);
         }
       },
       Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
       function selectFeature(feature) {
-        var selectbuilding = feature.getProperty("DOITT_ID");
-        var s = "${DOITT_ID} ===" + selectbuilding;
-        console.log(s);
-        var selectcontent = s;
+        var selectbuilding = feature.getProperty("SOURCE_ID");
+        var selectedCondition =
+          "${SOURCE_ID} === " + "'" + selectbuilding + "'";
+
+        console.log(selectedCondition);
+
         var transparentStyle = new Cesium.Cesium3DTileStyle({
           color: {
             conditions: [
-              [selectcontent, "rgb(255,255,0)"],
+              [selectedCondition, "rgb(255,0,0)"],
               // ["${Height} >= 300", "rgba(45, 0, 75, 0.5)"],
               // ["${Height} >= 200", "rgb(102, 71, 151)"],
               // ["${Height} >= 100", "rgb(170, 162, 204)"],
@@ -163,7 +141,7 @@
               // ["${Height} >= 25", "rgb(252, 230, 200)"],
               // ["${Height} >= 10", "rgb(248, 176, 87)"],
               // ["${Height} >= 5", "rgb(198, 106, 11)"],
-              //["true", "rgb(255, 0, 0)"], //true表示剩余的显示的对象
+              ["true", "rgb(255, 255, 255)"], //true表示剩余的显示的对象
             ],
           },
         });
