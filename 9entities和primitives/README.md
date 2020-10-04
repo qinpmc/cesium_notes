@@ -117,12 +117,17 @@ var polyline = polylines.add({
 
 把线条贴到 3dtiles 上需要用到两个属性：clampToGround 和 classificationType。
 
-clampToGround 属性用来表示该线段要贴地。1.54 版以后贴地中的地字同时指代地形和 3dtiles 数据。   
+clampToGround 属性用来表示该线段要贴地。1.54 版以后贴地中的地字同时指代地形和 3dtiles 数据。
 
-还有一个属性 classificationType，则用来描述是否只贴地形（ClassificationType.TERRAIN），或者只贴 3dtiles 数据（ClassificationType.CESIUM_3D_TILE），或者二者都贴（ClassificationType.BOTH）。默认情况下是二者都贴。        
+还有一个属性 classificationType，则用来描述是否只贴地形（ClassificationType.TERRAIN），或者只贴 3dtiles 数据（ClassificationType.CESIUM_3D_TILE），或者二者都贴（ClassificationType.BOTH）。默认情况下是二者都贴。
 
-链接：https://www.jianshu.com/p/aab4a0bb0d0e?tdsourcetag=s_pctim_aiomsg          
-
-
+链接：https://www.jianshu.com/p/aab4a0bb0d0e?tdsourcetag=s_pctim_aiomsg
 
 
+### ArcType : Number
+
+ArcType defines the path that should be taken connecting vertices. 
+
+- NONE Number Straight line that does not conform to the surface of the ellipsoid.
+- GEODESIC Number Follow geodesic path.
+- RHUMB Number Follow rhumb or loxodrome path.

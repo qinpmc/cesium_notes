@@ -76,6 +76,8 @@
 
         scene.primitives.add(model);
         scene.camera.lookAt(position, new Cesium.Cartesian3(0.0, 0.0, 10.0));
+
+        //camera.lookAtTransform(Cesium.Matrix4.IDENTITY); //
       }
 
       createModel3("../data/model/Cesium_Air.glb", 5000.0);
