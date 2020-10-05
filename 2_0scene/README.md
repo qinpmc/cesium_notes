@@ -97,6 +97,12 @@ Scene 中有一些内置的**图元对象**：
 - scene.globe.tileCacheSize : Number ，A larger number will consume more memory but will show detail faster
 - scene.globe.maximumScreenSpaceError : Number ， Higher values will provide better performance but lower visual quality  
   较高的 maximumScreenSpaceError 将会渲染更少的贴图，进而可以提高性能，而较低的值将提高视觉质量。
+- requestRenderMode : Boolean，When true, rendering a frame will only occur when needed as determined by changes within the scene，改善性能
+
+// 调试相关
+- debugShowFramesPerSecond
+- debugShowFrustumPlanes
+- debugShowFrustums
 
 //Globe 方法
 
