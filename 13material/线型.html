@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>线</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
+      <button onclick="addPolyline1()">增加红色实线1</button>
+      <button onclick="addPolyline2()">增加RHUMB虚线2-恒向线</button>
+      <button onclick="addPolyline3()">增加dot线3</button>
+      <button onclick="addPolyline4()">增加dashdot线4</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        geocoder: false,
+        baseLayerPicker: false,
+        fullscreenButton: false,
+        homeButton: false,
+        sceneModePicker: false,
+        animation: false,
+        timeline: false,
+        navigationHelpButton: false,
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+        }),
+        // terrainProvider: Cesium.createWorldTerrain({
+        //   requestWaterMask: true,
+        //   requestVertexNormals: true,
+        // }),
+      });
+
+      //普通线
+      function addPolyline1() {
+        viewer.entities.add({
+          name: "红色实线",
+          polyline: {
+            positions: Cesium.Cartesian3.fromDegreesArray([114, 30, 70, 30]),
+            width: 5,
+            //material: Cesium.Color.RED,
+            material: new Cesium.PolylineOutlineMaterialProperty({
+              color: Cesium.Color.RED,
+              outlineWidth: 10,
+              outlineColor: Cesium.Color.RED,
+            }),
+            clampToGround: true, //贴地形
+          },
+        });
+      }
+
+      //虚线
+      function addPolyline2() {
+        viewer.entities.add({
+          name: "蓝色虚线",
+          polyline: {
+            positions: Cesium.Cartesian3.fromDegreesArray([114, 30, 70, 30]),
+            width: 5,
+            material: new Cesium.PolylineDashMaterialProperty({
+              color: Cesium.Color.BLUE,
+              gapColor: Cesium.Color.TRANSPARENT,
+              dashLength: 66,
+            }),
+            arcType: Cesium.ArcType.RHUMB,
+            clampToGround: true, //贴地形
+          },
+        });
+      }
+
+      //dot线
+      function addPolyline3() {
+        viewer.entities.add({
+          name: "dot",
+          polyline: {
+            positions: Cesium.Cartesian3.fromDegreesArray([114, 33, 70, 33]),
+            width: 5,
+            material: new Cesium.PolylineDashMaterialProperty({
+              color: Cesium.Color.YELLOW,
+              gapColor: Cesium.Color.TRANSPARENT,
+              dashLength: 36,
+              dashPattern: parseInt("1010101010101010", 2),
+            }),
+          },
+        });
+      }
+
+      //dashdot线
+      function addPolyline4() {
+        viewer.entities.add({
+          polyline: {
+            positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+              114,
+              34,
+              250000,
+              70,
+              34,
+              0,
+            ]),
+            width: 8,
+            material: new Cesium.PolylineDashMaterialProperty({
+              color: Cesium.Color.YELLOW,
+              gapColor: Cesium.Color.TRANSPARENT,
+              dashLength: 36,
+              dashPattern: parseInt('110000001111', 2)
+            }),
+          },
+        });
+      }
+
+     
+
+      viewer.zoomTo(viewer.entities);
+    </script>
+  </body>
+</html>
