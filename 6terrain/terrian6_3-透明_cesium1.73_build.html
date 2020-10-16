@@ -48,6 +48,8 @@
           step="0.01"
           oninput="change()"
         />
+        <button onclick="enableTerrainTest()">开启地形碰撞检测</button>
+        <button onclick="disableTerrainTest()">关闭地形碰撞检测</button>
       </div>
     </div>
     <script type="module">
@@ -159,7 +161,7 @@
       }
       addParcLeadMine();
 
-      viewer.scene.screenSpaceCameraController.enableCollisionDetection = false;
+      viewer.scene.screenSpaceCameraController.enableCollisionDetection = true;
       globe.translucency.frontFaceAlphaByDistance = new Cesium.NearFarScalar(
         400.0,
         0.0,
@@ -171,7 +173,7 @@
         var alpha = parseFloat(
           document.getElementById("btnImageryAlpha").value
         );
-        alpha = Cesium.Math.clamp(alpha, 0.0, 1.0);
+        alpha = Cesium.Math.clamp(alpha, 0.0, 0.9999);
         globe.translucency.frontFaceAlphaByDistance.nearValue = alpha;
         globe.translucency.frontFaceAlphaByDistance.farValue = false
           ? 1.0
@@ -184,6 +186,14 @@
         //     viewer.imageryLayers.get(i).alpha = alpha;
         //   }
         // }
+      };
+
+      window.enableTerrainTest = function () {
+        viewer.scene.screenSpaceCameraController.enableCollisionDetection = true;
+      };
+
+      window.disableTerrainTest = function () {
+        viewer.scene.screenSpaceCameraController.enableCollisionDetection = false;
       };
     </script>
   </body>
