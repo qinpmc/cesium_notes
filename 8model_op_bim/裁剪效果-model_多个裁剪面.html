@@ -29,7 +29,9 @@
 
   <body>
     <div id="cesiumContainer"></div>
-    <script>
+    <script type="module">
+      window.CESIUM_BASE_URL = "../Source/";
+      import * as Cesium from "../Source/Cesium.js";
       // token
       Cesium.Ion.defaultAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
@@ -41,7 +43,6 @@
       });
       var scene = viewer.scene;
 
-      var targetY = 0.0;
       var planeEntities = [];
       var selectedPlane, selectedPlane1, selectedPlane2;
       var clippingPlanes;
@@ -53,11 +54,10 @@
         heading = 135.0,
         pitch = 0.0,
         roll = 0.0;
-      var normal = new Cesium.Cartesian3(0.0, 0.0, -1.0);
-      var distance = 100;
-      targetY = distance; //记录初始裁剪面距离
-      var targetY1 = 100,
-        targetY2 = 100;
+      var normal = new Cesium.Cartesian3(0.0, 0.0, 1.0);
+
+      var targetY1 = 10,
+        targetY2 = 0;
       loadModel(
         modelUrl,
         lon,
@@ -67,7 +67,8 @@
         pitch,
         roll,
         normal,
-        distance
+        targetY1,
+        targetY2
       );
 
       function loadModel(
@@ -79,21 +80,26 @@
         pitch,
         roll,
         normal,
-        distance
+        distance1,
+        distance2
       ) {
         //重置
         //reset();
 
         var clippingPlanes2 = new Cesium.ClippingPlane(
           new Cesium.Cartesian3(-1.0, 0.0, 0.0),
-          distance
+          distance2
         );
 
         //构造裁剪面
         clippingPlanes = new Cesium.ClippingPlaneCollection({
-          planes: [new Cesium.ClippingPlane(normal, distance), clippingPlanes2],
+          planes: [
+            new Cesium.ClippingPlane(normal, distance1),
+            clippingPlanes2,
+          ],
           edgeWidth: 3,
           edgeColor: Cesium.Color.RED,
+          unionClippingRegions: true,
         });
 
         var position = Cesium.Cartesian3.fromDegrees(lon, lat, height);
@@ -131,11 +137,11 @@
                 false
               ),
               outline: true,
-              outlineColor: Cesium.Color.CYAN,
+              outlineColor: i == 1 ? Cesium.Color.CYAN : Cesium.Color.YELLOW,
             },
           });
-          planeEntity.index = i + 1;
-          plane.index = planeEntity.index;
+          planeEntity.seq = i + 1;
+          plane.seq = planeEntity.seq;
           planeEntities.push(planeEntity);
         }
         console.log(planeEntities);
@@ -172,12 +178,12 @@
           Cesium.defined(pickedObject.id) &&
           Cesium.defined(pickedObject.id.plane)
         ) {
-          if (pickedObject.id.index === 1) {
+          if (pickedObject.id.seq === 1) {
             selectedPlane1 = pickedObject.id.plane;
             selectedPlane1.material = Cesium.Color.WHITE.withAlpha(0.05);
             selectedPlane1.outlineColor = Cesium.Color.WHITE;
             scene.screenSpaceCameraController.enableInputs = false;
-          } else if (pickedObject.id.index === 2) {
+          } else if (pickedObject.id.seq === 2) {
             selectedPlane2 = pickedObject.id.plane;
             selectedPlane2.material = Cesium.Color.WHITE.withAlpha(0.05);
             selectedPlane2.outlineColor = Cesium.Color.WHITE;
@@ -208,18 +214,20 @@
         if (Cesium.defined(selectedPlane1)) {
           var deltaY = movement.startPosition.y - movement.endPosition.y;
           targetY1 += deltaY;
+          console.log("targetY1", targetY1);
         } else if (Cesium.defined(selectedPlane2)) {
           var deltaY = movement.startPosition.y - movement.endPosition.y;
           targetY2 += deltaY;
+          console.log("targetY2", targetY2);
         }
       }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
       // 动态改变ClippingPlane距离原点的距离
       function createPlaneUpdateFunction(plane) {
         return function () {
-          if (plane.index === 1) {
+          if (plane.seq === 1) {
             plane.distance = targetY1;
-          } else if (plane.index === 2) {
+          } else if (plane.seq === 2) {
             plane.distance = targetY2;
           }
 
