@@ -8,12 +8,9 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
     <title>裁剪效果</title>
-    <script src="https://cesiumjs.org/releases/1.57/Build/Cesium/Cesium.js"></script>
-    <link
-      href="https://cesiumjs.org/releases/1.57/Build/Cesium/Widgets/widgets.css"
-      rel="stylesheet"
-    />
     <style>
+      @import url(../Source/Widgets/widgets.css);
+
       html,
       body,
       #cesiumContainer {
@@ -22,7 +19,6 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background-color: #000000;
       }
     </style>
   </head>
@@ -47,7 +43,7 @@
       var selectedPlane, selectedPlane1, selectedPlane2;
       var clippingPlanes;
 
-      var modelUrl = "../data/model/Cesium_Air.glb";
+      var modelUrl = "../data/model/CesiumMilkTruck-kmc.gltf"; // Cesium_Air.glb
       var lon = 114,
         lat = 30,
         height = 300,
