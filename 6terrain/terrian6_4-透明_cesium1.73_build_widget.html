@@ -91,12 +91,16 @@
         layers.addImageryProvider(ciaLayerProvider);
       }
 
-      //init(); //添加天地图底图
+      init(); //添加天地图底图
 
       (function addTerrian() {
-        var terrainProvider = Cesium.createWorldTerrain({
-          requestVertexNormals: true,
-          requestWaterMask: true,
+        // var terrainProvider = Cesium.createWorldTerrain({
+        //   requestVertexNormals: true,
+        //   requestWaterMask: true,
+        // });
+
+        var terrainProvider = new Cesium.CesiumTerrainProvider({
+          url: "http://data.marsgis.cn/terrain/",
         });
 
         widget.terrainProvider = terrainProvider;
@@ -108,9 +112,9 @@
         var longitude = 94.01;
         var latitude = 30;
         var height = 72.8;
-        var longitude = -3.82518;
-        var latitude = 53.11728;
-        var height = 72.8;
+        // var longitude = -3.82518;
+        // var latitude = 53.11728;
+        // var height = 72.8;
         var position = Cesium.Cartesian3.fromDegrees(
           longitude,
           latitude,
@@ -169,9 +173,9 @@
           document.getElementById("btnImageryAlpha").value
         );
         alpha = Cesium.Math.clamp(alpha, 0.0, 1.0);
-        if (alpha === 1) {
-          alpha = 0.9999;
-        }
+        // if (alpha === 1) {
+        //   alpha = 0.9999;
+        // }
         globe.translucency.frontFaceAlphaByDistance.nearValue = alpha;
         globe.translucency.frontFaceAlphaByDistance.farValue = alpha;
 
@@ -182,9 +186,7 @@
       window.changeModelOpacity = function () {
         var alpha = parseFloat(document.getElementById("btnModelAlpha").value);
         alpha = Cesium.Math.clamp(alpha, 0.0, 1.0);
-        if (alpha === 1) {
-          alpha = 0.9999;
-        }
+
         model.color = Cesium.Color.fromAlpha(
           new Cesium.Color(1, 1, 1, 1),
           alpha

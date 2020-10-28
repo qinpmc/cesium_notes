@@ -173,7 +173,7 @@
         var alpha = parseFloat(
           document.getElementById("btnImageryAlpha").value
         );
-        alpha = Cesium.Math.clamp(alpha, 0.0, 0.9999);
+        alpha = Cesium.Math.clamp(alpha, 0.0, 1.0);
         globe.translucency.frontFaceAlphaByDistance.nearValue = alpha;
         globe.translucency.frontFaceAlphaByDistance.farValue = false
           ? 1.0
