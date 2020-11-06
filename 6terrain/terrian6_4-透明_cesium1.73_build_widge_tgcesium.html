@@ -11,7 +11,7 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
     <title>Hello World!</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../Build/Cesium_tsgis/Cesium.js"></script>
     <style>
       @import url(../Build/Cesium/Widgets/widgets.css);
 
@@ -58,18 +58,9 @@
       Cesium.Ion.defaultAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-      var widget = new Cesium.CesiumWidget("cesiumContainer", {
+      var widget = new Cesium.CesiumWidget({
         clock: new Cesium.Clock(),
         scene3DOnly: false,
-        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-          layer: "img",
-          style: "default",
-          format: "tiles",
-          tileMatrixSetID: "w",
-          maximumLevel: "19",
-        }),
         contextOptions: {
           allowTextureFilterAnisotropic: false,
           webgl: {
@@ -90,7 +81,20 @@
 
       var globe = widget.scene.globe;
 
+      var container = Cesium.getElement("cesiumContainer");
+      widget.setTarget(container);
+
       function init() {
+        var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          maximumLevel: "19",
+        });
+
         //创建 provider
         var ciaLayerProvider = new Cesium.WebMapTileServiceImageryProvider({
           url:
@@ -105,6 +109,7 @@
         var layers = widget.imageryLayers;
 
         //使用 provider 添加
+        layers.addImageryProvider(imageryProvider);
         layers.addImageryProvider(ciaLayerProvider);
       }
 
@@ -116,9 +121,15 @@
         //   requestWaterMask: true,
         // });
         var terrainProvider = new Cesium.CesiumTerrainProvider({
-          url: "http://data.marsgis.cn/terrain/",
+          url: "http://172.18.7.60:8088/data/terrain",
+          requestVertexNormals: true,
+          requestWaterMask: undefined,
+          token: undefined, //add by dyc 2019.12.25
+          proxy: undefined,
         });
-        widget.terrainProvider = terrainProvider;
+        widget.scene.terrainProvider = terrainProvider;
+
+        Cesium.TrustedServers.add("http://172.18.7.60:8088/data/terrain");
       })();
 
       var primitives = new Cesium.PrimitiveCollection();
@@ -186,13 +197,13 @@
         8.0e6,
         1.0
       );
+      globe.translucency.enabled = true;
 
       window.change = function change() {
-        globe.translucency.enabled = true;
         var alpha = parseFloat(
           document.getElementById("btnImageryAlpha").value
         );
-        alpha = Cesium.Math.clamp(alpha, 0.0, 1.0);
+        //alpha = Cesium.Math.clamp(alpha, 0.0, 1.0);
         // if (alpha === 1) {
         //   alpha = 0.9999;
         // }
@@ -211,16 +222,6 @@
           new Cesium.Color(1, 1, 1, 1),
           alpha
         );
-
-        //使用PrimitiveCollection添加model
-        //console.log(primitives);
-        // for (var i = 0, model; i < primitives._primitives.length; i++) {
-        //   model = primitives._primitives[i];
-        //   model.color = Cesium.Color.fromAlpha(
-        //     new Cesium.Color(1, 1, 1, 1),
-        //     alpha
-        //   );
-        // }
       };
     </script>
   </body>

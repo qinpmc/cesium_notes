@@ -11,7 +11,7 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
     <title>Hello World!</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <!-- <script src="../Build/Cesium/Cesium.js"></script> -->
 
     <style>
       @import url(../Build/Cesium/Widgets/widgets.css);
@@ -55,6 +55,10 @@
     <script type="module">
       Cesium.Ion.defaultAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+       
+      window.CESIUM_BASE_URL = "../Source/";
+      import * as Cesium from "../Source/Cesium.js";
 
       // var terrainProvider = Cesium.createWorldTerrain({
       //   requestVertexNormals: true,
@@ -175,9 +179,7 @@
         );
         alpha = Cesium.Math.clamp(alpha, 0.0, 1.0);
         globe.translucency.frontFaceAlphaByDistance.nearValue = alpha;
-        globe.translucency.frontFaceAlphaByDistance.farValue = false
-          ? 1.0
-          : alpha;
+        globe.translucency.frontFaceAlphaByDistance.farValue = alpha;
 
         console.log(alpha);
 
