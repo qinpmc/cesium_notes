@@ -99,6 +99,8 @@
       viewer.imageryLayers.addImageryProvider(imageryProvider2);
       var globe = viewer.scene.globe;
 
+      console.log("****************:",globe.depthTestAgainstTerrain );
+
       //构造圆形横截面 ---二维坐标 构成的数组
       function computeCircle(radius) {
         var positions = [];
