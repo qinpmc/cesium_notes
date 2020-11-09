@@ -27,7 +27,7 @@
     </style>
   </head>
   <body>
-    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px;">
+    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
       <button onclick="addPolyline1()">增加红色线1</button>
       <button onclick="addPolyline2()">增加RHUMB线2-恒向线</button>
       <button onclick="addPolyline3()">增加发光线3-透明度+高度</button>
@@ -43,6 +43,15 @@
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
       var viewer = new Cesium.Viewer("cesiumContainer", {
         geocoder: false,
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          maximumLevel: "19",
+        }),
         baseLayerPicker: false,
         fullscreenButton: false,
         homeButton: false,

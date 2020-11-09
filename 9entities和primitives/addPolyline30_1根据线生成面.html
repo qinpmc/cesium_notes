@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>线</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
+      <button onclick="addPolyline1()">增加红色线1</button>
+      <button onclick="addPolyline2()">增加绿色线2</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script type="module">
+      window.CESIUM_BASE_URL = "../Source/";
+      import * as Cesium from "../Source/Cesium.js";
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        geocoder: false,
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          maximumLevel: "19",
+        }),
+        baseLayerPicker: false,
+        fullscreenButton: false,
+        homeButton: false,
+        sceneModePicker: false,
+        animation: false,
+        timeline: false,
+        navigationHelpButton: false,
+        // terrainProvider: Cesium.createWorldTerrain({
+        //   requestWaterMask: true,
+        //   requestVertexNormals: true,
+        // }),
+      });
+
+      //普通红线
+      window.addPolyline1 = function () {
+        var point1 = {
+          x: 65,
+          y: 30,
+        };
+        var point2 = {
+          x: 70,
+          y: 30,
+        };
+        var point3 = {
+          x: 75,
+          y: 32,
+        };
+        //添加线
+        viewer.entities.add({
+          name: "红色普通线",
+          polyline: {
+            positions: Cesium.Cartesian3.fromDegreesArray([
+              point1.x,
+              point1.y,
+              point2.x,
+              point2.y,
+              point3.x,
+              point3.y,
+            ]),
+            width: 5,
+            material: Cesium.Color.RED,
+            clampToGround: true, //贴地形
+          },
+        });
+
+        var lineString = {
+          points: [point1, point2, point3],
+        };
+
+        var planes = line2Planes(lineString);
+        for (var i = 0; i < planes.length; i++) {
+          var pos = planes[i].position;
+          viewer.entities.add({
+            position: pos,
+            plane: planes[i],
+          });
+        }
+      };
+
+      //根据绘制线生成剖切面
+      function line2Planes(lineString) {
+        var up = Cesium.Cartesian3.UNIT_Z;
+        var points = lineString.points;
+        var p1,
+          p2,
+          middlePoint,
+          right,
+          normal,
+          planes = [];
+        for (var i = 0; i < points.length - 1; i++) {
+          p1 = points[i];
+          p2 = points[i + 1];
+
+          var cartesianP1 = Cesium.Cartesian3.fromDegrees(p1.x, p1.y, p1.z);
+          var cartesianP2 = Cesium.Cartesian3.fromDegrees(p2.x, p2.y, p2.z);
+          middlePoint = {
+            x: (p1.x + p2.x) / 2,
+            y: (p1.y + p2.y) / 2,
+            z: 0,
+          };
+
+          var cartesianMiddlePoint = Cesium.Cartesian3.fromDegrees(
+            middlePoint.x,
+            middlePoint.y,
+            middlePoint.z
+          );
+
+          var inverseTransform = Cesium.Matrix4.inverseTransformation(
+            Cesium.Transforms.eastNorthUpToFixedFrame(cartesianMiddlePoint),
+            new Cesium.Matrix4()
+          );
+
+          var p1LocalCartesian = Cesium.Matrix4.multiplyByPoint(
+            inverseTransform,
+            cartesianP1,
+            new Cesium.Cartesian3()
+          );
+          var p2LocalCartesian = Cesium.Matrix4.multiplyByPoint(
+            inverseTransform,
+            cartesianP2,
+            new Cesium.Cartesian3()
+          );
+
+          var planeWidth = Math.sqrt(
+            Math.pow(p1LocalCartesian.x - p2LocalCartesian.x, 2) +
+              Math.pow(p1LocalCartesian.y - p2LocalCartesian.y, 2) +
+              Math.pow(p1LocalCartesian.z - p2LocalCartesian.z, 2)
+          );
+
+          right = Cesium.Cartesian3.subtract(
+            p2LocalCartesian,
+            p1LocalCartesian,
+            new Cesium.Cartesian3()
+          );
+          right = Cesium.Cartesian3.normalize(right, new Cesium.Cartesian3());
+          normal = Cesium.Cartesian3.cross(right, up, new Cesium.Cartesian3());
+          normal = Cesium.Cartesian3.normalize(normal, new Cesium.Cartesian3());
+
+          var planeGraphic = new Cesium.PlaneGraphics({
+            dimensions: new Cesium.Cartesian2(planeWidth, 80000),
+            plane: new Cesium.Plane(normal, 0),
+            material: Cesium.Color.BLUE,
+          });
+          planeGraphic.position = cartesianMiddlePoint;
+          planes.push(planeGraphic);
+        }
+        return planes;
+      }
+
+      //普通绿线
+      window.addPolyline2 = function () {
+        var point1 = {
+          x: 65,
+          y: 50,
+        };
+        var point2 = {
+          x: 70,
+          y: 50,
+        };
+        var point3 = {
+          x: 75,
+          y: 52,
+        };
+        //添加线
+        viewer.entities.add({
+          name: "绿色普通线",
+          polyline: {
+            positions: Cesium.Cartesian3.fromDegreesArray([
+              point1.x,
+              point1.y,
+              point2.x,
+              point2.y,
+              point3.x,
+              point3.y,
+            ]),
+            width: 5,
+            material: Cesium.Color.GREEN,
+            clampToGround: true, //贴地形
+          },
+        });
+
+        var lineString = {
+          points: [point1, point2, point3],
+        };
+
+        var wall = line2WallPlanes(lineString);
+        viewer.entities.add({
+          name: "wall",
+          wall: wall,
+        });
+      };
+      //根据绘制线生成剖切面
+      function line2WallPlanes(lineString) {
+        var up = Cesium.Cartesian3.UNIT_Z;
+        var points = lineString.points;
+        var wall,
+          pointsArr = [],
+          maximumHeights = [],
+          minimumHeights = [];
+        for (var i = 0; i < points.length; i++) {
+          pointsArr.push(points[i].x, points[i].y);
+          maximumHeights.push(200000);
+          minimumHeights.push(0);
+        }
+        wall = {
+          positions: Cesium.Cartesian3.fromDegreesArray(pointsArr),
+          maximumHeights: maximumHeights,
+          minimumHeights: minimumHeights,
+          material: Cesium.Color.BLUE.withAlpha(0.5),
+          outline: true,
+          outlineColor: Cesium.Color.BLACK,
+        };
+
+        return wall;
+      }
+
+      viewer.zoomTo(viewer.entities);
+    </script>
+  </body>
+</html>
