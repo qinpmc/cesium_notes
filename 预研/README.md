@@ -28,7 +28,7 @@ function getOccluder(scene) {
 }
 ```
 
-开启地下模式后，!scene.\_globeTranslucencyState.translucent 为 !true = false; 造成 return undefined
+开启地下模式后，!scene._globeTranslucencyState.translucent 为 !true = false; 造成 return undefined
 
 ```
    /**
@@ -50,3 +50,26 @@ globe.prototype.isPointVisible = function (point) {
     return visible;
 }
 ```
+
+
+
+
+//Scene.js line:208
+scene._globeTranslucencyState.translucent 属性 是 GlobeTranslucencyState 实例：
+
+```
+this._globeTranslucencyState = new GlobeTranslucencyState();
+
+```
+ 
+// GlobeTranslucencyState.js line:89
+GlobeTranslucencyState 中的translucent 实际是_frontFaceTranslucent属性
+```
+ translucent: {
+    get: function () {
+      return this._frontFaceTranslucent;
+    },
+```
+
+
+
