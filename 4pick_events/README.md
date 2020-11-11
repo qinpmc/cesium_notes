@@ -88,7 +88,7 @@ https://zhuanlan.zhihu.com/p/44767866
 
 - drillPick：scene.drillPick(click.position)是从当前鼠标点击位置获取 entity 的集合，然后通过 for 循环可以获取当前坐标下的所有 entity；
 
-- pickPosition：通过 viewer.scene.pickPosition(movement.position)获取，可以获取场中任意点击处的对应的世界坐标。（高程不精确）
+- pickPosition：通过 viewer.scene.pickPosition(movement.position)获取，可以获取场中任意点击处的对应的**世界坐标**。（高程不精确）
 
 pick 与 drillPick 的区别：pick 只可获取一个 entity 对象（如该位置存在多个 entity，哪怕面点线不在同一高度，面 entity 都可能会盖住点线 entity），但 drillPick 可获取当前坐标下的多个对象；
 
