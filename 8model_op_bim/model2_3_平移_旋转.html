@@ -1,227 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <!-- Use correct character set. -->
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
     <title>模型</title>
     <script src="../Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+      @import url(../Build/Cesium/Widgets/widgets.css);
 
-        html, body, #cesiumContainer {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
 
-        .cesium-viewer-bottom /* logo信息 */
-        {
-            display: none;
-        }
-
-
+      .cesium-viewer-bottom /* logo信息 */ {
+        display: none;
+      }
     </style>
-</head>
-<body>
-<div>
-    <button onclick="showVec()">显隐天地图矢量</button>
-    <button onclick="showCta()">显隐天地图标注</button>
-    <button onclick="addHeading(0.1)">增加heading</button>
-    <button onclick="addHeading(-0.1)">减小heading</button>
-    <button onclick="addPitch(0.1)">增加Pitch</button>
-    <button onclick="addPitch(-0.1)">减小Pitch</button>
-    <button onclick="addRoll(0.1)">增加Roll</button>
-    <button onclick="addRoll(-0.1)">减小Roll</button>
-    高度：<input type="range" max="200" min="-200" step="20" id="heightEle">
-    经度：<input type="range" max="0.0001" min="-0.0001" step="0.00005" id="lonEle">
-    纬度：<input type="range" max="0.0001" min="-0.0001" step="0.00005" id="latEle">
+  </head>
+  <body>
+    <div>
+      <button onclick="showVec()">显隐天地图矢量</button>
+      <button onclick="showCta()">显隐天地图标注</button>
+      <button onclick="addHeading(0.1)">增加heading</button>
+      <button onclick="addHeading(-0.1)">减小heading</button>
+      <button onclick="addPitch(0.1)">增加Pitch</button>
+      <button onclick="addPitch(-0.1)">减小Pitch</button>
+      <button onclick="addRoll(0.1)">增加Roll</button>
+      <button onclick="addRoll(-0.1)">减小Roll</button>
+      高度：<input type="range" max="200" min="-200" step="20" id="heightEle" />
+      经度：<input
+        type="range"
+        max="0.0001"
+        min="-0.0001"
+        step="0.00005"
+        id="lonEle"
+      />
+      纬度：<input
+        type="range"
+        max="0.0001"
+        min="-0.0001"
+        step="0.00005"
+        id="latEle"
+      />
+      缩放：<input type="range" max="5" min="1" step="1" id="scaleEle" />
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-</div>
-<div id="cesiumContainer"></div>
-<script>
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
-
-    //4326坐标系从1开始
-    var tileMatrixLabels =[];
-    for(var i=1;i<18;i++){
-        tileMatrixLabels.push(""+i);
-    }
-    var viewer = new Cesium.Viewer("cesiumContainer", {
-        animation: false,  //是否显示动画控件
-        shouldAnimate : true, // 让
+      //4326坐标系从1开始
+      var tileMatrixLabels = [];
+      for (var i = 1; i < 18; i++) {
+        tileMatrixLabels.push("" + i);
+      }
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        shouldAnimate: true, // 让
         baseLayerPicker: false, //是否显示图层选择控件
         geocoder: true, //是否显示地名查找控件
         timeline: false, //是否显示时间线控件
         sceneModePicker: true, //是否显示投影方式控件
         navigationHelpButton: false, //是否显示帮助信息控件
-        infoBox: true,  //是否显示点击要素之后显示的信息
-        imageryProvider : new Cesium.WebMapTileServiceImageryProvider({
-            url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-            layer: "vec",
-            style: "default",
-            format: "tiles",
-            tileMatrixSetID: "c",
-            maximumLevel:"14",
-            tileMatrixLabels:tileMatrixLabels,
-            tilingScheme:new Cesium.GeographicTilingScheme({
-                numberOfLevelZeroTilesX:2,
-                numberOfLevelZeroTilesY:1
-            })
-        })
-    });
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+      });
 
-
-    var ctaLayer = new Cesium.ImageryLayer(
+      var ctaLayer = new Cesium.ImageryLayer(
         new Cesium.WebMapTileServiceImageryProvider({
-            url: "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-            layer: "cta",
-            style: "default",
-            format: "tiles",
-            tileMatrixSetID: "c",
-            maximumLevel: "14",
-            tileMatrixLabels: tileMatrixLabels,
-            tilingScheme: new Cesium.GeographicTilingScheme({
-                numberOfLevelZeroTilesX: 2,
-                numberOfLevelZeroTilesY: 1
-            }),
-        }),{
-            show: false
+          url:
+            "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+        {
+          show: false,
         }
-    );
+      );
 
-    console.log(viewer.scene.imageryLayers === viewer.imageryLayers ); // true
-    var layers = viewer.imageryLayers;
-    layers.add(ctaLayer);
+      console.log(viewer.scene.imageryLayers === viewer.imageryLayers); // true
+      var layers = viewer.imageryLayers;
+      layers.add(ctaLayer);
 
-    var model;
-    var heading = 0.0;
-    var pitch = Cesium.Math.toRadians(10.0);
-    var roll = Cesium.Math.toRadians(-20.0);
+      var model;
+      var heading = 0.0;
+      var pitch = Cesium.Math.toRadians(10.0);
+      var roll = Cesium.Math.toRadians(-20.0);
 
+      var longitude = -123.0744619;
+      var latitude = 44.0503706;
+      var height = 5000;
+      var origin = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);
 
-    var longitude = -123.0744619;
-    var latitude = 44.0503706;
-    var height = 5000;
-    var origin = Cesium.Cartesian3.fromDegrees(longitude, latitude,height);
+      window.showVec = function () {
+        viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show;
+      };
 
+      window.showCta = function () {
+        viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show;
+      };
 
-    window.showVec = function () {
-        viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show
-    }
+      createModel("../data/model/Cesium_Air.glb", origin, heading, pitch, roll);
 
-    window.showCta = function () {
-        viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show
-    }
-
-    createModel('../data/model/Cesium_Air.glb', origin, heading, pitch, roll);
-
-
-
-
-    function createModel(url, origin, heading, pitch, roll) {
+      function createModel(url, origin, heading, pitch, roll) {
         height = Cesium.defaultValue(height, 0.0);
         heading = Cesium.defaultValue(heading, 0.0);
         pitch = Cesium.defaultValue(pitch, 0.0);
         roll = Cesium.defaultValue(roll, 0.0);
         var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
 
-        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(origin, hpr);
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+          origin,
+          hpr
+        );
 
         viewer.scene.primitives.removeAll(); // Remove previous model
-        model = viewer.scene.primitives.add(Cesium.Model.fromGltf({
-            url : url,
-            modelMatrix : modelMatrix,
-            minimumPixelSize : 128
-        }));
+        model = viewer.scene.primitives.add(
+          Cesium.Model.fromGltf({
+            url: url,
+            modelMatrix: modelMatrix,
+            minimumPixelSize: 128,
+          })
+        );
 
-        model.readyPromise.then(function(model) {
-
+        model.readyPromise
+          .then(function (model) {
             // Play and loop all animations at half-speed
             model.activeAnimations.addAll({
-                multiplier : 2.5,
-                loop : Cesium.ModelAnimationLoop.REPEAT
+              multiplier: 2.5,
+              loop: Cesium.ModelAnimationLoop.REPEAT,
             });
 
-            viewer.scene.camera.lookAt(origin,new Cesium.Cartesian3(0.0, 0.0, 10.0))
+            viewer.scene.camera.lookAt(
+              origin,
+              new Cesium.Cartesian3(0.0, 0.0, 10.0)
+            );
 
-        }).otherwise(function(error){
+            // 局部坐标系 -----调试看效果
+            // 东北  红色--x  绿色 --y  蓝色 ---z
+            var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+            var hprRollZero = new Cesium.HeadingPitchRoll();
+            var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+              origin,
+              hprRollZero,
+              Cesium.Ellipsoid.WGS84,
+              enUpConverter
+            );
+
+            viewer.scene.primitives.add(
+              new Cesium.DebugModelMatrixPrimitive({
+                modelMatrix: modelMatrix,
+                length: 3000.0,
+                width: 10.0,
+              })
+            );
+          })
+          .otherwise(function (error) {
             window.alert(error);
+          });
+      }
+
+      //model 偏移量
+      model._offsetX = 0;
+      model._offsetY = 0;
+      model._offsetZ = 0;
+
+      document
+        .getElementById("heightEle")
+        .addEventListener("change", function () {
+          var height = parseFloat(this.value);
+          model._offsetZ = height;
+
+          model.modelMatrix = calculateOffset(
+            model._offsetX,
+            model._offsetY,
+            model._offsetZ,
+            origin
+          );
         });
-    }
 
-    //model 偏移量
-    model._offsetX = 0;
-    model._offsetY = 0;
-    model._offsetZ = 0;
-
-    document.getElementById("heightEle").addEventListener("change",function () {
-        var height = parseFloat(this.value);
-        model._offsetZ = height;
-
-        model.modelMatrix =  calculateOffset(model._offsetX,model._offsetY,model._offsetZ,origin);
-    })
-
-    document.getElementById("lonEle").addEventListener("change",function () {
+      document.getElementById("lonEle").addEventListener("change", function () {
         var lon = parseFloat(this.value);
         model._offsetX = lon;
-        model.modelMatrix = calculateOffset(model._offsetX,model._offsetY,model._offsetZ,origin);
-    })
+        model.modelMatrix = calculateOffset(
+          model._offsetX,
+          model._offsetY,
+          model._offsetZ,
+          origin
+        );
+      });
 
-    document.getElementById("latEle").addEventListener("change",function () {
+      document.getElementById("latEle").addEventListener("change", function () {
         var lon = parseFloat(this.value);
         model._offsetY = lon;
-        model.modelMatrix = calculateOffset(model._offsetX,model._offsetY,model._offsetZ,origin);
-    })
+        model.modelMatrix = calculateOffset(
+          model._offsetX,
+          model._offsetY,
+          model._offsetZ,
+          origin
+        );
+      });
+      document
+        .getElementById("scaleEle")
+        .addEventListener("change", function () {
+          var scale = parseFloat(this.value);
+          model.scale = scale;
+        });
 
-    function calculateOffset(offsetX,offsetY,offsetZ,cartesianCenter){
+      function calculateOffset(offsetX, offsetY, offsetZ, cartesianCenter) {
         var center = Cesium.Cartographic.fromCartesian(cartesianCenter);
-        var surface = Cesium.Cartesian3.fromRadians(center.longitude, center.latitude, 0.0);
+        var surface = Cesium.Cartesian3.fromRadians(
+          center.longitude,
+          center.latitude,
+          0.0
+        );
 
         // cartesian 相减
-        var offset = Cesium.Cartesian3.fromRadians(center.longitude+offsetX, center.latitude+offsetY, offsetZ);
-        var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3());
+        var offset = Cesium.Cartesian3.fromRadians(
+          center.longitude + offsetX,
+          center.latitude + offsetY,
+          offsetZ
+        );
+        var translation = Cesium.Cartesian3.subtract(
+          offset,
+          surface,
+          new Cesium.Cartesian3()
+        );
 
         var transMatrix4 = Cesium.Matrix4.fromTranslation(translation);
 
-        var trans = Cesium.Transforms.eastNorthUpToFixedFrame(cartesianCenter)
+        var trans = Cesium.Transforms.eastNorthUpToFixedFrame(cartesianCenter);
 
-        return Cesium.Matrix4.multiply(trans, transMatrix4,trans);
-    }
+        return Cesium.Matrix4.multiply(trans, transMatrix4, trans);
+      }
 
-
-    window.addHeading = function (headingOffset) {
+      window.addHeading = function (headingOffset) {
         heading += headingOffset;
         var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
 
-        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(origin, hpr);
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+          origin,
+          hpr
+        );
         model.modelMatrix = modelMatrix;
-    }
+      };
 
-    window.addPitch = function (pitchOffset) {
-        pitch +=pitchOffset;
+      window.addPitch = function (pitchOffset) {
+        pitch += pitchOffset;
         var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
 
-        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(origin, hpr);
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+          origin,
+          hpr
+        );
         model.modelMatrix = modelMatrix;
-    }
+      };
 
-
-
-    window.addRoll = function (rollOffset) {
-        roll +=rollOffset;
+      window.addRoll = function (rollOffset) {
+        roll += rollOffset;
         var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
 
-        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(origin, hpr);
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+          origin,
+          hpr
+        );
         model.modelMatrix = modelMatrix;
-    }
-
-</script>
-</body>
+      };
+    </script>
+  </body>
 </html>

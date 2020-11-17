@@ -36,7 +36,6 @@
         background: #fff;
       "
     >
-      <button onclick="ajustHeight()">调整高度</button>
       高度：<input type="range" max="200" min="-200" step="20" id="heightEle" />
       经度：<input
         type="range"
@@ -112,9 +111,12 @@
         url: "../data/tileset/Tileset/tileset.json",
       });
 
+      var center = null; //tileset的中心
+
       tileset.readyPromise
         .then(function (tileset) {
           viewer.scene.primitives.add(tileset);
+          center = tileset.boundingSphere.center;
           viewer.zoomTo(
             tileset,
             new Cesium.HeadingPitchRange(
@@ -122,6 +124,25 @@
               -0.5,
               tileset.boundingSphere.radius * 2.0
             )
+          );
+
+          // 局部坐标系 -----调试看效果
+          // 东北  红色--x  绿色 --y  蓝色 ---z
+          var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+          var hprRollZero = new Cesium.HeadingPitchRoll();
+          var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+            center,
+            hprRollZero,
+            Cesium.Ellipsoid.WGS84,
+            enUpConverter
+          );
+
+          viewer.scene.primitives.add(
+            new Cesium.DebugModelMatrixPrimitive({
+              modelMatrix: modelMatrix,
+              length: 3000.0,
+              width: 10.0,
+            })
           );
         })
         .otherwise(function (error) {
@@ -190,20 +211,6 @@
         );
         return Cesium.Matrix4.fromTranslation(translation);
       }
-
-
-      //单击左键，部分tile移动
-      viewer.screenSpaceEventHandler.setInputAction(function (movement) {
-        var feature = viewer.scene.pick(movement.position);
-        if (!!feature && !!feature.content) {
-          var tile = feature.content.tile;
-          tile.transform = Cesium.Matrix4.multiplyByTranslation(
-            tile.transform,
-            new Cesium.Cartesian3(0, 0, 10), //高度移动10
-            new Cesium.Matrix4()
-          );
-        }
-      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     </script>
   </body>
 </html>
