@@ -154,24 +154,24 @@
           var height_minimum = 6.161747192963958;
           var height_maximum = 85.41026367992163;
 
-          var position = Cesium.Cartesian3.fromRadians(
-            (lon_minimum + lon_maximum) / 2,
-            (lat_minimum + lat_maximum) / 2,
-            (height_minimum + height_maximum) / 2
-          );
-          //var position = tileset.boundingSphere.center;
+          // var position = Cesium.Cartesian3.fromRadians(
+          //   (lon_minimum + lon_maximum) / 2,
+          //   (lat_minimum + lat_maximum) / 2,
+          //   (height_minimum + height_maximum) / 2
+          // );
+          var position = tileset.boundingSphere.center;
           var m = Cesium.Transforms.eastNorthUpToFixedFrame(position);
           Cesium.Matrix4.multiply(m, scale, m);
 
           tileset._root.transform = m;
-          viewer.zoomTo(
-            tileset,
-            new Cesium.HeadingPitchRange(
-              0.0,
-              -0.5,
-              tileset.boundingSphere.radius * 2.0
-            )
-          );
+          // viewer.zoomTo(
+          //   tileset,
+          //   new Cesium.HeadingPitchRange(
+          //     0.0,
+          //     -0.5,
+          //     tileset.boundingSphere.radius * 2.0
+          //   )
+          // );
           // tileset.modelMatrix = calculateOffset(
           //   tileset._offsetX,
           //   tileset._offsetY,

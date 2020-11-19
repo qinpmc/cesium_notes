@@ -41,7 +41,9 @@
       <button onclick="addRoll(-0.1)">减小Roll</button>
     </div>
     <div id="cesiumContainer"></div>
-    <script>
+    <script type="module">
+      window.CESIUM_BASE_URL = "../Source/";
+      import * as Cesium from "../Source/Cesium.js";
       Cesium.Ion.defaultAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
@@ -89,10 +91,7 @@
             numberOfLevelZeroTilesX: 2,
             numberOfLevelZeroTilesY: 1,
           }),
-        }),
-        {
-          show: false,
-        }
+        })
       );
 
       console.log(viewer.scene.imageryLayers === viewer.imageryLayers); // true
@@ -108,20 +107,120 @@
       var latitude = 44.0503706;
       var height = 5000;
       var origin = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);
+      var origin = new Cesium.Cartesian3(
+        -2538333.811073561,
+        4884805.65131724,
+        3210538.3796964255
+      );
 
       window.addModel = function () {
         var height = 5000.0;
 
-        createModel(
-          "../data/model/Cesium_Air.glb",
+        createModel2(
+          "./data/50700220.b3dm", //
           origin,
           heading,
           pitch,
           roll
         );
+        // createModel1(
+        //   "./data/Cesium_Air.glb",
+        //   origin,
+        //   heading,
+        //   pitch,
+        //   roll
+        // );
       };
 
-      function createModel(url, origin, heading, pitch, roll) {
+      function createModel2(url, origin, heading, pitch, roll) {
+        fetch(url, { responseType: "arraybuffer" })
+          .then(function (res) {
+            return res.arrayBuffer();
+          })
+          .then((arrayBuffer) => {
+            var gltfView = new Uint8Array(arrayBuffer, 84, 34792);
+            height = Cesium.defaultValue(height, 0.0);
+            heading = Cesium.defaultValue(heading, 0.0);
+            pitch = Cesium.defaultValue(pitch, 0.0);
+            roll = Cesium.defaultValue(roll, 0.0);
+            var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+            var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+              origin,
+              hpr
+            );
+
+            viewer.scene.primitives.removeAll(); // Remove previous model
+            model = viewer.scene.primitives.add(
+              new Cesium.Model({
+                gltf: gltfView,
+                modelMatrix: modelMatrix,
+                minimumPixelSize: 128,
+              })
+            );
+
+            model.readyPromise
+              .then(function (model) {
+     
+                // Play and loop all animations at half-speed
+                model.activeAnimations.addAll({
+                  multiplier: 2.5,
+                  loop: Cesium.ModelAnimationLoop.REPEAT,
+                });
+
+                var camera = viewer.camera;
+
+                // Zoom to model
+                var controller = viewer.scene.screenSpaceCameraController;
+                var r =
+                  2.0 *
+                  Math.max(model.boundingSphere.radius, camera.frustum.near);
+                controller.minimumZoomDistance = r * 0.5;
+
+                var center = Cesium.Matrix4.multiplyByPoint(
+                  model.modelMatrix,
+                  model.boundingSphere.center,
+                  new Cesium.Cartesian3()
+                );
+                var heading = Cesium.Math.toRadians(230.0);
+                var pitch = Cesium.Math.toRadians(-20.0);
+
+                // lookAt  Sets the camera position and orientation using a target and offset
+
+                camera.lookAt(
+                  center,
+                  new Cesium.HeadingPitchRange(heading, pitch, r * 2.0)
+                );
+
+                // lookAt后，地球的相机会以center和 对应的姿态角进行变化
+                camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+
+                // 局部坐标系 -----调试看效果
+                // 东北  红色--x  绿色 --y  蓝色 ---z
+                var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+                var hprRollZero = new Cesium.HeadingPitchRoll();
+                var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+                  origin,
+                  hprRollZero,
+                  Cesium.Ellipsoid.WGS84,
+                  enUpConverter
+                );
+
+                viewer.scene.primitives.add(
+                  new Cesium.DebugModelMatrixPrimitive({
+                    modelMatrix: modelMatrix,
+                    length: 30.0,
+                    width: 3.0,
+                  })
+                );
+              })
+              .otherwise(function (error) {
+                window.alert(error);
+              });
+          });
+      }
+
+      function createModel1(url, origin, heading, pitch, roll) {
         height = Cesium.defaultValue(height, 0.0);
         heading = Cesium.defaultValue(heading, 0.0);
         pitch = Cesium.defaultValue(pitch, 0.0);

@@ -35,24 +35,7 @@
         top: 10px;
         background: #fff;
       "
-    >
-      <button onclick="ajustHeight()">调整高度</button>
-      高度：<input type="range" max="200" min="-200" step="20" id="heightEle" />
-      经度：<input
-        type="range"
-        max="0.0001"
-        min="-0.0001"
-        step="0.00005"
-        id="lonEle"
-      />
-      纬度：<input
-        type="range"
-        max="0.0001"
-        min="-0.0001"
-        step="0.00005"
-        id="latEle"
-      />
-    </div>
+    ></div>
     <div id="cesiumContainer"></div>
     <script>
       Cesium.Ion.defaultAccessToken =
@@ -109,7 +92,7 @@
       layers.add(ctaLayer);
 
       var tileset = new Cesium.Cesium3DTileset({
-        url: "../data/tileset/Tileset/tileset.json",
+        
       });
 
       tileset.readyPromise
@@ -127,70 +110,6 @@
         .otherwise(function (error) {
           console.log(error);
         });
-
-      //3dTiles 偏移量
-      tileset._offsetX = 0;
-      tileset._offsetY = 0;
-      tileset._offsetZ = 0;
-
-      document
-        .getElementById("heightEle")
-        .addEventListener("change", function () {
-          var height = parseFloat(this.value);
-          tileset._offsetZ = height;
-
-          tileset.modelMatrix = calculateOffset(
-            tileset._offsetX,
-            tileset._offsetY,
-            tileset._offsetZ,
-            tileset.boundingSphere.center
-          );
-        });
-
-      document.getElementById("lonEle").addEventListener("change", function () {
-        var lon = parseFloat(this.value);
-        tileset._offsetX = lon;
-        tileset.modelMatrix = calculateOffset(
-          tileset._offsetX,
-          tileset._offsetY,
-          tileset._offsetZ,
-          tileset.boundingSphere.center
-        );
-      });
-
-      document.getElementById("latEle").addEventListener("change", function () {
-        var lon = parseFloat(this.value);
-        tileset._offsetY = lon;
-        tileset.modelMatrix = calculateOffset(
-          tileset._offsetX,
-          tileset._offsetY,
-          tileset._offsetZ,
-          tileset.boundingSphere.center
-        );
-      });
-
-      function calculateOffset(offsetX, offsetY, offsetZ, cartesianCenter) {
-        var center = Cesium.Cartographic.fromCartesian(cartesianCenter);
-        var surface = Cesium.Cartesian3.fromRadians(
-          center.longitude,
-          center.latitude,
-          0.0
-        );
-
-        // cartesian 相减
-        var offset = Cesium.Cartesian3.fromRadians(
-          center.longitude + offsetX,
-          center.latitude + offsetY,
-          offsetZ
-        );
-        var translation = Cesium.Cartesian3.subtract(
-          offset,
-          surface,
-          new Cesium.Cartesian3()
-        );
-        return Cesium.Matrix4.fromTranslation(translation);
-      }
-
 
       //单击左键，部分tile移动
       viewer.screenSpaceEventHandler.setInputAction(function (movement) {
