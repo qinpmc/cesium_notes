@@ -294,6 +294,9 @@
           return;
         }
         var tilesetCenter = tileset.boundingSphere.center;
+
+        // _model._boundingSphere.center 与_model.boundingSphere.center存在区别：
+
         var modelCenter = _model._boundingSphere.center.clone(
           new Cesium.Cartesian3()
         );

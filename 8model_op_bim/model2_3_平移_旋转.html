@@ -32,8 +32,6 @@
   </head>
   <body>
     <div>
-      <button onclick="showVec()">显隐天地图矢量</button>
-      <button onclick="showCta()">显隐天地图标注</button>
       <button onclick="addHeading(0.1)">增加heading</button>
       <button onclick="addHeading(-0.1)">减小heading</button>
       <button onclick="addPitch(0.1)">增加Pitch</button>
@@ -118,21 +116,13 @@
 
       var model;
       var heading = 0.0;
-      var pitch = Cesium.Math.toRadians(10.0);
-      var roll = Cesium.Math.toRadians(-20.0);
+      var pitch = Cesium.Math.toRadians(0);
+      var roll = Cesium.Math.toRadians(0);
 
       var longitude = -123.0744619;
       var latitude = 44.0503706;
       var height = 5000;
       var origin = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);
-
-      window.showVec = function () {
-        viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show;
-      };
-
-      window.showCta = function () {
-        viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show;
-      };
 
       createModel("../data/model/Cesium_Air.glb", origin, heading, pitch, roll);
 
@@ -194,10 +184,14 @@
           });
       }
 
-      //model 偏移量
+      //model 偏移量 旋转量 缩放量
       model._offsetX = 0;
       model._offsetY = 0;
       model._offsetZ = 0;
+      model._heading = 0;
+      model._pitch = 0;
+      model._roll = 0;
+      model._scale = 1;
 
       document
         .getElementById("heightEle")
@@ -242,18 +236,61 @@
         });
 
       function calculateOffset(offsetX, offsetY, offsetZ, cartesianCenter) {
+        // var center = Cesium.Cartographic.fromCartesian(cartesianCenter);
+        // var surface = Cesium.Cartesian3.fromRadians(
+        //   center.longitude,
+        //   center.latitude,
+        //   0.0
+        // );
+
+        // // cartesian 相减
+        // var offset = Cesium.Cartesian3.fromRadians(
+        //   center.longitude + offsetX,
+        //   center.latitude + offsetY,
+        //   offsetZ
+        // );
+        // var translation = Cesium.Cartesian3.subtract(
+        //   offset,
+        //   surface,
+        //   new Cesium.Cartesian3()
+        // );
+
+        // var transMatrix4 = Cesium.Matrix4.fromTranslation(translation);
+
+        // var trans = Cesium.Transforms.eastNorthUpToFixedFrame(cartesianCenter);
+
+        // return Cesium.Matrix4.multiply(transMatrix4, trans, trans);
+
+        var headingPitchRoll = Cesium.HeadingPitchRoll.fromDegrees(
+          model._heading,
+          model._pitch, //
+          model._roll, //
+          new Cesium.HeadingPitchRoll()
+        );
+        var rotation = Cesium.Quaternion.fromHeadingPitchRoll(
+          headingPitchRoll,
+          new Cesium.Quaternion()
+        );
+
+        var rotateMatrix4 = Cesium.Matrix4.fromTranslationQuaternionRotationScale(
+          new Cesium.Cartesian3(0.0, 0.0, 0.0), // translation
+          rotation, // rotation
+          new Cesium.Cartesian3(1.0, 1.0, 1.0), // scale
+          new Cesium.Matrix4()
+        );
+
         var center = Cesium.Cartographic.fromCartesian(cartesianCenter);
         var surface = Cesium.Cartesian3.fromRadians(
           center.longitude,
           center.latitude,
-          0.0
+          height
         );
 
         // cartesian 相减
         var offset = Cesium.Cartesian3.fromRadians(
           center.longitude + offsetX,
           center.latitude + offsetY,
-          offsetZ
+          height+offsetZ
         );
         var translation = Cesium.Cartesian3.subtract(
           offset,
@@ -263,13 +300,20 @@
 
         var transMatrix4 = Cesium.Matrix4.fromTranslation(translation);
 
-        var trans = Cesium.Transforms.eastNorthUpToFixedFrame(cartesianCenter);
+        var transform = Cesium.Transforms.eastNorthUpToFixedFrame(
+          cartesianCenter
+        );
 
-        return Cesium.Matrix4.multiply(trans, transMatrix4, trans);
+        //var res = Cesium.Matrix4.multiply(rotateMatrix4, transform, new Cesium.Matrix4());
+        var res = Cesium.Matrix4.multiply(transMatrix4, res, new Cesium.Matrix4());
+        return res;
+
+        return Cesium.Matrix4.multiply(transMatrix4, trans, trans);
       }
 
       window.addHeading = function (headingOffset) {
         heading += headingOffset;
+        model._heading = heading;
         var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
 
         var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
@@ -281,6 +325,7 @@
 
       window.addPitch = function (pitchOffset) {
         pitch += pitchOffset;
+        model._pitch = pitch;
         var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
 
         var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
@@ -292,6 +337,7 @@
 
       window.addRoll = function (rollOffset) {
         roll += rollOffset;
+        model._roll = roll;
         var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
 
         var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(

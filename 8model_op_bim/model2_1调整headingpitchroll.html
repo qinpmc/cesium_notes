@@ -128,6 +128,7 @@
         roll = Cesium.defaultValue(roll, 0.0);
         var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
 
+        //→ Matrix4 
         var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
           origin,
           hpr
