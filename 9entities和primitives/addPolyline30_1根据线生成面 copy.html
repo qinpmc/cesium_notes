@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>线</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
+      <button onclick="addPolyline1()">增加红色线1</button>
+      <button onclick="addPolyline2()">增加绿色线2</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script type="module">
+      window.CESIUM_BASE_URL = "../Source/";
+      import * as Cesium from "../Source/Cesium.js";
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        geocoder: false,
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          maximumLevel: "19",
+        }),
+        baseLayerPicker: false,
+        fullscreenButton: false,
+        homeButton: false,
+        sceneModePicker: false,
+        animation: false,
+        timeline: false,
+        navigationHelpButton: false,
+        // terrainProvider: Cesium.createWorldTerrain({
+        //   requestWaterMask: true,
+        //   requestVertexNormals: true,
+        // }),
+      });
+      var p1 = new Cesium.Cartesian3(
+        -1851592.0651543695,
+        5581445.735443895,
+        2462040.1089042784
+      );
+      var p2 = new Cesium.Cartesian3(
+        -1851590.5651543695,
+        5581439.765443895,
+        2462047.1089042784
+      );
+      var p3 = new Cesium.Cartesian3(
+        -1851585.7651543695,
+        5581430.665443895,
+        2462053.5089042784
+      );
+
+      viewer.entities.add({
+        position: p1,
+        point: {
+          pixelSize: 10,
+          color: Cesium.Color.RED,
+        },
+      });
+
+      viewer.entities.add({
+        position: p2,
+        point: {
+          pixelSize: 10,
+          color: Cesium.Color.RED,
+        },
+      });
+      viewer.entities.add({
+        position: p3,
+        point: {
+          pixelSize: 10,
+          color: Cesium.Color.RED,
+        },
+      });
+
+      var yellowPolygon = viewer.entities.add({
+        name: "黄色面",
+        polygon: {
+          hierarchy: [p1, p2, p3],
+          material: Cesium.Color.YELLOW,
+          perPositionHeight: true,
+          //classificationType:Cesium.ClassificationType.CESIUM_3D_TILE
+        },
+      });
+
+      var plane_equation = equation_plane(p1, p2, p3);
+      var normal = Cesium.Cartesian3.normalize(
+        new Cesium.Cartesian3(
+          plane_equation.a,
+          plane_equation.b,
+          plane_equation.c
+        ),
+        new Cesium.Cartesian3()
+      );
+
+      var bluePlane = viewer.entities.add({
+        name: "Blue plane",
+        position: p1, //平板中心位置
+        plane: {
+          plane: new Cesium.Plane(normal, 0), //平板法向
+          dimensions: new Cesium.Cartesian2(400.0, 300.0), //平板宽 和 高
+          material: Cesium.Color.BLUE,
+        },
+      });
+
+      function equation_plane(p1, p2, p3) {
+        var a1 = p2.x - p1.x;
+        var b1 = p2.y - p1.y;
+        var c1 = p2.z - p1.z;
+        var a2 = p3.x - p1.x;
+        var b2 = p3.y - p1.y;
+        var c2 = p3.z - p1.z;
+        var a = b1 * c2 - b2 * c1;
+        var b = a2 * c1 - a1 * c2;
+        var c = a1 * b2 - b1 * a2;
+        var d = -a * p1.x - b * p1.y - c * p1.z;
+        return {
+          a: a,
+          b: b,
+          c: c,
+          d: d,
+        };
+      }
+
+      viewer.zoomTo(viewer.entities);
+    </script>
+  </body>
+</html>
