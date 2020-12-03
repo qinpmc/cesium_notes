@@ -72,8 +72,10 @@
           new Cesium.PointPrimitiveCollection()
         );
         var base = viewer.scene.globe.ellipsoid.radii.x;
-        var color = Cesium.Color.LIGHTSKYBLUE;
+        var colorA = Cesium.Color.LIGHTSKYBLUE;
+        var colorB = Cesium.Color.RED;
         var outlineColor = Cesium.Color.BLACK;
+        var color;
 
         for (var j = 0; j < numPoints; ++j) {
           var position = new Cesium.Cartesian3(
@@ -81,7 +83,7 @@
             -((4000000 * j) / numPoints + base),
             2000000 * Math.random() - 1000000
           );
-
+          j % 2 === 0 ? (color = colorA) : (color = colorB);
           pointPrimitives.add({
             pixelSize: 5,
             color: color,
