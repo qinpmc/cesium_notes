@@ -68,7 +68,6 @@
         requestVertexNormals: true,
       });
       scene.terrainProvider = terrainLayer;
-
       // 使用另一套api创建 polyline
 
       // PolylineCollection
@@ -108,32 +107,9 @@
             color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
           }),
         });
-
-        // polylines.add(
-        //   new Cesium.GroundPolylinePrimitive({
-        //     geometryInstances: new Cesium.GeometryInstance({
-        //       geometry: new Cesium.GroundPolylineGeometry({
-        //         positions: Cesium.Cartesian3.fromDegreesArray([
-        //           114,
-        //           31.5,
-        //           70.0,
-        //           31.5,
-        //         ]),
-        //         width: 5.0,
-        //         vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
-        //       }),
-        //       attributes: {
-        //         color: Cesium.ColorGeometryInstanceAttribute.fromColor(
-        //           new Cesium.Color(1.0, 1.0, 0.0, 1.0)
-        //         ),
-        //       },
-        //     }),
-        //     appearance: new Cesium.PolylineColorAppearance(),
-        //   })
-        // );
       }
 
-      //恒向线-
+      //恒向线- 
       //该线条则描述的是恒向线，任意位置的延伸方向都是恒定的。起点和终点的纬度都是30，所以线条是和30度纬度线是重合的。
       function addPolyline2() {
         var rhumbLine = polylines.add({

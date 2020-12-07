@@ -11,7 +11,8 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
     <title>point</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <!-- <script src="../Build/Cesium/Cesium.js"></script> -->
+    <script src="../Build/Cesium_tsgis/Cesium.js"></script>
     <style>
       @import url(../Build/Cesium/Widgets/widgets.css);
       html,
@@ -51,7 +52,7 @@
           tileMatrixSetID: "w",
         }),
       });
-
+      viewer.scene.debugShowFramesPerSecond = true;
       function getRandomPoints(number) {
         number = number || 10000;
         var points = [];

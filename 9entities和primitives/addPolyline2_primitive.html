@@ -31,12 +31,35 @@
   <script>
       Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
-      var widget = new Cesium.CesiumWidget('cesiumContainer');
-      var scene = widget.scene;
-      scene.terrainProvider = Cesium.createWorldTerrain({
-          requestWaterMask: true,
-          requestVertexNormals: true
+      var widget = new Cesium.CesiumWidget("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+        }),
       });
+      var scene = widget.scene;
+      // scene.terrainProvider = Cesium.createWorldTerrain({
+      //   requestWaterMask: true,
+      //   requestVertexNormals: true,
+      // });
+
+      var terrainLayer = new Cesium.CesiumTerrainProvider({
+        url: "http://data.marsgis.cn/terrain",
+        requestWaterMask: true,
+        requestVertexNormals: true,
+      });
+      scene.terrainProvider = terrainLayer;
 
 
       //普通红色线-不贴地
