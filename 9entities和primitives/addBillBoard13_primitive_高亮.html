@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>广告牌</title>
+    <!-- <script src="../Build/Cesium/Cesium.js"></script> -->
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
+      <img src="./facility2.png" alt="" />
+    </div>
+    <div id="cesiumContainer"></div>
+    <script type="module">
+      window.CESIUM_BASE_URL = "../Source/";
+      import * as Cesium from "../Source/Cesium.js";
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var widget = new Cesium.CesiumWidget("cesiumContainer", {
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+        }),
+      });
+      var scene = widget.scene;
+      // scene.terrainProvider = Cesium.createWorldTerrain({
+      //   requestWaterMask: true,
+      //   requestVertexNormals: true,
+      // });
+
+      var ellipsoid = scene.globe.ellipsoid;
+      var billboardCollection = scene.primitives.add(
+        new Cesium.BillboardCollection({
+          scene: scene,
+        })
+      );
+
+      (function addBillboard1() {
+        billboardCollection.add({
+          position: Cesium.Cartesian3.fromDegrees(114, 30),
+          image: "./facility.gif",
+          id: "1",
+        });
+      })();
+
+      var selectedBillBoard;
+
+      function draw() {
+        var canvas = document.createElement("canvas");
+        canvas.width = 32;
+        canvas.height = 32;
+        var context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "#00FFFF";
+        context.beginPath();
+        context.arc(16, 16, 16, Math.PI * 2, 0, true);
+        context.closePath();
+        context.fill();
+        return canvas;
+      }
+
+      function drawImage(id) {
+        // create and draw an image using a canvas
+        var canvas = document.createElement("canvas");
+        var context2D = canvas.getContext("2d");
+        // ... draw image
+      }
+
+      widget.screenSpaceEventHandler.setInputAction(function (movement) {
+        var tempRay = new Cesium.Ray();
+        var tempPos = new Cesium.Cartesian3();
+        var ray = scene.camera.getPickRay(movement.position, tempRay);
+        var cartesian3 = scene.globe.pick(ray, scene, tempPos);
+        var pickedObject = scene.pick(movement.position);
+        if (pickedObject && pickedObject.primitive) {
+          selectedBillBoard = pickedObject.primitive;
+          console.log(pickedObject);
+
+          //使用图片高亮
+          // var color = Cesium.Color.AQUA;
+          // selectedBillBoard.color = color;
+          // selectedBillBoard.image = "./facility2.png";
+
+          //使用canvase高亮
+          var id = selectedBillBoard.id;
+          selectedBillBoard.setImage(id, draw);
+        } else {
+          selectedBillBoard.color = Cesium.Color.WHITE;
+          selectedBillBoard.image = "./facility.gif";
+        }
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+      var billBoard = null;
+    </script>
+  </body>
+</html>
