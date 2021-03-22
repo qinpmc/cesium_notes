@@ -66,6 +66,7 @@ DEM 的数据组织表达形式有多种，常用的有规则举行网格和不�
 ## glTF 规范
 
 https://github.com/KhronosGroup/glTF
+https://github.com/KhronosGroup/glTF-Tutorials/blob/master/gltfTutorial/README.md（中文：https://zhuanlan.zhihu.com/p/65264050） 
 https://github.com/KhronosGroup/glTF-Tutorials/tree/master/gltfTutorial
 
 ### 3d-tiles 规范
