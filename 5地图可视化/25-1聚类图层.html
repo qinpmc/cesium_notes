@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>tianditu</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <button onclick="showVec()">显隐天地图矢量</button>
+      <button onclick="showCta()">显隐天地图标注</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      //4326坐标系从1开始
+      var tileMatrixLabels = [];
+      for (var i = 1; i < 18; i++) {
+        tileMatrixLabels.push("" + i);
+      }
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+      });
+
+      console.log(viewer.imageryLayers.get(0));
+      console.log(viewer.imageryLayers.get(1)); //undefined
+
+      // 隐藏默认的图层，显示蓝色地球
+      viewer.imageryLayers.get(0).show = false;
+
+      var ctaLayer = new Cesium.ImageryLayer(
+        new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+        {
+          show: false,
+        }
+      );
+
+      console.log(viewer.scene.imageryLayers === viewer.imageryLayers); // true
+      var layers = viewer.imageryLayers;
+      layers.add(ctaLayer);
+      console.log(viewer.imageryLayers.get(1)); // cta图层
+
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000),
+      });
+
+      var options = {
+        camera: viewer.scene.camera,
+        canvas: viewer.scene.canvas,
+      };
+
+      var dataSourcePromise = viewer.dataSources.add(
+        Cesium.KmlDataSource.load("./kml/facilities/facilities.kml", options)
+      );
+      dataSourcePromise.then(function (dataSource) {
+        var pixelRange = 15;
+        var minimumClusterSize = 3;
+        var enabled = true;
+
+        dataSource.clustering.enabled = enabled;
+        dataSource.clustering.pixelRange = pixelRange;
+        dataSource.clustering.minimumClusterSize = minimumClusterSize;
+
+        var removeListener;
+
+        var pinBuilder = new Cesium.PinBuilder();
+        var pin50 = pinBuilder
+          .fromText("50+", Cesium.Color.RED, 48)
+          .toDataURL();
+        var pin40 = pinBuilder
+          .fromText("40+", Cesium.Color.ORANGE, 48)
+          .toDataURL();
+        var pin30 = pinBuilder
+          .fromText("30+", Cesium.Color.YELLOW, 48)
+          .toDataURL();
+        var pin20 = pinBuilder
+          .fromText("20+", Cesium.Color.GREEN, 48)
+          .toDataURL();
+        var pin10 = pinBuilder
+          .fromText("10+", Cesium.Color.BLUE, 48)
+          .toDataURL();
+
+        var singleDigitPins = new Array(8);
+        for (var i = 0; i < singleDigitPins.length; ++i) {
+          singleDigitPins[i] = pinBuilder
+            .fromText("" + (i + 2), Cesium.Color.VIOLET, 48)
+            .toDataURL();
+        }
+
+        function customStyle() {
+          if (Cesium.defined(removeListener)) {
+            removeListener();
+            removeListener = undefined;
+          } else {
+            removeListener = dataSource.clustering.clusterEvent.addEventListener(
+              function (clusteredEntities, cluster) {
+                cluster.label.show = false;
+                cluster.billboard.show = true;
+                cluster.billboard.id = cluster.label.id;
+                cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
+
+                if (clusteredEntities.length >= 50) {
+                  cluster.billboard.image = pin50;
+                } else if (clusteredEntities.length >= 40) {
+                  cluster.billboard.image = pin40;
+                } else if (clusteredEntities.length >= 30) {
+                  cluster.billboard.image = pin30;
+                } else if (clusteredEntities.length >= 20) {
+                  cluster.billboard.image = pin20;
+                } else if (clusteredEntities.length >= 10) {
+                  cluster.billboard.image = pin10;
+                } else {
+                  cluster.billboard.image =
+                    singleDigitPins[clusteredEntities.length - 2];
+                }
+              }
+            );
+          }
+
+          // force a re-cluster with the new styling
+          var pixelRange = dataSource.clustering.pixelRange;
+          dataSource.clustering.pixelRange = 0;
+          dataSource.clustering.pixelRange = pixelRange;
+        }
+
+        // start with custom style
+        customStyle();
+      });
+
+      var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+      handler.setInputAction(function (movement) {
+        var pickedLabel = viewer.scene.pick(movement.position);
+        if (Cesium.defined(pickedLabel)) {
+          var ids = pickedLabel.id;
+          if (Array.isArray(ids)) {
+            for (var i = 0; i < ids.length; ++i) {
+              ids[i].billboard.color = Cesium.Color.RED;
+            }
+          }
+        }
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+      window.showVec = function () {
+        viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show;
+      };
+
+      window.showCta = function () {
+        viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show;
+      };
+    </script>
+  </body>
+</html>
