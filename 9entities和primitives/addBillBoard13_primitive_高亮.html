@@ -47,10 +47,10 @@
         }),
       });
       var scene = widget.scene;
-      // scene.terrainProvider = Cesium.createWorldTerrain({
-      //   requestWaterMask: true,
-      //   requestVertexNormals: true,
-      // });
+      scene.terrainProvider = Cesium.createWorldTerrain({
+        requestWaterMask: true,
+        requestVertexNormals: true,
+      });
 
       var ellipsoid = scene.globe.ellipsoid;
       var billboardCollection = scene.primitives.add(
@@ -64,6 +64,7 @@
           position: Cesium.Cartesian3.fromDegrees(114, 30),
           image: "./facility.gif",
           id: "1",
+          heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
         });
       })();
 

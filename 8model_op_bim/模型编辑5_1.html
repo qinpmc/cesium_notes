@@ -10,7 +10,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
-    <title>倾斜摄影测试</title>
+    <title>模型编辑</title>
     <script src="../Build/Cesium/Cesium.js"></script>
     <style>
       @import url(../Build/Cesium/Widgets/widgets.css);
@@ -35,11 +35,6 @@
     <script>
       Cesium.Ion.defaultAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
-
-      var worldTerrain = Cesium.createWorldTerrain({
-        requestWaterMask: true,
-        requestVertexNormals: true,
-      });
 
       var tileMatrixLabels = [];
       for (var i = 1; i < 18; i++) {
@@ -86,39 +81,99 @@
       });
       viewer.imageryLayers.addImageryProvider(imageryProvider2);
 
-      //viewer.terrainProvider = worldTerrain;
-
-      var tileset = new Cesium.Cesium3DTileset({
-        url: "http://172.18.xx.1xx:8081/wops/wops_bim/tileset.json",
-      });
-      viewer.scene.primitives.add(tileset);
-      var globe = viewer.scene.globe;
-      viewer.scene.screenSpaceCameraController.enableCollisionDetection = true;
-      globe.translucency.frontFaceAlphaByDistance = new Cesium.NearFarScalar(
-        400.0,
-        0.0,
-        800.0,
-        1.0
+      var x = 116.55503179697041;
+      var y = 31.93562396462908;
+      var z = 35.05309024180969;
+      var position = Cesium.Cartesian3.fromDegrees(x, y, z);
+      var headingPitchRoll = new Cesium.HeadingPitchRoll(0, 0, 0);
+      var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+        position,
+        headingPitchRoll
       );
-      globe.translucency.frontFaceAlphaByDistance = new Cesium.NearFarScalar(
-        1.5e2,
-        0.5,
-        8.0e6,
-        1.0
-      );
-      globe.translucency.enabled = true;
-      var alpha = 1;
-      globe.translucency.frontFaceAlphaByDistance.nearValue = alpha;
-      globe.translucency.frontFaceAlphaByDistance.farValue = alpha;
 
-      tileset.readyPromise.then(function () {
-        var boundingSphere = tileset.boundingSphere;
-        viewer.camera.viewBoundingSphere(
-          boundingSphere,
-          new Cesium.HeadingPitchRange(0.0, -0.5, boundingSphere.radius + 500.0)
-        );
-        viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+      var source = null;
+
+      var model = {
+        scale: 4,
+        silhouetteopacity: 0,
+        color: Cesium.Color.fromBytes(255, 255, 255, 255),
+        shadows: true,
+        orientation: orientation,
+        postion: position,
+        source: source,
+      };
+
+      var g = {
+        zIndex: new Cesium.CallbackProperty(function () {
+          return model.zIndex;
+        }),
+        show: new Cesium.CallbackProperty(function () {
+          return model.visible;
+        }),
+        gltf: new Cesium.CallbackProperty(function () {
+          return model.source;
+        }),
+        uri: new Cesium.CallbackProperty(function () {
+          return model.uri;
+        }),
+        minimumPixelSize: new Cesium.CallbackProperty(function () {
+          return model.minimumPixelSize;
+        }),
+        maximumScale: new Cesium.CallbackProperty(function () {
+          return model.maximumScale;
+        }),
+        color: new Cesium.CallbackProperty(function () {
+          defaultColor = Cesium.Color.clone(model.color, defaultColor);
+          return that.updateOpacity(defaultColor, entity.opacity);
+        }),
+        heightReference: new Cesium.CallbackProperty(function () {
+          return model.heightReference;
+        }),
+        colorBlendMode: new Cesium.CallbackProperty(function () {
+          return model.colorBlendMode;
+        }),
+        colorBlendAmount: new Cesium.CallbackProperty(function () {
+          return model.colorBlendAmount;
+        }),
+
+        silhouetteColor: new Cesium.CallbackProperty(function () {
+          return Cesium.Color.fromAlpha(
+            Cesium.Color.RED,
+            model.silhouetteopacity
+          );
+        }),
+        scale: new Cesium.CallbackProperty(function () {
+          return model.scale;
+        }),
+        silhouetteSize: new Cesium.CallbackProperty(function () {
+          return model.silhouetteSize;
+        }),
+      };
+
+      var entity = new Cesium.Entity({
+        id: "model",
+        position: new Cesium.CallbackProperty(function () {
+          return model.position;
+        }),
+        orientation: new Cesium.CallbackProperty(function () {
+          return model.orientation;
+        }),
+        model: g,
       });
+
+      var dataSource = new Cesium.CustomDataSource("x");
+      dataSource.entities.add(entity);
+      viewer.dataSources.add(dataSource);
+
+      viewer.scene.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(x, y, z),
+        orientation: {
+          heading: -Cesium.Math.PI_OVER_TWO, //pi/2
+          pitch: -Cesium.Math.PI_OVER_FOUR, //pi/4
+          roll: 0.0,
+        },
+      });
+      
     </script>
   </body>
 </html>
