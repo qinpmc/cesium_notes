@@ -1,0 +1,9 @@
+## 材质  Materials
+
+
+## 概述 Introduction
+
+
+glTF格式的目的是作为3D资源的中转格式。它不仅包含了场景结构和场景中对象的几何数据信息，还包含了场景中对象的外观信息。
+
+有多种不同的可以表示材质的方式，简单的有Phong(https://en.wikipedia.org/wiki/Phong_reflection_model) 或Blinn-Phong模型(https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_shading_model)这种被常见图形API，如OpenGL、WebGL所支持的材质表示方式。这些材质表示方式通过一组基本的材质属性来定义3D对象的外观表现。比如，材质属性包含了3D对象的散射光反射信息，镜面反射信息和光强信息。许多3D资源文件包含有基本的材质信息，比如，Wavefront OBJ文件结合MTL文件包含了3D对象的纹理和颜色信息，渲染程序可以直接读取这些信息用于渲染3D对象。为了描述更加真实的3D对象，还需要更加复杂的材质表示方式。
