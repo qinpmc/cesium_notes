@@ -3,6 +3,8 @@
 - https://github.com/CesiumGS/3d-tiles
 - https://github.com/CesiumGS/3d-tiles/tree/master/specification
 - https://github.com/CesiumGS/3d-tiles-samples
+- https://blog.csdn.net/qq_31709249/article/details/102643371
+- https://www.cnblogs.com/onsummer/p/12799366.html
 - Khronos Group（科纳斯组织）
 
 ## 3D Tiles
@@ -188,7 +190,6 @@ https://www.cnblogs.com/lyggqm/p/5386174.html
 
 下面的示例在 b3dm 瓦片中有一个建筑物，在 pnts 瓦片中有一个建筑内部的点云。点云瓦片的包围体(boundingVolume)是半径为 1.25 的球体。该点云瓦片还有一个半径为 15 的观察者请求体（viewerRequestVolume）球体。由于 geometricError 为零，因此当视野位于观察者请求体(viewerRequestVolume)球体内时，将始终呈现（并最初请求）点云平瓦片的内容。
 ![viewerRequestVolume](figures/viewerRequestVolume.gif)
- 
 
 ```json
 {
@@ -258,23 +259,23 @@ https://www.cnblogs.com/lyggqm/p/5386174.html
 
 ##### 瓦片变换 Tile transforms
 
-为了支持局部坐标系——例如，城市建筑群中的某一个建筑物自己的局部坐标系，一个在建筑物中的点云集定义自己的坐标系- 给每个Tile都提供了一个可选的transform属性。
+为了支持局部坐标系——例如，城市建筑群中的某一个建筑物自己的局部坐标系，一个在建筑物中的点云集定义自己的坐标系- 给每个 Tile 都提供了一个可选的 transform 属性。
 
-transform属性是一个以列主序存储的4×4矩阵，通过此属性，Tile的坐标就可以是自己的局部坐标系内的坐标，最后通过自己的transform矩阵变换到父节点的坐标系中。transform会对以下属性的数据进行变换：
+transform 属性是一个以列主序存储的 4×4 矩阵，通过此属性，Tile 的坐标就可以是自己的局部坐标系内的坐标，最后通过自己的 transform 矩阵变换到父节点的坐标系中。transform 会对以下属性的数据进行变换：
 
-- tile.content：（这个字段实际是Tile数据的具体存放位置字段，下面有介绍）tranform矩阵会应用到content中的
-   - 每个feature的位置坐标
-   - 每个feature的法向量（实际上只有在进行缩放旋转变换时，法向量才需要变换，故只需要应用4×4逆转置矩阵左上角的3×3矩阵对法向量进行变化即可，具体过程可以看看图形学的介绍） 
-   - content.boundingVolume, 除非定义了content.boundingVolume.region，因为它是明确在EPSG:4979 坐标系中的
- 
-- tile.boudingVolume：包围体，除非定义了tile.boundingVolume.region，因为它是明确在EPSG:4979 坐标系中的
+- tile.content：（这个字段实际是 Tile 数据的具体存放位置字段，下面有介绍）tranform 矩阵会应用到 content 中的
 
-- tile.viewerRequestVolume：，除非定义了tile.viewerRequestVolume.region，因为它是明确在EPSG:4979 坐标系中的
- 
+  - 每个 feature 的位置坐标
+  - 每个 feature 的法向量（实际上只有在进行缩放旋转变换时，法向量才需要变换，故只需要应用 4×4 逆转置矩阵左上角的 3×3 矩阵对法向量进行变化即可，具体过程可以看看图形学的介绍）
+  - content.boundingVolume, 除非定义了 content.boundingVolume.region，因为它是显示地在 EPSG:4979 坐标系中定义的
 
-几何误差（geometricError）不需要进行应用transform变换，因为变化矩阵不会影响几何误差——几何误差都是以米为单位定义的。
+- tile.boudingVolume：包围体，除非定义了 tile.boundingVolume.region，因为它是显示地在 EPSG:4979 坐标系中定义的
 
-当transform未定义时，其默认是一个如下所示的单位阵。
+- tile.viewerRequestVolume：，除非定义了 tile.viewerRequestVolume.region，因为它是显示地在 EPSG:4979 坐标系中定义的
+
+几何误差（geometricError）不需要进行应用 transform 变换，因为变化矩阵不会影响几何误差——几何误差都是以米为单位定义的。
+
+当 transform 未定义时，其默认是一个如下所示的单位阵。
 
 ```
 [
@@ -284,27 +285,177 @@ transform属性是一个以列主序存储的4×4矩阵，通过此属性，Tile
 0.0, 0.0, 0.0, 1.0
 ]
 ```
-对tile的变化是从上自下的多个变换的一个级联变换的过程，这个很容易理解，因为LOD是一个树的结构，所以叶子节点的变换就是从根节点到下的一个矩阵级联变换的过程。
 
+对 tile 的变化是从上自下的多个变换的一个级联变换的过程，这个很容易理解，因为 LOD 是一个树的结构，所以叶子节点的变换就是从根节点到下的一个矩阵级联变换的过程。
 
+##### glTF transforms
 
+b3dm 和 i3dm 都是通过内嵌 glTF 模型来实现的，而 glTF 模型本身就有矩阵变换 ，glTF 定义了自己的节点层级和自己的 y 轴向上的坐标系，故 Tile 的 transform 是应用在 glTF 的变化之后的。
 
+- glTF node hierarchy
+  首先，gltf 节点层级转换根据 gltf 规范进行（https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#transformations）。
 
+- y 轴向上到 z 轴向上
+  为了与 3D tiles 的 z 轴向上坐标系一致，必须将 gltf 从 y 轴向上转换为 z 轴向上，这是通过将模型绕 x 轴旋转 π/2 实现的。相当于应用如下转换矩阵（矩阵是列主序的）：
 
+```
+[
+1.0, 0.0,  0.0, 0.0,
+0.0, 0.0, -1.0, 0.0,
+0.0, 1.0,  0.0, 0.0,
+0.0, 0.0,  0.0, 1.0
+]
 
+```
 
+更加通用的转换顺序为：
 
+- 1. gltf 节点层级转换
+- 2. gltf y 轴向上到 z 轴向上转换
+- 3. 任意瓦片格式具体的转换：
 
+  - b3dm 的要素表（Feature Table）可能定义 RTC_CENTER 用于转换模型顶点
+  - i3dm 的要素表定义每个实例的位置、法线和缩放，它们用于创建应用于每个实例的 4\*4 仿射变换矩阵
 
+- 4. 瓦片转换：
+     当作用于 z 轴向上的源数据时，如 WGS84 或局部 Z 轴向上的坐标系，通用的工作流程为：
+  - 网格数据，包括位置和法线不修改，它们仍然是 z 轴向上
+  - 根节点矩阵指定了一个列主序从 z 轴向上到 y 轴向上的转换，这将源数据转换为 glTF 所需的 y-up 坐标系
+  - 在运行时，glTF 使用上面的矩阵从 y-up 转换回 z-up。实际上，这些变换相互抵消。
 
+##### 示例 Example
 
+以下图的节点层级为例：
 
+![](figures/tileTransform.png)
 
+各个节点的变换应该为:
 
+```
+TO: [T0]
+T1: [T0][T1]
+T2: [T0][T2]
+T3: [T0][T1][T3]
+T4: [T0][T1][T4]
 
+```
 
+在瓦片的转换之前，瓦片内容中的位置、法线也可能有 特定的转换，比如：
 
+- b3dm 和 i3dm 瓦片中嵌入 gltf，gltf 定义了自己的节点层级和坐标系统，tile.transform 在解析这些变换后使用，参见 gltf 变换（https://github.com/CesiumGS/3d-tiles/tree/master/specification#gltf-transforms）
+- i3dm 的要素表定义每个实例的位置、法线和缩放，它们用于创建应用于每个实例的 4\*4 仿射变换矩阵
+- 压缩属性如 i3dm 和点云 要素表（Feature Table）中的 POSITION_QUANTIZED 和点云中的 NORMAL_OCT16P 在任何其他变换前应该解压缩
 
+因此，上例完整的 变换矩阵是：
 
+```
+TO: [T0]
+T1: [T0][T1]
+T2: [T0][T2][pnts-specific transform, including RTC_CENTER (if defined)]
+T3: [T0][T1][T3][b3dm-specific transform, including RTC_CENTER (if defined), coordinate system transform, and glTF node hierarchy]
+T4: [T0][T1][T4][i3dm-specific transform, including per-instance transform, coordinate system transform, and glTF node hierarchy]
+```
 
+下面的 js 代码是使用 Cesium 的 Matrix4 和 Matrix3 计算变换矩阵：
 
+```
+
+function computeTransforms(tileset) {
+    var t = tileset.root;
+    var transformToRoot = defined(t.transform) ? Matrix4.fromArray(t.transform) : Matrix4.IDENTITY;
+
+    computeTransform(t, transformToRoot);
+}
+
+function computeTransform(tile, transformToRoot) {
+    // Apply 4x4 transformToRoot to this tile's positions and bounding volumes
+
+    var inverseTransform = Matrix4.inverse(transformToRoot, new Matrix4());
+    var normalTransform = Matrix4.getRotation(inverseTransform, new Matrix3());
+    normalTransform = Matrix3.transpose(normalTransform, normalTransform);
+    // Apply 3x3 normalTransform to this tile's normals
+
+    var children = tile.children;
+    var length = children.length;
+    for (var i = 0; i < length; ++i) {
+        var child = children[i];
+        var childToRoot = defined(child.transform) ? Matrix4.fromArray(child.transform) : Matrix4.clone(Matrix4.IDENTITY);
+        childToRoot = Matrix4.multiplyTransformation(transformToRoot, childToRoot, childToRoot);
+        computeTransform(child, childToRoot);
+    }
+}
+```
+
+### 瓦片 JSON Tile JSON
+
+瓦片的属性如下：
+
+![](figures/tile.png)
+
+下面是一个没有 叶子瓦片的例子：
+
+```json
+{
+  "boundingVolume": {
+    "region": [
+      -1.2419052957251926,
+      0.7395016240301894,
+      -1.2415404171917719,
+      0.7396563300150859,
+      0,
+      20.4
+    ]
+  },
+  "geometricError": 43.88464075650763,
+  "refine" : "ADD",
+  "content": {
+    "boundingVolume": {
+      "region": [
+        -1.2418882438584018,
+        0.7395016240301894,
+        -1.2415422846940714,
+        0.7396461198389616,
+        0,
+        19.4
+      ]
+    },
+    "uri": "2/0/0.b3dm"
+  },
+  "children": [...]
+}
+```
+
+- boundingVolume ： 定义了包围瓦片 tile 的体对象，用于确定在运行时渲染哪些 tile。上面的示例使用了 region 体，也可以使用 box 体和 sphere 体；
+
+- geometricError ： 非负数，用于定义 瓦片渲染以及其子瓦片不渲染时的误差，以米 为单位。运行时 geometricError 用于计算 屏幕空间误差（Screen-Space Error (SSE) ），屏幕误差以像素为单位。SSE 决定当前视图下瓦片是否足够详细，或者是否要考虑渲染其子瓦片
+
+- viewerRequestVolume：可选，使用与 boundingVolume 相同的结构，视野只有在 viewerRequestVolume 内部，瓦片内容才会请求；
+- refine：取值为"REPLACE" 或者 "ADD"，该属性对瓦片集（tileset）的 根瓦片（root tile）是必须的，对于其他的瓦片是可选的。一个瓦片集可使用任意的 "REPLACE" 或者 "ADD" 组合的细化策略。如果忽略该属性，瓦片的细化策略继承其父瓦片的策略；
+- content： 该属性是一个包含了瓦片渲染内容元数据的对象。content 的 uri 是指向 tile 的二进制内容的 uri（请参阅 tile 格式规范），或者是另一个 tileset JSON （请参阅外部 tileset）。
+  content 的 uri 中的文件扩展名不是必须的，因为 content 中的瓦片格式可以被头部的魔术字段 识别，或者是一个外部的瓦片集
+  下面的截图中 红色包围体 显示了 Canary Wharf 根瓦片（root tile）的 包围体 boundingVolume ，包围了整个瓦片集。content.boundingVolume 以蓝色显示，包围了根瓦片中的 4 个要素（模型）
+
+![](figures/contentsBox.png)
+
+- transform：可选属性，是一个 4\*4 仿射变换矩阵，用于变换瓦片的 content、boundingVolume, 和 viewerRequestVolume
+- children：定义子瓦片的数组，每个子瓦片的内容完全包含在父瓦片的包围体 boundingVolume 中，通常其几何误差 geometricError 小于父瓦片的几何误差。对于叶子瓦片，子瓦片的数组长度为 0，并且 children 可以不定义
+
+详细的属性参考可参见 https://github.com/CesiumGS/3d-tiles/tree/master/specification#property-reference
+
+### 瓦片集 TileSet
+
+tileSet 有四个属性：asset、properties、geometricError、root。下面来逐个介绍每个属性：
+
+- 1.asset
+  asset 包含整个 tileSet 的元数据，asset.Version 属性，定义了 3DTiles 的版本，此版本号指定 tileSet 的 JSON 模式和基本的 tileSet 格式。tileVersion 属性可选，用于定义特定的应用程序的 tileset。
+
+- 2.properties
+  包含 tileSet 中的每个要素属性的对象。上面的例子是一个建筑物的 3DTiles，因此每个瓦片都含有三维建筑物模型，每个三维建筑物模型都有 Height 属性，所以上面的例子中就定义了 Height 属性。 每个属性的作用通常如属性名称相对应（如例子中的 Height 对应高度），并且包含该属性的最大值和最小值。这对于创建随值变换的色带的模型很有用（根据某个属性设置模型颜色渐变）。
+
+- 3.geometricError
+  geometricError 是一个非负数，是通过这个几何误差的值来计算屏幕误差 SSE，确定 tileSet 是否渲染。如果在渲染的过程中，当前屏幕误差大于这里定义的屏幕误差，这个 tileSet 就不渲染。
+
+- 4.root
+  root 是一个定义了根瓦片的对象，root 的几何误差和瓦片集顶层的几何误差不同，tileSet 的 geometricError 是根据屏幕误差来控制 tileSet 中的 root 是否渲染。而 tile 中的 geometricError 则是用来控制 tile 中的 children 是否渲染。
+
+ 
