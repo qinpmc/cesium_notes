@@ -118,12 +118,12 @@ var cartesian2 = scene.globe.pick(ray, scene, tempPos);
 
 #### 结论
 
-- camera.pickEllipsoid：获取鼠标点的对应椭球面位置，地形和模型等高度均获取不到
+- camera.pickEllipsoid(windowPosition, ellipsoid, result) → Cartesian3：获取鼠标点的对应椭球面位置，地形和模型等高度均获取不到
 - camera.getPickRay + globe.pick，可获取地形，模型等高度获取不到
 - scene.pickPosition，可获取地形，模型等高度
 
 - globe.pick 的结果相对稳定准确，不论地形深度检测开启与否，不论加载的是默认地形还是别的地形数据；
-- scene.pickPosition 只有在开启地形深度检测，且不使用默认地形时是准确的。
+- scene.pickPosition(windowPosition, result)→ Cartesian3  只有在开启地形深度检测，且不使用默认地形时是准确的。
 - globe.getHeight,镜头高度太高获取的高度会为错误的负数，镜头高度要足够低
 
 ```
