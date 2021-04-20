@@ -31,15 +31,32 @@
 
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        geocoder: true,
-        baseLayerPicker: true,
-        fullscreenButton: false,
-        homeButton: false,
-        sceneModePicker: true,
-        animation: true,
-        timeline: true,
-        navigationHelpButton: true
+        //4326坐标系从1开始
+    var tileMatrixLabels =[];
+    for(var i=1;i<18;i++){
+        tileMatrixLabels.push(""+i);
+    }
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false,  //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true,  //是否显示点击要素之后显示的信息
+        imageryProvider : new Cesium.WebMapTileServiceImageryProvider({
+            url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=f45027f1731b61b21dcc714b01694ac1",
+            layer: "vec",
+            style: "default",
+            format: "tiles",
+            tileMatrixSetID: "c",
+            maximumLevel:"14",
+            tileMatrixLabels:tileMatrixLabels,
+            tilingScheme:new Cesium.GeographicTilingScheme({
+                numberOfLevelZeroTilesX:2,
+                numberOfLevelZeroTilesY:1
+            })
+        })
     });
     var camera = viewer.camera;
 
@@ -72,6 +89,16 @@
     console.log("viewMatrix....." + camera.viewMatrix);
 
     console.log(camera.viewMatrix * camera.transform);
+
+
+    camera.moveEnd.addEventListener(function () {
+        console.log("moveEnd",arguments);
+        console.log("heading....."+ camera.heading); //4.71238898038469 = 3.14 + 3.14/2
+        console.log("pitch....."+ camera.pitch);  //-0.7853981633974492  = -3.14/4
+        console.log("roll....."+ camera.roll); //6.283185307179586
+        console.log("position....." + camera.position);
+    })
+
 
 
 </script>
