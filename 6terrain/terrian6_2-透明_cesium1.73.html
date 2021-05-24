@@ -57,26 +57,28 @@
       Cesium.Ion.defaultAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-      var terrainProvider = new Cesium.CesiumTerrainProvider({
-        url: "http://data.marsgis.cn/terrain/",
-      });
+      // var terrainProvider = new Cesium.CesiumTerrainProvider({
+      //   url: "http://data.marsgis.cn/terrain/",
+      // });
 
       var terrainProvider = Cesium.createWorldTerrain({
         requestVertexNormals: true,
         requestWaterMask: true,
       });
 
+      
+
       var viewer = new Cesium.Viewer("cesiumContainer", {
         //baseLayerPicker: false, //影响地下的显示，地形度透明度为1，反而地形物体显示
         terrainProvider: terrainProvider,
-        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-          layer: "img",
-          style: "default",
-          format: "tiles",
-          tileMatrixSetID: "w",
-        }),
+        // imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        //   url:
+        //     "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        //   layer: "img",
+        //   style: "default",
+        //   format: "tiles",
+        //   tileMatrixSetID: "w",
+        // }),
       });
       var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
         url:
@@ -143,7 +145,7 @@
           latitude,
           height
         );
-        var url = "../data/model/ParcLeadMine.glb";
+        var url = "./ParcLeadMine.glb";
 
         var entity = viewer.entities.add({
           name: url,
@@ -172,7 +174,6 @@
         globe.translucency.frontFaceAlphaByDistance.farValue = false
           ? 1.0
           : alpha;
-
         console.log(alpha);
       };
     </script>

@@ -55,8 +55,7 @@
           style: "default",
           format: "tiles",
           tileMatrixSetID: "c",
-          maximumLevel: 7,
-          minimumLevel: 3,
+          maximumLevel: "14",
           tileMatrixLabels: tileMatrixLabels,
           tilingScheme: new Cesium.GeographicTilingScheme({
             numberOfLevelZeroTilesX: 2,
@@ -68,9 +67,6 @@
       console.log(viewer.imageryLayers.get(0));
       console.log(viewer.imageryLayers.get(1)); //undefined
 
-      // 隐藏默认的图层，显示蓝色地球
-      //viewer.imageryLayers.get(0).show = false;
-
       //创建 provider
       var ctaLayerProvider = new Cesium.WebMapTileServiceImageryProvider({
         url: "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
@@ -78,9 +74,28 @@
         style: "default",
         format: "tiles",
         tileMatrixSetID: "c",
-        maximumLevel: 7,
-        minimumLevel: 3,
+        maximumLevel: "14",
         tileMatrixLabels: tileMatrixLabels,
+        tilingScheme: new Cesium.GeographicTilingScheme({
+          numberOfLevelZeroTilesX: 2,
+          numberOfLevelZeroTilesY: 1,
+        }),
+      });
+
+      var tileMatrixLabels2 = [];
+      for (var i = 0; i < 9; i++) {
+        tileMatrixLabels2.push("bj08:" + i);
+      }
+
+      var provider = new Cesium.WebMapTileServiceImageryProvider({
+        url: "http://172.18.24.144:8081/wmts",
+        layer: "wmts_road_hubei_0518",
+        style: "default",
+        format: "image/png",
+        tileMatrixSetID: "bj08",
+        maximumLevel: 4,
+        minimumLevel: 0,
+        tileMatrixLabels: tileMatrixLabels2,
         tilingScheme: new Cesium.GeographicTilingScheme({
           numberOfLevelZeroTilesX: 2,
           numberOfLevelZeroTilesY: 1,
@@ -91,7 +106,7 @@
       var layers = viewer.imageryLayers;
 
       //使用 provider 添加
-      layers.addImageryProvider(ctaLayerProvider);
+      layers.addImageryProvider(provider);
       console.log(viewer.imageryLayers.get(1)); // cta图层
 
       viewer.camera.flyTo({
