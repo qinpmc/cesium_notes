@@ -77,7 +77,7 @@ Cartesian2经常用来描述屏幕坐标系，比如鼠标在电脑屏幕上的�
 
 2. Cesium.Ellipsoid.WGS84.cartographicToCartesian(cartographic, result) → Cartesian3
 
-3. Cesium.Ellipsoid.WGS84.cartographicArrayToCartesianArray(cartographics, result) → Array.<Cartesian3>
+3. Cesium.Ellipsoid.WGS84.cartographicArrayToCartesianArray(Array.<Cartographic>, results) → Array.<Cartesian3>
 
 
 
@@ -88,7 +88,7 @@ Cartesian2经常用来描述屏幕坐标系，比如鼠标在电脑屏幕上的�
 
 2. Cesium.Ellipsoid.WGS84.cartesianToCartographic(cartesian, result) → Cartographic
 
-3. Cesium.Ellipsoid.WGS84.cartesianArrayToCartographicArray(cartesians, result) → Array.<Cartographic>  批量转换
+3. Cesium.Ellipsoid.WGS84.cartesianArrayToCartographicArray(Array.<Cartesian3>, result) → Array.<Cartographic>  批量转换
 
  
 
@@ -134,7 +134,7 @@ Cartesian2经常用来描述屏幕坐标系，比如鼠标在电脑屏幕上的�
   
 #### 5.2  笛卡尔空间直角坐标系 -> 平面坐标系
  
-1. Cesium.SceneTransforms.wgs84ToWindowCoordinates(scene, position, result) → Cartesian2
+1. Cesium.SceneTransforms.wgs84ToWindowCoordinates(scene, position<Cartesian3>, result<Cartesian2>) → Cartesian2
 
 ```
 参数：   
