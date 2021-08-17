@@ -88,7 +88,7 @@
 
 - drillPick：scene.drillPick(click.position)是从当前鼠标点击位置获取 entity 的集合，然后通过 for 循环可以获取当前坐标下的所有 entity；
 
-- pickPosition：通过 viewer.scene.pickPosition(movement.position)获取，可以获取场中任意点击处的对应的**世界坐标**。（高程不精确）
+- pickPosition：通过 viewer.scene.pickPosition(movement.position)获取，可以获取场中任意点击处的对应的**世界坐标**。（高程不精确），返回  Cartesian3
 
 pick 与 drillPick 的区别：pick 只可获取一个 entity 对象（如该位置存在多个 entity，哪怕面点线不在同一高度，面 entity 都可能会盖住点线 entity），但 drillPick 可获取当前坐标下的多个对象；
 
@@ -136,25 +136,27 @@ var height = viewer.scene.globe.getHeight(cartographic);
 - origin： Cartesian3 ，默认 Cartesian3.ZERO The origin of the ray.
 - direction ： Cartesian3 ，默认 Cartesian3.ZERO The direction of the ray.
 
-/\*\*
+```
 
+/**
 - 根据两点生成一个射线
 - @param startPosition 射线起点
 - @param endPosition 射线朝向方向上一点
 - @returns Ray 返回一条射线
-  \*/
+**/
   globe.prototype.toRay = function (startPosition, endPosition) {
-  var start = Cesium.Cartesian3.fromDegrees(startPosition.x, startPosition.y, startPosition.z);
-  var end = Cesium.Cartesian3.fromDegrees(endPosition.x, endPosition.y, endPosition.z);
-  var direction = Cesium.Cartesian3.normalize(Cesium.Cartesian3.subtract(end, start, cartesian), cartesian);
-  var vector = new Vector3({
-  x: direction.x,
-  y: direction.y,
-  z: direction.z
-  })
-  var ray = new Ray({
-  origin: startPosition,
-  direction: vector
-  });
-  return ray;
+    var start = Cesium.Cartesian3.fromDegrees(startPosition.x, startPosition.y, startPosition.z);
+    var end = Cesium.Cartesian3.fromDegrees(endPosition.x, endPosition.y, endPosition.z);
+    var direction = Cesium.Cartesian3.normalize(Cesium.Cartesian3.subtract(end, start, cartesian), cartesian);
+    var vector = new Vector3({
+        x: direction.x,
+        y: direction.y,
+        z: direction.z
+    })
+    var ray = new Ray({
+        origin: startPosition,
+        direction: vector
+    });
+    return ray;
   }
+```
