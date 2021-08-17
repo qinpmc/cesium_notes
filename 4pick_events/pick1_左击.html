@@ -28,6 +28,7 @@
     var viewer = new Cesium.Viewer('cesiumContainer');
 
 
+// 第一种方式：
 
 /*    var scene = viewer.scene;
     var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
@@ -47,6 +48,7 @@
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);*/
 
 
+// 第二种方式：
     viewer.screenSpaceEventHandler.setInputAction(function (movement) {
 
         //Cartesian3 --笛卡尔坐标

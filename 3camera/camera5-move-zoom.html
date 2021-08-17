@@ -63,6 +63,26 @@
     });
 
 
+    // 局部坐标系 -----调试看效果
+    // 东北  红色--x  绿色 --y  蓝色 ---z
+    var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+    var hprRollZero = new Cesium.HeadingPitchRoll();
+    var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+        Cesium.Cartesian3.fromDegrees(-75.5847, 40.0397, 100000.0),
+        hprRollZero,
+        Cesium.Ellipsoid.WGS84,
+        enUpConverter
+    );
+
+    viewer.scene.primitives.add(
+        new Cesium.DebugModelMatrixPrimitive({
+        modelMatrix: modelMatrix,
+        length: 300000.0,
+        width: 3.0,
+        })
+    );
+
+
 
     var cameraHeight = viewer.scene.globe.ellipsoid.cartesianToCartographic(camera.position).height;
     var amount = cameraHeight;

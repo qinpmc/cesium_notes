@@ -31,8 +31,8 @@ var camera = widget.scene.camera; //  var widget = new Cesium.CesiumWidget('cesi
 
 ![相机角度](./headingpitchroll.png)
 
-- Heading 是围绕 Z 轴旋转，下图中 yaw ---方向角/航向角
-- Pitch 是围绕 Y 轴旋转，---俯仰角
+- Heading 是围绕 Z 轴旋转，下图中 yaw ---方向角/航向角 ( 左右 )
+- Pitch 是围绕 Y 轴旋转，---俯仰角( 上下 )
 - Roll 是围绕 X 轴旋转 --- 翻滚角
 
 ## 相机的属性

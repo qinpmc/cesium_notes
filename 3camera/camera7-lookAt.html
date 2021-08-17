@@ -1,82 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <!-- Use correct character set. -->
-  <meta charset="utf-8">
-  <!-- Tell IE to use the latest, best version. -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <title>camera</title>
-  <script src="../Build/Cesium/Cesium.js"></script>
-  <style>
-    @import url(../Build/Cesium/Widgets/widgets.css);
-    html, body, #cesiumContainer {
-      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
-    }
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>camera</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
 
-
-  </style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
 </head>
+
 <body>
 
-<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
-  <button onclick="lookAt()">lookAt </button>
-  <button onclick="lookAtWithOffset()">lookAtWithOffset</button>
-  <button onclick="lookAtTransform()">lookAtTransform</button>
-</div>
-<div id="cesiumContainer"></div>
+    <div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+        <button onclick="lookAt()">lookAt </button>
+        <button onclick="lookAtWithOffset()">lookAtWithOffset</button>
+        <button onclick="lookAtTransform()">lookAtTransform</button>
+        <button onclick="cancelLookAt()">取消lookAt限制 </button>
+    </div>
+    <div id="cesiumContainer"></div>
 
-<script>
+    <script>
 
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
-    var viewer = new Cesium.Viewer('cesiumContainer',{
-        geocoder:true,
-        baseLayerPicker:true,
-        fullscreenButton:false,
-        homeButton:false,
-        sceneModePicker:true,
-        animation:true,
-        timeline:true,
-        navigationHelpButton:true
-    });
-    var camera = viewer.camera;
-
-
-    function lookAt(){
-        var center = Cesium.Cartesian3.fromDegrees(114, 30,10000);
-        viewer.camera.lookAt(center);
-    }
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            geocoder: true,
+            baseLayerPicker: true,
+            fullscreenButton: false,
+            homeButton: false,
+            sceneModePicker: true,
+            animation: true,
+            timeline: true,
+            navigationHelpButton: true
+        });
+        var camera = viewer.camera;
 
 
-    function lookAtWithOffset() {
-        var center = Cesium.Cartesian3.fromDegrees(114, 30,10000);
-        var heading = Cesium.Math.toRadians(0.0);
-        var pitch = Cesium.Math.toRadians(-80.0);
-        var range = 50000.0;
-        viewer.camera.lookAt(center, new Cesium.HeadingPitchRange(heading, pitch, range));
-    }
-
-    function lookAtTransform() {
-        var center = Cesium.Cartesian3.fromDegrees(114, 30);
-
-        //Cesium.Transforms.eastNorthUpToFixedFrame(origin, ellipsoid, result) → Matrix4
-        var transform = Cesium.Transforms.eastNorthUpToFixedFrame(center);
-
-        // View in east-north-up frame
-        camera.constrainedAxis = Cesium.Cartesian3.UNIT_Z;
-        camera.lookAtTransform(transform, new Cesium.Cartesian3(-120000.0, -120000.0, 120000.0));
-
-        // Show reference frame.  Not required.
-        var referenceFramePrimitive = viewer.scene.primitives.add(new Cesium.DebugModelMatrixPrimitive({
-            modelMatrix : transform,
-            length : 100000.0
-        }));
-    }
+        function lookAt() {
+            var center = Cesium.Cartesian3.fromDegrees(114, 30, 10000);
+            viewer.camera.lookAt(center);
+        }
 
 
+        function lookAtWithOffset() {
+            var center = Cesium.Cartesian3.fromDegrees(114, 30, 10000);
+            var heading = Cesium.Math.toRadians(0.0);
+            var pitch = Cesium.Math.toRadians(-80.0);
+            var range = 50000.0;
+            viewer.camera.lookAt(center, new Cesium.HeadingPitchRange(heading, pitch, range));
 
-</script>
+
+            var point = viewer.entities.add({
+                position: center,
+                point: {
+                    pixelSize: 10,
+                    color: Cesium.Color.BLUE
+                }
+            });
+
+            addDebugFrame(center,viewer);
+
+        }
+
+        function lookAtTransform() {
+            var center = Cesium.Cartesian3.fromDegrees(114, 30);
+
+            //Cesium.Transforms.eastNorthUpToFixedFrame(origin, ellipsoid, result) → Matrix4
+            var transform = Cesium.Transforms.eastNorthUpToFixedFrame(center);
+
+            // View in east-north-up frame
+            // camera.constrainedAxis = Cesium.Cartesian3.UNIT_Z;
+            camera.lookAtTransform(transform, new Cesium.Cartesian3(-120000.0, -120000.0, 120000.0));
+
+            // Show reference frame.  Not required.
+            var referenceFramePrimitive = viewer.scene.primitives.add(new Cesium.DebugModelMatrixPrimitive({
+                modelMatrix: transform,
+                length: 100000.0
+            }));
+        }
+
+
+        function addDebugFrame(center /* Cartesian3 */,viewer){
+            // 局部坐标系 -----调试看效果
+            // 东北  红色--x  绿色 --y  蓝色 ---z
+            var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+            var hprRollZero = new Cesium.HeadingPitchRoll();
+            var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+                center,
+                hprRollZero,
+                Cesium.Ellipsoid.WGS84,
+                enUpConverter
+            );
+
+            viewer.scene.primitives.add(
+                new Cesium.DebugModelMatrixPrimitive({
+                modelMatrix: modelMatrix,
+                length: 300000.0,
+                width: 3.0,
+                })
+            );
+        }
+
+        function cancelLookAt(){
+            camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+        }
+
+
+    </script>
 </body>
+
 </html>

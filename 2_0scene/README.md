@@ -124,10 +124,10 @@ var intersection = globe.pick(ray, scene);
 
 May be used to clamp objects to the globe, 3D Tiles, or primitives in the scene.
 
-- scene.clampToHeight(cartesian, objectsToExclude, width, result) → Cartesian3
+- scene.clampToHeight(cartesian<Cartesian3>, objectsToExclude, width, result) → Cartesian3
 - scene.clampToHeightMostDetailed(cartesians, objectsToExclude, width) → Promise.<Array.<Cartesian3>>
-- scene.sampleHeight(position, objectsToExclude, width) → Number
-- scene.sampleHeightMostDetailed(positions, objectsToExclude, width) → Promise.<Array.<Cartographic>> positions:Array.<Cartographic>
+- scene.sampleHeight(position<Cartographic>, objectsToExclude, width) → Number
+- scene.sampleHeightMostDetailed(positions<Cartographic>, objectsToExclude, width) → Promise.<Array.<Cartographic>> positions:Array.<Cartographic>
 
 sampleHeight 和 clampToHeight，按照官方文档的说法，都可以作用于 globe, 3D Tiles, or primitives，都是用来给定地理坐标，然后获取对应的高度值。参数类型略有不同，返回值一个是直接给高度，另外一个是返回一个 position.
 
