@@ -100,9 +100,9 @@ Scene 中有一些内置的**图元对象**：
 - requestRenderMode : Boolean，When true, rendering a frame will only occur when needed as determined by changes within the scene，改善性能
 
 // 调试相关
-- debugShowFramesPerSecond
-- debugShowFrustumPlanes
-- debugShowFrustums
+- scene.debugShowFramesPerSecond
+- scene.debugShowFrustumPlanes
+- scene.debugShowFrustums
 
 //Globe 方法
 

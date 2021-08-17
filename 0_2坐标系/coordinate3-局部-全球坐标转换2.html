@@ -20,6 +20,7 @@
 </style>
 <div style="position: absolute;z-index: 9999;left: 10px;top:10px">
     <button onclick="addModelMatrix_X()">模型添加modelMatrix_X</button>
+    <button onclick="addModelMatrix_Y()">模型添加modelMatrix_Y</button>
 </div>
 <div id="cesiumContainer">
 </div>
@@ -79,18 +80,45 @@
     viewer.zoomTo(point);
 
 
+    // 局部坐标系 -----调试看效果
+    // 东北  红色--x  绿色 --y  蓝色 ---z
+    var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+    var hprRollZero = new Cesium.HeadingPitchRoll();
+    var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+        position,
+        hprRollZero,
+        Cesium.Ellipsoid.WGS84,
+        enUpConverter
+    );
+
+    viewer.scene.primitives.add(
+        new Cesium.DebugModelMatrixPrimitive({
+        modelMatrix: modelMatrix,
+        length: 30.0,
+        width: 3.0,
+        })
+    );
+
+
     function addModelMatrix_X() {
-        var newCoordinate = new Cesium.Matrix4();
+        var newCoordinate =  new Cesium.Cartesian3();
         var trans = Cesium.Transforms.eastNorthUpToFixedFrame(position);//matrix4
         var localCoordinate = new  Cesium.Cartesian3(100, 0, 0);
 
         //Cesium.Matrix4.multiplyByPoint(matrix4, cartesian3, result) → Cartesian3
         Cesium.Matrix4.multiplyByPoint(trans, localCoordinate, newCoordinate);
         modelEntity.position = newCoordinate;
+         
     }
 
     function addModelMatrix_Y() {
+        var newCoordinate =  new Cesium.Cartesian3();
+        var trans = Cesium.Transforms.eastNorthUpToFixedFrame(position);//matrix4
+        var localCoordinate = new  Cesium.Cartesian3(0, 100, 0);
 
+        //Cesium.Matrix4.multiplyByPoint(matrix4, cartesian3, result) → Cartesian3
+        Cesium.Matrix4.multiplyByPoint(trans, localCoordinate, newCoordinate);
+        modelEntity.position = newCoordinate;
     }
 
 

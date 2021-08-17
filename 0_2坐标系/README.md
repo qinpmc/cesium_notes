@@ -1,9 +1,10 @@
 参考资料：    
-https://www.cnblogs.com/telwanggs/p/11289954.html    
-https://www.cnblogs.com/arxive/p/10256065.html                             
-https://blog.csdn.net/qq_34149805/article/details/78393540             
-http://www.yanhuangxueyuan.com/doc/Three.js/MatrixRST.html          
-
+- https://www.cnblogs.com/telwanggs/p/11289954.html    
+- https://www.cnblogs.com/arxive/p/10256065.html                             
+- https://blog.csdn.net/qq_34149805/article/details/78393540             
+- http://www.yanhuangxueyuan.com/doc/Three.js/MatrixRST.html
+- https://blog.csdn.net/lxl743p/article/details/80371568          
+- https://blog.csdn.net/xtfge0915/article/details/104653730
 
 
 ## 准备知识

@@ -65,7 +65,7 @@
         "  void main(void)\n" +
         "  {\n" +
         "      vec4 origcolor=texture2D(colorTexture, v_textureCoordinates);\n" +
-        "      vec4 fogcolor=vec4(0.8,0.8,0.8,0.5);\n" +
+        "      vec4 fogcolor=vec4(0.8,0.8,0.8,0.02);\n" +
         "\n" +
         "      float depth = czm_readDepth(depthTexture, v_textureCoordinates);\n" +
         "      vec4 depthcolor=texture2D(depthTexture, v_textureCoordinates);\n" +
