@@ -45,10 +45,10 @@
         animation: false,
         timeline: false,
         navigationHelpButton: false,
-        terrainProvider: Cesium.createWorldTerrain({
-            requestWaterMask: true,
-            requestVertexNormals: true
-        })
+        // terrainProvider: Cesium.createWorldTerrain({
+        //     requestWaterMask: true,
+        //     requestVertexNormals: true
+        // })
     });
 
     // 增加3dTiles 数据后，面覆盖在3dTiles上
@@ -112,7 +112,8 @@
                 //perPositionHeight : true,  // 增加此属性面不贴地形
                 material: Cesium.Color.ORANGE.withAlpha(0.5),
                 outline: true,
-                outlineColor: Cesium.Color.BLACK
+                outlineColor: Cesium.Color.BLUE,
+                outlineWidth:19
             }
         });
 
@@ -195,7 +196,7 @@
                     -100.0, 42.0,
                     -104.0, 40.0]),
                 height:20000,
-                extrudedHeight: 20000.0,
+                //extrudedHeight: 20000.0,
                 material: Cesium.Color.GREEN,
                 closeTop: false,
                 closeBottom: true

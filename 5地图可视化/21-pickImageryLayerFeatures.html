@@ -118,7 +118,7 @@
     handler.setInputAction(function (movement) {
 
         var pickRay = viewer.camera.getPickRay(movement.position);
-        var featuresPromise = viewer.imageryLayers.pickImageryLayerFeatures(pickRay, viewer.scene);
+        var featuresPromise = viewer.imageryLayers.pickImageryLayerFeatures(pickRay, viewer.scene); //拾取wms feature
         if (!Cesium.defined(featuresPromise)) {
             console.log('No features picked.');
         } else {

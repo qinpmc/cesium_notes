@@ -1,169 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Use correct character set. -->
     <meta charset="utf-8">
     <!-- Tell IE to use the latest, best version. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Hello World!</title>
     <script src="../Build/Cesium/Cesium.js"></script>
     <style>
         @import url(../Build/Cesium/Widgets/widgets.css);
 
-        html, body, #cesiumContainer {
+        html,
+        body,
+        #cesiumContainer {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
-
-
     </style>
 </head>
+
 <body>
 
-<div id="cesiumContainer"></div>
+    <div>
+        <button onclick="addModel()">添加模型</button>
+    </div>
+    <div id="cesiumContainer"></div>
 
-<script>
-/*
+    <script>
+        /*
+        
+            1. globe.pick的结果相对稳定准确，不论地形深度检测开启与否，不论加载的是默认地形还是别的地形数据；
+            2. scene.pickPosition只有在开启地形深度检测，且不使用默认地形时是准确的。
+            注意点：
+            1. globe.pick只能求交地形； 2. scene.pickPosition不仅可以求交地形，还可以求交除地形以外其他所有写深度的物体。
+        */
 
-    1. globe.pick的结果相对稳定准确，不论地形深度检测开启与否，不论加载的是默认地形还是别的地形数据；
-    2. scene.pickPosition只有在开启地形深度检测，且不使用默认地形时是准确的。
-    注意点：
-    1. globe.pick只能求交地形； 2. scene.pickPosition不仅可以求交地形，还可以求交除地形以外其他所有写深度的物体。
-*/
-
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
 
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        selectionIndicator : false,
-        infoBox : false,
-        // 注释时相当于使用默认地形，解开注释相当于使用全球地形
-        terrainProvider: Cesium.createWorldTerrain()
-    });
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            selectionIndicator: false,
+            infoBox: false,
+            // 注释时相当于使用默认地形，解开注释相当于使用全球地形
+            terrainProvider: Cesium.createWorldTerrain()
+        });
 
-    // 深度开启或关闭
-    viewer.scene.globe.depthTestAgainstTerrain = true;
-    var scene = viewer.scene;
-    var handler;
+        let terrain = new Cesium.CesiumTerrainProvider({
+            //url: "../Source/Terrain/beijing/"
+            url: "http://data.marsgis.cn/terrain/",
+        });
+        viewer.terrainProvider = terrain;
 
-    var labelEntity = viewer.entities.add({
-        label : {
-            show : false,
-            showBackground : true,
-            font : '14px monospace',
-            horizontalOrigin : Cesium.HorizontalOrigin.LEFT,
-            verticalOrigin : Cesium.VerticalOrigin.TOP,
-            pixelOffset : new Cesium.Cartesian2(15, 0)
-        }
-    });
-
-    var tempRay = new Cesium.Ray();
-    var tempPos = new Cesium.Cartesian3();
-
-    // Mouse over the globe to see the cartographic position
-    handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
-    handler.setInputAction(function(movement) {
-
-        var foundPosition = false;
-
+        // 深度开启或关闭
+        viewer.scene.globe.depthTestAgainstTerrain = true;
         var scene = viewer.scene;
-        if (scene.mode !== Cesium.SceneMode.MORPHING) {
-            //var pickedObject = scene.pick(movement.endPosition);
-            if (true) {
-                labelEntity.label.text = '';
+        var handler;
 
-                //第一种：scene.pickPosition
-                var cartesian = viewer.scene.pickPosition(movement.endPosition);
+        var labelEntity = viewer.entities.add({
+            label: {
+                show: false,
+                showBackground: true,
+                font: '14px monospace',
+                horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+                verticalOrigin: Cesium.VerticalOrigin.TOP,
+                pixelOffset: new Cesium.Cartesian2(15, 0)
+            }
+        });
 
-                if (Cesium.defined(cartesian)) {
-                    var res1 = transCartesian2LonLatHeight(cartesian);
+        var tempRay = new Cesium.Ray();
+        var tempPos = new Cesium.Cartesian3();
 
+        // Mouse over the globe to see the cartographic position
+        handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+        handler.setInputAction(function (movement) {
+
+            var foundPosition = false;
+
+            var scene = viewer.scene;
+            if (scene.mode !== Cesium.SceneMode.MORPHING) {
+                //var pickedObject = scene.pick(movement.endPosition);
+                if (true) {
+                    labelEntity.label.text = '';
+
+                    //第一种：scene.pickPosition
+                    var cartesian = viewer.scene.pickPosition(movement.endPosition);
+
+                    if (Cesium.defined(cartesian)) {
+                        var res1 = transCartesian2LonLatHeight(cartesian);
+
+                        labelEntity.label.text +=
+                            'Lon: ' + ('   ' + res1.lon).slice(-7) + '\u00B0' +
+                            '\nLat: ' + ('   ' + res1.lat).slice(-7) + '\u00B0' +
+                            '\nAlt: ' + ('   ' + res1.height).slice(-7) + 'm';
+                    }
+
+                    // 第二种：camera.getPickRay + globe.pick  -- 不能拾取 CesiumMilkTruck-kmc.gltf 模型上高度，在模型上拾取时 cartesian2为undefined
+                    var ray = scene.camera.getPickRay(movement.endPosition, tempRay);
+                    var cartesian2 = scene.globe.pick(ray, scene, tempPos);
+
+                    if (Cesium.defined(cartesian2)) {
+                        var res2 = transCartesian2LonLatHeight(cartesian2);
+
+                        labelEntity.label.text +=
+                            '\nLon2: ' + ('   ' + res2.lon).slice(-7) + '\u00B0' +
+                            '\nLat2: ' + ('   ' + res2.lat).slice(-7) + '\u00B0' +
+                            '\nAlt2: ' + ('   ' + res2.height).slice(-7) + 'm';
+                    }
+
+                    // 第三种：camera.pickEllipsoid --- CesiumMilkTruck-kmc.gltf模型和地形的高度均获取不到
+                    var cartesian3 = viewer.scene.camera.pickEllipsoid(movement.endPosition, viewer.scene.globe.ellipsoid);
+                    var res3 = transCartesian2LonLatHeight(cartesian3);
                     labelEntity.label.text +=
-                        'Lon: ' + ('   ' + res1.lon).slice(-7) + '\u00B0' +
-                        '\nLat: ' + ('   ' + res1.lat).slice(-7) + '\u00B0' +
-                        '\nAlt: ' + ('   ' + res1.height).slice(-7) + 'm';
+                        '\nLon3: ' + ('   ' + res3.lon).slice(-7) + '\u00B0' +
+                        '\nLat3: ' + ('   ' + res3.lat).slice(-7) + '\u00B0' +
+                        '\nAlt3: ' + ('   ' + res3.height).slice(-7) + 'm';
+
+                    //第四种：globe.getHeight ----镜头高度太高获取的高度会为错误的负数
+
+                    var cartographic4 = Cesium.Cartographic.fromDegrees(res3.lon, res3.lat);
+                    var height4 = viewer.scene.globe.getHeight(cartographic4);
+                    console.log(height4);
+
+
+
+                    if (cartesian || cartesian2 || cartesian3) {
+                        labelEntity.position = cartesian || cartesian2 || cartesian3;
+                        labelEntity.label.show = true;
+
+                        labelEntity.label.eyeOffset = new Cesium.Cartesian3(0.0, 0.0, 0);
+                        labelEntity.label.disableDepthTestDistance = Number.POSITIVE_INFINITY;
+
+                        foundPosition = true;
+                    }
                 }
+            }
 
-                // 第二种：camera.getPickRay + globe.pick  -- 不能拾取 CesiumMilkTruck-kmc.gltf 模型上高度，在模型上拾取时 cartesian2为undefined
-                var ray = scene.camera.getPickRay(movement.endPosition, tempRay);
-                var cartesian2 = scene.globe.pick(ray, scene, tempPos);
+            if (!foundPosition) {
+                labelEntity.label.show = false;
+            }
+        }, Cesium.ScreenSpaceEventType.MOUSE_MOVE); /*Cesium.ScreenSpaceEventType.MOUSE_MOVE   Cesium.ScreenSpaceEventType.LEFT_CLICK*/
 
-                if (Cesium.defined(cartesian2)) {
-                    var res2 = transCartesian2LonLatHeight(cartesian2);
+        function transCartesian2LonLatHeight(cartesian) {
+            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+            var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(2);
+            var latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(2);
+            var heightString = cartographic.height.toFixed(2);
 
-                    labelEntity.label.text +=
-                        '\nLon2: ' + ('   ' + res2.lon).slice(-7) + '\u00B0' +
-                        '\nLat2: ' + ('   ' + res2.lat).slice(-7) + '\u00B0' +
-                        '\nAlt2: ' + ('   ' + res2.height).slice(-7) + 'm';
-                }
-
-                // 第三种：camera.pickEllipsoid --- CesiumMilkTruck-kmc.gltf模型和地形的高度均获取不到
-                var cartesian3 = viewer.scene.camera.pickEllipsoid(movement.endPosition, viewer.scene.globe.ellipsoid);
-                var res3 = transCartesian2LonLatHeight(cartesian3);
-                labelEntity.label.text +=
-                    '\nLon3: ' + ('   ' + res3.lon).slice(-7) + '\u00B0' +
-                    '\nLat3: ' + ('   ' + res3.lat).slice(-7) + '\u00B0' +
-                    '\nAlt3: ' + ('   ' + res3.height).slice(-7) + 'm';
-
-                //第四种：globe.getHeight ----镜头高度太高获取的高度会为错误的负数
-
-                var cartographic4 = Cesium.Cartographic.fromDegrees(res3.lon,res3.lat);
-                var height4 = viewer.scene.globe.getHeight(cartographic4);
-                console.log(height4);
-
-
-
-                if (cartesian || cartesian2 || cartesian3) {
-                    labelEntity.position = cartesian || cartesian2 || cartesian3;
-                    labelEntity.label.show = true;
-
-                    labelEntity.label.eyeOffset = new Cesium.Cartesian3(0.0, 0.0, 0);
-                    labelEntity.label.disableDepthTestDistance  = Number.POSITIVE_INFINITY;
-
-                    foundPosition = true;
-                }
+            return {
+                lon: longitudeString,
+                lat: latitudeString,
+                height: heightString
             }
         }
 
-        if (!foundPosition) {
-            labelEntity.label.show = false;
+        // Cesium.ScreenSpaceEventType.LEFT_CLICK 会覆盖前面的 单击事件（如果有）
+        handler.setInputAction(function (movement) {
+            var pick = viewer.scene.pick(movement.position);  //获取的pick对象
+            var pickedEntity = Cesium.defined(pick) ? pick.id : undefined; //pick.id即为entity
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+
+        // viewer.camera.flyTo({
+        //     destination: Cesium.Cartesian3.fromDegrees(91, 30, 5000.0),  //west, south, east, north
+        //     orientation: {
+        //         heading: Cesium.Math.toRadians(175.0),
+        //         pitch: Cesium.Math.toRadians(-90.0),
+        //         roll: 0.0
+        //     }
+        // });
+
+        function addModel() {
+            var modelEntity = viewer.entities.add({
+                name: 'milktruck',
+                position: Cesium.Cartesian3.fromDegrees(91, 30),
+                model: {
+                    uri: '../data/model/CesiumMilkTruck-kmc.gltf',
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+                }
+            });
+
+            viewer.zoomTo(modelEntity);
         }
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
-    function transCartesian2LonLatHeight(cartesian) {
-        var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
-        var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(2);
-        var latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(2);
-        var heightString = cartographic.height.toFixed(2);
-
-        return {
-            lon:longitudeString,
-            lat:latitudeString,
-            height:heightString
-        }
-    }
-
-    handler.setInputAction(function (movement) {
-        var pick = viewer.scene.pick(movement.position);  //获取的pick对象
-        var pickedEntity = Cesium.defined(pick) ? pick.id : undefined; //pick.id即为entity
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-
-    var modelEntity = viewer.entities.add({
-        name : 'milktruck',
-        position : Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706),
-        model : {
-            uri : '../data/model/CesiumMilkTruck-kmc.gltf'
-        }
-    });
-
-    viewer.zoomTo(modelEntity);
-
-</script>
+    </script>
 </body>
+
 </html>

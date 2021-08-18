@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>拾取entity</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cesiumContainer"></div>
+
+    <script>
+        /*
+    
+     
+    
+        */
+
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            selectionIndicator: false,
+            infoBox: false,
+
+            terrainProvider: new Cesium.CesiumTerrainProvider({
+                url: "http://data.marsgis.cn/terrain/",
+            })
+        });
+
+        // 开启或关闭深度检测
+        //viewer.scene.globe.depthTestAgainstTerrain = true;
+
+        var scene = viewer.scene;
+
+
+
+        viewer.dataSources.add(
+            Cesium.GeoJsonDataSource.load("./hubei_city.json", {
+                stroke: Cesium.Color.RED,
+                fill: Cesium.Color.YELLOW,
+                strokeWidth: 200,
+                clampToGround: true
+            })
+        );
+
+        var bluePolygon = viewer.entities.add({
+            name: "blue polygon on surface",
+            polygon: {
+                hierarchy: Cesium.Cartesian3.fromDegreesArray([
+                    -115.0,
+                    37.0,
+                    -115.0,
+                    32.0,
+                    -107.0,
+                    33.0,
+                    -102.0,
+                    31.0,
+                    -102.0,
+                    35.0,
+                ]),
+                material: Cesium.Color.BLUE,
+            },
+        });
+
+        var selectedEntity = null;
+        var pickColor = Cesium.Color.RED.withAlpha(0.8);
+
+
+        // Move the primitive that the mouse is over to the top.
+        var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+
+        handler.setInputAction(function (movement) {
+            // get an array of all primitives at the mouse position
+            var pickedObject = scene.pick(movement.position);//--------------------------
+            if (Cesium.defined(pickedObject)) {
+
+
+                console.log(pickedObject);
+                hilightEntites(pickedObject)
+                //console.log(pickedObjects.id.polygon.material = Cesium.Color.RED);
+
+            }
+
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+        function hilightEntites(pickedObject) {
+            var entity = pickedObject.id;
+            if(!selectedEntity){
+                selectedEntity = entity;
+                var oldColor = Object.assign({},entity.polygon.material.color.getValue());
+                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red,oldColor.green,oldColor.blue,oldColor.alpha)
+                selectedEntity.polygon.material = pickColor;  
+            }else{
+                selectedEntity.polygon.material = selectedEntity.oldMaterial
+                selectedEntity = entity;
+                var oldColor = Object.assign({},entity.polygon.material.color.getValue());
+                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red,oldColor.green,oldColor.blue,oldColor.alpha)
+                selectedEntity.polygon.material = pickColor;
+            }
+  
+            
+        }
+
+
+    </script>
+</body>
+
+</html>

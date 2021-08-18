@@ -160,9 +160,18 @@
                 } else if (clusteredEntities.length >= 40) {
                   cluster.billboard.image = pin40;
                 } else if (clusteredEntities.length >= 30) {
-                  cluster.billboard.image = pin30;
+                  
+                  //cluster.billboard.image = pin30;
+                  cluster.billboard.image = "./facility2.png";
                 } else if (clusteredEntities.length >= 20) {
-                  cluster.billboard.image = pin20;
+
+                  //cluster.billboard.image = pin20;
+
+                  var pin20 = pinBuilder
+                      .fromText(clusteredEntities.length, Cesium.Color.GREEN, 48)
+                      .toDataURL();
+                      cluster.billboard.image = pin20;
+
                 } else if (clusteredEntities.length >= 10) {
                   cluster.billboard.image = pin10;
                 } else {
