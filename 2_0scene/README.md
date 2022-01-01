@@ -13,6 +13,8 @@ CesiumWidget:
 
 ## 场景 Scene
 
+scene 是所有 3D 图形对象的容器，它是由 Viewer 或 CesiumWidget 内部隐式创建的。
+
 Scene 中有一些内置的**图元对象**：
 
 - globe（地球） Globe  
@@ -100,6 +102,7 @@ Scene 中有一些内置的**图元对象**：
 - requestRenderMode : Boolean，When true, rendering a frame will only occur when needed as determined by changes within the scene，改善性能
 
 // 调试相关
+
 - scene.debugShowFramesPerSecond
 - scene.debugShowFrustumPlanes
 - scene.debugShowFrustums
@@ -115,6 +118,10 @@ Scene 中有一些内置的**图元对象**：
 var ray = viewer.camera.getPickRay(windowCoordinates);
 var intersection = globe.pick(ray, scene);
 ```
+
+## Scene 事件
+
+![场景上的事件](./场景上的事件.png)
 
 ## Scene 方法
 

@@ -11,7 +11,7 @@
 - MapboxStyleImageryProvider
 - SingleTileImageryProvider
 - TileCoordinatesImageryProvider
-- UrlTemplateImageryProvider:
+- UrlTemplateImageryProvider: 通过使用指定的 URL 模板请求图块来提供图像。方便用户实现自己的 Provider，比如国内的高德，腾讯等影像服务，url 都是一个固定的规范，都可以通过该 Provider 轻松实现。而 OSM 也是通过该类实现的
 - WebMapServiceImageryProvider : wms
 - WebMapTileServiceImageryProvider : wmts
 
