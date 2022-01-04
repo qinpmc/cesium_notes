@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>debug</title>
+    <style>
+      @import url(../Source/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="cesiumContainer"></div>
+    <script type="module">
+      window.CESIUM_BASE_URL = "../Source/";
+      import * as Cesium from "../Source/Cesium.js";
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer = new Cesium.Viewer("cesiumContainer");
+
+      // https://blog.csdn.net/qq_40043761/article/details/81020823?utm_source=blogxgwz3
+      var m = origin_and_hpr_to_matrix4(
+        {
+          x: 114,
+          y: 30,
+          z: 1000
+        },
+        30,
+        20,
+        10
+      );
+
+      var hpr = getHPR_from_matrix(m);
+
+      function origin_and_hpr_to_matrix4(position, heading, pitch, roll) {
+        // 假设当前模型的经纬度坐标为{114, 30, 1000} 方位角{heading: 30, pitch: 20, roll: 10} 都是角度来计算
+        // 1. 根据坐标, 方位角计算世界矩阵
+        var position = Cesium.Cartesian3.fromDegrees(
+          position.x,
+          position.y,
+          position.z
+        );
+        var heading = Cesium.Math.toRadians(heading);
+        var pitch = Cesium.Math.toRadians(pitch);
+        var roll = Cesium.Math.toRadians(roll);
+        var headingPitchRoll = new Cesium.HeadingPitchRoll(
+          heading,
+          pitch,
+          roll
+        );
+
+        var m = Cesium.Transforms.headingPitchRollToFixedFrame(
+          position,
+          headingPitchRoll,
+          Cesium.Ellipsoid.WGS84,
+          Cesium.Transforms.eastNorthUpToFixedFrame,
+          new Cesium.Matrix4()
+        );
+        console.log(m);
+        return m;
+      }
+
+      function getHPR_from_matrix(m) {
+        // 2. 根据矩阵求方位角
+        // 计算中心处的变换矩阵
+        var m1 = Cesium.Transforms.eastNorthUpToFixedFrame(
+          Cesium.Matrix4.getTranslation(m, new Cesium.Cartesian3()),
+          Cesium.Ellipsoid.WGS84,
+          new Cesium.Matrix4()
+        );
+        // 矩阵相除
+        var m3 = Cesium.Matrix4.multiply(
+          Cesium.Matrix4.inverse(m1, new Cesium.Matrix4()),
+          m,
+          new Cesium.Matrix4()
+        );
+        // 得到旋转矩阵
+        var mat3 = Cesium.Matrix4.getMatrix3(m3, new Cesium.Matrix3());
+        // 计算四元数
+        var q = Cesium.Quaternion.fromRotationMatrix(mat3);
+        // 计算旋转角(弧度)
+        var hpr = Cesium.HeadingPitchRoll.fromQuaternion(q);
+        // 得到角度
+        var heading = Cesium.Math.toDegrees(hpr.heading);
+        var pitch = Cesium.Math.toDegrees(hpr.pitch);
+        var roll = Cesium.Math.toDegrees(hpr.roll);
+        console.log(heading, pitch, roll);
+        return {
+          heading,
+          pitch,
+          roll
+        };
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>日照分析</title>
+    <style>
+      @import url(../Source/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      #menu {
+        position: absolute;
+        top: 80px;
+        left: 10px;
+        z-index: 999;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="cesiumContainer"></div>
+    <div style="display:none;" id="tooltip"></div>
+    <div id="menu">
+      <p>
+        <button onclick="addRectangle()">添加矩形</button>
+        <button onclick="clearAll()">清除面</button>
+        <button onclick="createCalculatePoints()">生产计算点</button>
+      </p>
+      <p>
+        <button onclick="setvisible('play')">播放</button>
+      </p>
+      <p>
+        <button onclick="setvisible('stop')">暂停</button>
+      </p>
+      <p>
+        <button onclick="shadowAnalyze()">分析</button>
+      </p>
+    </div>
+    <script type="module">
+      window.CESIUM_BASE_URL = "../Source/";
+      import * as Cesium from "../Source/Cesium.js";
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      // var date = new Date("2019/10/04 12:30:00"); //时间为：2019/10/04 12:00:00
+
+      // var julianTime = Cesium.JulianDate.fromDate(date); //转为JulianDate
+      // console.log(julianTime);
+
+      let osm = new Cesium.OpenStreetMapImageryProvider({
+        url: "https://a.tile.openstreetmap.org/"
+      });
+
+      let viewer = new Cesium.Viewer("cesiumContainer", {
+        imageryProvider: osm,
+        contextOptions: {
+          webgl: {
+            alpha: true
+          }
+        },
+        selectionIndicator: false,
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: false, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: false, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: false, //是否显示点击要素之后显示的信息
+        fullscreenButton: false
+      });
+
+      //https://blog.csdn.net/qq_32685139/article/details/97926437
+      viewer.scene.globe.enableLighting = true;
+      viewer.shadows = true;
+
+      console.log(viewer.scene.context.uniformState.sunPositionWC);
+
+      var tileset = new Cesium.Cesium3DTileset({
+        url: "../8model_op_bim/data/Tilesets/Tileset/tileset.json"
+      });
+      viewer.scene.primitives.add(tileset);
+      tileset.readyPromise.then(function() {
+        viewer.zoomTo(
+          tileset,
+          new Cesium.HeadingPitchRange(
+            0.0,
+            -0.5,
+            tileset.boundingSphere.radius / 4.0
+          )
+        );
+      });
+      var stopTime = null;
+      window.stratPlay = function stratPlay() {
+        if (((viewer.clock.shouldAnimate = true), stopTime))
+          viewer.clock.currentTime = stopTime;
+        else {
+          var e = "2022-01-01",
+            t = new Date(e),
+            startHours = "00",
+            endHours = "24",
+            start = new Date(new Date(t).setHours(Number(startHours))),
+            end = new Date(new Date(t).setHours(Number(endHours)));
+          viewer.scene.globe.enableLighting = true;
+          viewer.shadows = true;
+          viewer.clock.startTime = Cesium.JulianDate.fromDate(start);
+          viewer.clock.currentTime = Cesium.JulianDate.fromDate(start);
+          viewer.clock.stopTime = Cesium.JulianDate.fromDate(end);
+          //viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+          viewer.clock.clockStep = Cesium.ClockStep.SYSTEM_CLOCK_MULTIPLIER;
+          viewer.clock.multiplier = 1600;
+          console.log(viewer.scene.context.uniformState.sunPositionWC);
+        }
+      };
+      window.stopPlay = function stopPlay() {
+        (stopTime = viewer.clock.currentTime),
+          (viewer.clock.shouldAnimate = false);
+        console.log(viewer.scene.context.uniformState.sunPositionWC);
+      };
+
+      window.setvisible = function setvisible(value) {
+        switch (value) {
+          case "play":
+            stratPlay();
+            break;
+          case "stop":
+            stopPlay();
+            break;
+        }
+      };
+
+      // viewer.clock.onTick.addEventListener(function() {
+      //   console.log(viewer.scene.context.uniformState.sunPositionWC);
+      // });
+
+      /////////////////////////////////////// 绘制逻辑
+      var tempEntities = [];
+      var carto1 = (window.drawPoint = function drawPoint(position, config) {
+        var config = config ? config : {};
+        var pointGeometry = viewer.entities.add({
+          name: "点几何对象",
+          position: position,
+          point: {
+            color: Cesium.Color.SKYBLUE,
+            pixelSize: 3
+          }
+        });
+        return pointGeometry;
+      });
+
+      window.clearAll = function() {
+        tempEntities.forEach(item => {
+          viewer.entities.remove(item);
+        });
+      };
+
+      var redRectangle;
+      var p1 = Cesium.Cartographic.fromDegrees(
+        -75.61256974524136,
+        40.042031724941786
+      );
+      var p2 = Cesium.Cartographic.fromDegrees(
+        -75.61174849848568,
+        40.042031724941786
+      );
+
+      var p3 = Cesium.Cartographic.fromDegrees(
+        -75.61174849848568,
+        40.043181650145875
+      );
+      var p4 = Cesium.Cartographic.fromDegrees(
+        -75.61256974524136,
+        40.043181650145875
+      );
+      window.addRectangle = function() {
+        redRectangle = viewer.entities.add({
+          name: "Red translucent rectangle",
+          rectangle: {
+            coordinates: Cesium.Rectangle.fromDegrees(
+              -75.61256974524136,
+              40.042031724941786,
+
+              -75.61174849848568,
+              40.043181650145875
+            ),
+            material: Cesium.Color.RED.withAlpha(0.7),
+            classificationType: Cesium.ClassificationType.TERRAIN
+          }
+        });
+
+        tempEntities.push(redRectangle);
+
+        var point1 = viewer.entities.add({
+          position: Cesium.Cartographic.toCartesian(p1),
+          point: {
+            pixelSize: 3,
+            color: Cesium.Color.AQUA
+          }
+        });
+        tempEntities.push(point1);
+
+        var point2 = viewer.entities.add({
+          position: Cesium.Cartographic.toCartesian(p2),
+          point: {
+            pixelSize: 3,
+            color: Cesium.Color.AQUA
+          }
+        });
+        tempEntities.push(point2);
+        var point3 = viewer.entities.add({
+          position: Cesium.Cartographic.toCartesian(p3),
+          point: {
+            pixelSize: 3,
+            color: Cesium.Color.AQUA
+          }
+        });
+        tempEntities.push(point3);
+
+        var point4 = viewer.entities.add({
+          position: Cesium.Cartographic.toCartesian(p4),
+          point: {
+            pixelSize: 3,
+            color: Cesium.Color.AQUA
+          }
+        });
+        tempEntities.push(point4);
+      };
+
+      /////////////////////////////////////// 绘制逻辑结束
+      var points;
+      window.createCalculatePoints = function(
+        step = 10,
+        baseHeight = 20,
+        extrudeHeight = 20,
+        rectangle
+      ) {
+        points = createCalculatePoints(10, 20, 20, redRectangle);
+        points.forEach(point => {
+          viewer.entities.add({
+            position: point,
+            point: {
+              pixelSize: 3,
+              color: Cesium.Color.RED
+            }
+          });
+          tempEntities.push(point);
+        });
+      };
+
+      function createCalculatePoints(
+        step = 10,
+        baseHeight = 20,
+        extrudeHeight = 20,
+        rectangle
+      ) {
+        var coordinates = rectangle.rectangle._coordinates._value;
+        var c1 = Cesium.Cartographic.fromRadians(
+          coordinates.west,
+          coordinates.south
+        );
+        var c2 = Cesium.Cartographic.fromRadians(
+          coordinates.east,
+          coordinates.south
+        );
+
+        var c3 = Cesium.Cartographic.fromRadians(
+          coordinates.east,
+          coordinates.north
+        );
+        // var width0 = getDistance(p1, p2);
+        // var height0 = getDistance(p2, p3);
+        var width = getDistance(c1, c2);
+        var height = getDistance(c2, c3);
+
+        console.log(width);
+        console.log(height);
+
+        var countX = Math.round(width / step);
+        var countY = Math.round(height / step);
+        var dx = (coordinates.east - coordinates.west) / countX;
+        var dy = (coordinates.north - coordinates.south) / countY;
+        var points = [];
+        var countZ = extrudeHeight / 10;
+        for (var i = 0; i <= countX; i++) {
+          for (var j = 0; j <= countY; j++) {
+            for (var k = 0; k <= countZ; k++) {
+              var x = dx * i + coordinates.west;
+              var y = dy * j + coordinates.south;
+              var point = Cesium.Cartesian3.fromRadians(
+                x,
+                y,
+                baseHeight + k * countZ * 10,
+                Cesium.Ellipsoid.WGS84,
+                new Cesium.Cartesian3()
+              );
+              points.push(point);
+            }
+          }
+        }
+        return points;
+      }
+
+      /* 计算两点之间的距离https://www.cnblogs.com/s313139232/p/13571932.html
+              satrt :Cartographic
+              end: Cartographic
+              */
+      window.getDistance = function getDistance(satrt, end) {
+        var geodesic = new Cesium.EllipsoidGeodesic();
+        geodesic.setEndPoints(satrt, end);
+        var distance = geodesic.surfaceDistance;
+        return distance;
+      };
+
+      window.shadowAnalyze = function() {
+        var point = points[0]; //先以第一个点测试
+        var last = null,
+          now = null,
+          deltaSceonds = 0;
+        var frequency = 60 * 10; // 10分钟计算一次
+
+        stratPlay();
+        last = viewer.clock.currentTime;
+        viewer.clock.onTick.addEventListener(function() {
+          //console.log(viewer.scene.context.uniformState.sunPositionWC);
+
+          now = viewer.clock.currentTime;
+          if (last && now) {
+            var deltaSceonds = Cesium.JulianDate.secondsDifference(now, last);
+
+            if (deltaSceonds > frequency) {
+              last = viewer.clock.currentTime;
+
+              var date = Cesium.JulianDate.toDate(viewer.clock.currentTime);
+
+              console.log(date);
+              // console.log("deltaSceonds", deltaSceonds);
+              var sunPosition = viewer.scene.context.uniformState.sunPositionWC; //太阳位置
+
+              var subtractResult = new Cesium.Cartesian3(
+                sunPosition.x - point.x,
+                sunPosition.y - point.y,
+                sunPosition.z - point.z
+              );
+              var modulusOfVectors = Math.sqrt(
+                subtractResult.x * subtractResult.x +
+                  subtractResult.y * subtractResult.y +
+                  subtractResult.z * subtractResult.z
+              );
+
+              //方向向量
+              var direction = new Cesium.Cartesian3(
+                subtractResult.x / modulusOfVectors,
+                subtractResult.y / modulusOfVectors,
+                subtractResult.z / modulusOfVectors
+              );
+
+              var changdu = 400;
+              var zd = new Cesium.Cartesian3(
+                point.x + changdu * direction.x,
+                point.y + changdu * direction.y,
+                point.z + changdu * direction.z
+              );
+              //做射线，
+              var arrowPositions = [zd, point];
+              viewer.entities.remove(viewer.entities.getById("1"));
+              var arrow = viewer.entities.add({
+                id: "1",
+                polyline: {
+                  positions: arrowPositions,
+                  width: 10,
+                  followSurface: false,
+                  material: new Cesium.PolylineArrowMaterialProperty(
+                    Cesium.Color.YELLOW
+                  )
+                }
+              });
+              var ray = new Cesium.Ray(point, direction);
+              var pickObj = viewer.scene.pickFromRay(ray);
+              if (pickObj) {
+                console.log("在阴影里");
+
+                var testPoint = viewer.entities.add({
+                  position: pickObj.position,
+                  point: {
+                    pixelSize: 6,
+                    color: Cesium.Color.GREEN
+                  }
+                });
+              } else {
+                console.log("不在阴影里");
+              }
+            }
+          }
+        });
+      };
+    </script>
+  </body>
+</html>
