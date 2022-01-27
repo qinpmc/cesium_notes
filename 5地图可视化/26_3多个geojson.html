@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>图层叠加</title>
+    <script src="../Build/CesiumUnminified/Cesium.js"></script>
+    <!-- <script src="../Build/Cesium/Cesium.js"></script> -->
+    <style>
+        @import url(../Build/CesiumUnminified/Widgets/widgets.css);
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position:absolute;z-index:9999;">
+        <button onclick="addChina()">addChina</button>
+        <button onclick="addHubei()">addHubei</button>
+        <button onclick="addHubei_primitive()">addHubei_primitive</button>
+
+        <button onclick="addWuhan()">addWuhan</button>
+        <button onclick="addPoints()">addPoints</button>
+        <button onclick="addPolyline()">addPolyline</button>
+        <button onclick="addPolygon()">addPolygon</button>
+        <button onclick="addText()">addText</button>
+        <button onclick="addImage()">addImage</button>
+    </div>
+    <div style="position:absolute;z-index:9999;top:40px;">
+        <button onclick="removeChina()">removeChina</button>
+        <button onclick="removeHubei()">removeHubei</button>
+        <button onclick="removePoints()">removePoints</button>
+        <button onclick="removePolyline()">removePolyline</button>
+        <button onclick="removePolygon()">removePolygon</button>
+        <button onclick="removeText()">removeText</button>
+        <button onclick="removeImage()">removeImage</button>
+    </div>
+    <div id="cesiumContainer"></div>
+
+    <script>
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            selectionIndicator: false,
+            infoBox: false,
+
+            terrainProvider: new Cesium.CesiumTerrainProvider({
+                url: "http://data.marsgis.cn/terrain/",
+            })
+        });
+
+        // 开启或关闭深度检测
+        viewer.scene.globe.depthTestAgainstTerrain = true;
+
+        var scene = viewer.scene;
+
+
+        function getRandomPoints(number) {
+            number = number || 10000;
+            var points = [];
+            for (var i = 0; i < number; i++) {
+                var x = 114 + Math.random();
+                var y = 30 + Math.random();
+                points.push(x);
+                points.push(y);
+            }
+            return points;
+        }
+
+
+        window.addChina = function () {
+            var promise = viewer.dataSources.add(
+                Cesium.GeoJsonDataSource.load("../4pick_events/china.json", {
+                    stroke: Cesium.Color.GREEN,
+                    fill: Cesium.Color.RED,
+                    strokeWidth: 200,
+                    clampToGround: true
+                })
+            );
+            promise.then(dataRes => {
+                console.log(dataRes);
+            })
+
+        }
+
+        window.addHubei = function () {
+            var entityCollection = null
+
+            Cesium.GeoJsonDataSource.load("../4pick_events/hubei_city.json", {
+                stroke: Cesium.Color.GREEN,
+                // fill: new Cesium.CallbackProperty(function (time, result) {
+                //     console.log(entityCollection);
+                //     if (entityCollection._entities._array[0]._name === "武汉市") {
+                //         return Cesium.Color.RED
+                //     }
+                //     return Cesium.Color.YELLOW
+                // }, false),
+                fill: Cesium.Color.YELLOW,
+                strokeWidth: 200,
+                clampToGround: true
+            }).then(res => {
+                console.log(res);
+                entityCollection = res._entityCollection;
+                viewer.dataSources.add(res);
+
+                res.update = function (time) {
+                    //entityCollection._entities._array[0].polygon.material = new Cesium.ColorMaterialProperty(Cesium.Color.RED);
+                    return true;
+                }
+
+
+            })
+            //viewer.dataSources.add();
+        }
+
+        window.addHubei_primitive = function () {
+            fetch("../4pick_events/simplestyles.geojson").then(stream => stream.json()).then(res => {
+
+                const features = res.features;
+
+                var pointPrimitives = scene.primitives.add(new Cesium.PointPrimitiveCollection());
+
+                features.forEach(feature => {
+                    const coords = feature.geometry.coordinates;
+                    pointPrimitives.add({
+                        position: Cesium.Cartesian3.fromDegrees(coords[0] * 1, coords[1] * 1),
+                        show: true, // default
+                        // color: Cesium.Color.RED, // default: WHITE
+                        color: new Cesium.CallbackProperty(function (time, result) {
+                            return Cesium.Color.YELLOW
+                        }, false),
+                        pixelSize: 10, // default: 1
+                    });
+                })
+
+                // const instances = [];
+                // for (let i = 0; i < features.length; i++) {
+                //     for (let j = 0; j < features[i].geometry.coordinates.length; j++) {
+                //         const polygonArr = features[i].geometry.coordinates[j].toString().split(',');
+                //         let polygonArr_number = [];
+                //         polygonArr.forEach(coord => {
+                //             polygonArr_number.push(coord * 1);
+                //         })
+                //         const polygon = new Cesium.PolygonGeometry({
+                //             polygonHierarchy: new Cesium.PolygonHierarchy(
+                //                 Cesium.Cartesian3.fromDegreesArray(polygonArr_number)
+                //             ),
+                //             vertexFormat: Cesium.PerInstanceColorAppearance.VERTEX_FORMAT
+                //         });
+                //         const geometry = Cesium.PolygonGeometry.createGeometry(polygon);
+                //         instances.push(new Cesium.GeometryInstance({
+                //             geometry: geometry,
+                //             attributes: {
+                //                 color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.GREEN),
+                //             },
+                //         }));
+                //     }
+                // }
+
+                // const primitive = new Cesium.GroundPrimitive({
+                //     geometryInstances: instances,
+                //     appearance: new Cesium.PerInstanceColorAppearance({ // 为每个instance着色
+                //         translucent: true,
+                //         closed: false
+                //     }),
+                // });
+
+                // viewer.scene.primitives.add(primitive);
+            })
+
+        }
+
+        window.addWuhan = function () {
+            viewer.dataSources.add(
+                Cesium.GeoJsonDataSource.load("../4pick_events/wuhan.geojson", {
+                    stroke: Cesium.Color.GREEN,
+                    fill: Cesium.Color.BLUE,
+                    strokeWidth: 200,
+                    clampToGround: true
+                })
+            );
+        }
+
+        window.addPoints = function () {
+            var points = getRandomPoints(1000); // 
+            for (var i = 0; i < points.length; i += 2) {
+                viewer.entities.add({
+                    position: Cesium.Cartesian3.fromDegrees(points[i], points[i + 1]),
+                    point: {
+                        pixelSize: 3,
+                        color: Cesium.Color.RED,
+                    },
+                });
+            }
+        }
+
+        window.addPolygon = function () {
+            var bluePolygon = viewer.entities.add({
+                name: "blue polygon on surface",
+                polygon: {
+                    hierarchy: Cesium.Cartesian3.fromDegreesArray([
+                        114.0,
+                        30.0,
+                        115.0,
+                        32.0,
+                        116.0,
+                        31.0,
+                        115.5,
+                        31.0,
+                        114.0,
+                        30.0,
+                    ]),
+                    material: Cesium.Color.PINK,
+                },
+            });
+        }
+
+
+
+    </script>
+</body>
+
+</html>

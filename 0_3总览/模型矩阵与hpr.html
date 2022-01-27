@@ -29,15 +29,21 @@
       var viewer = new Cesium.Viewer("cesiumContainer");
 
       // https://blog.csdn.net/qq_40043761/article/details/81020823?utm_source=blogxgwz3
+      var origin = {
+        x: 114,
+        y: 30,
+        z: 1000
+      };
+      var hpr = {
+        heading: 30,
+        pitch: 20,
+        roll: 10
+      };
       var m = origin_and_hpr_to_matrix4(
-        {
-          x: 114,
-          y: 30,
-          z: 1000
-        },
-        30,
-        20,
-        10
+        origin,
+        hpr.heading,
+        hpr.pitch,
+        hpr.roll
       );
 
       var hpr = getHPR_from_matrix(m);

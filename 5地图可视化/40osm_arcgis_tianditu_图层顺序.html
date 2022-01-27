@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>Hello World!</title>
+    <title>Bingmap</title>
     <script src="../Build/Cesium/Cesium.js"></script>
     <style>
         @import url(../Build/Cesium/Widgets/widgets.css);
@@ -28,24 +28,36 @@
 <body>
     <div id="cesiumContainer"></div>
     <script>
-
         Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
-        //第一种方式
-        var viewer = new Cesium.Viewer('cesiumContainer', {
-            geocoder: true,
-            homeButton: true,
-            sceneModePicker: true,
-            baseLayerPicker: true,
-            projectionPicker: true,
-            navigationHelpButton: true,
-            animation: true,
-            timeline: true,
-            fullscreenButton: true,
-            //scene3DOnly:false,//仅仅显示3d,可隐藏右上角2d和3d按钮
-            infoBox: true, //点击模型不显示cesium自带的信息框
-            selectionIndicator: true //点击模型不显示cesium自带的绿色选中框
+        var tileMatrixLabels = [];
+        for (var i = 0; i < 18; i++) {
+            tileMatrixLabels.push("" + i);
+        }
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            animation: false,  //是否显示动画控件
+            baseLayerPicker: false, //是否显示图层选择控件
+            geocoder: true, //是否显示地名查找控件
+            timeline: false, //是否显示时间线控件
+            sceneModePicker: true, //是否显示投影方式控件
+            navigationHelpButton: false, //是否显示帮助信息控件
+            infoBox: true,  //是否显示点击要素之后显示的信息
         });
+
+
+        var bing = new Cesium.BingMapsImageryProvider({
+            url: 'https://ecn.t0.tiles.virtualearth.net',//     https://ecn.t0.tiles.virtualearth.net https://dev.virtualearth.net
+            key: 'AkjzA7OhS4MIBjutL21bkAop7dc41HSE0CNTR5c6HJy8JKc7U9U9RveWJrylD3XJ',
+
+        });
+
+        viewer.imageryLayers.addImageryProvider(bing);
+        viewer.camera.flyTo({
+            destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
+        })
+
+
+
 
     </script>
 </body>

@@ -105,20 +105,20 @@
 
         function hilightEntites(pickedObject) {
             var entity = pickedObject.id;
-            if(!selectedEntity){
+            if (!selectedEntity) {
                 selectedEntity = entity;
-                var oldColor = Object.assign({},entity.polygon.material.color.getValue());
-                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red,oldColor.green,oldColor.blue,oldColor.alpha)
-                selectedEntity.polygon.material = pickColor;  
-            }else{
+                var oldColor = Object.assign({}, entity.polygon.material.color.getValue());
+                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red, oldColor.green, oldColor.blue, oldColor.alpha)
+                selectedEntity.polygon.material = pickColor;
+            } else {
                 selectedEntity.polygon.material = selectedEntity.oldMaterial
                 selectedEntity = entity;
-                var oldColor = Object.assign({},entity.polygon.material.color.getValue());
-                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red,oldColor.green,oldColor.blue,oldColor.alpha)
+                var oldColor = Object.assign({}, entity.polygon.material.color.getValue());
+                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red, oldColor.green, oldColor.blue, oldColor.alpha)
                 selectedEntity.polygon.material = pickColor;
             }
-  
-            
+
+
         }
 
 

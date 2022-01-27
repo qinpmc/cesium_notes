@@ -27,24 +27,20 @@
 
 <body>
     <div id="cesiumContainer"></div>
-    <script>
+    <script type="module">
+        window.CESIUM_BASE_URL = "../Source/";
+        import * as Cesium from "../Source/Cesium.js";
 
-        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+        //Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
         //第一种方式
         var viewer = new Cesium.Viewer('cesiumContainer', {
-            geocoder: true,
-            homeButton: true,
-            sceneModePicker: true,
-            baseLayerPicker: true,
-            projectionPicker: true,
-            navigationHelpButton: true,
-            animation: true,
-            timeline: true,
-            fullscreenButton: true,
-            //scene3DOnly:false,//仅仅显示3d,可隐藏右上角2d和3d按钮
-            infoBox: true, //点击模型不显示cesium自带的信息框
-            selectionIndicator: true //点击模型不显示cesium自带的绿色选中框
+            baseLayerPicker: false,
+            // 有效果，缺陷：如果初始添加此provider，或造成影像的图层中 多了这个imageryProvider，对后续图层顺序等的管理造成影响
+            // imageryProvider: new Cesium.SingleTileImageryProvider({
+            //     url:
+            //         "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==",
+            // }),
         });
 
     </script>
