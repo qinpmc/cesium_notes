@@ -6,6 +6,7 @@ test/e2e/screenshots
 selenium-debug.log
 dist/*.gz
 dist/*.map
+5layer/custom/*
 explorations
 docs/.vuepress/dist
 yarn-error.log

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Bingmap</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button onclick="showBing()">显隐bing</button>
+        <button onclick="showOSM()">显隐osm</button>
+        <button onclick="showArcGIS()">显隐arcgis</button>
+        <button onclick="showTdt()">显隐tianditu</button>
+        <button onclick="adjustTdt(2)">调整tianditu</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            animation: false,  //是否显示动画控件
+            baseLayerPicker: false, //是否显示图层选择控件
+            geocoder: true, //是否显示地名查找控件
+            timeline: false, //是否显示时间线控件
+            sceneModePicker: true, //是否显示投影方式控件
+            navigationHelpButton: false, //是否显示帮助信息控件
+            infoBox: true,  //是否显示点击要素之后显示的信息
+        });
+
+
+        // bing
+        var bingLayer = new Cesium.ImageryLayer(new Cesium.BingMapsImageryProvider({
+            url: 'https://dev.virtualearth.net',//     https://ecn.t0.tiles.virtualearth.net https://dev.virtualearth.net
+            key: 'AkjzA7OhS4MIBjutL21bkAop7dc41HSE0CNTR5c6HJy8JKc7U9U9RveWJrylD3XJ',
+            mapStyle: 'Road'
+
+        }));
+        viewer.imageryLayers.add(bingLayer);
+
+        // osm
+        const osmLayer = new Cesium.ImageryLayer(new Cesium.OpenStreetMapImageryProvider({
+            url: 'https://a.tile.openstreetmap.org/'
+        }))
+        viewer.imageryLayers.add(osmLayer); //add(layer, index)
+
+        // arcgis
+        var arcgisImageryProvider = new Cesium.ArcGisMapServerImageryProvider({
+            url:
+                "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", // 3857坐标系
+        });
+        const arcgisLayer = new Cesium.ImageryLayer(arcgisImageryProvider)
+        viewer.imageryLayers.add(arcgisLayer);
+
+
+        const tdtLayer = new Cesium.ImageryLayer(new Cesium.WebMapTileServiceImageryProvider({
+            url:
+                "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            layer: "vec",
+            style: "default",
+            format: "tiles",
+            tileMatrixSetID: "w",
+            /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+  
+              }),*/
+        }))
+        viewer.imageryLayers.add(tdtLayer);
+
+
+        viewer.camera.flyTo({
+            destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
+        })
+
+        ///////////////////////////////////////////////////
+        window.showBing = function () {
+            const index = viewer.imageryLayers.indexOf(bingLayer)
+            const layer = viewer.imageryLayers.get(index)
+            layer.show = !layer.show
+        }
+
+        window.showOSM = function () {
+            const index = viewer.imageryLayers.indexOf(osmLayer)
+            const layer = viewer.imageryLayers.get(index)
+            layer.show = !layer.show
+        }
+
+        window.showArcGIS = function () {
+            const index = viewer.imageryLayers.indexOf(arcgisLayer)
+            const layer = viewer.imageryLayers.get(index)
+            layer.show = !layer.show
+        }
+
+        window.showTdt = function () {
+            const index = viewer.imageryLayers.indexOf(tdtLayer)
+            const layer = viewer.imageryLayers.get(index)
+            layer.show = !layer.show
+        }
+
+        window.adjustTdt = function (zindex) {
+            const oldIndex = viewer.imageryLayers.indexOf(tdtLayer);
+            viewer.imageryLayers.remove(tdtLayer, false)
+            viewer.imageryLayers.add(tdtLayer, 2);
+        }
+    </script>
+</body>
+
+</html>
