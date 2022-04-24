@@ -1,126 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <!-- Use correct character set. -->
-  <meta charset="utf-8">
-  <!-- Tell IE to use the latest, best version. -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <title>point</title>
-  <script src="../Build/Cesium/Cesium.js"></script>
-  <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
-      html, body, #cesiumContainer {
-          width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
-      }
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>point</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-  </style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
 </head>
+
 <body>
-<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
-  <button onclick="addPoint1()">增加红色点1</button>
-  <button onclick="addPoint2()">增加红色点2-带边框</button>
-  <button onclick="addPoint3()">增加红色点3-透明度+高度</button>
-  <button onclick="addPoint4()">增加黄色点4-translucencyByDistance</button>
-  <button onclick="addPoint5()">增加黄色点5-scaleByDistance</button>
-  <button onclick="addPoint6()">增加蓝色点6-distanceDisplayCondition</button>
+    <div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+        <button onclick="addPoint1()">增加红色点1</button>
+        <button onclick="addPoint2()">增加红色点2-带边框</button>
+        <button onclick="addPoint3()">增加红色点3-透明度+高度</button>
+        <button onclick="addPoint4()">增加黄色点4-translucencyByDistance</button>
+        <button onclick="addPoint5()">增加黄色点5-scaleByDistance</button>
+        <button onclick="addPoint6()">增加蓝色点6-distanceDisplayCondition</button>
 
-</div>
-  <div id="cesiumContainer"></div>
-  <script>
-      Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
-      var widget = new Cesium.CesiumWidget('cesiumContainer');
-      var scene = widget.scene;
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+        var widget = new Cesium.CesiumWidget('cesiumContainer');
+        var scene = widget.scene;
 
-      var pointPrimitives = scene.primitives.add(new Cesium.PointPrimitiveCollection());
+        var pointPrimitives = scene.primitives.add(new Cesium.PointPrimitiveCollection());
 
-      //普通点
-      function addPoint1() {
+        //普通点
+        function addPoint1() {
 
-          pointPrimitives.add({
-              position : Cesium.Cartesian3.fromDegrees(114, 30),
-              show : true, // default
-              color : Cesium.Color.RED, // default: WHITE
-              pixelSize : 10, // default: 1
-          });
+            pointPrimitives.add({
+                position: Cesium.Cartesian3.fromDegrees(114, 30),
+                show: true, // default
+                color: Cesium.Color.RED, // default: WHITE
+                pixelSize: 10, // default: 1
+            });
 
-          // 错误用法
-          /*scene.primitives.add({
-              position : Cesium.Cartesian3.fromDegrees(114, 30),
-              show : true, // default
-              color : Cesium.Color.RED, // default: WHITE
-              pixelSize : 10, // default: 1
-          });*/
+            // 错误用法
+            /*scene.primitives.add({
+                position : Cesium.Cartesian3.fromDegrees(114, 30),
+                show : true, // default
+                color : Cesium.Color.RED, // default: WHITE
+                pixelSize : 10, // default: 1
+            });*/
 
-      }
-
-
-      //带外边框点
-      function addPoint2() {
-          pointPrimitives.add({
-              position : Cesium.Cartesian3.fromDegrees(116, 30),
-              color : Cesium.Color.RED, // default: WHITE
-              pixelSize : 10, // default: 1
-              outlineColor : Cesium.Color.GREEN, // default: BLACK
-              outlineWidth : 3 // default: 0
-          });
-
-      }
-
-      //带外边框点+带高度+透明度
-      function addPoint3() {
-
-          pointPrimitives.add({
-              position : Cesium.Cartesian3.fromDegrees(114, 30,300000),
-              color : Cesium.Color.RED.withAlpha(0.33),
-              pixelSize : 15, // default: 1
-              outlineColor : Cesium.Color.GREEN, // default: BLACK
-              outlineWidth : 3 // default: 0
-          });
-      }
+        }
 
 
-      //点+translucencyByDistance
-      function addPoint4() {
-          pointPrimitives.add({
-              position : Cesium.Cartesian3.fromDegrees(114, 32),
-              color : Cesium.Color.YELLOW,
-              pixelSize : 15, // default: 1
-              //透明度随距离变化
-              translucencyByDistance : new Cesium.NearFarScalar(1.5e2, 1.0, 1.5e7, 0.2)
-          });
-      }
+        //带外边框点
+        function addPoint2() {
+            pointPrimitives.add({
+                position: Cesium.Cartesian3.fromDegrees(116, 30),
+                color: Cesium.Color.RED, // default: WHITE
+                pixelSize: 10, // default: 1
+                outlineColor: Cesium.Color.GREEN, // default: BLACK
+                outlineWidth: 3 // default: 0
+            });
 
-      //点+scaleByDistance
-      function addPoint5() {
-          pointPrimitives.add({
-              position : Cesium.Cartesian3.fromDegrees(100, 32),
-              color : Cesium.Color.YELLOW,
-              pixelSize : 15, // default: 1
-              //大小随距离变化
-              scaleByDistance : new Cesium.NearFarScalar(1.5e2, 1.0, 1.5e7, 2)
-          });
-      }
+        }
 
+        //带外边框点+带高度+透明度
+        function addPoint3() {
 
-      //点+distanceDisplayCondition
-      function addPoint6() {
-          pointPrimitives.add({
-              position : Cesium.Cartesian3.fromDegrees(114, 40),
-              color : Cesium.Color.NAVY,
-              pixelSize : 15, // default: 1
-              //随距离是否显示
-              distanceDisplayCondition : new Cesium.DistanceDisplayCondition(1.5e2, 1.5e7)
-          });
-
-      }
+            pointPrimitives.add({
+                position: Cesium.Cartesian3.fromDegrees(114, 30, 300000),
+                color: Cesium.Color.RED.withAlpha(0.33),
+                pixelSize: 15, // default: 1
+                outlineColor: Cesium.Color.GREEN, // default: BLACK
+                outlineWidth: 3 // default: 0
+            });
+        }
 
 
-      scene.camera.lookAt(new Cesium.Cartesian3.fromDegrees(114, 30),new Cesium.HeadingPitchRange(0, -50, 10000000))
+        //点+translucencyByDistance
+        function addPoint4() {
+            pointPrimitives.add({
+                position: Cesium.Cartesian3.fromDegrees(114, 32),
+                color: Cesium.Color.YELLOW,
+                pixelSize: 15, // default: 1
+                //透明度随距离变化
+                translucencyByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 1.5e7, 0.2)
+            });
+        }
+
+        //点+scaleByDistance
+        function addPoint5() {
+            pointPrimitives.add({
+                position: Cesium.Cartesian3.fromDegrees(100, 32),
+                color: Cesium.Color.YELLOW,
+                pixelSize: 15, // default: 1
+                //大小随距离变化
+                scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 1.5e7, 2)
+            });
+        }
+
+
+        //点+distanceDisplayCondition
+        function addPoint6() {
+            pointPrimitives.add({
+                position: Cesium.Cartesian3.fromDegrees(114, 40),
+                color: Cesium.Color.NAVY,
+                pixelSize: 15, // default: 1
+                //随距离是否显示
+                distanceDisplayCondition: new Cesium.DistanceDisplayCondition(1.5e2, 1.5e7)
+            });
+
+        }
+
+
+        scene.camera.lookAt(new Cesium.Cartesian3.fromDegrees(114, 30), new Cesium.HeadingPitchRange(0, -50, 10000000))
 
 
 
-  </script>
+    </script>
 </body>
+
 </html>

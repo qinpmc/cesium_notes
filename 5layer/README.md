@@ -1,3 +1,5 @@
+- https://blog.csdn.net/qq_19689967/article/details/119642190 (基于 Cesium 使高德地图、百度地图、腾讯地图与天地图无偏移叠加)
+
 ## Cesium.ImageryProvider 接口
 
 - ArcGisMapServerImageryProvider
@@ -109,4 +111,4 @@ options:Object ：
 （1）add(layer, index) layer： ImageryLayer index: Number  
 （2）addImageryProvider(imageryProvider, index) → ImageryLayer
 
-- https://blog.csdn.net/qq_19689967/article/details/119642190 (基于 Cesium 使高德地图、百度地图、腾讯地图与天地图无偏移叠加)
+

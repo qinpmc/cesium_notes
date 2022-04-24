@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Use correct character set. -->
     <meta charset="utf-8">
     <!-- Tell IE to use the latest, best version. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>移动事件</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-        html, body, #cesiumContainer {
+        html,
+        body,
+        #cesiumContainer {
             width: 100%;
             height: 100%;
             margin: 0;
@@ -22,40 +24,42 @@
         }
     </style>
 </head>
+
 <body>
 
-<div id="cesiumContainer"></div>
+    <div id="cesiumContainer"></div>
 
-<script>
+    <script>
 
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
-
-
-    var viewer = new Cesium.Viewer('cesiumContainer');
-    var scene = viewer.scene;
-
-    var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
-
-    //绑定鼠标移动事件
-    handler.setInputAction(function (movement) {
-        // movement.endPosition 屏幕坐标       movement.startPosition屏幕坐标
-
-        console.log("movement.startPosition: ",movement.startPosition,"movement.endPosition：",movement.endPosition);
-        // cartesian   世界坐标系 in world coordinates
-        var cartesian = viewer.camera.pickEllipsoid(movement.endPosition, scene.globe.ellipsoid);
-        if (cartesian) {
-
-            //Cesium.Cartographic(longitude, latitude, height) -----A position defined by longitude, latitude, and height. 弧度单位
-
-            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
-            var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(2);
-            var latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(2);
-            console.log(longitudeString, latitudeString);
-
-        }
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
 
-</script>
+        var viewer = new Cesium.Viewer('cesiumContainer');
+        var scene = viewer.scene;
+
+        var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+
+        //绑定鼠标移动事件
+        handler.setInputAction(function (movement) {
+            // movement.endPosition 屏幕坐标       movement.startPosition屏幕坐标
+
+            console.log("movement.startPosition: ", movement.startPosition, "movement.endPosition：", movement.endPosition);
+            // cartesian   世界坐标系 in world coordinates
+            var cartesian = viewer.camera.pickEllipsoid(movement.endPosition, scene.globe.ellipsoid);
+            if (cartesian) {
+
+                //Cesium.Cartographic(longitude, latitude, height) -----A position defined by longitude, latitude, and height. 弧度单位
+
+                var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+                var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(2);
+                var latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(2);
+                console.log(longitudeString, latitudeString);
+
+            }
+        }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+
+    </script>
 </body>
+
 </html>

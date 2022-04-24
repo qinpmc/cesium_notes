@@ -1,65 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Use correct character set. -->
     <meta charset="utf-8">
     <!-- Tell IE to use the latest, best version. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Hello World!</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-        html, body, #cesiumContainer {
+        html,
+        body,
+        #cesiumContainer {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
-
     </style>
 </head>
+
 <body>
-<img id="htmlOverlay" style="position: absolute;z-index: 999;display:none" src="./Cesium_Logo_overlay.png">
+    <img id="htmlOverlay" style="position: absolute;z-index: 999;display:none" src="./Cesium_Logo_overlay.png">
 
-<div id="cesiumContainer"></div>
+    <div id="cesiumContainer"></div>
 
-<script>
+    <script>
 
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        geocoder: true,
-        baseLayerPicker: true,
-        fullscreenButton: false,
-        homeButton: false,
-        sceneModePicker: true,
-        animation: true,
-        timeline: true,
-        navigationHelpButton: true
-    });
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            geocoder: true,
+            baseLayerPicker: true,
+            fullscreenButton: false,
+            homeButton: false,
+            sceneModePicker: true,
+            animation: true,
+            timeline: true,
+            navigationHelpButton: true
+        });
 
-    var scene = viewer.scene;
-    if (!scene.pickPositionSupported) {
-        window.alert('This browser does not support pickPosition.');
-    }
+        var scene = viewer.scene;
+        if (!scene.pickPositionSupported) {
+            window.alert('This browser does not support pickPosition.');
+        }
 
-    var htmlOverlay = document.getElementById('htmlOverlay');
+        var htmlOverlay = document.getElementById('htmlOverlay');
 
-    // Mouse over the globe to see the cartographic position
-    var widget = viewer.cesiumWidget;
-    widget.screenSpaceEventHandler.setInputAction(function (movement) {
-        // movement.endPosition 屏幕坐标       movement.startPosition屏幕坐标
-        htmlOverlay.style.display = "inline-block";
-        htmlOverlay.style.top = movement.endPosition.y + 'px';
-        htmlOverlay.style.left = movement.endPosition.x + 'px';
+        // Mouse over the globe to see the cartographic position
+        var widget = viewer.cesiumWidget;
+        widget.screenSpaceEventHandler.setInputAction(function (movement) {
+            // movement.endPosition 屏幕坐标       movement.startPosition屏幕坐标
+            htmlOverlay.style.display = "inline-block";
+            htmlOverlay.style.top = movement.endPosition.y + 'px';
+            htmlOverlay.style.left = movement.endPosition.x + 'px';
 
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+        }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
-</script>
+    </script>
 </body>
+
 </html>

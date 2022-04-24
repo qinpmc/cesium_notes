@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Hello World!</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .cesium-viewer-bottom
+
+        /* logo信息 */
+            {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cesiumContainer"></div>
+
+    <script>
+
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+
+        var terrainLayer = new Cesium.CesiumTerrainProvider({
+            "url": "http://data.marsgis.cn/terrain",
+            "requestWaterMask": true,
+            "requestVertexNormals": true,
+        });
+
+
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            selectionIndicator: false,
+            infoBox: false,
+            // 注释时相当于使用默认地形，解开注释相当于使用全球地形
+            //terrainProvider: Cesium.createWorldTerrain()
+        });
+
+
+        viewer.terrainProvider = terrainLayer;
+
+        viewer.camera.flyTo({
+            destination: Cesium.Cartesian3.fromDegrees(100, 31, 40000),
+            orientation: {
+                heading: Cesium.Math.toRadians(20),
+                pitch: Cesium.Math.toRadians(-90),
+                roll: Cesium.Math.toRadians(0),
+            }
+        });
+
+
+        var ellipsoid = viewer.scene.globe.ellipsoid;   //得到当前三维场景的椭球体
+        var scene = viewer.scene;
+
+        var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+        handler.setInputAction(function (movement) {
+            var cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
+            if (cartesian) {
+                var cartographic = Cesium.Cartographic.fromCartesian(cartesian);  //将笛卡尔坐标转换为地理坐标
+                var longitudeDegree = Cesium.Math.toDegrees(cartographic.longitude);
+                var latitudeDegree = Cesium.Math.toDegrees(cartographic.latitude);
+                var cartographic2 = Cesium.Cartographic.fromDegrees(longitudeDegree, latitudeDegree);
+                var terrainLevel = 14;
+                var promise = Cesium.sampleTerrain(terrainLayer, terrainLevel, [cartographic2]);
+                Cesium.when(promise, function (updatedPositions) {
+                    if (updatedPositions.length > 0) {
+                        console.log(
+                            'lng:' + Cesium.Math.toDegrees(updatedPositions[0].longitude) +
+                            ',lat:' + Cesium.Math.toDegrees(updatedPositions[0].latitude) +
+                            ',height:' + (updatedPositions[0].height ? updatedPositions[0].height : 0));
+                    } else {
+                        console.log('无法获取高程');
+                    }
+                });
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+    </script>
+</body>
+
+</html>

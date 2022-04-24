@@ -1,152 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Use correct character set. -->
-    <meta charset="utf-8" />
-    <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-    />
-    <title>模型</title>
-    <script src="../Build/CesiumUnminified/Cesium.js"></script>
-    <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
 
-      html,
-      body,
-      #cesiumContainer {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="cesiumContainer"></div>
-    <script>
-      Cesium.Ion.defaultAccessToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyOGYxMWEyYS1hMzc5LTQ0MDEtOGYxOC04ZDc4ODcyNTdiZTUiLCJpZCI6MjU5LCJpYXQiOjE1OTg5NTg3MjR9.HjqOnTvUuTIKotbUF7cfYxfOLR9UaKAfYcQAqZQblGs";
-      var viewer;
-      !(function () {
-        viewer = new Cesium.Viewer("cesiumContainer", {
-          animation: true, //是否显示动画控件
-          //baseLayerPicker: false, //是否显示图层选择控件
-          geocoder: true, //是否显示地名查找控件
-          timeline: true, //是否显示时间线控件
-          shouldAnimate: true,
-          sceneModePicker: true, //是否显示投影方式控件
-          //navigationHelpButton: false, //是否显示帮助信息控件
-          infoBox: true, //是否显示点击要素之后显示的信息
-          imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-            url:
-              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-            layer: "vec",
-            style: "default",
-            format: "tiles",
-            tileMatrixSetID: "w",
-            /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>模型</title>
+  <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+  <style>
+    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-                  }),*/
-          }),
-        });
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
 
-        var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyOGYxMWEyYS1hMzc5LTQ0MDEtOGYxOC04ZDc4ODcyNTdiZTUiLCJpZCI6MjU5LCJpYXQiOjE1OTg5NTg3MjR9.HjqOnTvUuTIKotbUF7cfYxfOLR9UaKAfYcQAqZQblGs";
+    var viewer;
+    !(function () {
+      viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: true, //是否显示动画控件
+        //baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: true, //是否显示时间线控件
+        shouldAnimate: true,
+        sceneModePicker: true, //是否显示投影方式控件
+        //navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
           url:
-            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-          layer: "cta",
+            "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
           style: "default",
           format: "tiles",
           tileMatrixSetID: "w",
-          tilingScheme: new Cesium.WebMercatorTilingScheme({}),
-        });
+          /*tilingScheme:new Cesium.WebMercatorTilingScheme({
 
-        viewer.imageryLayers.addImageryProvider(imageryProvider2);
-        viewer.camera.flyTo({
-          destination: Cesium.Cartesian3.fromDegrees(115, 2, 4556976),
-          orientation: {
-            heading: Cesium.Math.toRadians(355),
-            pitch: Cesium.Math.toRadians(-63.6),
-            roll: 0,
-          },
-        });
-      })();
-
-      viewer.scene.globe.depthTestAgainstTerrain = true;
-
-      // Set the initial camera view to look at Manhattan
-      var initialPosition = Cesium.Cartesian3.fromDegrees(
-        -74.05616,
-        40.70047,
-        2745
-      );
-
-      viewer.scene.camera.flyTo({
-        destination: initialPosition,
+                }),*/
+        }),
       });
 
-      // Load the NYC buildings tileset
-      var tileset = new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(75343),
+      var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "cta",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
       });
-      viewer.scene.primitives.add(tileset);
 
-      //   viewer.camera.changed.addEventListener(function () {
-      //     console.log(viewer.camera.heading);
-      //     console.log(viewer.camera.pitch);
-      //     console.log(viewer.camera.roll);
-      //     console.log(viewer.camera.positionCartographic);
-      //   });
+      viewer.imageryLayers.addImageryProvider(imageryProvider2);
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(115, 2, 4556976),
+        orientation: {
+          heading: Cesium.Math.toRadians(355),
+          pitch: Cesium.Math.toRadians(-63.6),
+          roll: 0,
+        },
+      });
+    })();
 
-      viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(
-        movement
-      ) {
-        var pickedFeature = viewer.scene.pick(movement.position);
+    viewer.scene.globe.depthTestAgainstTerrain = true;
 
-        if (pickedFeature instanceof Cesium.Cesium3DTileFeature) {
-          var propertyNames = pickedFeature.getPropertyNames();
-          var length = propertyNames.length;
-          for (var i = 0; i < length; ++i) {
-            var propertyName = propertyNames[i];
-            console.log(
-              propertyName + ": " + pickedFeature.getProperty(propertyName)
-            );
-          }
+    // Set the initial camera view to look at Manhattan
+    var initialPosition = Cesium.Cartesian3.fromDegrees(
+      -74.05616,
+      40.70047,
+      2745
+    );
+
+    viewer.scene.camera.flyTo({
+      destination: initialPosition,
+    });
+
+    // Load the NYC buildings tileset
+    var tileset = new Cesium.Cesium3DTileset({
+      url: Cesium.IonResource.fromAssetId(75343),
+    });
+    viewer.scene.primitives.add(tileset);
+
+    //   viewer.camera.changed.addEventListener(function () {
+    //     console.log(viewer.camera.heading);
+    //     console.log(viewer.camera.pitch);
+    //     console.log(viewer.camera.roll);
+    //     console.log(viewer.camera.positionCartographic);
+    //   });
+
+    viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(
+      movement
+    ) {
+      var pickedFeature = viewer.scene.pick(movement.position);
+
+      if (pickedFeature instanceof Cesium.Cesium3DTileFeature) {
+        var propertyNames = pickedFeature.getPropertyNames();
+        var length = propertyNames.length;
+        for (var i = 0; i < length; ++i) {
+          var propertyName = propertyNames[i];
+          console.log(
+            propertyName + ": " + pickedFeature.getProperty(propertyName)
+          );
         }
-        if (pickedFeature) {
-          selectFeature(pickedFeature);
-        }
-      },
+      }
+      if (pickedFeature) {
+        selectFeature(pickedFeature);
+      }
+    },
       Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
-      function selectFeature(feature) {
-        var selectbuilding = feature.getProperty("SOURCE_ID");
-        var selectedCondition =
-          "${SOURCE_ID} === " + "'" + selectbuilding + "'";
+    function selectFeature(feature) {
+      var selectbuilding = feature.getProperty("SOURCE_ID");
+      var selectedCondition =
+        "${SOURCE_ID} === " + "'" + selectbuilding + "'";
 
-        console.log(selectedCondition);
+      console.log(selectedCondition);
 
-        var transparentStyle = new Cesium.Cesium3DTileStyle({
-          color: {
-            conditions: [
-              [selectedCondition, "rgb(255,0,0)"],
-              // ["${Height} >= 300", "rgba(45, 0, 75, 0.5)"],
-              // ["${Height} >= 200", "rgb(102, 71, 151)"],
-              // ["${Height} >= 100", "rgb(170, 162, 204)"],
-              // ["${Height} >= 50", "rgb(224, 226, 238)"],
-              // ["${Height} >= 25", "rgb(252, 230, 200)"],
-              // ["${Height} >= 10", "rgb(248, 176, 87)"],
-              // ["${Height} >= 5", "rgb(198, 106, 11)"],
-              ["true", "rgb(255, 255, 255)"], //true表示剩余的显示的对象
-            ],
-          },
-        });
-        tileset.style = transparentStyle;
-      }
-    </script>
-  </body>
+      var transparentStyle = new Cesium.Cesium3DTileStyle({
+        color: {
+          conditions: [
+            [selectedCondition, "rgb(255,0,0)"],
+            // ["${Height} >= 300", "rgba(45, 0, 75, 0.5)"],
+            // ["${Height} >= 200", "rgb(102, 71, 151)"],
+            // ["${Height} >= 100", "rgb(170, 162, 204)"],
+            // ["${Height} >= 50", "rgb(224, 226, 238)"],
+            // ["${Height} >= 25", "rgb(252, 230, 200)"],
+            // ["${Height} >= 10", "rgb(248, 176, 87)"],
+            // ["${Height} >= 5", "rgb(198, 106, 11)"],
+            ["true", "rgb(255, 255, 255)"], //true表示剩余的显示的对象
+          ],
+        },
+      });
+      tileset.style = transparentStyle;
+    }
+  </script>
+</body>
+
 </html>

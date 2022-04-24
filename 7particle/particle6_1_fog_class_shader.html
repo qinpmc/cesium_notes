@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fog</title>
+  <style>
+    @import url(../lib/cesium1.89/Source/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+</head>
+
+<body>
+  <div style="position: absolute;z-index: 9999">
+    <button onclick="showFog()">显示全屏雾</button>
+    <button onclick="hideFog()">隐藏全屏雾</button>
+  </div>
+  <div id="cesiumContainer"></div>
+  <script type="module">
+    window.CESIUM_BASE_URL = "../lib/cesium1.89/Source/";
+    import * as Cesium from "../lib/cesium1.89/Source/Cesium.js";
+    import FogEffect from "./weather/FogEffect.js"
+
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      animation: false, //是否显示动画控件
+      baseLayerPicker: false, //是否显示图层选择控件
+      geocoder: true, //是否显示地名查找控件
+      timeline: false, //是否显示时间线控件
+      sceneModePicker: true, //是否显示投影方式控件
+      navigationHelpButton: false, //是否显示帮助信息控件
+      infoBox: true, //是否显示点击要素之后显示的信息
+      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "img",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w"
+      }),
+    });
+
+    var fog
+    window.showFog = function () {
+      fog = new FogEffect(viewer, {
+        visibility: 0.2,
+        color: new Cesium.Color(0.8, 0.8, 0.8, 0.3)
+      });
+    }
+
+    window.hideFog = function () {
+      fog.destroy()
+    }
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>开挖地形</title>
+  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+
+  <link href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" rel="stylesheet" />
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #000000;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+    var terrainProvider = Cesium.createWorldTerrain({
+      requestVertexNormals: true,
+      requestWaterMask: true,
+    });
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "img",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+
+          }),*/
+      }),
+      terrainProvider: terrainProvider,
+    });
+
+    viewer.scene.globe.depthTestAgainstTerrain = true;
+
+
+
+    // 逆时针方向采集
+    var points = [
+      new Cesium.Cartesian3(-1715292.6999753984, 4993153.157628936, 3566663.752912529),
+      new Cesium.Cartesian3(-1715285.8150713604, 4993167.072601330, 3566647.6921528564),
+      new Cesium.Cartesian3(-1715286.5985765400, 4993181.309761941, 3566627.519787549),
+      new Cesium.Cartesian3(-1715299.0249209427, 4993191.177501195, 3566607.861264360),
+      new Cesium.Cartesian3(-1715349.5762367432, 4993176.675656664, 3566603.878289345),
+      new Cesium.Cartesian3(-1715375.5538853381, 4993159.990032478, 3566614.671147202),
+      new Cesium.Cartesian3(-1715370.1945772346, 4993141.041835706, 3566643.580587877),
+      new Cesium.Cartesian3(-1715359.7019716015, 4993131.063945592, 3566662.468046927),
+      new Cesium.Cartesian3(-1715321.9141253997, 4993137.762602262, 3566671.205164391)
+    ];
+
+    var pointsLength = points.length;
+
+    var clippingPlanes = [];
+    for (var i = 0; i < pointsLength; ++i) {
+      var nextIndex = (i + 1) % pointsLength;
+      var midpoint = Cesium.Cartesian3.add(points[i], points[nextIndex], new Cesium.Cartesian3());
+      midpoint = Cesium.Cartesian3.multiplyByScalar(midpoint, 0.5, midpoint);
+
+      var up = Cesium.Cartesian3.normalize(midpoint, new Cesium.Cartesian3());
+      var right = Cesium.Cartesian3.subtract(points[nextIndex], midpoint, new Cesium.Cartesian3());
+      right = Cesium.Cartesian3.normalize(right, right);
+
+      var normal = Cesium.Cartesian3.cross(right, up, new Cesium.Cartesian3());
+      normal = Cesium.Cartesian3.normalize(normal, normal);
+
+      var originCenteredPlane = new Cesium.Plane(normal, 0.0);
+      var distance = Cesium.Plane.getPointDistance(originCenteredPlane, midpoint);
+
+      clippingPlanes.push(new Cesium.ClippingPlane(normal, distance));
+    }
+    viewer.scene.globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
+      planes: clippingPlanes,
+      edgeWidth: 1.0,
+      edgeColor: Cesium.Color.WHITE
+    });
+
+    viewer.camera.lookAt(new Cesium.Cartesian3(-1715349.5762367432, 4993176.675656664, 3566603.878289345),
+      new Cesium.HeadingPitchRange(0, -Cesium.Math.toRadians(90), 100));
+    viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+
+    // 多边形每个顶点的坐标
+    //var points = [];
+
+    // 依次计算顶点与下个顶点之间组成的线段，中间按照精度大小插值n个点，然后计算每个点的地形高度
+    var res = []
+    for (var i = 0; i < points.length - 1; i++) {
+      var promise = calHeight(points[i], points[i + 1], 30); // 返回promise对象
+      res.push(promise)
+    }
+
+
+    // 待所有的计算完毕后，处理坐标点，构造多边形
+    Promise.all(res).then(data => {
+      var positons = Array.prototype.concat.apply([], data); // 数组降维
+      var hierarchy = [];
+      positons.forEach(element => {
+        hierarchy.push(Cesium.Math.toDegrees(element.longitude));
+        hierarchy.push(Cesium.Math.toDegrees(element.latitude));
+        hierarchy.push(element.height);
+      });
+      viewer.entities.add({
+        polygon: {
+          hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights(hierarchy),
+          material: new Cesium.ImageMaterialProperty({
+            image: "./TerrainClipPlan/excavate_bottom_min.jpg"
+          }),
+          closeTop: false, // 这个要设置为false
+          extrudedHeight: 370,
+          perPositionHeight: true // 这个要设置true
+        }
+      });
+    })
+
+    function calHeight(fromPoint, endPoint, count) {
+      var positions = [];
+      for (var i = 0; i <= count; i++) {
+        var cart = Cesium.Cartesian3.lerp(fromPoint, endPoint, i / count, new Cesium.Cartesian3());
+        positions.push(Cesium.Cartographic.fromCartesian(cart));
+      }
+      return new Promise((resolve, reject) => {
+        var promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
+        Cesium.when(promise, function (updatedPositions) {
+          resolve(updatedPositions);
+        });
+      })
+    }
+
+  </script>
+</body>
+
+</html>

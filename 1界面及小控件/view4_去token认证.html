@@ -9,9 +9,9 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Hello World!</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
         html,
         body,
@@ -28,20 +28,51 @@
 <body>
     <div id="cesiumContainer"></div>
     <script type="module">
-        window.CESIUM_BASE_URL = "../Source/";
-        import * as Cesium from "../Source/Cesium.js";
+        window.CESIUM_BASE_URL = "../lib/cesium1.89/Source/";
+        import * as Cesium from "../lib/cesium1.89/Source/Cesium.js";
 
         //Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
         //第一种方式
         var viewer = new Cesium.Viewer('cesiumContainer', {
+            geocoder: false,
+            homeButton: false,
+            sceneModePicker: false,
             baseLayerPicker: false,
+            projectionPicker: false,
+            navigationHelpButton: false,
+            animation: false,
+            timeline: false,
+            fullscreenButton: false,
+            infoBox: false, //点击模型不显示cesium自带的信息框
+            selectionIndicator: false, //点击模型不显示cesium自带的绿色选中框
             // 有效果，缺陷：如果初始添加此provider，或造成影像的图层中 多了这个imageryProvider，对后续图层顺序等的管理造成影响
-            // imageryProvider: new Cesium.SingleTileImageryProvider({
-            //     url:
-            //         "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==",
-            // }),
+            imageryProvider: new Cesium.SingleTileImageryProvider({
+                url:
+                    "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==",
+            }),
         });
+        // 立即删除
+        viewer.imageryLayers.remove(viewer.imageryLayers.get(0))
+
+        //第2种方式
+        // var viewer = new Cesium.Viewer('cesiumContainer', {
+        //     geocoder: false,
+        //     homeButton: false,
+        //     sceneModePicker: false,
+        //     baseLayerPicker: false,
+        //     projectionPicker: false,
+        //     navigationHelpButton: false,
+        //     animation: false,
+        //     timeline: false,
+        //     fullscreenButton: false,
+        //     infoBox: false, //点击模型不显示cesium自带的信息框
+        //     selectionIndicator: false, //点击模型不显示cesium自带的绿色选中框
+        // });
+        // 缺陷：控制台有401错误
+        // viewer.imageryLayers.remove(viewer.imageryLayers.get(0))
+
+        viewer._cesiumWidget._creditContainer.style.display = "none"
 
     </script>
 </body>

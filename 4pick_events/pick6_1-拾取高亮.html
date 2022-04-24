@@ -9,9 +9,9 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>拾取entity</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
         html,
         body,
@@ -93,33 +93,21 @@
             // get an array of all primitives at the mouse position
             var pickedObject = scene.pick(movement.position);//--------------------------
             if (Cesium.defined(pickedObject)) {
-
-
-                console.log(pickedObject);
-                hilightEntites(pickedObject)
-                //console.log(pickedObjects.id.polygon.material = Cesium.Color.RED);
-
+                var entity = pickedObject.id;
+                selectedEntity = entity;
+                var oldColor = Object.assign({}, entity.polygon.material.color.getValue());
+                if (!selectedEntity.oldMaterial) {
+                    selectedEntity.oldMaterial = new Cesium.Color(oldColor.red, oldColor.green, oldColor.blue, oldColor.alpha)
+                }
+                selectedEntity.polygon.material = pickColor;
+            } else {
+                if (selectedEntity) {
+                    selectedEntity.polygon.material = selectedEntity.oldMaterial
+                    selectedEntity = null
+                }
             }
 
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-
-        function hilightEntites(pickedObject) {
-            var entity = pickedObject.id;
-            if(!selectedEntity){
-                selectedEntity = entity;
-                var oldColor = Object.assign({},entity.polygon.material.color.getValue());
-                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red,oldColor.green,oldColor.blue,oldColor.alpha)
-                selectedEntity.polygon.material = pickColor;  
-            }else{
-                selectedEntity.polygon.material = selectedEntity.oldMaterial
-                selectedEntity = entity;
-                var oldColor = Object.assign({},entity.polygon.material.color.getValue());
-                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red,oldColor.green,oldColor.blue,oldColor.alpha)
-                selectedEntity.polygon.material = pickColor;
-            }
-  
-            
-        }
 
 
     </script>

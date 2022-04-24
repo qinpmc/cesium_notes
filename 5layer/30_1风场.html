@@ -9,9 +9,9 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>tianditu</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
         html,
         body,
@@ -109,17 +109,17 @@
             viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show
         }
 
-        fetch("./uvwind.json").then(stream => {
+        fetch("../sampleData/uvwind.json").then(stream => {
             return stream.json()
         }).then(res => {
             if (window.CesiumWind) {
                 var windyLayer = new window.CesiumWind.WindLayer(res, {
                     colorScale: "#fff",
-                    minVelocity:  0,
-                    maxVelocity:  10,
+                    minVelocity: 0,
+                    maxVelocity: 10,
                     velocityScale: 0.05,
-                    particleAge:  90,
-                    lineWidth:  1,
+                    particleAge: 90,
+                    lineWidth: 1,
                     particleMultiplier: 0.01
                 });
                 console.log(windyLayer)

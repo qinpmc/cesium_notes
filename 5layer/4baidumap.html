@@ -1,325 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Use correct character set. -->
-    <meta charset="utf-8" />
-    <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-    />
-    <title>baiduMAP</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
-    <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
 
-      html,
-      body,
-      #cesiumContainer {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-    </style>
-  </head>
-  <body>
-    <div style="position: absolute;z-index: 999999">
-      <button onclick="toggleTiandituLayer()">显隐天地图</button>
-    </div>
-    <div id="cesiumContainer"></div>
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>baiduMAP</title>
+  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-    <script>
-      ///////////////////////////////////////////
-      function BDImageryProvider(options) {
-        this._url = options.url;
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
 
-        this._tileWidth = 256;
-        this._tileHeight = 256;
-        this._maximumLevel = 18;
+<body>
+  <div style="position: absolute;z-index: 999999">
+    <button onclick="toggleTiandituLayer()">显隐天地图</button>
+  </div>
+  <div id="cesiumContainer"></div>
 
-        var rectangleSouthwestInMeters = new Cesium.Cartesian2(
-          -33746824,
-          -33554054
-        );
-        var rectangleNortheastInMeters = new Cesium.Cartesian2(
-          33746824,
-          33554054
-        );
-        this._tilingScheme = new Cesium.WebMercatorTilingScheme({
-          rectangleSouthwestInMeters: rectangleSouthwestInMeters,
-          rectangleNortheastInMeters: rectangleNortheastInMeters
-        });
+  <script>
+    ///////////////////////////////////////////
+    function BDImageryProvider(options) {
+      this._url = options.url;
 
-        //var rectangleSouthwestInMeters = new Cesium.Cartesian2(-25165824, -25165824);
-        //var rectangleNortheastInMeters = new Cesium.Cartesian2(25165824, 25165824);
-        //this._tilingScheme = new Cesium.WebMercatorTilingScheme();
+      this._tileWidth = 256;
+      this._tileHeight = 256;
+      this._maximumLevel = 18;
 
-        this._credit = undefined;
-        this._rectangle = this._tilingScheme.rectangle;
-        this._ready = true;
-      }
-
-      /*    function buildImageUrl(imageryProvider, x, y, level) {
-        var tileW = imageryProvider._tilingScheme.getNumberOfXTilesAtLevel(level);
-        var tileH = imageryProvider._tilingScheme.getNumberOfYTilesAtLevel(level);
-        x = x - tileW / 2;
-        y = tileH / 2 - y - 1;
-        if (x < 0)
-            x = 'M' + (-x);
-        if (y < 0)
-            y = 'M' + (-y);
-        var url1 = imageryProvider._url
-            .replace('{x}', x)
-            .replace('{y}', y)
-            .replace('{z}', level);
-        return url1;
-    }*/
-
-      Object.defineProperties(BDImageryProvider.prototype, {
-        /**
-         * url地址
-         * @ignore
-         * @type {String}
-         */
-        url: {
-          get: function() {
-            return this._url;
-          }
-        },
-        /**
-         *令牌
-         * @ignore
-         * @type {String}
-         */
-        token: {
-          get: function() {
-            return this._token;
-          }
-        },
-        /**
-         *代理
-         * @ignore
-         * @type {String}
-         */
-        proxy: {
-          get: function() {
-            return this._proxy;
-          }
-        },
-        /**
-         *切片宽度
-         * @ignore
-         * @type {Number}
-         */
-        tileWidth: {
-          get: function() {
-            if (!this._ready) {
-              throw new Cesium.DeveloperError(
-                "tileWidth must not be called before the imagery provider is ready."
-              );
-            }
-            return this._tileWidth;
-          }
-        },
-        /**
-         *切片高度
-         * @ignore
-         * @type {Number}
-         */
-        tileHeight: {
-          get: function() {
-            if (!this._ready) {
-              throw new Cesium.DeveloperError(
-                "tileHeight must not be called before the imagery provider is ready."
-              );
-            }
-            return this._tileHeight;
-          }
-        },
-        /**
-         *最大切片级别
-         * @ignore
-         * @type {Number}
-         */
-        maximumLevel: {
-          get: function() {
-            if (!this._ready) {
-              throw new Cesium.DeveloperError(
-                "maximumLevel must not be called before the imagery provider is ready."
-              );
-            }
-            return this._maximumLevel;
-          }
-        },
-        /**
-         *最小切片级别
-         * @ignore
-         * @type {Number}
-         */
-        minimumLevel: {
-          get: function() {
-            if (!this._ready) {
-              throw new Cesium.DeveloperError(
-                "minimumLevel must not be called before the imagery provider is ready."
-              );
-            }
-            return 0;
-          }
-        },
-        /**
-         *切片模式
-         * @ignore
-         * @type {Object}
-         */
-        tilingScheme: {
-          get: function() {
-            if (!this._ready) {
-              throw new Cesium.DeveloperError(
-                "tilingScheme must not be called before the imagery provider is ready."
-              );
-            }
-            return this._tilingScheme;
-          }
-        },
-        /**
-         *矩形
-         * @ignore
-         * @type {Object}
-         */
-        rectangle: {
-          get: function() {
-            if (!this._ready) {
-              throw new Cesium.DeveloperError(
-                "rectangle must not be called before the imagery provider is ready."
-              );
-            }
-            return this._rectangle;
-          }
-        },
-        /**
-         *切片丢失策略
-         * @ignore
-         * @type {Object}
-         */
-        tileDiscardPolicy: {
-          get: function() {
-            if (!this._ready) {
-              throw new Cesium.DeveloperError(
-                "tileDiscardPolicy must not be called before the imagery provider is ready."
-              );
-            }
-            return this._tileDiscardPolicy;
-          }
-        },
-        /**
-         *是否准备好
-         * @ignore
-         * @type {Boolean}
-         */
-        ready: {
-          get: function() {
-            return this._ready;
-          }
-        },
-        readyPromise: {
-          get: function() {
-            return this._readyPromise.promise;
-          }
-        },
-        credit: {
-          get: function() {
-            return this._credit;
-          }
-        },
-        usingPrecachedTiles: {
-          get: function() {
-            return this._useTiles;
-          }
-        },
-        hasAlphaChannel: {
-          get: function() {
-            return !0;
-          }
-        },
-        layers: {
-          get: function() {
-            return this._layers;
-          }
-        }
-      });
-
-      BDImageryProvider.prototype.getTileCredits = function(x, y, level) {
-        return undefined;
-      };
-
-      BDImageryProvider.prototype.requestImage = function(x, y, level) {
-        if (!this._ready) {
-          throw new Cesium.DeveloperError(
-            "requestImage must not be called before the imagery provider is ready."
-          );
-        }
-        var r = this._tilingScheme.getNumberOfXTilesAtLevel(level);
-        var n = this._tilingScheme.getNumberOfYTilesAtLevel(level);
-        var url = this._url
-          .replace("{x}", x - r / 2)
-          .replace("{y}", n / 2 - y - 1)
-          .replace("{z}", level)
-          .replace("{s}", Math.floor(10 * Math.random()));
-        return Cesium.ImageryProvider.loadImage(this, url);
-      };
-      //////////////////////////////////////////////
-
-      Cesium.Ion.defaultAccessToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
-
-      var viewer = new Cesium.Viewer("cesiumContainer", {
-        animation: false, //是否显示动画控件
-        baseLayerPicker: false, //是否显示图层选择控件
-        geocoder: true, //是否显示地名查找控件
-        timeline: false, //是否显示时间线控件
-        sceneModePicker: true, //是否显示投影方式控件
-        navigationHelpButton: false, //是否显示帮助信息控件
-        infoBox: true //是否显示点击要素之后显示的信息
-      });
-
-      var bdlayer = new BDImageryProvider({
-        url:
-          "http://online1.map.bdimg.com/onlinelabel/?qt=tile&x={x}&y={y}&z={z}"
-      });
-
-      viewer.imageryLayers.addImageryProvider(bdlayer);
-      viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
-      });
-
-      var tileMatrixLabels = [];
-      for (var i = 0; i < 18; i++) {
-        tileMatrixLabels.push("" + i);
-      }
-      var imageryProvider3 = new Cesium.WebMapTileServiceImageryProvider({
-        url:
-          "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-        layer: "img",
-        style: "default",
-        format: "tiles",
-        tileMatrixSetID: "w",
-        tileMatrixLabels: tileMatrixLabels,
-        tilingScheme: new Cesium.WebMercatorTilingScheme({})
-      });
-
-      var tiandituLayer = viewer.imageryLayers.addImageryProvider(
-        imageryProvider3
+      var rectangleSouthwestInMeters = new Cesium.Cartesian2(
+        -33746824,
+        -33554054
       );
+      var rectangleNortheastInMeters = new Cesium.Cartesian2(
+        33746824,
+        33554054
+      );
+      this._tilingScheme = new Cesium.WebMercatorTilingScheme({
+        rectangleSouthwestInMeters: rectangleSouthwestInMeters,
+        rectangleNortheastInMeters: rectangleNortheastInMeters
+      });
 
-      window.toggleTiandituLayer = function() {
-        var visible = tiandituLayer.show;
-        visible = !visible;
-        tiandituLayer.show = visible;
-      };
-    </script>
-  </body>
+      //var rectangleSouthwestInMeters = new Cesium.Cartesian2(-25165824, -25165824);
+      //var rectangleNortheastInMeters = new Cesium.Cartesian2(25165824, 25165824);
+      //this._tilingScheme = new Cesium.WebMercatorTilingScheme();
+
+      this._credit = undefined;
+      this._rectangle = this._tilingScheme.rectangle;
+      this._ready = true;
+    }
+
+    /*    function buildImageUrl(imageryProvider, x, y, level) {
+      var tileW = imageryProvider._tilingScheme.getNumberOfXTilesAtLevel(level);
+      var tileH = imageryProvider._tilingScheme.getNumberOfYTilesAtLevel(level);
+      x = x - tileW / 2;
+      y = tileH / 2 - y - 1;
+      if (x < 0)
+          x = 'M' + (-x);
+      if (y < 0)
+          y = 'M' + (-y);
+      var url1 = imageryProvider._url
+          .replace('{x}', x)
+          .replace('{y}', y)
+          .replace('{z}', level);
+      return url1;
+  }*/
+
+    Object.defineProperties(BDImageryProvider.prototype, {
+      /**
+       * url地址
+       * @ignore
+       * @type {String}
+       */
+      url: {
+        get: function () {
+          return this._url;
+        }
+      },
+      /**
+       *令牌
+       * @ignore
+       * @type {String}
+       */
+      token: {
+        get: function () {
+          return this._token;
+        }
+      },
+      /**
+       *代理
+       * @ignore
+       * @type {String}
+       */
+      proxy: {
+        get: function () {
+          return this._proxy;
+        }
+      },
+      /**
+       *切片宽度
+       * @ignore
+       * @type {Number}
+       */
+      tileWidth: {
+        get: function () {
+          if (!this._ready) {
+            throw new Cesium.DeveloperError(
+              "tileWidth must not be called before the imagery provider is ready."
+            );
+          }
+          return this._tileWidth;
+        }
+      },
+      /**
+       *切片高度
+       * @ignore
+       * @type {Number}
+       */
+      tileHeight: {
+        get: function () {
+          if (!this._ready) {
+            throw new Cesium.DeveloperError(
+              "tileHeight must not be called before the imagery provider is ready."
+            );
+          }
+          return this._tileHeight;
+        }
+      },
+      /**
+       *最大切片级别
+       * @ignore
+       * @type {Number}
+       */
+      maximumLevel: {
+        get: function () {
+          if (!this._ready) {
+            throw new Cesium.DeveloperError(
+              "maximumLevel must not be called before the imagery provider is ready."
+            );
+          }
+          return this._maximumLevel;
+        }
+      },
+      /**
+       *最小切片级别
+       * @ignore
+       * @type {Number}
+       */
+      minimumLevel: {
+        get: function () {
+          if (!this._ready) {
+            throw new Cesium.DeveloperError(
+              "minimumLevel must not be called before the imagery provider is ready."
+            );
+          }
+          return 0;
+        }
+      },
+      /**
+       *切片模式
+       * @ignore
+       * @type {Object}
+       */
+      tilingScheme: {
+        get: function () {
+          if (!this._ready) {
+            throw new Cesium.DeveloperError(
+              "tilingScheme must not be called before the imagery provider is ready."
+            );
+          }
+          return this._tilingScheme;
+        }
+      },
+      /**
+       *矩形
+       * @ignore
+       * @type {Object}
+       */
+      rectangle: {
+        get: function () {
+          if (!this._ready) {
+            throw new Cesium.DeveloperError(
+              "rectangle must not be called before the imagery provider is ready."
+            );
+          }
+          return this._rectangle;
+        }
+      },
+      /**
+       *切片丢失策略
+       * @ignore
+       * @type {Object}
+       */
+      tileDiscardPolicy: {
+        get: function () {
+          if (!this._ready) {
+            throw new Cesium.DeveloperError(
+              "tileDiscardPolicy must not be called before the imagery provider is ready."
+            );
+          }
+          return this._tileDiscardPolicy;
+        }
+      },
+      /**
+       *是否准备好
+       * @ignore
+       * @type {Boolean}
+       */
+      ready: {
+        get: function () {
+          return this._ready;
+        }
+      },
+      readyPromise: {
+        get: function () {
+          return this._readyPromise.promise;
+        }
+      },
+      credit: {
+        get: function () {
+          return this._credit;
+        }
+      },
+      usingPrecachedTiles: {
+        get: function () {
+          return this._useTiles;
+        }
+      },
+      hasAlphaChannel: {
+        get: function () {
+          return !0;
+        }
+      },
+      layers: {
+        get: function () {
+          return this._layers;
+        }
+      }
+    });
+
+    BDImageryProvider.prototype.getTileCredits = function (x, y, level) {
+      return undefined;
+    };
+
+    BDImageryProvider.prototype.requestImage = function (x, y, level) {
+      if (!this._ready) {
+        throw new Cesium.DeveloperError(
+          "requestImage must not be called before the imagery provider is ready."
+        );
+      }
+      var r = this._tilingScheme.getNumberOfXTilesAtLevel(level);
+      var n = this._tilingScheme.getNumberOfYTilesAtLevel(level);
+      var url = this._url
+        .replace("{x}", x - r / 2)
+        .replace("{y}", n / 2 - y - 1)
+        .replace("{z}", level)
+        .replace("{s}", Math.floor(10 * Math.random()));
+      return Cesium.ImageryProvider.loadImage(this, url);
+    };
+    //////////////////////////////////////////////
+
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      animation: false, //是否显示动画控件
+      baseLayerPicker: false, //是否显示图层选择控件
+      geocoder: true, //是否显示地名查找控件
+      timeline: false, //是否显示时间线控件
+      sceneModePicker: true, //是否显示投影方式控件
+      navigationHelpButton: false, //是否显示帮助信息控件
+      infoBox: true //是否显示点击要素之后显示的信息
+    });
+
+    var bdlayer = new BDImageryProvider({
+      url:
+        "http://online1.map.bdimg.com/onlinelabel/?qt=tile&x={x}&y={y}&z={z}"
+    });
+
+    viewer.imageryLayers.addImageryProvider(bdlayer);
+    viewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
+    });
+
+    var tileMatrixLabels = [];
+    for (var i = 0; i < 18; i++) {
+      tileMatrixLabels.push("" + i);
+    }
+    var imageryProvider3 = new Cesium.WebMapTileServiceImageryProvider({
+      url:
+        "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+      layer: "img",
+      style: "default",
+      format: "tiles",
+      tileMatrixSetID: "w",
+      tileMatrixLabels: tileMatrixLabels,
+      tilingScheme: new Cesium.WebMercatorTilingScheme({})
+    });
+
+    var tiandituLayer = viewer.imageryLayers.addImageryProvider(
+      imageryProvider3
+    );
+
+    window.toggleTiandituLayer = function () {
+      var visible = tiandituLayer.show;
+      visible = !visible;
+      tiandituLayer.show = visible;
+    };
+  </script>
+</body>
+
 </html>

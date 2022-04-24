@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Use correct character set. -->
   <meta charset="utf-8">
@@ -8,35 +9,44 @@
   <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
   <title>鼠标默认方式</title>
-  <script src="../Build/Cesium/Cesium.js"></script>
+  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
   <style>
-    @import url(../Build/Cesium/Widgets/widgets.css);
-    html, body, #cesiumContainer {
-      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
     }
   </style>
 </head>
-<body>
-<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
-  <button onclick="toggleZoom()">禁用/开启Zoom</button>
-  <button onclick="toggleTilt()">禁用/开启旋转</button>
-</div>
-<div id="cesiumContainer"></div>
 
-<script>
+<body>
+  <div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+    <button onclick="toggleZoom()">禁用/开启Zoom</button>
+    <button onclick="toggleTilt()">禁用/开启旋转</button>
+  </div>
+  <div id="cesiumContainer"></div>
+
+  <script>
 
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
     var viewer = new Cesium.Viewer('cesiumContainer');
 
     function toggleZoom() {
-        viewer.scene.screenSpaceCameraController.enableZoom = !viewer.scene.screenSpaceCameraController.enableZoom;
+      viewer.scene.screenSpaceCameraController.enableZoom = !viewer.scene.screenSpaceCameraController.enableZoom;
     }
 
     function toggleTilt() {
-        viewer.scene.screenSpaceCameraController.enableTilt = !viewer.scene.screenSpaceCameraController.enableTilt;
+      viewer.scene.screenSpaceCameraController.enableTilt = !viewer.scene.screenSpaceCameraController.enableTilt;
     }
 
-</script>
+  </script>
 </body>
+
 </html>

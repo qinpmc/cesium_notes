@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>entity_primitive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+
+  <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+  <link rel="stylesheet" href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" />
+</head>
+
+<body>
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+  <div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+    <button onclick="addModel()">增加模型_primitive</button>
+    <button onclick="addModles('../sampleData/model/Cesium_Air.glb')">增加多个模型_primitives</button>
+    <button onclick="hilight()">高亮模型</button>
+  </div>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+    var widget = new Cesium.CesiumWidget("cesiumContainer");
+    var scene = widget.scene;
+
+
+    var primitives = new Cesium.PrimitiveCollection()
+
+
+    function addModel() {
+      var lng = 114, lat = 30, height = 5000;
+      primitives.removeAll(); // 使用 scene.primitives.removeAll()，并且使用CesiumUnminified/Cesium.js 会报调试错误
+      scene.primitives.add(primitives)
+      var position = Cesium.Cartesian3.fromDegrees(lng, lat, height);
+
+      var heading = Cesium.Math.toRadians(135);
+      var pitch = 0;
+      var roll = 0;
+      var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+      // 模型矩阵  Matrix4 
+      var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+        position,
+        hpr
+      );
+
+      var model = Cesium.Model.fromGltf({
+        url: "../sampleData/model/Cesium_Air.glb",
+        modelMatrix: modelMatrix,
+        minimumPixelSize: 128,
+        maximumScale: 20000,
+      });
+      var primitiveModel = primitives.add(model)
+
+      var modelMatrix = primitiveModel.modelMatrix
+
+      var anchor = getPositonFromModelMatix(modelMatrix)
+
+      console.log(anchor)
+
+
+      scene.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(lng, lat, height + 20000),
+        orientation: {
+          heading: Cesium.Math.toRadians(175.0),
+          pitch: Cesium.Math.toRadians(-90.0),
+          roll: 0.0
+        }
+      });
+    }
+
+
+    function getPositonFromModelMatix(modelMatrix) {
+      const cartesian3 = Cesium.Matrix4.getTranslation(modelMatrix, new Cesium.Cartesian3())
+      const carto = Cesium.Cartographic.fromCartesian(cartesian3)
+      const lng = Cesium.Math.toDegrees(carto.longitude)
+      const lat = Cesium.Math.toDegrees(carto.latitude)
+      return [lng, lat, carto.height]
+    }
+
+
+    function addModles(url) {
+      var lng = 114, lat = 30, height = 5000;
+      primitives.removeAll(); // 使用 scene.primitives.removeAll()，并且使用CesiumUnminified/Cesium.js 会报调试错误
+      scene.primitives.add(primitives)
+      var models = createModels(url, lng, lat, height)
+
+      models.forEach(model => {
+        primitives.add(model);
+      })
+
+      scene.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(lng, lat, height + 20000),
+        orientation: {
+          heading: Cesium.Math.toRadians(175.0),
+          pitch: Cesium.Math.toRadians(-90.0),
+          roll: 0.0
+        }
+      });
+    }
+
+
+
+    function createModels(url, x, y, z) {
+      var heading = Cesium.Math.toRadians(135);
+      var pitch = 0;
+      var roll = 0;
+      var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+      var res = []
+      for (var i = 0; i < 50; i++) {
+        for (var j = 0; j < 50; j++) {
+          if (i > 50) {
+            var lng = x - Math.random()
+            var lat = y - Math.random()
+          } else {
+            var lng = x + Math.random()
+            var lat = y + Math.random()
+          }
+          var position = Cesium.Cartesian3.fromDegrees(lng, lat, z);
+          var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+            position,
+            hpr
+          );
+
+          var model = Cesium.Model.fromGltf({
+            url: url,
+            modelMatrix: modelMatrix,
+            minimumPixelSize: 128,
+            maximumScale: 20000,
+          });
+          res.push(model)
+        }
+      }
+      return res
+
+    }
+
+
+
+
+    widget.screenSpaceEventHandler.setInputAction(function (movement) {
+      var picked = scene.pick(movement.position);
+      if (picked) {
+        console.log(picked)
+        picked.primitive.colorBlendMode = Cesium.ColorBlendMode.HIGHLIGHT //必须开启
+        picked.primitive.color = Cesium.Color.RED
+      }
+
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+  </script>
+</body>
+
+</html>

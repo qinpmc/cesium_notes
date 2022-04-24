@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+  <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+  <link rel="stylesheet" href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" />
+
+</head>
+
+<body>
+  <div id="fun">
+    <button id="fov1">fov++</button>
+    <button id="fov2">fov--</button>
+    <button id="aspectRatio1">aspectRatio++</button>
+    <button id="aspectRatio2">aspectRatio--</button>
+    <button id="near1">near++</button>
+    <button id="near2">near--</button>
+    <button id="far1">far++</button>
+    <button id="far2">far--</button>
+    <button id="xOffset1">xOffset++</button>
+    <button id="xOffset2">xOffset--</button>
+    <button id="yOffset1">yOffset++</button>
+    <button id="yOffset2">yOffset--</button>
+  </div>
+  <div id="cesiumContainer"></div>
+</body>
+<style>
+  html,
+  body,
+  #cesiumContainer {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  #fun {
+    position: absolute;
+    z-index: 100;
+  }
+</style>
+
+<script>
+  Cesium.Ion.defaultAccessToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+  let viewer = new Cesium.Viewer("cesiumContainer", {
+    selectionIndicator: false,
+    animation: false, //是否显示动画控件
+    baseLayerPicker: false, //是否显示图层选择控件
+    geocoder: false, //是否显示地名查找控件
+    timeline: false, //是否显示时间线控件
+    sceneModePicker: true, //是否显示投影方式控件
+    navigationHelpButton: false, //是否显示帮助信息控件
+    infoBox: false, //是否显示点击要素之后显示的信息
+    fullscreenButton: true,
+    terrainProvider: Cesium.createWorldTerrain()
+  });
+
+
+  let fov = 0, aspectRatio = 0, near = 0, far = 0, xOffset = 0, yOffset = 0;
+  let primitive;
+
+  addFrameFrustum()
+
+  function addFrameFrustum() {
+    // 视锥体只带边框
+    let geometry = new Cesium.FrustumOutlineGeometry({
+      frustum: new Cesium.PerspectiveFrustum({
+        fov: Math.PI / 6 + fov,
+        aspectRatio: 1 + aspectRatio,
+        near: 1.0 + near,
+        far: 300.0 + far,
+        xOffset: xOffset,
+        yOffset: yOffset
+      }),
+      origin: Cesium.Cartesian3.fromDegrees(
+        108.95941920299897,
+        34.21978815691976,
+        1000
+      ),
+      orientation: new Cesium.Quaternion(0.0001, 0.0, 0.0, 0.0)
+    });
+
+    primitive = new Cesium.Primitive({
+      geometryInstances: new Cesium.GeometryInstance({
+        geometry: geometry,
+        attributes: {
+          color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+            Cesium.Color.RED
+          ),
+          show: new Cesium.ShowGeometryInstanceAttribute(true)
+        }
+      }),
+      appearance: new Cesium.PerInstanceColorAppearance({
+        flat: true,
+        translucent: false
+      }),
+
+    });
+    viewer.scene.primitives.add(primitive);
+
+    viewer.camera.flyTo({ destination: Cesium.Cartesian3.fromDegrees(108.95941920299897, 34.21978815691976, 1200) });
+
+  }
+
+</script>
+
+</html>

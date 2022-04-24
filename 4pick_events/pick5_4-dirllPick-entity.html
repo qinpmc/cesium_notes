@@ -1,145 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Use correct character set. -->
     <meta charset="utf-8">
     <!-- Tell IE to use the latest, best version. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>拾取entity</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-        html, body, #cesiumContainer {
+        html,
+        body,
+        #cesiumContainer {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
-
     </style>
 </head>
+
 <body>
 
-<div id="cesiumContainer"></div>
+    <div id="cesiumContainer"></div>
 
-<script>
-    /*
+    <script>
+        /*
+    
+            1. scene.pick只可获取一个entity对象（如该位置存在多个entity，哪怕面点线不在同一高度，面entity都可能会盖住点线entity），
+            2. scene.drillPick可获取当前坐标下的多个对象；
+    
+        */
 
-        1. scene.pick只可获取一个entity对象（如该位置存在多个entity，哪怕面点线不在同一高度，面entity都可能会盖住点线entity），
-        2. scene.drillPick可获取当前坐标下的多个对象；
-
-    */
-
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
 
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        selectionIndicator: false,
-        infoBox: false,
-        // 注释时相当于使用默认地形，解开注释相当于使用全球地形
-        //terrainProvider: Cesium.createWorldTerrain()
-    });
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            selectionIndicator: false,
+            infoBox: false,
+            // 注释时相当于使用默认地形，解开注释相当于使用全球地形
+            //terrainProvider: Cesium.createWorldTerrain()
+        });
 
-    // 深度开启或关闭
-    //viewer.scene.globe.depthTestAgainstTerrain = true;
+        // 深度开启或关闭
+        //viewer.scene.globe.depthTestAgainstTerrain = true;
 
-    var scene = viewer.scene;
+        var scene = viewer.scene;
 
-    var handler;
+        var handler;
 
-    var pickedEntities = new Cesium.EntityCollection();
-    var pickColor = Cesium.Color.YELLOW.withAlpha(0.5);
+        var pickedEntities = new Cesium.EntityCollection();
+        var pickColor = Cesium.Color.YELLOW.withAlpha(0.5);
 
-    function makeProperty(entity, color) {
-        var colorProperty = new Cesium.CallbackProperty(function(time, result) {
-            if (pickedEntities.contains(entity)) {
-                return pickColor.clone(result);
-            }
-            return color.clone(result);
-        }, false);
+        function makeProperty(entity, color) {
+            var colorProperty = new Cesium.CallbackProperty(function (time, result) {
+                if (pickedEntities.contains(entity)) {
+                    return pickColor.clone(result);
+                }
+                return color.clone(result);
+            }, false);
 
-        entity.polygon.material = new Cesium.ColorMaterialProperty(colorProperty);
-    }
+            entity.polygon.material = new Cesium.ColorMaterialProperty(colorProperty);
+        }
 
-    var red = viewer.entities.add({
-        polygon : {
-            hierarchy : Cesium.Cartesian3.fromDegreesArray([-70.0, 30.0,
+        var red = viewer.entities.add({
+            polygon: {
+                hierarchy: Cesium.Cartesian3.fromDegreesArray([-70.0, 30.0,
                 -60.0, 30.0,
                 -60.0, 40.0,
                 -70.0, 40.0]),
-            height : 0
-        }
-    });
-    makeProperty(red, Cesium.Color.RED.withAlpha(0.5));
+                height: 0
+            }
+        });
+        makeProperty(red, Cesium.Color.RED.withAlpha(0.5));
 
-    var blue = viewer.entities.add({
-        polygon : {
-            hierarchy : Cesium.Cartesian3.fromDegreesArray([-75.0, 34.0,
+        var blue = viewer.entities.add({
+            polygon: {
+                hierarchy: Cesium.Cartesian3.fromDegreesArray([-75.0, 34.0,
                 -63.0, 34.0,
                 -63.0, 40.0,
                 -75.0, 40.0]),
-            height : 0
-        }
-    });
-    makeProperty(blue, Cesium.Color.BLUE.withAlpha(0.5));
+                height: 0
+            }
+        });
+        makeProperty(blue, Cesium.Color.BLUE.withAlpha(0.5));
 
-    var green = viewer.entities.add({
-        polygon : {
-            hierarchy : Cesium.Cartesian3.fromDegreesArray([-67.0, 36.0,
+        var green = viewer.entities.add({
+            polygon: {
+                hierarchy: Cesium.Cartesian3.fromDegreesArray([-67.0, 36.0,
                 -55.0, 36.0,
                 -55.0, 30.0,
                 -67.0, 30.0]),
-            height : 0
-        }
-    });
-    makeProperty(green, Cesium.Color.GREEN.withAlpha(0.5));
+                height: 0
+            }
+        });
+        makeProperty(green, Cesium.Color.GREEN.withAlpha(0.5));
 
-    // Move the primitive that the mouse is over to the top.
-    handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+        // Move the primitive that the mouse is over to the top.
+        handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
 
 
-    handler.setInputAction(function(movement) {
-        // get an array of all primitives at the mouse position
-        var pickedObjects = scene.drillPick(movement.position);//--------------------------
-        if (Cesium.defined(pickedObjects)) {
-            //Update the collection of picked entities.
-            pickedEntities.removeAll();
-            for (var i = 0; i < pickedObjects.length; ++i) {
-                var entity = pickedObjects[i].id;
-                pickedEntities.add(entity);
+        handler.setInputAction(function (movement) {
+            // get an array of all primitives at the mouse position
+            var pickedObjects = scene.drillPick(movement.position);//--------------------------
+            if (Cesium.defined(pickedObjects)) {
+                //Update the collection of picked entities.
+                pickedEntities.removeAll();
+                for (var i = 0; i < pickedObjects.length; ++i) {
+                    var entity = pickedObjects[i].id;
+                    pickedEntities.add(entity);
+                }
+
+                console.log(pickedObjects)
+                /*
+                            [{…}, {…}, {…}]
+                            0:
+                            id: Entity {_availability: undefined, _id: "26267c95-883a-48bf-a87a-85349d0c93cf", _definitionChanged: Event, _name: undefined, _show: true, …}
+                            primitive: Primitive {geometryInstances: undefined, appearance: PerInstanceColorAppearance, _appearance: PerInstanceColorAppearance, _material: undefined, depthFailAppearance: undefined, …}
+                            __proto__: Object
+                            1:
+                            id: Entity {_availability: undefined, _id: "0a3e9a7e-74a1-4157-bb55-a927b9f6bfdd", _definitionChanged: Event, _name: undefined, _show: true, …}
+                            primitive: Primitive {geometryInstances: undefined, appearance: PerInstanceColorAppearance, _appearance: PerInstanceColorAppearance, _material: undefined, depthFailAppearance: undefined, …}
+                            __proto__: Object
+                            2: {primitive: Primitive, id: Entity}
+                            length: 3
+                
+                
+                            */
+
+
             }
 
-            console.log(pickedObjects)
-/*
-            [{…}, {…}, {…}]
-            0:
-            id: Entity {_availability: undefined, _id: "26267c95-883a-48bf-a87a-85349d0c93cf", _definitionChanged: Event, _name: undefined, _show: true, …}
-            primitive: Primitive {geometryInstances: undefined, appearance: PerInstanceColorAppearance, _appearance: PerInstanceColorAppearance, _material: undefined, depthFailAppearance: undefined, …}
-            __proto__: Object
-            1:
-            id: Entity {_availability: undefined, _id: "0a3e9a7e-74a1-4157-bb55-a927b9f6bfdd", _definitionChanged: Event, _name: undefined, _show: true, …}
-            primitive: Primitive {geometryInstances: undefined, appearance: PerInstanceColorAppearance, _appearance: PerInstanceColorAppearance, _material: undefined, depthFailAppearance: undefined, …}
-            __proto__: Object
-            2: {primitive: Primitive, id: Entity}
-            length: 3
-
-
-            */
-
-
-        }
-
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
 
   // !!!!! -handler.setInputAction 注册多个函数，后面的注册函数会覆盖前面注册的函数
 
 
-</script>
+    </script>
 </body>
+
 </html>

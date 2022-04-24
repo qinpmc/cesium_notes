@@ -1,10 +1,11 @@
 参考资料：
 
 - https://www.cnblogs.com/telwanggs/p/11289954.html
+- https://www.cnblogs.com/CreateFree/p/11244512.html
+// todo
+
 - https://www.cnblogs.com/arxive/p/10256065.html
-- https://blog.csdn.net/qq_34149805/article/details/78393540
 - http://www.yanhuangxueyuan.com/doc/Three.js/MatrixRST.html
-- https://blog.csdn.net/lxl743p/article/details/80371568
 - https://blog.csdn.net/xtfge0915/article/details/104653730
 - https://www.jianshu.com/p/5839f615bb94
 
@@ -131,141 +132,37 @@ Cesium.Quaternion（四元数，用于描述围绕某个向量旋转一定角度
 
 ### 6 局部坐标系和世界坐标系转换
 
-#### 6.1 局部坐标系转世界坐标系
+见 ：
+- coordinate3_1局部-全球坐标转换.html
+- coordinate3_2-局部-全球坐标转换(卡车移动).html
+ 
+##  示例
+
+
+
+
+1. 计算两个三维坐标系之间的距离
 
 ```
-
- /**
-
- * 相对坐标系与世界坐标系转换，相对坐标系的轴方向由可选参数direction控制，默认是eastNorthUp北、东、上为轴线
-
- *
-
- * @param {Number} longitude 世界坐标系中的经度
-
- * @param {Number} latitude 世界坐标系中的纬度
-
- * @param {Number} height 世界坐标系中的高度
-
- * @param {Number} direction 坐标轴方向，值是"northEastDown","northUpEast","northWestUp","eastNorthUp"(默认)
-
- */
-
-var LocalAndWorldTransform = function(longitude,latitude,height,direction){
-
-
-
-    var RCSorigincenter = Cesium.Cartesian3.fromDegrees(longitude,latitude,height);
-
-    if (direction == "northEastDown")
-
-        this.RCSMatrix = Cesium.Transforms.northEastDownToFixedFrame(RCSorigincenter);
-
-    else if (direction == "northUpEast")
-
-        this.RCSMatrix = Cesium.Transforms.northUpEastToFixedFrame(RCSorigincenter);
-
-    else if (direction == "northWestUp")
-
-        this.RCSMatrix = Cesium.Transforms.northWestUpToFixedFrame(RCSorigincenter);
-
-    else
-
-        this.RCSMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(RCSorigincenter);
-
-    this.RCSmatrixInverse = Cesium.Matrix4.inverseTransformation(this.RCSMatrix, new Cesium.Matrix4());
-
-
-
-  /**
-
-   * 相对坐标转换成对应的世界坐标
-
-   *
-
-   * @param {Cartesian3	} localCoordinates 相对坐标系中的坐标，如 {x:1,y:1,z:1}
-
-   * @param {Cartesian3} result 世界坐标系中的对应坐标，XYZ格式
-
-   * @returns
-
-   */
-
-  this.localToWorldCoordinates = function(localCoordinates, result){
-
-      if (!result) {
-
-          result = new Cesium.Cartesian3();
-
-      }
-
-      Cesium.Matrix4.multiplyByPoint(this.RCSMatrix, localCoordinates, result);
-
-      return result;
-
-  };
-
-
-
-  /**
-
-   * 世界坐标转换成对应的相对坐标
-
-   *
-
-   * @param {Cartesian3} WorldCoordinates 世界坐标系中的坐标，XYZ格式
-
-   * @param {Cartesian3} result 相对坐标系中的坐标，XYZ格式
-
-   * @returns
-
-   */
-
-  this.WorldCoordinatesTolocal = function(WorldCoordinates, result){
-
-      if (!result) {
-
-          result = new Cesium.Cartesian3();
-
-      }
-
-      Cesium.Matrix4.multiplyByPoint(this.RCSmatrixInverse, WorldCoordinates, result);
-
-      return result;
-
-  };
-
-};
-
-
-```
-
-var getModelMatrix = function(lon, lat, rotationZ) {
-// 1) create a translation position matrix
-var posMat = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(lon, lat));
-// 2) create a Matrix3 with a given Z rotation
-var rotMat3 = Cesium.Matrix3.fromRotationZ(Math.random() \* 360);  
- // 3) transform the Matrix3 into a Matrix4 with no translation
-var rotMat4 = Cesium.Matrix4.fromRotationTranslation(rotMat3, undefined, undefined);
-// 4) empty matrix to place result in
-var result = new Cesium.Matrix4();
-// 5) multiply position by rotation
-return Cesium.Matrix4.multiply(posMat, rotMat4, result);  
-};
-
-//计算两个三维坐标系之间的距离
+// pick1、pick3 都是三维坐标系
 var d = Cesium.Cartesian3.distance(
 new Cesium.Cartesian3(pick1.x, pick1.y, pick1.z),
 new Cesium.Cartesian3(pick3.x, pick3.y, pick3.z)
-); //pick1、pick3 都是三维坐标系
+); 
+```
+
+
+2. 
 
 一个局部坐标为 p1(x,y,z)的点，将它的局部坐标原点放置到 loc(lng,lat,alt)上，局部坐标的 z 轴垂直于地表，局部坐标的 y 轴指向正北，
 并围绕这个 z 轴旋转 angle 度，求此时 p1(x,y,z)变换成全局坐标笛卡尔坐标 p2(x1,y1,z1)是多少？
 
+// 计算旋转矩阵
 var rotate = Cesium.Math.toRadians(angle);//转成弧度
 var quat = Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_Z, rotate); //quat 为围绕这个 z 轴旋转 d 度的四元数
 var rot_mat3 = Cesium.Matrix3.fromQuaternion(quat);//rot_mat3 为根据四元数求得的旋转矩阵
 
+//
 var pt = new Cesium.Cartesian3(x, y, z);//p1 的局部坐标
 // m2 为旋转加平移的 4x4 变换矩阵，这里平移为(0,0,0)，故填个 Cesium.Cartesian3.ZERO
 var m = Cesium.Matrix4.fromRotationTranslation(rot_mat3, Cesium.Cartesian3.ZERO);
@@ -278,7 +175,10 @@ var m1 = Cesium.Transforms.eastNorthUpToFixedFrame(cart3);
 m = Cesium.Matrix4.multiplyTransformation(m, m1);//m = m X m1
 var p2 = Cesium.Matrix4.getTranslation(m);//根据最终变换矩阵 m 得到 p2
 
-```
+ 
+
+
+
 //CESIUM空间中AB两点A绕B点的地面法向量旋转任意角度后新的A点坐标(A’)
 
 
@@ -322,9 +222,11 @@ viewer.entities.add({
     },
 
 });
-```
+ 
 
-```
+
+
+
 // Cesium 计算一个点正北方向x米的另一个点的坐标
 function getNorthPointByDistance(position, distance) {
     //以点为原点建立局部坐标系（东方向为x轴,北方向为y轴,垂直于地面为z轴），得到一个局部坐标到世界坐标转换的变换矩阵
@@ -332,8 +234,23 @@ function getNorthPointByDistance(position, distance) {
     return Cesium.Matrix4.multiplyByPoint(localToWorld_Matrix, Cesium.Cartesian3.fromElements(0, distance, 0), new Cesium.Cartesian3())
 }
 
+ 
 
-```
+
+var getModelMatrix = function(lon, lat, rotationZ) {
+// 1) create a translation position matrix
+var posMat = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(lon, lat));
+// 2) create a Matrix3 with a given Z rotation
+var rotMat3 = Cesium.Matrix3.fromRotationZ(Math.random() \* 360);  
+ // 3) transform the Matrix3 into a Matrix4 with no translation
+var rotMat4 = Cesium.Matrix4.fromRotationTranslation(rotMat3, undefined, undefined);
+// 4) empty matrix to place result in
+var result = new Cesium.Matrix4();
+// 5) multiply position by rotation
+return Cesium.Matrix4.multiply(posMat, rotMat4, result);  
+};
+
+
 
 Cesium.Transforms.eastNorthUpToFixedFrame(origin, ellipsoid, result) → Matrix4
 Cesium.SceneTransforms

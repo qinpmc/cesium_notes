@@ -8,10 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>拾取entity</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <title>geojson</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
         html,
         body,
@@ -30,11 +30,7 @@
     <div id="cesiumContainer"></div>
 
     <script>
-        /*
-    
-     
-    
-        */
+
 
         Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
@@ -65,24 +61,24 @@
         promise.then((res) => {
             var entities = res.entities.values;
 
-            console.log("entities.length-----------------------------",entities.length);
- 
+            console.log("entities.length-----------------------------", entities.length);
+
             var colorHash = {};
             for (var i = 0; i < entities.length; i++) {
-              var entity = entities[i];
-              var name = entity.name;
-              var color = colorHash[name];
-              if (!color) {
-                color = Cesium.Color.fromRandom({
-                  alpha: 1.0
-                });
-                colorHash[name] = color;
-              }
-              entity.polygon.material = color;
-              entity.polygon.outline = false;
-              entity.polygon.extrudedHeight = entity.properties.childrenNum * 5000 || 5000; //高度扩大5000倍，便于观察
+                var entity = entities[i];
+                var name = entity.name;
+                var color = colorHash[name];
+                if (!color) {
+                    color = Cesium.Color.fromRandom({
+                        alpha: 1.0
+                    });
+                    colorHash[name] = color;
+                }
+                entity.polygon.material = color;
+                entity.polygon.outline = false;
+                entity.polygon.extrudedHeight = entity.properties.childrenNum * 5000 || 5000; //高度扩大5000倍，便于观察
 
-              console.log("extrudedHeight-----------------------------",entity.polygon.extrudedHeight);
+                console.log("extrudedHeight-----------------------------", entity.polygon.extrudedHeight);
             }
         })
 
@@ -121,33 +117,12 @@
             // get an array of all primitives at the mouse position
             var pickedObject = scene.pick(movement.position);//--------------------------
             if (Cesium.defined(pickedObject)) {
-
-
                 console.log(pickedObject);
-                hilightEntites(pickedObject)
-                //console.log(pickedObjects.id.polygon.material = Cesium.Color.RED);
-
             }
 
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
-        function hilightEntites(pickedObject) {
-            var entity = pickedObject.id;
-            if (!selectedEntity) {
-                selectedEntity = entity;
-                var oldColor = Object.assign({}, entity.polygon.material.color.getValue());
-                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red, oldColor.green, oldColor.blue, oldColor.alpha)
-                selectedEntity.polygon.material = pickColor;
-            } else {
-                selectedEntity.polygon.material = selectedEntity.oldMaterial
-                selectedEntity = entity;
-                var oldColor = Object.assign({}, entity.polygon.material.color.getValue());
-                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red, oldColor.green, oldColor.blue, oldColor.alpha)
-                selectedEntity.polygon.material = pickColor;
-            }
 
-
-        }
 
 
     </script>

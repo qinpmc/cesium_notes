@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Bingmap</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button onclick="showBing()">显隐bing</button>
+        <button onclick="showOSM()">显隐osm</button>
+        <button onclick="exportMap()">导出地图</button>
+
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            animation: false,  //是否显示动画控件
+            baseLayerPicker: false, //是否显示图层选择控件
+            geocoder: true, //是否显示地名查找控件
+            timeline: false, //是否显示时间线控件
+            sceneModePicker: true, //是否显示投影方式控件
+            navigationHelpButton: false, //是否显示帮助信息控件
+            infoBox: true,  //是否显示点击要素之后显示的信息
+            // 导出前调用 render（）函数，可省略contextOptions.webgl
+            // contextOptions: {
+            //     webgl: {
+            //         alpha: true,
+            //         depth: false,
+            //         stencil: true,
+            //         antialias: true,
+            //         preserveDrawingBuffer: true,
+            //         premultipliedAlpha: true,
+            //         failIfMajorPerformanceCaveat: true
+            //     }
+            // }
+        });
+
+        // bing
+        var bingLayer = new Cesium.ImageryLayer(new Cesium.BingMapsImageryProvider({
+            url: 'https://dev.virtualearth.net',//     https://ecn.t0.tiles.virtualearth.net https://dev.virtualearth.net
+            key: 'AkjzA7OhS4MIBjutL21bkAop7dc41HSE0CNTR5c6HJy8JKc7U9U9RveWJrylD3XJ',
+            mapStyle: 'Road'
+
+        }));
+        viewer.imageryLayers.add(bingLayer);
+
+        // osm
+        const osmLayer = new Cesium.ImageryLayer(new Cesium.OpenStreetMapImageryProvider({
+            url: 'https://a.tile.openstreetmap.org/'
+        }))
+        viewer.imageryLayers.add(osmLayer); //add(layer, index)
+
+        viewer.camera.flyTo({
+            destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
+        })
+        ///////////////////////////////////////////////////
+
+        viewer.entities.add({
+            position: Cesium.Cartesian3.fromDegrees(100, 39),
+            point: {
+                pixelSize: 10,
+                color: Cesium.Color.RED,
+            },
+        });
+        viewer.entities.add({
+            name: "红色普通线",
+            polyline: {
+                positions: Cesium.Cartesian3.fromDegreesArray([114, 30, 70, 30]),
+                width: 5,
+                material: Cesium.Color.RED,
+                clampToGround: true, //贴地形
+            },
+        });
+        ///////////////////////////////////////////////////
+        window.showBing = function () {
+            const index = viewer.imageryLayers.indexOf(bingLayer)
+            const layer = viewer.imageryLayers.get(index)
+            layer.show = !layer.show
+        }
+
+        window.showOSM = function () {
+            const index = viewer.imageryLayers.indexOf(osmLayer)
+            const layer = viewer.imageryLayers.get(index)
+            layer.show = !layer.show
+        }
+
+        window.exportMap = function () {
+            viewer.render(); // 一定注意render（）函数，不然导出是一张黑乎乎的图片,除非开启webgl选项
+            var canvas = viewer.scene.canvas;
+            var img = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
+
+            var arr = img.split(",");
+            var mime = arr[0].match(/:(.*?);/)[1];
+            var str = atob(arr[1]);
+            var n = str.length;
+            var u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = str.charCodeAt(n)
+            }
+
+            var blob = new Blob([u8arr], { type: mime })
+            var objUrl = URL.createObjectURL(blob)
+            var name = "地图输出a", format = 'png'
+            var a = document.createElement("a");
+            a.download = `${name}.${format}`
+            a.href = objUrl
+            a.click()
+        }
+
+    </script>
+</body>
+
+</html>

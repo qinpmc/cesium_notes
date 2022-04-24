@@ -9,9 +9,9 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Hello World!</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
         html,
         body,
@@ -35,14 +35,14 @@
         var viewer = new Cesium.Viewer('cesiumContainer', {
             geocoder: true,
             homeButton: true,
-            sceneModePicker: true,
+            sceneModePicker: false,
             baseLayerPicker: true,
             projectionPicker: true,
             navigationHelpButton: true,
             animation: true,
             timeline: true,
             fullscreenButton: true,
-            //scene3DOnly:false,//仅仅显示3d,可隐藏右上角2d和3d按钮
+            scene3DOnly: true, //仅仅显示3d,可隐藏右上角2d和3d按钮, 使用CesiumUnminified版本，sceneModePicker 需设置为false,否则报错
             infoBox: true, //点击模型不显示cesium自带的信息框
             selectionIndicator: true //点击模型不显示cesium自带的绿色选中框
         });

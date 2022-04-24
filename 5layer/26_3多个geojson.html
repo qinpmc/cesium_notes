@@ -9,10 +9,10 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>图层叠加</title>
-    <script src="../Build/CesiumUnminified/Cesium.js"></script>
-    <!-- <script src="../Build/Cesium/Cesium.js"></script> -->
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+
     <style>
-        @import url(../Build/CesiumUnminified/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
         html,
         body,
@@ -30,7 +30,7 @@
     <div style="position:absolute;z-index:9999;">
         <button onclick="addChina()">addChina</button>
         <button onclick="addHubei()">addHubei</button>
-        <button onclick="addHubei_primitive()">addHubei_primitive</button>
+        <button onclick="add_points_primitive()">add_points_primitive</button>
 
         <button onclick="addWuhan()">addWuhan</button>
         <button onclick="addPoints()">addPoints</button>
@@ -82,7 +82,7 @@
 
         window.addChina = function () {
             var promise = viewer.dataSources.add(
-                Cesium.GeoJsonDataSource.load("../4pick_events/china.json", {
+                Cesium.GeoJsonDataSource.load("../sampleData/geojson/china.json", {
                     stroke: Cesium.Color.GREEN,
                     fill: Cesium.Color.RED,
                     strokeWidth: 200,
@@ -98,7 +98,7 @@
         window.addHubei = function () {
             var entityCollection = null
 
-            Cesium.GeoJsonDataSource.load("../4pick_events/hubei_city.json", {
+            Cesium.GeoJsonDataSource.load("../sampleData/geojson/hubei_city.json", {
                 stroke: Cesium.Color.GREEN,
                 // fill: new Cesium.CallbackProperty(function (time, result) {
                 //     console.log(entityCollection);
@@ -126,8 +126,8 @@
             //viewer.dataSources.add();
         }
 
-        window.addHubei_primitive = function () {
-            fetch("../4pick_events/simplestyles.geojson").then(stream => stream.json()).then(res => {
+        window.add_points_primitive = function () {
+            fetch("../sampleData/geojson/simplestyles.geojson").then(stream => stream.json()).then(res => {
 
                 const features = res.features;
 
@@ -138,10 +138,7 @@
                     pointPrimitives.add({
                         position: Cesium.Cartesian3.fromDegrees(coords[0] * 1, coords[1] * 1),
                         show: true, // default
-                        // color: Cesium.Color.RED, // default: WHITE
-                        color: new Cesium.CallbackProperty(function (time, result) {
-                            return Cesium.Color.YELLOW
-                        }, false),
+                        color: Cesium.Color.CYAN, // default: WHITE
                         pixelSize: 10, // default: 1
                     });
                 })
@@ -185,7 +182,7 @@
 
         window.addWuhan = function () {
             viewer.dataSources.add(
-                Cesium.GeoJsonDataSource.load("../4pick_events/wuhan.geojson", {
+                Cesium.GeoJsonDataSource.load("../sampleData/geojson/wuhan.geojson", {
                     stroke: Cesium.Color.GREEN,
                     fill: Cesium.Color.BLUE,
                     strokeWidth: 200,
@@ -194,14 +191,17 @@
             );
         }
 
+        //  cesium解决画点只显示一半的问题 :https://blog.csdn.net/weixin_45782925/article/details/123366325
         window.addPoints = function () {
             var points = getRandomPoints(1000); // 
             for (var i = 0; i < points.length; i += 2) {
                 viewer.entities.add({
                     position: Cesium.Cartesian3.fromDegrees(points[i], points[i + 1]),
                     point: {
-                        pixelSize: 3,
+                        pixelSize: 8,
                         color: Cesium.Color.RED,
+                        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, // CLAMP_TO_GROUND RELATIVE_TO_GROUND
+                        disableDepthTestDistance: Number.POSITIVE_INFINITY // 1000
                     },
                 });
             }

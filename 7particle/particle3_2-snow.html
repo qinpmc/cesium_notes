@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>snow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+    <link rel="stylesheet" href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" />
+</head>
+
+<body>
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+    <div id="cesiumContainer">
+    </div>
+    <script>
+
+
+        var matrix = 18;
+        var matrixIds = [];
+
+        var tilingScheme = new Cesium.GeographicTilingScheme({
+
+
+        })
+        for (var i = 1; i < matrix; i++) {
+            matrixIds.push("" + i)
+
+        }
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            shouldAnimate: true,   // 开启此选项，例子效果才展示
+            animation: false,  //是否显示动画控件
+            baseLayerPicker: false, //是否显示图层选择控件
+            geocoder: true, //是否显示地名查找控件
+            timeline: false, //是否显示时间线控件
+            sceneModePicker: true, //是否显示投影方式控件
+            navigationHelpButton: false, //是否显示帮助信息控件
+            infoBox: true,  //是否显示点击要素之后显示的信息
+            imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+                url: "http://t0.tianditu.gov.cn/img_c/wmts?&tk=4f62e1d82bd46e2ff470b291c2260156",
+                layer: "img",
+                style: "default",
+                format: "tiles",
+                tilingScheme: tilingScheme,
+                tileMatrixLabels: matrixIds,
+                maximumLevel: 18,
+                minimumLevel: 0,
+                tileMatrixSetID: "c",
+
+            })
+        });
+
+
+        var scene = viewer.scene;
+        scene.globe.depthTestAgainstTerrain = true;
+        var resetCameraFunction = function () {
+            scene.camera.setView({
+                destination: new Cesium.Cartesian3(277096.634865404, 5647834.481964232, 2985563.7039122293),
+                orientation: {
+                    heading: 4.731089976107251,
+                    pitch: -0.32003481981370063
+                }
+            });
+        };
+        resetCameraFunction();
+
+        // snow
+        var snowParticleSize = 12.0;
+        var snowRadius = 100000.0;
+        var minimumSnowImageSize = new Cesium.Cartesian2(snowParticleSize, snowParticleSize);
+        var maximumSnowImageSize = new Cesium.Cartesian2(snowParticleSize * 2.0, snowParticleSize * 2.0);
+        var snowSystem;
+
+        var snowGravityScratch = new Cesium.Cartesian3();
+        var snowUpdate = function (particle, dt) {
+            snowGravityScratch = Cesium.Cartesian3.normalize(particle.position, snowGravityScratch);
+            Cesium.Cartesian3.multiplyByScalar(snowGravityScratch, Cesium.Math.randomBetween(-30.0, -300.0), snowGravityScratch);
+            particle.velocity = Cesium.Cartesian3.add(particle.velocity, snowGravityScratch, particle.velocity);
+
+            var distance = Cesium.Cartesian3.distance(scene.camera.position, particle.position);
+            if (distance > snowRadius) {
+                particle.endColor.alpha = 0.0;
+            } else {
+                particle.endColor.alpha = snowSystem.endColor.alpha / (distance / snowRadius + 0.1);
+            }
+        };
+
+        snowSystem = new Cesium.ParticleSystem({
+            modelMatrix: new Cesium.Matrix4.fromTranslation(scene.camera.position),
+            minimumSpeed: -1.0,
+            maximumSpeed: 0.0,
+            lifetime: 15.0,
+            emitter: new Cesium.SphereEmitter(snowRadius),
+            startScale: 0.5,
+            endScale: 1.0,
+            image: './snowflake_particle.png',
+            emissionRate: 7000.0,
+            startColor: Cesium.Color.WHITE.withAlpha(0.0),
+            endColor: Cesium.Color.WHITE.withAlpha(1.0),
+            minimumImageSize: minimumSnowImageSize,
+            maximumImageSize: maximumSnowImageSize,
+            updateCallback: snowUpdate
+        });
+        scene.primitives.add(snowSystem);
+
+        scene.skyAtmosphere.hueShift = -0.97;
+        scene.skyAtmosphere.saturationShift = 0.25;
+        scene.skyAtmosphere.brightnessShift = -0.4;
+
+        scene.fog.density = 0.00025;
+        scene.fog.minimumBrightness = 0.01;
+    </script>
+</body>
+
+</html>

@@ -1,101 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Use correct character set. -->
     <meta charset="utf-8">
     <!-- Tell IE to use the latest, best version. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>camera</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-        html, body, #cesiumContainer {
+        html,
+        body,
+        #cesiumContainer {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
-
-
     </style>
 </head>
+
 <body>
-<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
-    <button onclick="ajustAngle('heading',0.2)">增加Heading（绕z轴）</button>
-    <button onclick="ajustAngle('heading',-0.2)">减小Heading（绕z轴）</button>
-    <button onclick="ajustAngle('pitch',0.2)">增加Pitch（绕y轴）</button>
-    <button onclick="ajustAngle('pitch',-0.2)">减小Pitch（绕y轴）</button>
-    <button onclick="ajustAngle('roll',0.2)">增加Roll（绕x轴）</button>
-    <button onclick="ajustAngle('roll',-0.2)">减小Roll（绕x轴）</button>
-</div>
+    <div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+        <button onclick="ajustAngle('heading',0.2)">增加Heading（绕z轴）</button>
+        <button onclick="ajustAngle('heading',-0.2)">减小Heading（绕z轴）</button>
+        <button onclick="ajustAngle('pitch',0.2)">增加Pitch（绕y轴）</button>
+        <button onclick="ajustAngle('pitch',-0.2)">减小Pitch（绕y轴）</button>
+        <button onclick="ajustAngle('roll',0.2)">增加Roll（绕x轴）</button>
+        <button onclick="ajustAngle('roll',-0.2)">减小Roll（绕x轴）</button>
+    </div>
 
-<div id="cesiumContainer"></div>
+    <div id="cesiumContainer"></div>
 
-<script>
+    <script>
 
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
-
-    //相机的角度
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        geocoder: true,
-        baseLayerPicker: true,
-        fullscreenButton: false,
-        homeButton: false,
-        sceneModePicker: true,
-        animation: true,
-        timeline: true,
-        navigationHelpButton: true
-    });
-    var camera = viewer.camera; //如果用widget创建地球，获取camera： widget.scene.camera
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
 
-    camera.setView({
-        destination: Cesium.Cartesian3.fromDegrees(-75.5847, 40.0397, 1000.0),
-        orientation: {
-            heading: 0, //
-            pitch: 0,  //
-            roll: 0.0
+        //4326坐标系从1开始
+        var tileMatrixLabels = [];
+        for (var i = 1; i < 18; i++) {
+            tileMatrixLabels.push("" + i);
         }
-    });
-
-    console.log("heading....." + camera.heading); //
-    console.log("pitch....." + camera.pitch);  //
-    console.log("roll....." + camera.roll); //
-
-
-    function ajustAngle(type, offset) {
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            animation: false,  //是否显示动画控件
+            baseLayerPicker: false, //是否显示图层选择控件
+            geocoder: true, //是否显示地名查找控件
+            timeline: false, //是否显示时间线控件
+            sceneModePicker: true, //是否显示投影方式控件
+            navigationHelpButton: false, //是否显示帮助信息控件
+            infoBox: true,  //是否显示点击要素之后显示的信息
+            imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+                url: "http://t0.tianditu.gov.cn/img_c/wmts?tk=f45027f1731b61b21dcc714b01694ac1",
+                layer: "img",
+                style: "default",
+                format: "tiles",
+                tileMatrixSetID: "c",
+                maximumLevel: "14",
+                tileMatrixLabels: tileMatrixLabels,
+                tilingScheme: new Cesium.GeographicTilingScheme({
+                    numberOfLevelZeroTilesX: 2,
+                    numberOfLevelZeroTilesY: 1
+                })
+            })
+        });
         var camera = viewer.camera;
-        var heading = camera.heading;
-        var pitch = camera.pitch;
-        var roll = camera.roll;
-        switch (type) {
-            case "heading":
-                heading += offset;
-                break;
-            case "pitch":
-                pitch += offset;
-                break;
-            case "roll":
-                roll += offset;
-                break;
-        }
+
+        var ctaLayer = new Cesium.ImageryLayer(
+            new Cesium.WebMapTileServiceImageryProvider({
+                url: "http://t0.tianditu.gov.cn/cva_c/wmts?tk=f45027f1731b61b21dcc714b01694ac1",
+                layer: "cva",
+                style: "default",
+                format: "tiles",
+                tileMatrixSetID: "c",
+                maximumLevel: "14",
+                tileMatrixLabels: tileMatrixLabels,
+                tilingScheme: new Cesium.GeographicTilingScheme({
+                    numberOfLevelZeroTilesX: 2,
+                    numberOfLevelZeroTilesY: 1
+                }),
+            })
+        );
+
+        viewer.imageryLayers.add(ctaLayer);
+        var camera = viewer.camera; //如果用widget创建地球，获取camera： widget.scene.camera
+
+
         camera.setView({
-            destination: Cesium.Cartesian3.fromDegrees(-75.5847, 40.0397, 1000.0),
+            destination: Cesium.Cartesian3.fromDegrees(114, 30, 100000.0),
             orientation: {
-                heading: heading,
-                pitch: pitch,
-                roll: roll
+                heading: 0, //
+                pitch: 0,  //
+                roll: 0.0
             }
-        })
+        });
 
-    }
+        console.log("heading....." + camera.heading); //
+        console.log("pitch....." + camera.pitch);  //
+        console.log("roll....." + camera.roll); //
 
 
-</script>
+        /*
+        
+        heading 增加： 逆时针旋转          
+                                         | 
+                                     \   |
+                                       \ |
+
+                                       
+        pitch 增加： 抬头
+        
+        
+        */
+
+        function ajustAngle(type, offset) {
+            var camera = viewer.camera;
+            var heading = camera.heading;
+            var pitch = camera.pitch;
+            var roll = camera.roll;
+            switch (type) {
+                case "heading":
+                    heading += offset;
+                    break;
+                case "pitch":
+                    pitch += offset;
+                    break;
+                case "roll":
+                    roll += offset;
+                    break;
+            }
+            camera.setView({
+                destination: Cesium.Cartesian3.fromDegrees(114, 30, 100000.0),
+                orientation: {
+                    heading: heading,
+                    pitch: pitch,
+                    roll: roll
+                }
+            })
+
+        }
+
+
+    </script>
 </body>
+
 </html>

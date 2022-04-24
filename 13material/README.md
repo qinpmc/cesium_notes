@@ -1,7 +1,10 @@
 参考资料：  
 https://github.com/AnalyticalGraphicsInc/cesium/wiki/Fabric  
+https://github.com/CesiumGS/cesium/wiki/Fabric
 https://www.cnblogs.com/cesium1/p/10063089.html  
 https://www.jianshu.com/p/f8fee864379a
+https://blog.csdn.net/ls870061011/article/details/122748431
+ https://www.jianshu.com/p/678cb44fbbc2
 
 ## Appearance 结构
 

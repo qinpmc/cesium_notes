@@ -1,88 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Use correct character set. -->
     <meta charset="utf-8">
     <!-- Tell IE to use the latest, best version. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>拾取entity</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-        html, body, #cesiumContainer {
+        html,
+        body,
+        #cesiumContainer {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
-
-
     </style>
 </head>
+
 <body>
 
-<div id="cesiumContainer"></div>
+    <div id="cesiumContainer"></div>
 
-<script>
-    /*
+    <script>
+        /*
+    
+            1. scene.pick只可获取一个entity对象（如该位置存在多个entity，哪怕面点线不在同一高度，面entity都可能会盖住点线entity），
+            2. scene.drillPick可获取当前坐标下的多个对象；
+    
+        */
 
-        1. scene.pick只可获取一个entity对象（如该位置存在多个entity，哪怕面点线不在同一高度，面entity都可能会盖住点线entity），
-        2. scene.drillPick可获取当前坐标下的多个对象；
-
-    */
-
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
-
-
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        selectionIndicator: false,
-        infoBox: false,
-        // 注释时相当于使用默认地形，解开注释相当于使用全球地形
-        //terrainProvider: Cesium.createWorldTerrain()
-    });
-
-    // 深度开启或关闭
-    //viewer.scene.globe.depthTestAgainstTerrain = true;
-
-    var scene = viewer.scene;
-
-    var handler;
-
-    var entity = viewer.entities.add({
-        position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
-        billboard: {
-            image: './Cesium_Logo_overlay.png'
-    }
-    });
-
-    // If the mouse is over the billboard, change its scale and color
-    handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
-    handler.setInputAction(function (movement) {
-        var pickedObject = scene.pick(movement.position);
-        if (Cesium.defined(pickedObject) && (pickedObject.id === entity)) {
-            entity.billboard.scale = 2.0;
-            entity.billboard.color = Cesium.Color.YELLOW;
-
-            console.log(pickedObject)
-/*
-            collection: BillboardCollection {_scene: Scene, _batchTable: undefined, _textureAtlas: TextureAtlas, _textureAtlasGUID: "ef849a1a-f30e-41fa-ad1f-703332fd41da", _destroyTextureAtlas: true, …}
-            id: Entity {_availability: undefined, _id: "83c2f484-6c5a-49d4-9c16-6cd98cd55bbc", _definitionChanged: Event, _name: undefined, _show: true, …}
-            primitive: Billboard {_show: true, _position: Cartesian3, _actualPosition: Cartesian3, _pixelOffset: Cartesian2, _translate: Cartesian2, …}
-             */
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
 
-        } else {
-            entity.billboard.scale = 1.0;
-            entity.billboard.color = Cesium.Color.WHITE;
-        }
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            selectionIndicator: false,
+            infoBox: false,
+            // 注释时相当于使用默认地形，解开注释相当于使用全球地形
+            //terrainProvider: Cesium.createWorldTerrain()
+        });
+
+        // 深度开启或关闭
+        //viewer.scene.globe.depthTestAgainstTerrain = true;
+
+        var scene = viewer.scene;
+
+        var handler;
+
+        var entity = viewer.entities.add({
+            position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
+            billboard: {
+                image: './Cesium_Logo_overlay.png'
+            }
+        });
+
+        // If the mouse is over the billboard, change its scale and color
+        handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+        handler.setInputAction(function (movement) {
+            var pickedObject = scene.pick(movement.position);
+            if (Cesium.defined(pickedObject) && (pickedObject.id === entity)) {
+                entity.billboard.scale = 2.0;
+                entity.billboard.color = Cesium.Color.YELLOW;
+
+                console.log(pickedObject)
+                /*
+                            collection: BillboardCollection {_scene: Scene, _batchTable: undefined, _textureAtlas: TextureAtlas, _textureAtlasGUID: "ef849a1a-f30e-41fa-ad1f-703332fd41da", _destroyTextureAtlas: true, …}
+                            id: Entity {_availability: undefined, _id: "83c2f484-6c5a-49d4-9c16-6cd98cd55bbc", _definitionChanged: Event, _name: undefined, _show: true, …}
+                            primitive: Billboard {_show: true, _position: Cartesian3, _actualPosition: Cartesian3, _pixelOffset: Cartesian2, _translate: Cartesian2, …}
+                             */
 
 
-</script>
+            } else {
+                entity.billboard.scale = 1.0;
+                entity.billboard.color = Cesium.Color.WHITE;
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+    </script>
 </body>
+
 </html>

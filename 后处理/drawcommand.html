@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>tianditu</title>
+  <script src="../Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../Build/Cesium/Widgets/widgets.css);
+
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      animation: false, //是否显示动画控件
+      baseLayerPicker: false, //是否显示图层选择控件
+      geocoder: true, //是否显示地名查找控件
+      timeline: false, //是否显示时间线控件
+      sceneModePicker: true, //是否显示投影方式控件
+      navigationHelpButton: false, //是否显示帮助信息控件
+      infoBox: true, //是否显示点击要素之后显示的信息
+      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "vec",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+
+          }),*/
+      }),
+    });
+
+    var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+      url:
+        "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+      layer: "cta",
+      style: "default",
+      format: "tiles",
+      tileMatrixSetID: "w",
+      tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+    });
+
+    viewer.imageryLayers.addImageryProvider(imageryProvider2);
+    viewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000),
+    });
+
+    class MyPrimitive {
+
+      constructor(modelMatrix) {
+        this.modelMatrix = modelMatrix || Cesium.Matrix4.IDENTITY.clone()
+        this.drawCommand = null;
+      }
+
+      /**
+       * 创建 DrawCommand
+       * @param {Cesium.Context} context
+       */
+      createCommand(context) {
+
+        var modelMatrix = this.modelMatrix;
+
+        var box = new Cesium.BoxGeometry({
+          vertexFormat: Cesium.VertexFormat.POSITION_ONLY,
+          maximum: new Cesium.Cartesian3(250000.0, 250000.0, 250000.0),
+          minimum: new Cesium.Cartesian3(-250000.0, -250000.0, -250000.0)
+        });
+        var geometry = Cesium.BoxGeometry.createGeometry(box);
+
+        var attributeLocations = Cesium.GeometryPipeline.createAttributeLocations(geometry)
+
+        var va = Cesium.VertexArray.fromGeometry({
+          context: context,
+          geometry: geometry,
+          attributeLocations: attributeLocations
+        });
+
+        var vs = `
+    attribute vec3 position;
+    void main(){
+        gl_Position = czm_projection  * czm_modelView * vec4( position , 1. );
+    }
+    `;
+        var fs = `
+    uniform vec3 color;
+    void main(){
+        gl_FragColor=vec4( color , 1. );
+    }
+    `;
+        var shaderProgram = Cesium.ShaderProgram.fromCache({
+          context: context,
+          vertexShaderSource: vs,
+          fragmentShaderSource: fs,
+          attributeLocations: attributeLocations
+        })
+
+        var uniformMap = {
+          color() {
+            return Cesium.Color.YELLOW
+          }
+        }
+
+        var renderState = Cesium.RenderState.fromCache({
+          cull: {
+            enabled: true,
+            face: Cesium.CullFace.BACK
+          },
+          depthTest: {
+            enabled: true
+          }
+        })
+
+        this.drawCommand = new Cesium.DrawCommand({
+          modelMatrix: modelMatrix,
+          vertexArray: va,
+          shaderProgram: shaderProgram,
+          uniformMap: uniformMap,
+          renderState: renderState,
+          pass: Cesium.Pass.TRANSLUCEN // TRANSLUCENT  OPAQUE
+        })
+      }
+
+      /**
+       * 实现Primitive接口，供Cesium内部在每一帧中调用
+       * @param {Cesium.FrameState} frameState
+       */
+      update(frameState) {
+        if (!this.drawCommand) {
+          this.createCommand(frameState.context)
+        }
+        frameState.commandList.push(this.drawCommand)
+      }
+
+    }
+
+
+    viewer.scene.globe.depthTestAgainstTerrain = true;
+
+    var origin = Cesium.Cartesian3.fromDegrees(106, 26, 250000 / 2)
+    var modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(origin)
+
+    var primitive = new MyPrimitive(modelMatrix);
+    viewer.scene.primitives.add(primitive)
+  </script>
+</body>
+
+</html>

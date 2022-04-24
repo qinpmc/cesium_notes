@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Coordinate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+    <style>
+
+    </style>
+
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+    <link rel="stylesheet" href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" />
+</head>
+
+<body>
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+
+    <div id="cesiumContainer">
+    </div>
+    <script>
+
+        var matrixIds = [];
+        var tilingScheme = new Cesium.GeographicTilingScheme({})
+        for (var i = 1; i < 18; i++) {
+            matrixIds.push("" + i)
+
+        }
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            shouldAnimate: true,  // 开启此选项，例子效果才展示
+            animation: false,  //是否显示动画控件
+            baseLayerPicker: false, //是否显示图层选择控件
+            geocoder: true, //是否显示地名查找控件
+            timeline: false, //是否显示时间线控件
+            sceneModePicker: true, //是否显示投影方式控件
+            navigationHelpButton: false, //是否显示帮助信息控件
+            infoBox: true,  //是否显示点击要素之后显示的信息
+            imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+                url: "http://t0.tianditu.gov.cn/img_c/wmts?&tk=4c27d6e0e8a90715b23a989d42272fd8",
+                layer: "img",
+                style: "default",
+                format: "tiles",
+                tilingScheme: tilingScheme,
+                tileMatrixLabels: matrixIds,
+                maximumLevel: 18,
+                minimumLevel: 0,
+                tileMatrixSetID: "c",
+
+            })
+        });
+
+        /////////////////////////////////////////////////////////////////////////////// 
+
+        // 1. 根据坐标, 方位角计算世界矩阵
+        // 假设当前模型的经纬度坐标为{114, 30, 1000} 方位角{heading: 30, pitch: 20, roll: 10} 都是角度来计算
+        // Cesium.Transforms.headingPitchRollToFixedFrame(origin, headingPitchRoll, ellipsoid, fixedFrameTransform, result) → Matrix4
+
+        var position = Cesium.Cartesian3.fromDegrees(114, 30, 1000);
+        var heading = 30;
+        var pitch = 20;
+        var roll = 10;
+
+        var modelMatrix = createModelMatrix(heading, pitch, roll, position);
+        console.log(modelMatrix);
+
+
+
+        // 2. 根据模型矩阵求方位角
+
+        var hpr = getHprFromModelMatrix(modelMatrix);
+        var heading = Cesium.Math.toDegrees(hpr.heading);
+        var pitch = Cesium.Math.toDegrees(hpr.pitch);
+        var roll = Cesium.Math.toDegrees(hpr.roll);
+
+        console.log('heading : ' + heading, 'pitch : ' + pitch, 'roll : ' + roll);
+        //heading : 30.000000000000004 pitch : 20.000000000000004 roll : 9.999999999999996
+
+        /////////////////////////////////////////////////////////////////////////////// 
+
+        // 根据 hpr角度，和原点(经纬度 -> Cesium.Cartesian3),计算模型矩阵modelMatrix
+        function createModelMatrix(heading, pitch, roll, origin) {
+            var heading = Cesium.Math.toRadians(30);
+            var pitch = Cesium.Math.toRadians(20);
+            var roll = Cesium.Math.toRadians(10);
+            var headingPitchRoll = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+            var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position, headingPitchRoll, Cesium.Ellipsoid.WGS84, Cesium.Transforms.eastNorthUpToFixedFrame, new Cesium.Matrix4());
+            return modelMatrix;
+        }
+
+        // 根据模型矩阵modelMatrix, 计算 hpr角度
+        function getHprFromModelMatrix(modelMatrix) {
+
+
+            // 计算中心处的变换矩阵
+            // 1. Cesium.Matrix4.getTranslation(modelMatrix, new Cesium.Cartesian3()),从模型矩阵中得到Cartesian3 坐标
+            // 2. Cesium.Transforms.eastNorthUpToFixedFrame(origin, ellipsoid, result) → Matrix4 , origin:Cartesian3
+
+            var cartesian3 = Cesium.Matrix4.getTranslation(modelMatrix, new Cesium.Cartesian3())
+            var carto = Cesium.Cartographic.fromCartesian(cartesian3)
+            var lng = Cesium.Math.toDegrees(carto.longitude)
+            var lat = Cesium.Math.toDegrees(carto.latitude)
+            var height = carto.height
+            console.log("lng,lat,height from modelMatrix", lng, lat, height)
+
+
+            var m4_1 = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Matrix4.getTranslation(modelMatrix, new Cesium.Cartesian3()), Cesium.Ellipsoid.WGS84, new Cesium.Matrix4());
+            // 矩阵相除, m4_1的逆矩阵 乘以 模型矩阵，
+            var m4_2 = Cesium.Matrix4.multiply(Cesium.Matrix4.inverse(m4_1, new Cesium.Matrix4()), modelMatrix, new Cesium.Matrix4());
+            // 得到旋转-缩放矩阵
+            //var mat3 = Cesium.Matrix4.getRotation(m4_2, new Cesium.Matrix3()); //新版cesium无该方法
+            var mat3 = Cesium.Matrix4.getMatrix3(m4_2, new Cesium.Matrix3())
+            var rmat3 = Cesium.Matrix3.getRotation(mat3, new Cesium.Matrix3())
+            // 计算四元数
+            var q = Cesium.Quaternion.fromRotationMatrix(rmat3);
+            // 计算旋转角(弧度)
+            var hpr = Cesium.HeadingPitchRoll.fromQuaternion(q);
+
+            // 以下代码为验证使用
+            var headingPitchRoll = new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(30), Cesium.Math.toRadians(20), Cesium.Math.toRadians(10));
+            var testq = Cesium.Quaternion.fromHeadingPitchRoll(headingPitchRoll, new Cesium.Quaternion())
+            console.log(q, testq)
+
+            return hpr;
+        }
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>debug</title>
+  <style>
+    @import url(../lib/cesium1.89/Source/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+</head>
+
+<body>
+  <div id="cesiumContainer"></div>
+  <script type="module">
+    window.CESIUM_BASE_URL = "../lib/cesium1.89/Source/";
+    import * as Cesium from "../lib/cesium1.89/Source/Cesium.js";
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+    var viewer = new Cesium.Viewer("cesiumContainer");
+
+    // https://blog.csdn.net/fb_help/article/details/84142580
+
+    var phi = -0.636578;
+    var omega = 1.351515;
+    var kappa = -0.090366;
+
+    var phi_in_degree = Cesium.Math.toDegrees(phi);
+    var kappa_in_degree = Cesium.Math.toDegrees(kappa);
+    var omega_in_degree = Cesium.Math.toDegrees(omega);
+
+    var m00 = Math.cos(phi) * Math.cos(kappa);
+    var m01 =
+      Math.cos(omega) * Math.sin(kappa) +
+      Math.sin(omega) * Math.sin(phi) * Math.cos(kappa);
+    var m02 =
+      Math.sin(omega) * Math.sin(kappa) -
+      Math.cos(omega) * Math.sin(phi) * Math.cos(kappa);
+
+    var m10 = -Math.cos(phi) * Math.sin(kappa);
+    var m11 =
+      Math.cos(omega) * Math.cos(kappa) -
+      Math.sin(omega) * Math.sin(phi) * Math.sin(kappa);
+    var m12 =
+      Math.sin(omega) * Math.cos(kappa) +
+      Math.cos(omega) * Math.sin(phi) * Math.sin(kappa);
+
+    var m20 = Math.sin(phi);
+    var m21 = -Math.sin(omega) * Math.cos(phi);
+    var m22 = Math.cos(omega) * Math.cos(phi);
+
+    var mat3 = new Cesium.Matrix3(
+      m00,
+      m01,
+      m02,
+      m10,
+      m11,
+      m12,
+      m20,
+      m21,
+      m22
+    );
+
+    getHPR_from_matrix(mat3);
+
+    var mat3_2 = Cesium.Matrix3.transpose(mat3, new Cesium.Matrix3());
+    getHPR_from_matrix(mat3_2);
+
+    function getHPR_from_matrix(mat3) {
+      var q = Cesium.Quaternion.fromRotationMatrix(mat3);
+      // 计算旋转角(弧度)
+      var hpr = Cesium.HeadingPitchRoll.fromQuaternion(q);
+      // 得到角度
+      var heading = Cesium.Math.toDegrees(hpr.heading);
+      var pitch = Cesium.Math.toDegrees(hpr.pitch);
+      var roll = Cesium.Math.toDegrees(hpr.roll);
+      console.log(heading, pitch, roll);
+    }
+
+      /*
+
+      https://blog.csdn.net/fb_help/article/details/83070239
+      omega相当于绕x轴逆时针旋转omega角              omega：   x
+      phi相当于绕y轴逆时针旋转phi角                  phi:      y 
+      kappa相当于绕z轴逆时针旋转kappa角              kappa :   z
+      
+
+
+      https://www.cnblogs.com/ambition921009/p/10794413.html 
+
+      其分别绕Z、Y、X顺时针旋转κ,ω,φ角度            z: kappa    y: omega  x:   phi
+                                                                            
+
+      https://blog.csdn.net/fb_help/article/details/84142580
+
+*/
+  </script>
+</body>
+
+</html>

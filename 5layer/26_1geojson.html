@@ -8,10 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>拾取entity</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <title>geojson</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
         html,
         body,
@@ -26,22 +26,30 @@
 </head>
 
 <body>
-
+    <div style="position:absolute;z-index:99999;">
+        <button onclick="addPolygon()">添加面</button>
+        <button onclick="removePolygon()">移除面</button>
+    </div>
     <div id="cesiumContainer"></div>
 
     <script>
-        /*
-    
-     
-    
-        */
 
         Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
         var viewer = new Cesium.Viewer('cesiumContainer', {
             selectionIndicator: false,
             infoBox: false,
-
+            imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+                url:
+                    "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+                layer: "img",
+                style: "default",
+                format: "tiles",
+                tileMatrixSetID: "w",
+                /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+        
+                  }),*/
+            }),
             terrainProvider: new Cesium.CesiumTerrainProvider({
                 url: "http://data.marsgis.cn/terrain/",
             })
@@ -51,36 +59,113 @@
         //viewer.scene.globe.depthTestAgainstTerrain = true;
 
         var scene = viewer.scene;
+        var dataSource = new Cesium.CustomDataSource('myData');
+        viewer.dataSources.add(dataSource);
+
+        // viewer.dataSources.add(
+        //     Cesium.GeoJsonDataSource.load("../sampleData/geojson/hubei_city.json", {
+        //         stroke: Cesium.Color.RED,
+        //         fill: Cesium.Color.YELLOW,
+        //         strokeWidth: 200,
+        //         clampToGround: true
+        //     })
+        // )
+        // var bluePolygon = viewer.entities.add({
+        //     name: "blue polygon on surface",
+        //     polygon: {
+        //         hierarchy: Cesium.Cartesian3.fromDegreesArray([
+        //             115.0,
+        //             37.0,
+        //             115.0,
+        //             32.0,
+        //             107.0,
+        //             33.0,
+        //             102.0,
+        //             31.0,
+        //             102.0,
+        //             35.0,
+        //         ]),
+        //         material: Cesium.Color.BLUE,
+        //     },
+        // });
 
 
 
-        viewer.dataSources.add(
-            Cesium.GeoJsonDataSource.load("../4pick_events/hubei_city.json", {
-                stroke: Cesium.Color.RED,
-                fill: Cesium.Color.YELLOW,
-                strokeWidth: 200,
-                clampToGround: true
-            })
-        );
+        Cesium.GeoJsonDataSource.load("../sampleData/geojson/hubei_city.json", {
+            stroke: Cesium.Color.BLUEVIOLET,
+            fill: Cesium.Color.YELLOW,
+            strokeWidth: 20,
+            clampToGround: true // 添加后 stroke 无效，无地形时，取消该属性stroke有效
+        }).then((source) => {
+            const entityArray = source.entities.values;
+            for (let i = 0; i < entityArray.length; i++) {
+                viewer.entities.add(entityArray[i])
+            }
+            //viewer.dataSources.add(source)
+            // setTimeout(function () {
+            //     var bluePolygon = dataSource.entities.add({
+            //         name: "blue polygon on surface",
+            //         polygon: {
+            //             hierarchy: Cesium.Cartesian3.fromDegreesArray([
+            //                 115.0,
+            //                 37.0,
+            //                 115.0,
+            //                 32.0,
+            //                 107.0,
+            //                 33.0,
+            //                 102.0,
+            //                 31.0,
+            //                 102.0,
+            //                 35.0,
+            //             ]),
+            //             material: Cesium.Color.BLUE,
+            //         },
+            //     });
+            // }, 1000)
 
-        var bluePolygon = viewer.entities.add({
-            name: "blue polygon on surface",
-            polygon: {
-                hierarchy: Cesium.Cartesian3.fromDegreesArray([
-                    -115.0,
-                    37.0,
-                    -115.0,
-                    32.0,
-                    -107.0,
-                    33.0,
-                    -102.0,
-                    31.0,
-                    -102.0,
-                    35.0,
-                ]),
-                material: Cesium.Color.BLUE,
-            },
+
         });
+
+        window.addPolygon = function () {
+            var bluePolygon = viewer.entities.add({
+                id: "blue",
+                name: "blue polygon on surface",
+                polygon: {
+                    hierarchy: Cesium.Cartesian3.fromDegreesArray([
+                        115.0,
+                        37.0,
+                        115.0,
+                        32.0,
+                        107.0,
+                        33.0,
+                        102.0,
+                        31.0,
+                        102.0,
+                        35.0,
+                    ]),
+                    material: Cesium.Color.BLUE,
+                    zIndex: 10
+                },
+            });
+            viewer.entities.add({
+                id: "Blue rectangle, zIndex 3",
+                rectangle: {
+                    coordinates: Cesium.Rectangle.fromDegrees(
+                        100.0,
+                        31.0,
+                        110.5,
+                        41.0
+                    ),
+                    material: Cesium.Color.GREEN,
+                    zIndex: 3,
+                },
+            });
+        }
+
+        window.removePolygon = function () {
+            viewer.entities.removeById("blue")
+        }
+
 
         var selectedEntity = null;
         var pickColor = Cesium.Color.RED.withAlpha(0.8);
@@ -92,34 +177,31 @@
         handler.setInputAction(function (movement) {
             // get an array of all primitives at the mouse position
             var pickedObject = scene.pick(movement.position);//--------------------------
+            // 选中
             if (Cesium.defined(pickedObject)) {
+                var entity = pickedObject.id;
 
+                if (selectedEntity === entity) {
+                    return
+                }
+                if (selectedEntity) {
+                    selectedEntity.polygon.material = selectedEntity.oldMaterial
+                }
+                selectedEntity = entity;
+                var oldColor = Object.assign({}, entity.polygon.material.color.getValue());
+                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red, oldColor.green, oldColor.blue, oldColor.alpha)
+                selectedEntity.polygon.material = pickColor;
 
-                console.log(pickedObject);
-                hilightEntites(pickedObject)
-                //console.log(pickedObjects.id.polygon.material = Cesium.Color.RED);
-
+            } else {// 未选中
+                if (selectedEntity) {
+                    selectedEntity.polygon.material = selectedEntity.oldMaterial
+                    selectedEntity = null;
+                }
             }
 
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
-        function hilightEntites(pickedObject) {
-            var entity = pickedObject.id;
-            if (!selectedEntity) {
-                selectedEntity = entity;
-                var oldColor = Object.assign({}, entity.polygon.material.color.getValue());
-                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red, oldColor.green, oldColor.blue, oldColor.alpha)
-                selectedEntity.polygon.material = pickColor;
-            } else {
-                selectedEntity.polygon.material = selectedEntity.oldMaterial
-                selectedEntity = entity;
-                var oldColor = Object.assign({}, entity.polygon.material.color.getValue());
-                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red, oldColor.green, oldColor.blue, oldColor.alpha)
-                selectedEntity.polygon.material = pickColor;
-            }
 
-
-        }
 
 
     </script>

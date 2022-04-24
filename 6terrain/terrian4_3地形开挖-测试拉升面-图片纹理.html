@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>面</title>
+  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
+    <button onclick="addPolygon1()">增加面1_纹理图片</button>
+    <button onclick="removeTerrain()">移除地形</button>
+  </div>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+    var widget = new Cesium.CesiumWidget("cesiumContainer");
+    var scene = widget.scene;
+    scene.terrainProvider = Cesium.createWorldTerrain({
+      requestWaterMask: true,
+      requestVertexNormals: true,
+    });
+
+    //面1_纹理图片
+    function addPolygon1() {
+      var bottomPolygon = [
+        97.20928922925265,
+        29.26268123394501,
+        3939.607332479499,
+        97.26506521125799,
+        29.158022806807345,
+        3939.607332479499,
+        97.3920063535399,
+        29.179759708273167,
+        3939.607332479499,
+        97.37078963846872,
+        29.319529028209132,
+        3939.607332479499,
+      ];
+
+      var polygon = new Cesium.PolygonGeometry({
+        polygonHierarchy: new Cesium.PolygonHierarchy(
+          Cesium.Cartesian3.fromDegreesArrayHeights(bottomPolygon)
+        ),
+        extrudedHeight: 3939.607332479499,
+      });
+      var geometry2 = Cesium.PolygonGeometry.createGeometry(polygon);
+
+      var i = new Cesium.Material({
+        fabric: {
+          type: "Image",
+          uniforms: {
+            image: "./TerrainClipPlan/excavate_bottom_min.jpg",
+          },
+        },
+      }),
+        a = new Cesium.MaterialAppearance({
+          translucent: !1,
+          flat: !0,
+          material: i,
+        });
+      var bottomSurface = new Cesium.Primitive({
+        geometryInstances: new Cesium.GeometryInstance({
+          geometry: geometry2,
+        }),
+        appearance: a,
+        asynchronous: !1,
+      });
+      scene.primitives.add(bottomSurface);
+
+      scene.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(
+          97.20928922925265,
+          29.26268123394501,
+          15052
+        ),
+      });
+    }
+
+    function removeTerrain() {
+      scene.terrainProvider = new Cesium.EllipsoidTerrainProvider({});
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>Tencent</title>
+  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="position: absolute;z-index: 9999">
+    <button onclick="toggleBaseLayer()">显隐cesium底图</button>
+    <button onclick="toggleTencentImg()">显隐腾讯影像</button>
+    <button onclick="toggleTencentVec()">显隐腾讯矢量</button>
+
+    <button onclick="toggleTiandituLayer()">显隐天地图</button>
+  </div>
+  <div id="cesiumContainer"></div>
+  <script type="module">
+    window.CESIUM_BASE_URL = "../lib/cesium1.89/Source/";
+    import * as Cesium from "../lib/cesium1.89/Source/Cesium.js";
+    import AmapImageryProvider from "./custom/AmapImageryProvider.js"
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      animation: false, //是否显示动画控件
+      baseLayerPicker: false, //是否显示图层选择控件
+      geocoder: true, //是否显示地名查找控件
+      timeline: false, //是否显示时间线控件
+      sceneModePicker: true, //是否显示投影方式控件
+      navigationHelpButton: false, //是否显示帮助信息控件
+      infoBox: true //是否显示点击要素之后显示的信息
+    });
+
+    // 隐藏默认的图层，显示蓝色地球
+    viewer.imageryLayers.get(0).show = false;
+
+    viewer.imageryLayers.addImageryProvider(
+      new AmapImageryProvider({
+        //url: "https://rt2.map.gtimg.com/tile?z={sz}&x={sx}&y={sy}&styleid=2&version=402", //腾讯电子
+        //url: "https://rt0.map.gtimg.com/tile?styleid=1&x={x}&y={y}&z={z}", ////腾讯电子
+        // https://rt3.map.gtimg.com/tile?z=12&x=3350&y=2413&styleid=2&version=990   // 腾讯影像标记-路网
+        // //url: "https://p3.map.gtimg.com/sateTiles/z/sx/sy/x_reverseY.jpg?version=253", //腾讯影像   
+        url:
+          "http://rt1.map.gtimg.com/realtimerender?z={sz}&x={sx}&y={sy}&type=vector&style=0", // 
+        customTags: {
+          sz: function (imageryProvider, x, y, level) {
+            return level;
+          },
+          sx: function (imageryProvider, x, y, level) {
+            return x;
+          },
+          sy: function (imageryProvider, x, y, level) {
+            return Math.pow(2, level) - 1 - y; //Y(Tencent) +  Y(Google) = Math.pow(2，zoom) - 1
+          }
+        },
+        crs: 'WGS84',
+      })
+    );
+
+    viewer.imageryLayers.addImageryProvider(
+      new AmapImageryProvider({
+        url:
+          "https://p2.map.gtimg.com/sateTiles/{z}/{sx}/{sy}/{x}_{reverseY}.jpg?version=229",
+        customTags: {
+          sx: function (imageryProvider, x, y, level) {
+            return x >> 4;
+          },
+          sy: function (imageryProvider, x, y, level) {
+            return ((1 << level) - y) >> 4;
+          }
+        },
+        crs: 'WGS84',
+      })
+    );
+    viewer.imageryLayers.get(2).show = false;
+
+
+
+    // 添加天地图
+    var tileMatrixLabels = [];
+    for (var i = 0; i < 18; i++) {
+      tileMatrixLabels.push("" + i);
+    }
+    var imageryProvider3 = new Cesium.WebMapTileServiceImageryProvider({
+      url:
+        "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+      layer: "img",
+      style: "default",
+      format: "tiles",
+      tileMatrixSetID: "w",
+      tileMatrixLabels: tileMatrixLabels,
+      tilingScheme: new Cesium.WebMercatorTilingScheme({})
+    });
+
+    viewer.imageryLayers.addImageryProvider(imageryProvider3);
+    var imageryProvider4 = new Cesium.WebMapTileServiceImageryProvider({
+      url:
+        "http://t0.tianditu.gov.cn/cia_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+      layer: "cia",
+      style: "default",
+      format: "tiles",
+      tileMatrixSetID: "w",
+      tileMatrixLabels: tileMatrixLabels,
+      tilingScheme: new Cesium.WebMercatorTilingScheme({})
+    });
+
+    viewer.imageryLayers.addImageryProvider(imageryProvider4);
+
+
+
+    window.toggleTencentImg = function () {
+      //腾讯地图
+      var visible = viewer.imageryLayers.get(2).show;
+      visible = !visible;
+      viewer.imageryLayers.get(2).show = visible;
+    };
+
+    window.toggleTencentVec = function () {
+      //腾讯地图 矢量"http://rt1.map.gtimg.com/realtimerender?z={sz}&x={sx}&y={sy}&type=vector&style=0", //矢量
+      var visible = viewer.imageryLayers.get(1).show;
+      visible = !visible;
+      viewer.imageryLayers.get(1).show = visible;
+    }
+
+    window.toggleBaseLayer = function () {
+      var visible = viewer.imageryLayers.get(0).show;
+      visible = !visible;
+      viewer.imageryLayers.get(0).show = visible;
+    };
+
+    window.toggleTiandituLayer = function () {
+      var visible = viewer.imageryLayers.get(3).show;
+      visible = !visible;
+      viewer.imageryLayers.get(3).show = visible;
+      viewer.imageryLayers.get(4).show = visible;
+    };
+  </script>
+</body>
+
+</html>

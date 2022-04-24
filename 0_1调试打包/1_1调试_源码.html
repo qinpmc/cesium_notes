@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="cn">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>debug</title>
-    <style>
-      @import url(../Source/Widgets/widgets.css);
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>source debug</title>
+  <style>
+    @import url(../lib/cesium1.89/Source/Widgets/widgets.css);
 
       html,
       body,
@@ -17,16 +18,18 @@
         overflow: hidden;
       }
     </style>
-  </head>
+</head>
 
-  <body>
-    <div id="cesiumContainer"></div>
-    <script type="module">
-      window.CESIUM_BASE_URL = "../Source/";
-      import * as Cesium from "../Source/Cesium.js";
-      Cesium.Ion.defaultAccessToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
-      var viewer = new Cesium.Viewer("cesiumContainer");
-    </script>
-  </body>
+<body>
+  <div id="cesiumContainer"></div>
+  <script type="module">
+    window.CESIUM_BASE_URL = "../lib/cesium1.89/Source/";
+    import * as Cesium from "../lib/cesium1.89/Source/Cesium.js";
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+    var viewer = new Cesium.Viewer("cesiumContainer");
+    viewer.scene.debugShowFrustums = true
+  </script>
+</body>
+
 </html>

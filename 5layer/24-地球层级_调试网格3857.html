@@ -1,178 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Use correct character set. -->
-    <meta charset="utf-8" />
-    <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-    />
-    <title>层级</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
-    <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
 
-      html,
-      body,
-      #cesiumContainer {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-    </style>
-  </head>
-  <body>
-    <div>
-      <button onclick="showVec()">显隐天地图矢量</button>
-      <button onclick="showCta()">显隐天地图标注</button>
-      <button onclick="toggleGridLayer()">显隐gridLayer</button>
-      <button onclick="toggleCoordLayer()">显隐coordLayer</button>
-    </div>
-    <div
-      style="
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>层级</title>
+  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <button onclick="showVec()">显隐天地图矢量</button>
+    <button onclick="showCta()">显隐天地图标注</button>
+    <button onclick="toggleGridLayer()">显隐gridLayer</button>
+    <button onclick="toggleCoordLayer()">显隐coordLayer</button>
+  </div>
+  <div style="
         position: absolute;
         z-index: 999;
         bottom: 10px;
         left: 10px;
         color: red;
-      "
-    >
-      <span id="level"></span>
-    </div>
-    <div id="cesiumContainer"></div>
-    <script>
-      Cesium.Ion.defaultAccessToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      ">
+    <span id="level"></span>
+  </div>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-      //maximumLevel:"10", //最大层级10级别
-      //4326坐标系从1开始
-      var tileMatrixLabels = [];
-      for (var i = 0; i < 18; i++) {
-        tileMatrixLabels.push("" + i);
+    //maximumLevel:"10", //最大层级10级别
+    //4326坐标系从1开始
+    var tileMatrixLabels = [];
+    for (var i = 0; i < 18; i++) {
+      tileMatrixLabels.push("" + i);
+    }
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      animation: false, //是否显示动画控件
+      baseLayerPicker: false, //是否显示图层选择控件
+      geocoder: true, //是否显示地名查找控件
+      timeline: false, //是否显示时间线控件
+      sceneModePicker: true, //是否显示投影方式控件
+      navigationHelpButton: false, //是否显示帮助信息控件
+      infoBox: true, //是否显示点击要素之后显示的信息
+      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "vec",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        maximumLevel: "18", //最大层级18级别
+        tileMatrixLabels: tileMatrixLabels,
+        // tilingScheme: new Cesium.GeographicTilingScheme({
+        //     numberOfLevelZeroTilesX: 2,
+        //     numberOfLevelZeroTilesY: 1
+        // })
+      }),
+    });
+
+    console.log(viewer.imageryLayers.get(0)); // vec_c
+    console.log(viewer.imageryLayers.get(1)); //undefined
+
+    var ctaLayer = new Cesium.ImageryLayer(
+      new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "cta",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        maximumLevel: "18",
+        tileMatrixLabels: tileMatrixLabels,
+        //   tilingScheme: new Cesium.GeographicTilingScheme({
+        //     numberOfLevelZeroTilesX: 2,
+        //     numberOfLevelZeroTilesY: 1,
+        //   }),
+      }),
+      {
+        show: false,
       }
-      var viewer = new Cesium.Viewer("cesiumContainer", {
-        animation: false, //是否显示动画控件
-        baseLayerPicker: false, //是否显示图层选择控件
-        geocoder: true, //是否显示地名查找控件
-        timeline: false, //是否显示时间线控件
-        sceneModePicker: true, //是否显示投影方式控件
-        navigationHelpButton: false, //是否显示帮助信息控件
-        infoBox: true, //是否显示点击要素之后显示的信息
-        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-          layer: "vec",
-          style: "default",
-          format: "tiles",
-          tileMatrixSetID: "w",
-          maximumLevel: "18", //最大层级18级别
-          tileMatrixLabels: tileMatrixLabels,
-          // tilingScheme: new Cesium.GeographicTilingScheme({
-          //     numberOfLevelZeroTilesX: 2,
-          //     numberOfLevelZeroTilesY: 1
-          // })
-        }),
-      });
+    );
 
-      console.log(viewer.imageryLayers.get(0)); // vec_c
-      console.log(viewer.imageryLayers.get(1)); //undefined
+    var layers = viewer.imageryLayers;
+    layers.add(ctaLayer);
 
-      var ctaLayer = new Cesium.ImageryLayer(
-        new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-          layer: "cta",
-          style: "default",
-          format: "tiles",
-          tileMatrixSetID: "w",
-          maximumLevel: "18",
-          tileMatrixLabels: tileMatrixLabels,
-          //   tilingScheme: new Cesium.GeographicTilingScheme({
-          //     numberOfLevelZeroTilesX: 2,
-          //     numberOfLevelZeroTilesY: 1,
-          //   }),
-        }),
-        {
-          show: false,
-        }
-      );
+    // 添加调试网格
+    // new Cesium.GridImageryProvider(), new Cesium.TileCoordinatesImageryProvider(),
 
-      var layers = viewer.imageryLayers;
-      layers.add(ctaLayer);
+    var gridLayer = layers.addImageryProvider(
+      new Cesium.GridImageryProvider()
+    );
+    var coordLayer = layers.addImageryProvider(
+      new Cesium.TileCoordinatesImageryProvider()
+    );
 
-      // 添加调试网格
-      // new Cesium.GridImageryProvider(), new Cesium.TileCoordinatesImageryProvider(),
+    viewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000),
+    });
 
-      var gridLayer = layers.addImageryProvider(
-        new Cesium.GridImageryProvider()
-      );
-      var coordLayer = layers.addImageryProvider(
-        new Cesium.TileCoordinatesImageryProvider()
-      );
+    var levelEle = document.getElementById("level");
+    //监听地图移动完成事件
+    viewer.camera.changed.addEventListener(function () {
+      //获取当前相机高度
+      let height = Math.ceil(viewer.camera.positionCartographic.height);
+      let zoom = heightToZoom(height);
+      let bounds = getCurrentExtent();
+      levelEle.innerHTML = zoom;
 
-      viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000),
-      });
+      console.log("地图变化监听事件", zoom, bounds);
+    });
 
-      var levelEle = document.getElementById("level");
-      //监听地图移动完成事件
-      viewer.camera.changed.addEventListener(function () {
-        //获取当前相机高度
-        let height = Math.ceil(viewer.camera.positionCartographic.height);
-        let zoom = heightToZoom(height);
-        let bounds = getCurrentExtent();
-        levelEle.innerHTML = zoom;
+    /*
+     *获取当前三维范围
+     *extent,返回当前模式下地图范围[xmin,ymin,xmax,ymax]
+     *extent,返回当前模式下地图范围{xmin,ymin,xmax,ymax}
+     */
+    function getCurrentExtent() {
+      //获取当前三维地图范围
+      var Rectangle = this.viewer.camera.computeViewRectangle();
+      //地理坐标（弧度）转经纬度坐标
+      var extent = [
+        (Rectangle.west / Math.PI) * 180,
+        (Rectangle.south / Math.PI) * 180,
+        (Rectangle.east / Math.PI) * 180,
+        (Rectangle.north / Math.PI) * 180,
+      ];
+      return extent;
+    }
 
-        console.log("地图变化监听事件", zoom, bounds);
-      });
+    /*根据camera高度近似计算当前层级*/
+    //
+    function heightToZoom(height) {
+      var A = 40487.57;
+      var B = 0.00007096758;
+      var C = 91610.74;
+      var D = -40467.74;
+      return Math.round(D + (A - D) / (1 + Math.pow(height / C, B))); //与天地图瓦片偏差3级    14（计算层级） ---11（天地图层级）
+    }
 
-      /*
-       *获取当前三维范围
-       *extent,返回当前模式下地图范围[xmin,ymin,xmax,ymax]
-       *extent,返回当前模式下地图范围{xmin,ymin,xmax,ymax}
-       */
-      function getCurrentExtent() {
-        //获取当前三维地图范围
-        var Rectangle = this.viewer.camera.computeViewRectangle();
-        //地理坐标（弧度）转经纬度坐标
-        var extent = [
-          (Rectangle.west / Math.PI) * 180,
-          (Rectangle.south / Math.PI) * 180,
-          (Rectangle.east / Math.PI) * 180,
-          (Rectangle.north / Math.PI) * 180,
-        ];
-        return extent;
-      }
+    window.showVec = function () {
+      viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show;
+    };
 
-      /*根据camera高度近似计算当前层级*/
-      //
-      function heightToZoom(height) {
-        var A = 40487.57;
-        var B = 0.00007096758;
-        var C = 91610.74;
-        var D = -40467.74;
-        return Math.round(D + (A - D) / (1 + Math.pow(height / C, B))); //与天地图瓦片偏差3级    14（计算层级） ---11（天地图层级）
-      }
+    window.showCta = function () {
+      viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show;
+    };
 
-      window.showVec = function () {
-        viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show;
-      };
+    window.toggleGridLayer = function () {
+      gridLayer.show = !gridLayer.show;
+    };
+    window.toggleCoordLayer = function () {
+      coordLayer.show = !coordLayer.show;
+    };
+  </script>
+</body>
 
-      window.showCta = function () {
-        viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show;
-      };
-
-      window.toggleGridLayer = function () {
-        gridLayer.show = !gridLayer.show;
-      };
-      window.toggleCoordLayer = function () {
-        coordLayer.show = !coordLayer.show;
-      };
-    </script>
-  </body>
 </html>

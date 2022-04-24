@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>地形高度取样-剖面分析</title>
+
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.2.1/echarts.js"></script>
+
+    <style>
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000000;
+        }
+
+        #painting {
+            z-index: 1;
+            position: absolute;
+            top: 80px;
+            left: 10px;
+            background-color: white;
+        }
+
+        .toolBar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #303336;
+            opacity: 0.6;
+            padding: 6px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="cesiumContainer">
+        <div id="painting" style="width: 600px;height:400px;display: none"></div>
+    </div>
+    <div class="toolBar">
+        <button class="cesium-button" onclick="beginDraw()">开始绘制</button>
+    </div>
+    <script>
+
+        var paintingDom = document.getElementById('painting'); // 绘图对象
+        var myChart = null;
+
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+
+
+        // 地形服务
+        var terrainProvider = Cesium.createWorldTerrain();
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            terrainProvider: terrainProvider
+        });
+
+        viewer.camera.setView({
+            destination: new Cesium.Cartesian3(-548184.7982559408, 5512367.059463563, 3173625.2210259973),
+            orientation: {
+                heading: 5.683499859605618,
+                pitch: -0.3430291183891061,
+                roll: 6.281444671468591
+            }
+        });
+
+        var start = null;
+        var end = null;
+
+        function drawPoint(position) {
+            viewer.entities.add({
+                position: position,
+                point: {
+                    size: 10,
+                    color: Cesium.Color.GREEN
+                }
+            })
+        }
+
+        function drawLine() {
+            viewer.entities.add({
+                polyline: {
+                    positions: new Cesium.CallbackProperty(function (time, result) {
+                        return [start, end]
+                    }),
+                    material: Cesium.Color.RED,
+                    clampToGround: true,
+                    classificationType: Cesium.ClassificationType.BOTH
+                }
+            })
+        }
+
+        function beginDraw() {
+            // 重置
+            paintingDom.style.display = "none";
+            viewer.entities.removeAll();
+            start = null;
+            end = null;
+            viewer.screenSpaceEventHandler.setInputAction(function (clickEvent) {
+                if (start == null) {
+                    start = viewer.scene.pickPosition(clickEvent.position);
+                    drawPoint(start);
+                    viewer.screenSpaceEventHandler.setInputAction(function (moveEvent) {
+                        end = viewer.scene.pickPosition(moveEvent.endPosition);
+                        drawLine();
+                    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+                } else { // 左击鼠标结束绘制
+                    end = viewer.scene.pickPosition(clickEvent.position);
+                    drawPoint(end);
+                    viewer.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
+                    viewer.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+                    profileAnalyse();
+                }
+            }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+        }
+
+        // 插值后使用Cesium.sampleTerrainMostDetailed 获取地形
+        function profileAnalyse() {
+            var positions = [Cesium.Cartographic.fromCartesian(start)];
+            // 插值100个点，点越多模拟越精确，但是效率会低
+            var count = 10;
+            for (var i = 1; i < count; i++) {
+                var cart = Cesium.Cartesian3.lerp(start, end, i / count, new Cesium.Cartesian3());
+                positions.push(Cesium.Cartographic.fromCartesian(cart));
+            }
+            positions.push(Cesium.Cartographic.fromCartesian(end));
+
+            // 异步使用最精确的地形采样获取地形高度
+            var promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
+            Cesium.when(promise, function (updatedPositions) {
+
+                // 处理返回的数据
+                var heights = [];
+                for (var i = 0; i < updatedPositions.length; i++) {
+                    heights.push(updatedPositions[i].height.toFixed(1)); // 取得高程值
+                }
+
+                console.log(heights);
+
+                // 绘制高程走势图
+                paintingDom.style.display = "block";
+
+                // 使用Echart等图表工具可视化
+                if (myChart == null) {
+                    myChart = echarts.init(paintingDom);
+                    initChart(heights, false);
+                } else {
+                    initChart(heights, true);
+                }
+
+            });
+        }
+
+        function initChart(heights, isMerge) {
+            var option = {
+                title: {
+                    text: '海拔走势图'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                legend: {
+                    data: ['海拔走势图']
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: '海拔走势图',
+                        type: 'line',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'top'
+                            }
+                        },
+                        areaStyle: { normal: {} },
+                        data: heights
+                    }
+                ]
+            };
+            myChart.setOption(option, isMerge);
+        }
+
+    </script>
+</body>
+
+</html>

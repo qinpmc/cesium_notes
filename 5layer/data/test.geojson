@@ -1,0 +1,1516 @@
+{
+    "type": "FeatureCollection",
+    "layer": {
+        "id": "M-113BE2FE-8C4A-45EE-892F-056B4C45996E",
+        "name": "未命名"
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "文字",
+                "type": "label",
+                "group": "注记",
+                "id": "M-7BE86EE5-2CC6-4131-8B78-2C33FA8CFA95",
+                "style": {
+                    "text": "Mars3D三维地球平台软件",
+                    "color": "#00fff2",
+                    "font_size": 40,
+                    "font_family": "楷体",
+                    "font_weight": "normal",
+                    "font_style": "normal",
+                    "opacity": 1,
+                    "outline": true,
+                    "outlineColor": "#000000",
+                    "outlineOpacity": 0.6,
+                    "outlineWidth": 3,
+                    "backgroundColor": "#000000",
+                    "backgroundOpacity": 0.5,
+                    "backgroundPadding": 5,
+                    "scaleByDistance_far": 1000000,
+                    "scaleByDistance_farValue": 0.1,
+                    "scaleByDistance_near": 1000,
+                    "scaleByDistance_nearValue": 1,
+                    "distanceDisplayCondition_far": 100000,
+                    "visibleDepth": true,
+                    "materialType": "Color"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.314081,
+                    31.004389,
+                    1173.5
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "文字",
+                "type": "label",
+                "group": "注记",
+                "id": "M-C8CCC55B-2AD1-4AA0-9BC9-EAFDC2F35F22",
+                "style": {
+                    "text": "火星科技",
+                    "font_family": "楷体",
+                    "font_size": 30,
+                    "font_weight": "normal",
+                    "font_style": "normal",
+                    "color": "#ffffff",
+                    "opacity": 1,
+                    "outline": true,
+                    "outlineColor": "#000000",
+                    "outlineOpacity": 0.6,
+                    "outlineWidth": 3,
+                    "backgroundColor": "#000000",
+                    "backgroundOpacity": 0.5,
+                    "backgroundPadding": 5,
+                    "scaleByDistance_far": 1000000,
+                    "scaleByDistance_farValue": 0.1,
+                    "scaleByDistance_near": 1000,
+                    "scaleByDistance_nearValue": 1,
+                    "distanceDisplayCondition_far": 100000,
+                    "visibleDepth": true,
+                    "materialType": "Color"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.294594,
+                    30.801093,
+                    786.3
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "点(带注记)",
+                "type": "point",
+                "group": "点状",
+                "id": "M-7607C3AE-5495-402E-9826-3098A18C4E0F",
+                "style": {
+                    "color": "#2f00b0",
+                    "pixelSize": 10,
+                    "opacity": 1,
+                    "outline": true,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "outlineWidth": 2,
+                    "scaleByDistance_far": 1000000,
+                    "scaleByDistance_farValue": 0.1,
+                    "scaleByDistance_near": 1000,
+                    "scaleByDistance_nearValue": 1,
+                    "distanceDisplayCondition_far": 10000,
+                    "visibleDepth": true,
+                    "materialType": "Color",
+                    "label": {
+                        "text": "安徽合肥",
+                        "font_size": 20,
+                        "color": "#55d415",
+                        "border": true,
+                        "border_color": "#063d47",
+                        "pixelOffsetY": -13,
+                        "materialType": "Color"
+                    }
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.243435,
+                    30.877364,
+                    1115.3
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "图标点(带注记)",
+                "type": "billboard",
+                "group": "点状",
+                "id": "M-29F8CB5E-50CC-40C7-A220-BABD345ADFCB",
+                "style": {
+                    "image": "img/marker/mark4.png",
+                    "scaleByDistance": true,
+                    "opacity": 1,
+                    "scale": 1,
+                    "horizontalOrigin": 0,
+                    "verticalOrigin": 1,
+                    "scaleByDistance_far": 1000000,
+                    "scaleByDistance_farValue": 0.1,
+                    "scaleByDistance_near": 1000,
+                    "scaleByDistance_nearValue": 1,
+                    "distanceDisplayCondition_far": 10000,
+                    "visibleDepth": true,
+                    "rotationDegree": 0,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_near": 0,
+                    "clampToGround": false,
+                    "label": {
+                        "text": "注记文字",
+                        "font_size": 25,
+                        "color": "#ffffff",
+                        "border": true,
+                        "pixelOffsetY": -40,
+                        "scaleByDistance": true,
+                        "distanceDisplayCondition": true,
+                        "materialType": "Color",
+                        "font_family": "楷体",
+                        "font_weight": "normal",
+                        "font_style": "normal",
+                        "opacity": 1,
+                        "outline": true,
+                        "outlineColor": "#000000",
+                        "outlineOpacity": 0.6,
+                        "outlineWidth": 3,
+                        "background": false,
+                        "backgroundColor": "#000000",
+                        "backgroundOpacity": 0.5,
+                        "backgroundPadding": 5,
+                        "pixelOffsetX": 0,
+                        "scaleByDistance_far": 1000000,
+                        "scaleByDistance_farValue": 0.1,
+                        "scaleByDistance_near": 1000,
+                        "scaleByDistance_nearValue": 1,
+                        "distanceDisplayCondition_far": 100000,
+                        "distanceDisplayCondition_near": 0,
+                        "clampToGround": false,
+                        "visibleDepth": true
+                    }
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.369906,
+                    30.868335,
+                    474.3
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "图标点3",
+                "type": "billboard",
+                "group": "点状",
+                "id": "M-5EF155F4-6080-48D7-B693-86E591C3077C",
+                "style": {
+                    "image": "img/marker/mark3.png",
+                    "opacity": 1,
+                    "scale": 1,
+                    "horizontalOrigin": 0,
+                    "verticalOrigin": 1,
+                    "scaleByDistance_far": 1000000,
+                    "scaleByDistance_farValue": 0.1,
+                    "scaleByDistance_near": 1000,
+                    "scaleByDistance_nearValue": 1,
+                    "distanceDisplayCondition_far": 10000,
+                    "visibleDepth": true,
+                    "rotationDegree": 0,
+                    "scaleByDistance": false,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_near": 0,
+                    "clampToGround": false
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.402144,
+                    30.872607,
+                    734.2
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "警车",
+                "type": "model",
+                "group": "模型",
+                "id": "M-C8AE17A1-337A-49FC-BCCD-698957A26E01",
+                "style": {
+                    "scale": 300,
+                    "url": "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
+                    "heading": 111,
+                    "radius": 717.0292078271689,
+                    "color": "#3388ff",
+                    "opacity": 1,
+                    "silhouetteColor": "#ffffff",
+                    "silhouetteSize": 2,
+                    "silhouetteAlpha": 0.8,
+                    "distanceDisplayCondition_far": 100000,
+                    "runAnimations": true,
+                    "hasShadows": true,
+                    "materialType": "Color"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.284615,
+                    30.8779,
+                    417.8
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "行人",
+                "type": "model",
+                "group": "模型",
+                "id": "M-883AACF9-AA4D-4388-BDF0-82767395EFA6",
+                "style": {
+                    "url": "//data.mars3d.cn/gltf/mars/man/walk.gltf",
+                    "scale": 700,
+                    "heading": 125,
+                    "radius": 666.9720954566423,
+                    "color": "#3388ff",
+                    "opacity": 1,
+                    "silhouetteColor": "#ffffff",
+                    "silhouetteSize": 2,
+                    "silhouetteAlpha": 0.8,
+                    "distanceDisplayCondition_far": 100000,
+                    "runAnimations": true,
+                    "hasShadows": true,
+                    "materialType": "Color"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.341774,
+                    30.878147,
+                    388.8
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "起重车",
+                "type": "model",
+                "group": "模型",
+                "id": "M-7720BC0A-6179-41CA-99C4-B4235C2915CB",
+                "style": {
+                    "url": "//data.mars3d.cn/gltf/mars/qzcar/GKZY_anim.gltf",
+                    "scale": 200,
+                    "radius": 976.2610310441422,
+                    "color": "#3388ff",
+                    "opacity": 1,
+                    "silhouetteColor": "#ffffff",
+                    "silhouetteSize": 2,
+                    "silhouetteAlpha": 0.8,
+                    "distanceDisplayCondition_far": 100000,
+                    "runAnimations": true,
+                    "hasShadows": true,
+                    "heading": 0,
+                    "materialType": "Color"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.315166,
+                    30.87653,
+                    395.7
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "polyline",
+                "group": "线状",
+                "id": "M-9FECAF7D-0538-4BAE-AAEC-7BCF23A91E56",
+                "style": {
+                    "materialType": "LineFlow",
+                    "color": "#33e8df",
+                    "speed": 10,
+                    "image": "img/textures/lineClr.png",
+                    "dashLength": 16,
+                    "opacity": 1,
+                    "width": 4,
+                    "outlineColor": "#ffffff",
+                    "outlineWidth": 2,
+                    "depthFailColor": "#ff0000",
+                    "depthFailOpacity": 0.2,
+                    "distanceDisplayCondition_far": 100000
+                }
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        116.273249,
+                        30.928155,
+                        944.7
+                    ],
+                    [
+                        116.291858,
+                        30.973276,
+                        651.3
+                    ],
+                    [
+                        116.308667,
+                        30.927694,
+                        482.8
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "polyline",
+                "group": "线状",
+                "id": "M-632EDEA8-F594-463D-AE82-DDEB7C29A930",
+                "style": {
+                    "materialType": "LineFlow",
+                    "speed": 2,
+                    "image": "img/textures/LinkPulse.png",
+                    "color": "#33e8df",
+                    "width": 8,
+                    "dashLength": 16,
+                    "opacity": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineWidth": 2,
+                    "depthFailColor": "#ff0000",
+                    "depthFailOpacity": 0.2,
+                    "distanceDisplayCondition_far": 100000
+                }
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        116.334336,
+                        30.96524,
+                        1165.1
+                    ],
+                    [
+                        116.333137,
+                        30.924785,
+                        666.4
+                    ],
+                    [
+                        116.337154,
+                        30.924386,
+                        646.9
+                    ],
+                    [
+                        116.337406,
+                        30.954994,
+                        831.7
+                    ],
+                    [
+                        116.362806,
+                        30.923818,
+                        549.6
+                    ],
+                    [
+                        116.364831,
+                        30.926338,
+                        584
+                    ],
+                    [
+                        116.34028,
+                        30.956525,
+                        807.9
+                    ],
+                    [
+                        116.362878,
+                        30.952779,
+                        940.8
+                    ],
+                    [
+                        116.364241,
+                        30.975741,
+                        737.5
+                    ],
+                    [
+                        116.333948,
+                        30.971116,
+                        1230.7
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "曲线",
+                "type": "curve",
+                "edittype": "polyline",
+                "group": "线状",
+                "id": "M-F377D8B5-07A3-46B0-B163-A1258222FCBA",
+                "style": {
+                    "color": "#ff3333",
+                    "materialType": "Color"
+                }
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        116.425147,
+                        30.967425,
+                        800
+                    ],
+                    [
+                        116.390764,
+                        30.967217,
+                        800
+                    ],
+                    [
+                        116.393392,
+                        30.948337,
+                        800
+                    ],
+                    [
+                        116.421159,
+                        30.935865,
+                        800
+                    ],
+                    [
+                        116.418227,
+                        30.920071,
+                        800
+                    ],
+                    [
+                        116.384593,
+                        30.921521,
+                        800
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "走廊",
+                "type": "corridor",
+                "group": "线状",
+                "id": "M-DBFA89A4-4BD5-49F1-A398-88B3CAB07526",
+                "style": {
+                    "height": 723.42,
+                    "width": 200,
+                    "color": "#33e8df",
+                    "cornerType": "ROUNDED",
+                    "grid_lineCount": 8,
+                    "grid_lineThickness": 2,
+                    "grid_cellAlpha": 0.1,
+                    "opacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "materialType": "Color"
+                }
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        116.281378,
+                        30.947868,
+                        0
+                    ],
+                    [
+                        116.299614,
+                        30.947923,
+                        0
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "wall",
+                "group": "立体",
+                "id": "M-C9EE49A5-1355-4EA6-A068-D36FA6A308B0",
+                "style": {
+                    "materialType": "LineFlow",
+                    "axisY": true,
+                    "color": "#36ff5b",
+                    "diffHeight": 3291.8,
+                    "fill": true,
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "speed": 10,
+                    "image": "img/textures/fence.png",
+                    "repeat": 1,
+                    "count": 1,
+                    "font_family": "楷体",
+                    "font_size": 30,
+                    "font_weight": "normal",
+                    "font_style": "normal",
+                    "lineCount": 8,
+                    "lineThickness": 2,
+                    "cellAlpha": 0.1,
+                    "evenColor": "#000000",
+                    "oddColor": "#ffffff",
+                    "closure": false,
+                    "outline": false,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_near": 0,
+                    "hasShadows": false
+                }
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        116.08422,
+                        30.92783,
+                        1504.1
+                    ],
+                    [
+                        116.157251,
+                        31.046631,
+                        1419.9
+                    ],
+                    [
+                        116.444703,
+                        31.049512,
+                        955.9
+                    ],
+                    [
+                        116.525192,
+                        30.927539,
+                        346
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "wall",
+                "group": "立体",
+                "id": "M-221DBBF4-3BE7-4C97-916A-CDBF3FE8BD6B",
+                "style": {
+                    "materialType": "LineFlow",
+                    "axisY": true,
+                    "color": "#ff0000",
+                    "image2": "img/textures/tanhao.png",
+                    "color2": "#FFFF00",
+                    "diffHeight": 2039,
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "speed": 10,
+                    "image": "img/textures/fence.png",
+                    "count": 1,
+                    "font_family": "楷体",
+                    "font_size": 30,
+                    "font_weight": "normal",
+                    "font_style": "normal",
+                    "lineCount": 8,
+                    "lineThickness": 2,
+                    "cellAlpha": 0.1,
+                    "evenColor": "#000000",
+                    "oddColor": "#ffffff",
+                    "closure": false,
+                    "outline": false,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_near": 0,
+                    "hasShadows": false,
+                    "repeat_x": 1,
+                    "repeat_y": 1
+                }
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        116.398129,
+                        30.828672,
+                        416.5
+                    ],
+                    [
+                        116.426694,
+                        30.828139,
+                        400.2
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "动态箭头墙体",
+                "type": "wall",
+                "group": "立体",
+                "id": "M-B4742ECE-D14A-45EA-B602-CD6114E43C36",
+                "style": {
+                    "materialType": "LineFlow",
+                    "image": "img/textures/arrow.png",
+                    "repeatX": 10,
+                    "color": "#ffcd36",
+                    "diffHeight": 2471.33,
+                    "fill": true,
+                    "flow_speed": 10,
+                    "grid_lineCount": 8,
+                    "grid_lineThickness": 2,
+                    "grid_cellAlpha": 0.1,
+                    "stripe_oddcolor": "#ffffff",
+                    "stripe_repeat": 6,
+                    "checkerboard_oddcolor": "#ffffff",
+                    "checkerboard_repeat": 4,
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "speed": 10,
+                    "repeat": 10,
+                    "axisY": false,
+                    "count": 1,
+                    "font_family": "楷体",
+                    "font_size": 30,
+                    "font_weight": "normal",
+                    "font_style": "normal",
+                    "lineCount": 8,
+                    "lineThickness": 2,
+                    "cellAlpha": 0.1,
+                    "evenColor": "#000000",
+                    "oddColor": "#ffffff",
+                    "closure": false,
+                    "outline": false,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_near": 0,
+                    "hasShadows": false,
+                    "repeat_x": 10,
+                    "repeat_y": 1
+                }
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        116.013679,
+                        30.809299,
+                        322.4
+                    ],
+                    [
+                        116.063046,
+                        30.853595,
+                        576.3
+                    ],
+                    [
+                        116.135414,
+                        30.874663,
+                        388.2
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "拉伸走廊",
+                "type": "corridor",
+                "group": "立体",
+                "id": "M-1F3D332C-55C6-4790-AF5F-20065D018752",
+                "style": {
+                    "diffHeight": 1113.26,
+                    "height": 799.37,
+                    "color": "#ffff12",
+                    "width": 100,
+                    "cornerType": "ROUNDED",
+                    "grid_lineCount": 8,
+                    "grid_lineThickness": 2,
+                    "grid_cellAlpha": 0.1,
+                    "opacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "materialType": "Color"
+                }
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        116.181837,
+                        30.930943,
+                        0
+                    ],
+                    [
+                        116.201137,
+                        30.981009,
+                        0
+                    ],
+                    [
+                        116.217127,
+                        30.928792,
+                        0
+                    ],
+                    [
+                        116.237996,
+                        30.976652,
+                        0
+                    ],
+                    [
+                        116.250976,
+                        30.925327,
+                        0
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "圆柱体",
+                "type": "circle",
+                "group": "立体",
+                "id": "M-3D02BBC6-BC18-4D37-89EE-ADC4C62BC8DF",
+                "style": {
+                    "diffHeight": 1597,
+                    "height": 802.4,
+                    "radius": 1108.49,
+                    "fill": true,
+                    "wave_speed": 10,
+                    "wave_count": 1,
+                    "wave_gradient": 0.1,
+                    "grid_lineCount": 8,
+                    "grid_lineThickness": 2,
+                    "grid_cellAlpha": 0.1,
+                    "stripe_oddcolor": "#ffffff",
+                    "stripe_repeat": 6,
+                    "checkerboard_oddcolor": "#ffffff",
+                    "checkerboard_repeat": 4,
+                    "color": "#3388ff",
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "clampToGround": false,
+                    "materialType": "Color"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.124359,
+                    30.908943,
+                    802.4
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "圆锥体",
+                "type": "cylinder",
+                "group": "立体",
+                "id": "M-4A02CE5B-B613-4499-ADAF-77336BE98577",
+                "style": {
+                    "bottomRadius": 1257.49,
+                    "length": 2239.62,
+                    "fill": true,
+                    "wave_speed": 10,
+                    "wave_count": 1,
+                    "wave_gradient": 0.1,
+                    "color": "#00FF00",
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "numberOfVerticalLines": 16,
+                    "distanceDisplayCondition_far": 100000,
+                    "materialType": "Color",
+                    "topRadius": 0
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.461908,
+                    30.901827,
+                    654.4
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "多边立体",
+                "type": "polygon",
+                "group": "立体",
+                "id": "M-C4F88965-B88B-4255-8859-D1D8A81E8AC1",
+                "style": {
+                    "diffHeight": 2103.77,
+                    "color": "#31f5bd",
+                    "fill": true,
+                    "grid_lineCount": 8,
+                    "grid_lineThickness": 2,
+                    "grid_cellAlpha": 0.1,
+                    "stripe_oddcolor": "#ffffff",
+                    "stripe_repeat": 6,
+                    "checkerboard_oddcolor": "#ffffff",
+                    "checkerboard_repeat": 4,
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "clampToGround": false,
+                    "materialType": "Color"
+                }
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            116.187197,
+                            30.870277,
+                            -12.1
+                        ],
+                        [
+                            116.177889,
+                            30.849951,
+                            251.3
+                        ],
+                        [
+                            116.192968,
+                            30.840307,
+                            311.3
+                        ],
+                        [
+                            116.205256,
+                            30.85111,
+                            72.1
+                        ],
+                        [
+                            116.208088,
+                            30.861911,
+                            -12.3
+                        ],
+                        [
+                            116.187197,
+                            30.870277,
+                            -12.1
+                        ],
+                        [
+                            116.187197,
+                            30.870277,
+                            -12.1
+                        ],
+                        [
+                            116.187197,
+                            30.870277,
+                            -12.1
+                        ],
+                        [
+                            116.187197,
+                            30.870277,
+                            -12.1
+                        ],
+                        [
+                            116.187197,
+                            30.870277,
+                            -12.1
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "面",
+                "type": "polygon",
+                "group": "平面",
+                "id": "M-5B2FF97E-7CFC-4207-A41E-DEC5BADBEA60",
+                "style": {
+                    "materialType": "Checkerboard",
+                    "repeat": 10,
+                    "color": "#96b825",
+                    "fill": true,
+                    "oddcolor": "#ffffff",
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "clampToGround": false,
+                    "diffHeight": 0,
+                    "lineCount": 8,
+                    "lineThickness": 2,
+                    "cellAlpha": 0.1,
+                    "evenColor": "#0079fa",
+                    "oddColor": "#ffffff",
+                    "stRotationDegree": 0,
+                    "outline": false,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_near": 0,
+                    "hasShadows": false,
+                    "zIndex": 0
+                }
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            116.283799,
+                            30.913481,
+                            563.3
+                        ],
+                        [
+                            116.298598,
+                            30.916559,
+                            403.9
+                        ],
+                        [
+                            116.309554,
+                            30.906019,
+                            366.3
+                        ],
+                        [
+                            116.304475,
+                            30.899226,
+                            382.9
+                        ],
+                        [
+                            116.29394,
+                            30.894739,
+                            390.5
+                        ],
+                        [
+                            116.280348,
+                            30.904161,
+                            427.2
+                        ],
+                        [
+                            116.283799,
+                            30.913481,
+                            563.3
+                        ],
+                        [
+                            116.283799,
+                            30.913481,
+                            563.3
+                        ],
+                        [
+                            116.283799,
+                            30.913481,
+                            563.3
+                        ],
+                        [
+                            116.283799,
+                            30.913481,
+                            563.3
+                        ],
+                        [
+                            116.283799,
+                            30.913481,
+                            563.3
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "矩形",
+                "type": "rectangle",
+                "group": "平面",
+                "id": "M-95C6363C-5BFC-48B1-811F-310078E2477B",
+                "style": {
+                    "height": 585.7,
+                    "materialType": "Grid",
+                    "cellAlpha": 0.42,
+                    "color": "#33ffc5",
+                    "fill": true,
+                    "lineCount": 6,
+                    "lineThickness": 2,
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "clampToGround": false,
+                    "diffHeight": 0,
+                    "evenColor": "#000000",
+                    "oddColor": "#ffffff",
+                    "repeat": 2,
+                    "outline": false,
+                    "rotationDegree": 0,
+                    "stRotationDegree": 0,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_near": 0,
+                    "hasShadows": false,
+                    "zIndex": 0
+                }
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            116.242439,
+                            30.898129,
+                            585.7
+                        ],
+                        [
+                            116.268751,
+                            30.913517,
+                            585.7
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "圆",
+                "type": "circle",
+                "group": "平面",
+                "id": "M-3E1866A8-AD8B-4BFE-9BA6-93E364249E7D",
+                "style": {
+                    "height": 657.6,
+                    "materialType": "Stripe",
+                    "repeat": 10,
+                    "radius": 1255.92,
+                    "fill": true,
+                    "color": "#3388ff",
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "clampToGround": false,
+                    "diffHeight": 0,
+                    "speed": 10,
+                    "count": 1,
+                    "gradient": 0.1,
+                    "lineCount": 8,
+                    "lineThickness": 2,
+                    "cellAlpha": 0.1,
+                    "evenColor": "#0036bd",
+                    "oddColor": "#ffffff",
+                    "stRotationDegree": 0,
+                    "outline": false,
+                    "rotationDegree": 0,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_near": 0,
+                    "hasShadows": false,
+                    "zIndex": 0
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.214796,
+                    30.907629,
+                    657.6
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "椭圆",
+                "type": "ellipse",
+                "group": "平面",
+                "id": "M-F0B72CAE-6308-4823-B5D0-1E95E90F6BCE",
+                "style": {
+                    "height": 619.1,
+                    "materialType": "Checkerboard",
+                    "semiMinorAxis": 858.07,
+                    "semiMajorAxis": 1418.01,
+                    "fill": true,
+                    "oddcolor": "#ffffff",
+                    "repeat": 8,
+                    "color": "#3388ff",
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "clampToGround": false,
+                    "diffHeight": 0,
+                    "speed": 10,
+                    "count": 1,
+                    "gradient": 0.1,
+                    "lineCount": 8,
+                    "lineThickness": 2,
+                    "cellAlpha": 0.1,
+                    "evenColor": "#18857c",
+                    "oddColor": "#ffffff",
+                    "stRotationDegree": 0,
+                    "outline": false,
+                    "rotationDegree": 0,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_near": 0,
+                    "hasShadows": false,
+                    "zIndex": 0
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.411659,
+                    30.903628,
+                    619.1
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "circle",
+                "group": "平面",
+                "id": "M-287FCD82-D3D6-408D-9018-6B12AA2315BC",
+                "style": {
+                    "materialType": "CircleWave",
+                    "count": 2,
+                    "height": 743.4,
+                    "radius": 1800,
+                    "fill": true,
+                    "speed": 10,
+                    "gradient": 0.1,
+                    "color": "#3388ff",
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "clampToGround": false
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.284302,
+                    30.837405,
+                    743.4
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "圆形图片",
+                "type": "circle",
+                "group": "平面",
+                "id": "M-99C77EB9-45CF-48EB-BEB9-DBAFDC5ADAD6",
+                "style": {
+                    "materialType": "Image",
+                    "image": "img/tietu/leida.jpg",
+                    "opacity": 0.8,
+                    "height": 472.1,
+                    "radius": 1442.92,
+                    "fill": true,
+                    "color": "#3388ff",
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "clampToGround": false
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    116.172567,
+                    30.90894,
+                    472.1
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "多边形图片",
+                "type": "polygon",
+                "group": "平面",
+                "id": "M-0F5A01E1-38C5-4435-9983-4DA542BFFA12",
+                "style": {
+                    "materialType": "Image",
+                    "image": "img/textures/excavate_bottom_min.jpg",
+                    "opacity": 1,
+                    "fill": true,
+                    "color": "#3388ff",
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "clampToGround": false
+                }
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            116.355381,
+                            30.905217,
+                            545
+                        ],
+                        [
+                            116.374256,
+                            30.893151,
+                            550.3
+                        ],
+                        [
+                            116.386675,
+                            30.911064,
+                            556.4
+                        ],
+                        [
+                            116.36443,
+                            30.914996,
+                            540.9
+                        ],
+                        [
+                            116.355381,
+                            30.905217,
+                            545
+                        ],
+                        [
+                            116.355381,
+                            30.905217,
+                            545
+                        ],
+                        [
+                            116.355381,
+                            30.905217,
+                            545
+                        ],
+                        [
+                            116.355381,
+                            30.905217,
+                            545
+                        ],
+                        [
+                            116.355381,
+                            30.905217,
+                            545
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "贴地矩形图片",
+                "type": "rectangle",
+                "group": "平面",
+                "id": "M-2F611E27-B34F-46E0-8635-6CC5ABEE4FAE",
+                "style": {
+                    "image": "img/tietu/gugong.jpg",
+                    "materialType": "Image",
+                    "fill": true,
+                    "color": "#3388ff",
+                    "opacity": 0.6,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition_far": 100000,
+                    "height": 0,
+                    "clampToGround": false
+                }
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            116.321299,
+                            30.894268,
+                            0
+                        ],
+                        [
+                            116.346701,
+                            30.915492,
+                            0
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "集结地",
+                "type": "gatheringPlace",
+                "edittype": "polygon",
+                "group": "平面",
+                "id": "M-2D5EC46F-1589-4CA5-AFA3-45D60F623E1B",
+                "style": {
+                    "color": "#00ad8a",
+                    "materialType": "Color",
+                    "diffHeight": 0,
+                    "fill": true,
+                    "lineCount": 8,
+                    "lineThickness": 2,
+                    "cellAlpha": 0.1,
+                    "evenColor": "#000000",
+                    "oddColor": "#ffffff",
+                    "repeat": 2,
+                    "opacity": 0.69,
+                    "stRotationDegree": 0,
+                    "outline": false,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_far": 100000,
+                    "distanceDisplayCondition_near": 0,
+                    "hasShadows": false,
+                    "zIndex": 0
+                }
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            116.397607,
+                            30.766435,
+                            662
+                        ],
+                        [
+                            116.438842,
+                            30.779146,
+                            665.2
+                        ],
+                        [
+                            116.427509,
+                            30.818898,
+                            503
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "燕尾直箭头",
+                "type": "fineArrowYW",
+                "edittype": "polygon",
+                "group": "平面",
+                "id": "M-B1B21C35-65E0-4420-BFA2-16623D411E0A",
+                "style": {
+                    "color": "#fff200",
+                    "materialType": "Color",
+                    "diffHeight": 0,
+                    "fill": true,
+                    "lineCount": 8,
+                    "lineThickness": 2,
+                    "cellAlpha": 0.1,
+                    "evenColor": "#000000",
+                    "oddColor": "#ffffff",
+                    "repeat": 2,
+                    "opacity": 0.54,
+                    "stRotationDegree": 0,
+                    "outline": false,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_far": 100000,
+                    "distanceDisplayCondition_near": 0,
+                    "hasShadows": false,
+                    "zIndex": 0
+                }
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            116.335922,
+                            30.678001,
+                            328.2
+                        ],
+                        [
+                            116.372386,
+                            30.786478,
+                            419.2
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "钳击箭头",
+                "type": "doubleArrow",
+                "edittype": "polygon",
+                "group": "平面",
+                "id": "M-239DFCDF-4680-4032-B16E-9FC0692A36E0",
+                "style": {
+                    "color": "#ff0900",
+                    "materialType": "Color",
+                    "diffHeight": 0,
+                    "fill": true,
+                    "lineCount": 8,
+                    "lineThickness": 2,
+                    "cellAlpha": 0.1,
+                    "evenColor": "#000000",
+                    "oddColor": "#ffffff",
+                    "repeat": 2,
+                    "opacity": 0.56,
+                    "stRotationDegree": 0,
+                    "outline": false,
+                    "outlineWidth": 1,
+                    "outlineColor": "#ffffff",
+                    "outlineOpacity": 0.6,
+                    "distanceDisplayCondition": false,
+                    "distanceDisplayCondition_far": 100000,
+                    "distanceDisplayCondition_near": 0,
+                    "hasShadows": false,
+                    "zIndex": 0
+                }
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            116.14095,
+                            30.758996,
+                            542.8
+                        ],
+                        [
+                            116.237801,
+                            30.716212,
+                            194.7
+                        ],
+                        [
+                            116.279206,
+                            30.787596,
+                            658.2
+                        ],
+                        [
+                            116.242369,
+                            30.798216,
+                            488.6
+                        ]
+                    ]
+                ]
+            }
+        }
+    ]
+}

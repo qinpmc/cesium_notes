@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>模型</title>
+  <script src="../Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../Build/Cesium/Widgets/widgets.css);
+
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <input id="offset" type="range" min="-500" max="500" step="10" onclick="ajustHeight()" style="width: 800px;">
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyOGYxMWEyYS1hMzc5LTQ0MDEtOGYxOC04ZDc4ODcyNTdiZTUiLCJpZCI6MjU5LCJpYXQiOjE1OTg5NTg3MjR9.HjqOnTvUuTIKotbUF7cfYxfOLR9UaKAfYcQAqZQblGs";
+    var viewer;
+    !(function () {
+      viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: true, //是否显示动画控件
+        //baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: true, //是否显示时间线控件
+        shouldAnimate: true,
+        sceneModePicker: true, //是否显示投影方式控件
+        //navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.OpenStreetMapImageryProvider({
+          url: "https://a.tile.openstreetmap.org/"
+        })
+      });
+
+      var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "cta",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+      });
+
+      //viewer.imageryLayers.addImageryProvider(imageryProvider2);
+
+    })();
+
+    viewer.scene.globe.depthTestAgainstTerrain = true;
+
+
+
+    // Load the NYC buildings tileset
+    var tileset = new Cesium.Cesium3DTileset({
+      url: "./dayanta/tileset.json"
+      //url: "../dv_ljz/tileset.json",
+      //url: "http://resource.dvgis.cn/data/3dtiles/ljz/tileset.json"
+    });
+    viewer.scene.primitives.add(tileset);
+    viewer.zoomTo(tileset)
+
+    window.ajustHeight = function () {
+      var offsetHeight = document.getElementById("offset").value;
+      changeHeight(offsetHeight);
+      //changeHeight2(offsetHeight)
+    }
+    var center
+    tileset.readyPromise.then(function (tileset) {
+      center = tileset.boundingSphere.center.clone()
+    });
+
+
+    function changeHeight(height) {
+      height = Number(height);
+      if (isNaN(height)) {
+        return;
+      }
+      var cartographic = Cesium.Cartographic.fromCartesian(center);
+
+      console.log(center)
+      var surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, cartographic.height);
+      var offset = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, height);
+      console.log(height)
+      var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3());
+      tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
+    }
+
+    function changeHeight2(height) {
+      //创建平移矩阵方法一
+      // m = Cesium.Matrix4.fromArray([
+      // 1.0, 0.0, 0.0, 0.0,
+      // 0.0, 1.0, 0.0, 0.0,
+      // 0.0, 0.0, 1.0, 0.0,
+      // x, y, z, 1.0
+      // ]);
+
+      //创建平移矩阵方法二
+      var translation = Cesium.Cartesian3.fromArray([0, 0, height]);
+      m = Cesium.Matrix4.fromTranslation(translation);
+
+      //生效
+      tileset._modelMatrix = m;
+    }
+
+  </script>
+</body>
+
+</html>
