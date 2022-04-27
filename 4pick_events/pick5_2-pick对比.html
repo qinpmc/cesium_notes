@@ -7,7 +7,8 @@
     <!-- Tell IE to use the latest, best version. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Hello World!</title>
     <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
@@ -27,8 +28,14 @@
 
 <body>
 
-    <div>
+    <div style="position: absolute;z-index: 9999;">
+        <button onclick="addWorldTerrain()">添加世界地形</button>
+        <button onclick="addChinaTerrain()">添加中国地形</button>
+        <button onclick="removeTerrain()">移除地形</button>
+        
+        <button onclick="toggleDepthTest()" id="toggleDepthTest">开启(green)/关闭深度检测</button>
         <button onclick="addModel()">添加模型</button>
+        <button onclick="add3Dtiles()">添加3dtiles</button>
     </div>
     <div id="cesiumContainer"></div>
 
@@ -47,18 +54,12 @@
         var viewer = new Cesium.Viewer('cesiumContainer', {
             selectionIndicator: false,
             infoBox: false,
-            // 注释时相当于使用默认地形，解开注释相当于使用全球地形
-            terrainProvider: Cesium.createWorldTerrain()
+
         });
 
-        let terrain = new Cesium.CesiumTerrainProvider({
-            //url: "../Source/Terrain/beijing/"
-            url: "http://data.marsgis.cn/terrain/",
-        });
-        viewer.terrainProvider = terrain;
 
-        // 深度开启或关闭
-        viewer.scene.globe.depthTestAgainstTerrain = true;
+
+
         var scene = viewer.scene;
         var handler;
 
@@ -86,7 +87,7 @@
             if (scene.mode !== Cesium.SceneMode.MORPHING) {
                 //var pickedObject = scene.pick(movement.endPosition);
                 if (true) {
-                    labelEntity.label.text = '';
+                    labelEntity.label.text = 'scene.pickPosition -\n';
 
                     //第一种：scene.pickPosition
                     var cartesian = viewer.scene.pickPosition(movement.endPosition);
@@ -107,7 +108,7 @@
                     if (Cesium.defined(cartesian2)) {
                         var res2 = transCartesian2LonLatHeight(cartesian2);
 
-                        labelEntity.label.text +=
+                        labelEntity.label.text += '\nglobe.pick -' +
                             '\nLon2: ' + ('   ' + res2.lon).slice(-7) + '\u00B0' +
                             '\nLat2: ' + ('   ' + res2.lat).slice(-7) + '\u00B0' +
                             '\nAlt2: ' + ('   ' + res2.height).slice(-7) + 'm';
@@ -115,17 +116,24 @@
 
                     // 第三种：camera.pickEllipsoid --- CesiumMilkTruck-kmc.gltf模型和地形的高度均获取不到
                     var cartesian3 = viewer.scene.camera.pickEllipsoid(movement.endPosition, viewer.scene.globe.ellipsoid);
-                    var res3 = transCartesian2LonLatHeight(cartesian3);
-                    labelEntity.label.text +=
-                        '\nLon3: ' + ('   ' + res3.lon).slice(-7) + '\u00B0' +
-                        '\nLat3: ' + ('   ' + res3.lat).slice(-7) + '\u00B0' +
-                        '\nAlt3: ' + ('   ' + res3.height).slice(-7) + 'm';
 
-                    //第四种：globe.getHeight ----镜头高度太高获取的高度会为错误的负数
+                    if (Cesium.defined(cartesian3)) {
+                        var res3 = transCartesian2LonLatHeight(cartesian3);
+                        labelEntity.label.text += '\ncamera.pickEllipsoid - ' +
+                            '\nLon3: ' + ('   ' + res3.lon).slice(-7) + '\u00B0' +
+                            '\nLat3: ' + ('   ' + res3.lat).slice(-7) + '\u00B0' +
+                            '\nAlt3: ' + ('   ' + res3.height).slice(-7) + 'm';
 
-                    var cartographic4 = Cesium.Cartographic.fromDegrees(res3.lon, res3.lat);
-                    var height4 = viewer.scene.globe.getHeight(cartographic4);
-                    console.log(height4);
+
+                        //第四种：globe.getHeight ----镜头高度太高获取的高度会为错误的负数
+
+                        var cartographic4 = Cesium.Cartographic.fromDegrees(res3.lon, res3.lat);
+                        var height4 = viewer.scene.globe.getHeight(cartographic4);
+                        console.log(height4);
+                    }
+
+
+
 
 
 
@@ -181,13 +189,59 @@
                 name: 'milktruck',
                 position: Cesium.Cartesian3.fromDegrees(91, 30),
                 model: {
-                    uri: '../data/model/CesiumMilkTruck-kmc.gltf',
-                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+                    uri: '../sampleData/model/CesiumMilkTruck-kmc.gltf',
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                    minimumPixelSize: 400,
                 }
             });
 
             viewer.zoomTo(modelEntity);
         }
+
+        function addWorldTerrain() {
+            // 注释时相当于使用默认地形，解开注释相当于使用全球地形
+            viewer.terrainProvider = Cesium.createWorldTerrain()
+        }
+
+        function addChinaTerrain() {
+
+            let terrain = new Cesium.CesiumTerrainProvider({
+                url: "http://data.marsgis.cn/terrain/",
+            });
+            viewer.terrainProvider = terrain;
+        }
+
+        function removeTerrain() {
+            viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider({});
+        }
+
+
+
+        function add3Dtiles() {
+            // 加载大雁塔模型
+            var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+                url: "../sampleData/tileset/dayanta/tileset.json",
+
+            }));
+
+            tileset.readyPromise.then(function () {
+                var boundingSphere = tileset.boundingSphere; // 模型的包围球范围
+                var radius = boundingSphere.radius; // 长度
+                viewer.zoomTo(tileset, new Cesium.HeadingPitchRange(0.5, -0.2, radius * 4.0));
+            });
+        }
+
+        var flag = false;
+        function toggleDepthTest() {
+            flag = !flag
+            // 深度开启或关闭
+            viewer.scene.globe.depthTestAgainstTerrain = flag;
+            var color = flag ? "green" : "red";
+            document.getElementById("toggleDepthTest").style.backgroundColor = color;
+        }
+
+
+
 
     </script>
 </body>

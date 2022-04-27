@@ -7,7 +7,8 @@
     <!-- Tell IE to use the latest, best version. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>point</title>
     <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
@@ -33,14 +34,15 @@
         <button onclick="addPoint4()">增加黄色点4-translucencyByDistance</button>
         <button onclick="addPoint5()">增加黄色点5-scaleByDistance</button>
         <button onclick="addPoint6()">增加蓝色点6-distanceDisplayCondition</button>
-
+        <button onclick="addPoint7()">增加多个点</button>
+        <button onclick="addPoint8()"> 带有modelMatrix点</button>
     </div>
     <div id="cesiumContainer"></div>
     <script>
         Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
         var widget = new Cesium.CesiumWidget('cesiumContainer');
-        var scene = widget.scene;
 
+        var scene = widget.scene;
         var pointPrimitives = scene.primitives.add(new Cesium.PointPrimitiveCollection());
 
         //普通点
@@ -76,16 +78,18 @@
 
         }
 
-        //带外边框点+带高度+透明度
+        //带外边框点+带高度+透明度+ 修改属性
         function addPoint3() {
 
-            pointPrimitives.add({
+            var point = pointPrimitives.add({
                 position: Cesium.Cartesian3.fromDegrees(114, 30, 300000),
                 color: Cesium.Color.RED.withAlpha(0.33),
                 pixelSize: 15, // default: 1
-                outlineColor: Cesium.Color.GREEN, // default: BLACK
+                // outlineColor: Cesium.Color.GREEN, // default: BLACK
                 outlineWidth: 3 // default: 0
             });
+            point.outlineColor = Cesium.Color.GREEN
+
         }
 
 
@@ -124,10 +128,64 @@
 
         }
 
+        //添加多个点
+        function addPoint7() {
+            pointPrimitives.add({
+                position: Cesium.Cartesian3.fromDegrees(114, 40.03883),
+                color: Cesium.Color.RED,
+                pixelSize: 5,
+            });
+            pointPrimitives.add({
+                position: Cesium.Cartesian3.fromDegrees(110, 35.14),
+                color: Cesium.Color.BLUE,
+                pixelSize: 10,
+            });
+            pointPrimitives.add({
+                position: Cesium.Cartesian3.fromDegrees(110, 25.46),
+                color: Cesium.Color.LIME,
+                pixelSize: 20,
+            });
+        }
 
-        scene.camera.lookAt(new Cesium.Cartesian3.fromDegrees(114, 30), new Cesium.HeadingPitchRange(0, -50, 10000000))
+        // 带有modelMatrix点
+        function addPoint8() {
+            var center = Cesium.Cartesian3.fromDegrees(115, 31);
+            pointPrimitives.modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+                center
+            );
+
+            // center 白色
+            pointPrimitives.add({
+                pixelSize: 20,
+                color: Cesium.Color.WHITE,
+                position: new Cesium.Cartesian3(0.0, 0.0, 0.0),
+            });
+            // east
+            pointPrimitives.add({
+                pixelSize: 10,
+                color: Cesium.Color.RED,
+                position: new Cesium.Cartesian3(1000000.0, 0.0, 0.0),
+            });
+            // north
+            pointPrimitives.add({
+                pixelSize: 10,
+                color: Cesium.Color.GREEN,
+                position: new Cesium.Cartesian3(0.0, 1000000.0, 0.0),
+            });
+            // up
+            pointPrimitives.add({
+                pixelSize: 10,
+                color: Cesium.Color.BLUE,
+                position: new Cesium.Cartesian3(0.0, 0.0, 1000000.0),
+            });
+        }
 
 
+
+
+        scene.camera.flyTo({
+            destination: Cesium.Rectangle.fromDegrees(73, 3, 135, 53)
+        })
 
     </script>
 </body>

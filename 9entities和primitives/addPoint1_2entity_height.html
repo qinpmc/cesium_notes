@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>point</title>
+  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="position: absolute; z-index: 9999; left: 10px; top: 10px;">
+    <button onclick="addPoint1()">增加红色点1贴地</button>
+    <button onclick="addPoint2()">增加相对地面高度点2</button>
+    <button onclick="addPoint3()">增加蓝色点3贴模型</button>
+    <button onclick="addPoint4()">增加红色点4贴3dtiles</button>
+  </div>
+  <div id="cesiumContainer"></div>
+  <script>
+    // cesium解决画点只显示一半的问题 :https://blog.csdn.net/weixin_45782925/article/details/123366325
+
+
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      geocoder: false,
+      baseLayerPicker: false,
+      fullscreenButton: false,
+      homeButton: false,
+      sceneModePicker: false,
+      animation: false,
+      timeline: false,
+      navigationHelpButton: false,
+      terrainProvider: Cesium.createWorldTerrain({
+        requestWaterMask: true,
+        requestVertexNormals: true,
+      }),
+      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "img",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+
+          }),*/
+      }),
+    });
+
+    //贴地点
+    function addPoint1() {
+      viewer.scene.globe.depthTestAgainstTerrain = true;
+      viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(92.4, 27.9, 10000), // CLAMP_TO_GROUND, 高度无用
+        point: {
+          pixelSize: 10,
+          color: Cesium.Color.RED,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, //! 贴地
+        },
+      });
+      viewer.zoomTo(viewer.entities);
+    }
+
+    //相对地面高度点
+    function addPoint2() {
+      viewer.scene.globe.depthTestAgainstTerrain = true;
+      viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(92.4, 27.91, 10),
+        point: {
+          pixelSize: 10,
+          color: Cesium.Color.BLUE,
+          heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND, //! 相对地
+        },
+      });
+      viewer.zoomTo(viewer.entities);
+    }
+
+    // 
+    function addPoint3() {
+
+      addModel(
+        "../sampleData/model/GroundVehicle.glb",
+        Cesium.Cartesian3.fromDegrees(92, 27.91, 1000000),
+        0,
+        0,
+        0,
+        Cesium.HeightReference.CLAMP_TO_GROUND
+      );
+
+      var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+
+      // 拾取模型表面的位置
+      handler.setInputAction(function (evt) {
+        console.log("拾取模型表面的位置");
+        var scene = viewer.scene;
+        var pickedObject = scene.pick(evt.position); //判断是否拾取到模型
+        if (scene.pickPositionSupported && Cesium.defined(pickedObject)) {
+          var cartesian = viewer.scene.pickPosition(evt.position);
+          if (Cesium.defined(cartesian)) {
+            var cartographic = Cesium.Cartographic.fromCartesian(cartesian); //根据笛卡尔坐标获取到弧度
+            var lng = Cesium.Math.toDegrees(cartographic.longitude); //根据弧度获取到经度
+            var lat = Cesium.Math.toDegrees(cartographic.latitude); //根据弧度获取到纬度
+            var height = cartographic.height;//模型高度
+            console.log(height);
+
+
+            viewer.entities.add({
+              position: cartesian,
+              point: {
+                pixelSize: 10,
+                color: Cesium.Color.RED,
+                outlineColor: Cesium.Color.YELLOW, // 
+                outlineWidth: 3, //  
+              },
+            });
+
+          }
+        }
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+
+
+    }
+
+    // 
+    function addPoint4() {
+
+
+      add3Dtiles();
+
+
+      var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+
+      // 拾取模型表面的位置
+      handler.setInputAction(function (evt) {
+        console.log("拾取3dtiles模型表面的位置");
+        var scene = viewer.scene;
+        var pickedObject = scene.pick(evt.position); //判断是否拾取到模型
+        if (scene.pickPositionSupported && Cesium.defined(pickedObject)) {
+          var cartesian = viewer.scene.pickPosition(evt.position);
+          if (Cesium.defined(cartesian)) {
+            var cartographic = Cesium.Cartographic.fromCartesian(cartesian); //根据笛卡尔坐标获取到弧度
+            var lng = Cesium.Math.toDegrees(cartographic.longitude); //根据弧度获取到经度
+            var lat = Cesium.Math.toDegrees(cartographic.latitude); //根据弧度获取到纬度
+            var height = cartographic.height;//模型高度
+            console.log(height);
+
+
+            viewer.entities.add({
+              position: cartesian,
+              point: {
+                pixelSize: 10,
+                color: Cesium.Color.BLUE,
+                outlineColor: Cesium.Color.YELLOW, // 
+                outlineWidth: 3, //  
+              },
+            });
+
+          }
+        }
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    }
+
+
+    /////////////////////////////////////////////////////////
+
+    function addModel(url, origin, heading, pitch, roll, heightReference) {
+
+      heading = Cesium.defaultValue(heading, 0.0);
+      pitch = Cesium.defaultValue(pitch, 0.0);
+      roll = Cesium.defaultValue(roll, 0.0);
+      var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+      //→ Matrix4 
+      var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+        origin,
+        hpr
+      );
+
+      var entity = viewer.entities.add({
+        name: url,
+        position: origin,
+
+        model: {
+          uri: url,
+          minimumPixelSize: 128,
+          maximumScale: 20000,
+          silhouetteColor: Cesium.Color.BLUE, //轮廓线颜色
+          silhouetteSize: 3,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+        }
+      })
+
+
+      viewer.zoomTo(viewer.entities);
+    }
+
+
+    function add3Dtiles() {
+      // 加载大雁塔模型
+      var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+        url: "../sampleData/tileset/dayanta/tileset.json",
+
+      }));
+
+      tileset.readyPromise.then(function () {
+        var boundingSphere = tileset.boundingSphere; // 模型的包围球范围
+        var radius = boundingSphere.radius; // 长度
+        viewer.zoomTo(tileset, new Cesium.HeadingPitchRange(0.5, -0.2, radius * 4.0));
+      });
+    }
+
+
+  </script>
+</body>
+
+</html>

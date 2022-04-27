@@ -101,7 +101,7 @@ pick 与 drillPick 的区别：pick 只可获取一个 entity 对象（如该位
 
 ```
 
-#### 3、camera 和 globel 中的 pick
+#### 3、camera 和 globe 中的 pick
 
 - camera.getPickRay 和 globe.pick 常用来组合使用，通过 camera 中的 getPickRay 获取 ray（射线），然后通过 globel 中的 pick 方法，获取世界坐标，
   如下面的地形坐标的获取：
@@ -121,7 +121,7 @@ var cartesian2 = scene.globe.pick(ray, scene, tempPos);
 - scene.pick、scene.drillPick主要用于拾取 Entity、Cesium3DTileFeature 等对象
 - scene.pickPosition，可获取地形，模型等高度
 - camera.pickEllipsoid(windowPosition, ellipsoid, result) → Cartesian3：获取鼠标点的对应椭球面位置，地形和模型等高度均获取不到
-- camera.getPickRay + globe.pick，可获取地形，模型等高度获取不到
+- camera.getPickRay + globe.pick，可获取地形，但是模型等高度获取不到
 
 
 - globe.pick 的结果相对稳定准确，不论地形深度检测开启与否，不论加载的是默认地形还是别的地形数据；

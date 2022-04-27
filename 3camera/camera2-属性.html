@@ -47,8 +47,8 @@
             navigationHelpButton: false, //是否显示帮助信息控件
             infoBox: true,  //是否显示点击要素之后显示的信息
             imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-                url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=f45027f1731b61b21dcc714b01694ac1",
-                layer: "vec",
+                url: "http://t0.tianditu.gov.cn/img_c/wmts?tk=f45027f1731b61b21dcc714b01694ac1",
+                layer: "img",
                 style: "default",
                 format: "tiles",
                 tileMatrixSetID: "c",
@@ -64,8 +64,8 @@
 
         var ctaLayer = new Cesium.ImageryLayer(
             new Cesium.WebMapTileServiceImageryProvider({
-                url: "http://t0.tianditu.gov.cn/cva_c/wmts?tk=f45027f1731b61b21dcc714b01694ac1",
-                layer: "cva",
+                url: "http://t0.tianditu.gov.cn/cia_c/wmts?tk=f45027f1731b61b21dcc714b01694ac1",
+                layer: "cia",
                 style: "default",
                 format: "tiles",
                 tileMatrixSetID: "c",

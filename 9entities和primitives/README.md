@@ -1,5 +1,5 @@
-- https://blog.csdn.net/qwe435541908/article/details/90762066
 
+- https://blog.csdn.net/vc___ae/article/details/110918301
 
 primitives 总体结构：
 
@@ -134,3 +134,8 @@ ArcType defines the path that should be taken connecting vertices.
 - NONE Number Straight line that does not conform to the surface of the ellipsoid.
 - GEODESIC Number Follow geodesic path.
 - RHUMB Number Follow rhumb or loxodrome path.
+
+
+
+
+
