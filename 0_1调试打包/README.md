@@ -1,6 +1,7 @@
 参考资料：
 - https://www.cnblogs.com/cesium1/p/10062900.html
 - https://www.jianshu.com/p/5f1b56a8a507
+- https://www.cnblogs.com/onsummer/p/12597594.html
 
 ## 常见问题
 
@@ -132,3 +133,7 @@ Cesium 官方在 github 中会同时提供两个版本的 zip 包，头一个是
 
 如果希望看到 development 分组示例，或者修改 Cesium 源码的话，就只能用第二个 zip 包了。这个 zip 包里面只有源码，需要自行打包。
 ![sourcecode](./sourcecode.jpg)
+
+## 简单打包总结
+
+ ![打包总结](./打包总结.png)
