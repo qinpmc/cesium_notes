@@ -1,5 +1,8 @@
 
 - https://blog.csdn.net/vc___ae/article/details/110918301
+- https://www.cxymm.net/article/luoyun620/107425770#:~:text=cesium%E6%8F%90%E4%BE%9B%E4%BA%86SimplePolylineGeometry%E3%80%81PolylineGeometry%E3%80%81PolylineVolumeGeometry%E3%80%81PolylineVolumeOutlineGeometry%E3%80%81GroundPolylineGeometry%E4%BA%94%E7%A7%8D%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%9A%84,%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E3%80%82%20%E9%A6%96%E5%85%88%E7%9C%8B%E4%B8%80%E4%B8%8BSimplePolylineGeometry%E5%92%8CPolylineGeometry%E7%9A%84API%E8%A7%A3%E9%87%8A%EF%BC%9A
+
+
 
 primitives 总体结构：
 
@@ -136,6 +139,40 @@ ArcType defines the path that should be taken connecting vertices.
 - RHUMB Number Follow rhumb or loxodrome path.
 
 
+## polygon,rectangle,ellipse,corridor 的注意点
+
+1.  Corridors, polygons and rectangles will be clamped automatically if they are filled with a constant color and
+    has no height or extruded height.
+    NOTE: Setting height to 0 will disable clamping.（https://sandcastle.cesium.com/?src=Clamp%20to%20Terrain.html&label=All）
+    实际测试Cesium1.89，设置 extrudedHeight，在positions中设置有height，均默认贴地
+
+2. Entity corridor, ellipse, polygon or rectangle with heightReference must also have a defined height.  heightReference will be ignored
+定义了heightReference时，必须专门设置height属性值
+
+```
+// corridor例子测试
+    const e = viewer.entities.add({
+        corridor: {
+        positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+            -122.19,
+            46.1914,
+            1000000,
+            -122.21,
+            46.21,
+            1000000,
+            -122.23,
+            46.21,
+            100000
+        ]),
+        width: 2000.0,
+        material: Cesium.Color.RED.withAlpha(0.5),
+        //height:20 ,
+        heightReference:Cesium.HeightReference.RELATIVE_TO_GROUND	
+        },
+    });
+
+    viewer.zoomTo(e);
 
 
+```
 

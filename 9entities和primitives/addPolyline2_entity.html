@@ -32,7 +32,7 @@
       <button onclick="addPolyline2()">增加RHUMB线2-恒向线</button>
       <button onclick="addPolyline3()">增加发光线3-透明度+高度</button>
       <button onclick="addPolyline4()">增加边框线4</button>
-      <button onclick="addPolyline5()">增加箭头线5</button>
+      <button onclick="addPolyline5()">增加箭头直线5</button>
       <button onclick="addPolyline6()">
         增加虚线6-distanceDisplayCondition
       </button>
@@ -134,7 +134,7 @@
       //紫色箭头线
       function addPolyline5() {
         viewer.entities.add({
-          name: "紫色箭头线",
+          name: "紫色箭头直线",
           polyline: {
             positions: Cesium.Cartesian3.fromDegreesArrayHeights([
               114,
