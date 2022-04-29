@@ -7,8 +7,7 @@
   <!-- Tell IE to use the latest, best version. -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
   <title>线</title>
   <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
   <style>
@@ -29,15 +28,12 @@
 <body>
   <div style="position: absolute;z-index: 9999;left: 10px;top:10px">
     <button onclick="addPolyline1()">增加线1</button>
-
     <button onclick="addPolyline2()">增加黄色线2</button>
     <button onclick="addPolyline3()">增加线3 渐变线和各段不同颜色</button>
-    <button onclick="addPolyline4()">增加边框线4</button>
-    <button onclick="addPolyline5()">增加箭头线5</button>
-    <button onclick="addPolyline6()">增加虚线6-distanceDisplayCondition</button>
   </div>
   <div id="cesiumContainer"></div>
   <script>
+
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
 
     var widget = new Cesium.CesiumWidget("cesiumContainer", {
@@ -58,18 +54,21 @@
       }),
     });
     var scene = widget.scene;
-    // scene.terrainProvider = Cesium.createWorldTerrain({
-    //   requestWaterMask: true,
-    //   requestVertexNormals: true,
-    // });
-
-    var terrainLayer = new Cesium.CesiumTerrainProvider({
-      url: "http://data.marsgis.cn/terrain",
+    scene.terrainProvider = Cesium.createWorldTerrain({
       requestWaterMask: true,
       requestVertexNormals: true,
     });
-    scene.terrainProvider = terrainLayer;
 
+    // var terrainLayer = new Cesium.CesiumTerrainProvider({
+    //   url: "http://data.marsgis.cn/terrain",
+    //   requestWaterMask: true,
+    //   requestVertexNormals: true,
+    // });
+    // scene.terrainProvider = terrainLayer;
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    // SimplePolylineGeometry 不支持线宽
 
     // 
     function addPolyline1() {
@@ -112,7 +111,7 @@
       //   Draw a yellow polyline on the globe surface.
       var yellowPolyline = new Cesium.GeometryInstance({
         geometry: new Cesium.SimplePolylineGeometry({
-          positions: Cesium.Cartesian3.fromDegreesArray([-127, 70, -80, 20]),
+          positions: Cesium.Cartesian3.fromDegreesArray([82.13, 30.78, 87.1, 29.97]),
         }),
         attributes: {
           color: Cesium.ColorGeometryInstanceAttribute.fromColor(
@@ -134,7 +133,7 @@
       );
 
       scene.camera.setView({
-        destination: new Cesium.Cartesian3.fromDegrees(-100, 50, 13000)
+        destination: new Cesium.Cartesian3.fromDegrees(82.13, 30.78, 13000)
       })
     }
 
@@ -183,6 +182,10 @@
           }),
         })
       );
+
+      scene.camera.flyTo({
+        destination: new Cesium.Cartesian3.fromDegrees(-90, 35, 73000)
+      })
     }
 
 
