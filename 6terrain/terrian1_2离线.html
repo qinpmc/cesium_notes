@@ -45,7 +45,8 @@
       }),
       terrainProvider: new Cesium.CesiumTerrainProvider({
         //url: "http://data.marsgis.cn/terrain/",
-        url: "./qd"
+        //url: "http://www.supermapol.com/realspace/services/3D-dixingyingxiang/rest/realspace/datas/DatasetDEM/data/path/"
+        url: "./hb_terrain"
       })
     });
 
@@ -62,7 +63,8 @@
     viewer.imageryLayers.addImageryProvider(imageryProvider2);
 
     viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(120.66, 36.16, 5000.0),
+      //destination: Cesium.Cartesian3.fromDegrees(120.66, 36.16, 5000.0),
+      destination: Cesium.Cartesian3.fromDegrees(114, 30, 5000.0),
       orientation: {
         heading: 5.879396799354463,
         pitch: -0.32149033016633055,
