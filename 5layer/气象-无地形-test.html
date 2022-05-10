@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>geojson</title>
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+    <style>
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position:absolute;z-index:99999;">
+        <button onclick="addPolygon1()">添加面</button>
+        <button onclick="addPolygon2()">添加面2</button>
+        <button onclick="addPolygon3()">添加面3</button>
+        <button onclick="removePolygon3()">移除面3</button>
+    </div>
+    <div id="cesiumContainer"></div>
+
+    <script>
+
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            selectionIndicator: false,
+            infoBox: false,
+            imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+                url:
+                    "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+                layer: "img",
+                style: "default",
+                format: "tiles",
+                tileMatrixSetID: "w",
+            }),
+            // terrainProvider: new Cesium.CesiumTerrainProvider({
+            //     url: "http://data.marsgis.cn/terrain/",
+            // })
+        });
+
+        // 开启或关闭深度检测
+        //viewer.scene.globe.depthTestAgainstTerrain = true;
+
+        var scene = viewer.scene;
+        var myData = new Cesium.CustomDataSource('myData');
+
+
+        var colors = [
+            new Cesium.Color(1.0, 0.0, 0.0, 0.3),
+            new Cesium.Color(0.0, 1.0, 0.0, 0.7),
+            new Cesium.Color(0.0, 0.0, 1.0, 0.7),
+        ]
+
+
+
+        window.addPolygon1 = function () {
+            var promise = Cesium.GeoJsonDataSource.load("../sampleData/geojson/rain.json");
+            viewer.dataSources.add(promise);
+            promise.then((res) => {
+                var entities = res.entities.values;
+                console.log("entities.length-----------------------------", entities.length);
+                var colorHash = {};
+                for (var i = 0; i < entities.length; i++) {
+                    var entity = entities[i];
+                    var name = entity.name;
+                    entity.polygon.material = colors[i];
+                    entity.polygon.outline = false;
+                }
+            })
+        }
+
+
+        // viewer.dataSources.add(
+        //     Cesium.GeoJsonDataSource.load("../sampleData/geojson/hubei_city.json", {
+        //         stroke: Cesium.Color.RED,
+        //         fill: Cesium.Color.YELLOW,
+        //         strokeWidth: 200,
+        //         clampToGround: true
+        //     })
+        // )
+        // var bluePolygon = viewer.entities.add({
+        //     name: "blue polygon on surface",
+        //     polygon: {
+        //         hierarchy: Cesium.Cartesian3.fromDegreesArray([
+        //             115.0,
+        //             37.0,
+        //             115.0,
+        //             32.0,
+        //             107.0,
+        //             33.0,
+        //             102.0,
+        //             31.0,
+        //             102.0,
+        //             35.0,
+        //         ]),
+        //         material: Cesium.Color.BLUE,
+        //     },
+        // });
+
+
+
+        window.addPolygon2 = function () {
+            var colors = [
+                new Cesium.Color(1.0, 1.0, 0.0, 0.3),
+                new Cesium.Color(0.0, 1.0, 0.0, 0.7),
+                new Cesium.Color(0.0, 0.0, 1.0, 0.7),
+            ]
+            var promise = Cesium.GeoJsonDataSource.load("../sampleData/geojson/rain.json");
+
+            promise.then((res) => {
+                viewer.dataSources.add(res);
+                var entities = res.entities.values;
+                console.log("entities.length-----------------------------", entities.length);
+                var colorHash = {};
+                for (var i = 0; i < entities.length; i++) {
+                    var entity = entities[i];
+                    var name = entity.name;
+                    entity.polygon.material = colors[i];
+                    entity.polygon.outline = false;
+                }
+            })
+
+        }
+
+        window.addPolygon3 = function () {
+            var colors = [
+                new Cesium.Color(1.0, 0.0, 0.0, 0.3),
+                new Cesium.Color(0.0, 1.0, 0.0, 0.7),
+                new Cesium.Color(0.0, 0.0, 1.0, 0.7),
+            ]
+
+            viewer.dataSources.add(myData);
+
+            Cesium.GeoJsonDataSource.load("../sampleData/geojson/rain.json", {
+                stroke: Cesium.Color.BLUEVIOLET,
+                fill: Cesium.Color.PINK,
+                strokeWidth: 20,
+                stroke: Cesium.Color.BLUE,
+                //clampToGround: true // 添加后 stroke 无效，无地形时，取消该属性stroke有效
+            }).then((res) => {
+                const entityArray = res.entities.values;
+                for (let i = 0; i < entityArray.length; i++) {
+
+
+                    var color = entityArray[i].polygon.material._color._value
+
+                    //entityArray[i].polygon.material._color._value = colors[i]
+                    entityArray[i].polygon.material = colors[i];
+
+                    myData.entities.add(entityArray[i]);
+                }
+
+
+            });
+
+        }
+
+
+        window.removePolygon3 = function () {
+
+            myData.entities.removeAll()
+            viewer.dataSources.remove(myData, true);
+        }
+
+
+        var selectedEntity = null;
+        var pickColor = Cesium.Color.RED.withAlpha(0.8);
+
+
+        // Move the primitive that the mouse is over to the top.
+        var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+
+        handler.setInputAction(function (movement) {
+            // get an array of all primitives at the mouse position
+            var pickedObject = scene.pick(movement.position);//--------------------------
+            // 选中
+            if (Cesium.defined(pickedObject)) {
+                var entity = pickedObject.id;
+
+                if (selectedEntity === entity) {
+                    return
+                }
+                if (selectedEntity) {
+                    selectedEntity.polygon.material = selectedEntity.oldMaterial
+                }
+                selectedEntity = entity;
+                var oldColor = Object.assign({}, entity.polygon.material.color.getValue());
+                selectedEntity.oldMaterial = new Cesium.Color(oldColor.red, oldColor.green, oldColor.blue, oldColor.alpha)
+                selectedEntity.polygon.material = pickColor;
+
+            } else {// 未选中
+                if (selectedEntity) {
+                    selectedEntity.polygon.material = selectedEntity.oldMaterial
+                    selectedEntity = null;
+                }
+            }
+
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+
+
+    </script>
+</body>
+
+</html>
