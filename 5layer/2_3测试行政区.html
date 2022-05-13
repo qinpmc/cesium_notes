@@ -72,16 +72,7 @@
       labels:[]
     }
 
-    fetch("./data/hubei_city.json").then(res => res.json()).then(data => {
-      console.log(data);
 
-      data.features.forEach(feature => {
-        const geometry = feature.geometry;
-        addPolygon(geometry);
-        const properties = feature.properties;
-        addLabel(properties);
-      })
-    })
 
 
 
@@ -201,7 +192,16 @@
 
     window.addDistrict = function(){
    
- 
+      fetch("./data/hubei_city.json").then(res => res.json()).then(data => {
+      console.log(data);
+
+      data.features.forEach(feature => {
+        const geometry = feature.geometry;
+        addPolygon(geometry);
+        const properties = feature.properties;
+        addLabel(properties);
+      })
+    })
     }
 
  
