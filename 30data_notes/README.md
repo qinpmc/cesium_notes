@@ -94,3 +94,49 @@ index index.html index.htm
 
 }
 
+
+
+
+
+
+
+具有多个孔的MultiPolygons  (https://qa.1r1g.com/sf/ask/3055162071/)
+
+四层数组：
+{
+  "type": "MultiPolygon",
+  "coordinates": [
+    [
+      {polygon},
+      {hole},
+      {hole},
+      {hole}
+    ],
+    [
+      {polygon2},
+      {hole},
+      {hole},
+      {hole}
+    ]
+  ]
+}
+
+
+具有多个孔的Polygon  (https://qa.1r1g.com/sf/ask/3055162071/)
+
+三层数组：
+{
+  "type": "MultiPolygon",
+  "coordinates": [
+    {polygon},
+    {hole},
+    {hole},
+    {hole}
+  ]
+}
+
+polygon ：
+[
+    [23.3,33.4],
+    [23.5,33.2]
+]
