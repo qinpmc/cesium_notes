@@ -161,7 +161,7 @@
           })
         }
 
-         //districtLayer.geometries.push(district)
+         districtLayer.geometries.push(district)
 
       })
     }
@@ -188,7 +188,7 @@
 
     }
 
-    window.hideDistrict = function(){
+    window.deleteDistrict = function(){
       districtLayer.geometries.forEach(geo =>{
         viewer.entities.remove(geo)
       })
@@ -198,6 +198,11 @@
  
     }
 
+
+    window.addDistrict = function(){
+   
+ 
+    }
 
  
 
