@@ -38,6 +38,7 @@
         <button onclick="addPolygon5()">增加perPositionHeight_垂直面5</button>
         <button onclick="addPolygon6()">增加拉伸面6</button>
         <button onclick="addPolygon7()">增加拉伸面7_恒向线</button>
+        <button onclick="clearAll()">清除</button>
     </div>
     <div id="cesiumContainer"></div>
     <script>
@@ -51,9 +52,14 @@
         });
 
 
+        var primitives = new Cesium.PrimitiveCollection()
+        scene.primitives.add(primitives);
+
+
+
         //普通红色面--不贴地 Cesium.PolygonGeometry.fromPositions
         function addPolygon1() {
-            scene.primitives.add(new Cesium.Primitive({
+            primitives.add(new Cesium.Primitive({
                 geometryInstances: new Cesium.GeometryInstance({
                     geometry: Cesium.PolygonGeometry.fromPositions({
                         positions: Cesium.Cartesian3.fromDegreesArray([-115.0, 37.0,
@@ -80,7 +86,7 @@
         //普通黄色面1_1 --不贴地 PolygonGeometry-polygonHierarchy
         function addPolygon1_1() {
 
-            scene.primitives.add(new Cesium.Primitive({
+            primitives.add(new Cesium.Primitive({
                 geometryInstances: new Cesium.GeometryInstance({
                     geometry: new Cesium.PolygonGeometry({
                         polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArray([-125.0, 37.0,
@@ -107,7 +113,7 @@
 
         //普通白色面1_2 --不贴地   polygonHierarchy 直接传对象--非官方方式
         function addPolygon1_2() {
-            scene.primitives.add(new Cesium.Primitive({
+            primitives.add(new Cesium.Primitive({
                 geometryInstances: new Cesium.GeometryInstance({
                     geometry: new Cesium.PolygonGeometry({
                         polygonHierarchy: {
@@ -138,7 +144,7 @@
         //普通绿色面1_3 --贴地
         function addPolygon1_3() {
 
-            scene.groundPrimitives.add(new Cesium.GroundPrimitive({
+            primitives.add(new Cesium.GroundPrimitive({
                 geometryInstances: new Cesium.GeometryInstance({
                     geometry: new Cesium.PolygonGeometry({
                         polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArray([-125.0, 35.0,
@@ -161,6 +167,8 @@
 
             }));
 
+            scene.groundPrimitives.add(primitives)
+
         }
 
 
@@ -169,7 +177,7 @@
 
             // 第一种边框方式---- PolygonOutlineGeometry
             //scene.primitives.add(new Cesium.GroundPrimitive({ ------使用GroundPrimitive 报错， PolygonOutlineGeometry不支持贴地，构造函数必须要有createShadowVolume
-            scene.primitives.add(new Cesium.Primitive({
+            primitives.add(new Cesium.Primitive({
                 geometryInstances: new Cesium.GeometryInstance({
                     geometry: new Cesium.PolygonOutlineGeometry({
                         polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArray([-75.61309, 40.04453,
@@ -216,7 +224,7 @@
 
 
             //填充面
-            scene.primitives.add(new Cesium.Primitive({
+            primitives.add(new Cesium.Primitive({
                 geometryInstances: new Cesium.GeometryInstance({
                     geometry: new Cesium.PolygonGeometry({
                         polygonHierarchy: {
@@ -274,7 +282,7 @@
                 }
             });
 
-            scene.primitives.add(new Cesium.Primitive({
+            primitives.add(new Cesium.Primitive({
                 geometryInstances: bluePolygonInstance,
                 appearance: new Cesium.PerInstanceColorAppearance({
                     closed: false,
@@ -286,7 +294,7 @@
         //perPositionHeight 面
         function addPolygon4() {
 
-            scene.primitives.add(new Cesium.Primitive({
+            primitives.add(new Cesium.Primitive({
                 geometryInstances: new Cesium.GeometryInstance({
                     geometry: Cesium.PolygonGeometry.fromPositions({
                         positions: Cesium.Cartesian3.fromDegreesArrayHeights([-108.0, 25.0, 100000,
@@ -313,7 +321,7 @@
 
         //perPositionHeight 垂直面
         function addPolygon5() {
-            scene.primitives.add(new Cesium.Primitive({
+            primitives.add(new Cesium.Primitive({
                 geometryInstances: new Cesium.GeometryInstance({
                     geometry: Cesium.PolygonGeometry.fromPositions({
                         positions: Cesium.Cartesian3.fromDegreesArrayHeights([
@@ -352,7 +360,7 @@
                     });*/
 
 
-            scene.primitives.add(new Cesium.Primitive({
+            primitives.add(new Cesium.Primitive({
                 geometryInstances: new Cesium.GeometryInstance({
                     geometry: Cesium.PolygonGeometry.fromPositions({
                         positions: Cesium.Cartesian3.fromDegreesArray([
@@ -397,7 +405,7 @@
                     });*/
 
 
-            scene.primitives.add(new Cesium.Primitive({
+            primitives.add(new Cesium.Primitive({
                 geometryInstances: new Cesium.GeometryInstance({
                     geometry: Cesium.PolygonGeometry.fromPositions({
                         positions: Cesium.Cartesian3.fromDegreesArray([
@@ -420,6 +428,11 @@
 
             }));
 
+        }
+
+        function clearAll() {
+            scene.primitives.remove(primitives);
+            scene.groundPrimitives.remove(primitives);
         }
 
 
