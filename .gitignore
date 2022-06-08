@@ -5,9 +5,12 @@ node_modules
 yjyzt
 预研
 .idea
+.history
+.vscode
 lib
 Source_bak
 Source1.68_bak
+Build_bak
 tileset
 dv_ljz
 sampleData
