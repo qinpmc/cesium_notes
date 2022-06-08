@@ -1,193 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Use correct character set. -->
-    <meta charset="utf-8" />
-    <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-    />
-    <title>广告牌</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
-    <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
 
-      html,
-      body,
-      #cesiumContainer {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-    </style>
-  </head>
-  <body>
-    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
-      <button onclick="addBillboard1()">增加广告牌1</button>
-      <button onclick="addBillboard2()">
-        增加广告牌2(eyeOffset+sizeInMeters+disableDepthTestDistance)
-      </button>
-      <button onclick="addBillboard3()">增加广告牌3(随距离变透明、缩放)</button>
-      <button onclick="removeBillBoard()">删除广告牌3</button>
-      <button onclick="addBillboard4()">添加广告牌4(canvas)</button>
-      <button onclick="addBillboard5()">添加广告牌5</button>
-    </div>
-    <div id="cesiumContainer"></div>
-    <script>
-      Cesium.Ion.defaultAccessToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
-      var widget = new Cesium.CesiumWidget("cesiumContainer");
-      var scene = widget.scene;
-      scene.terrainProvider = Cesium.createWorldTerrain({
-        requestWaterMask: true,
-        requestVertexNormals: true,
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>广告牌</title>
+  <script src="../Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../Build/Cesium/Widgets/widgets.css);
+
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
+    <button onclick="addBillboard1()">增加广告牌1</button>
+    <button onclick="addBillboard2()">
+      增加广告牌2(eyeOffset+sizeInMeters+disableDepthTestDistance)
+    </button>
+    <button onclick="addBillboard3()">增加广告牌3(随距离变透明、缩放)</button>
+    <button onclick="removeBillBoard()">删除广告牌3</button>
+    <button onclick="addBillboard4()">添加广告牌4(canvas)</button>
+    <button onclick="addBillboard5()">添加广告牌5</button>
+  </div>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+    var widget = new Cesium.CesiumWidget("cesiumContainer");
+    var scene = widget.scene;
+    scene.terrainProvider = Cesium.createWorldTerrain({
+      requestWaterMask: true,
+      requestVertexNormals: true,
+    });
+    scene.globe.depthTestAgainstTerrain = true;
+    var ellipsoid = scene.globe.ellipsoid;
+    var billboardCollection = scene.primitives.add(
+      new Cesium.BillboardCollection({
+        scene: scene,
+      })
+    );
+
+    //
+    function addBillboard1() {
+      billboardCollection.add({
+        position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
+        image: "../4pick_events/Cesium_Logo_overlay.png", // default: undefined
+        show: true, // default
+        pixelOffset: new Cesium.Cartesian2(0, -50), // default: (0, 0)
+        eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER, // default
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM, // default: CENTER
+        scale: 2.0, // default: 1.0
+        color: Cesium.Color.LIME, // default: WHITE
+        rotation: Cesium.Math.PI_OVER_FOUR, // default: 0.0
+        alignedAxis: Cesium.Cartesian3.ZERO, // default
+        width: 118, // default: undefined
+        height: 30, // default: undefined
       });
 
-      var ellipsoid = scene.globe.ellipsoid;
-      var billboardCollection = scene.primitives.add(
-        new Cesium.BillboardCollection({
-          scene: scene,
-        })
+      billboardCollection.add({
+        position: Cesium.Cartesian3.fromDegrees(-76.59777, 40.03883),
+        image: "./facility.gif",
+      });
+    }
+
+    //Billboard   sizeInMeters + eyeOffset + heightReference +disableDepthTestDistance
+    function addBillboard2() {
+      billboardCollection.add({
+        position: Cesium.Cartesian3.fromDegrees(-78.59777, 40.03883),
+        image: "../4pick_events/Cesium_Logo_overlay.png", // default: undefined
+        show: true, // default
+
+        //  指定 billboard's 尺寸是否是米为单位（如果是，地球缩小，billboard不随之放大）.
+        sizeInMeters: true,
+
+        //  Eye坐标系为左手坐标系, x朝向右方，y轴朝上，z朝向屏幕里面
+        // 比如，billboard 位于地球中心位置，但是eye offset使其出现在地球上方，而不论观察者或地球的方向
+
+        eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 30.0), //
+        width: 118, // default: undefined
+        height: 30, // default: undefined
+
+        // 高度参考：.CLAMP_TO_GROUND：附在地形上   RELATIVE_TO_GROUND ：相对地形   NONE ：位置是绝对的--可能被地形遮挡
+        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+        disableDepthTestDistance: Number.POSITIVE_INFINITY, // 为0，开启深度检测；为 Number.POSITIVE_INFINITY,不使用深度检测.
+      });
+
+      scene.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(
+          -76.59777,
+          40.03883,
+          1500.0
+        ),
+      });
+    }
+
+    var billBoard = null;
+
+    // Billboard 随距离变透明、缩放
+    function addBillboard3() {
+      billBoard = billboardCollection.add({
+        position: Cesium.Cartesian3.fromDegrees(-80.59777, 40.03883),
+        image: "../4pick_events/Cesium_Logo_overlay.png", // default: undefined
+        show: true, // default
+        translucencyByDistance: new Cesium.NearFarScalar(
+          1.5e2,
+          2.0,
+          1.5e7,
+          0.5
+        ),
+        scaleByDistance: new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5),
+      });
+    }
+
+    function removeBillBoard() {
+      billboardCollection.remove(billBoard);
+      billBoard = null;
+    }
+
+    function addBillboard4() {
+      var canvas = document.createElement("canvas");
+      canvas.width = 16;
+      canvas.height = 16;
+      var context2D = canvas.getContext("2d");
+      context2D.beginPath();
+      context2D.arc(8, 8, 8, 0, Cesium.Math.TWO_PI, true);
+      context2D.closePath();
+      context2D.fillStyle = "rgb(255, 0, 0)";
+      context2D.fill();
+
+      billBoard = billboardCollection.add({
+        position: Cesium.Cartesian3.fromDegrees(-80.59777, 41.03883),
+        image: canvas, // default: undefined
+        show: true, // default
+        translucencyByDistance: new Cesium.NearFarScalar(
+          1.5e2,
+          2.0,
+          1.5e7,
+          0.5
+        ),
+        scaleByDistance: new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5),
+      });
+    }
+
+    function addBillboard5() {
+      var billboards = scene.primitives.add(new Cesium.BillboardCollection());
+      var center = Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883);
+      billboards.modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+        center
       );
 
-      //
-      function addBillboard1() {
-        billboardCollection.add({
-          position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
-          image: "../4pick_events/Cesium_Logo_overlay.png", // default: undefined
-          show: true, // default
-          pixelOffset: new Cesium.Cartesian2(0, -50), // default: (0, 0)
-          eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
-          horizontalOrigin: Cesium.HorizontalOrigin.CENTER, // default
-          verticalOrigin: Cesium.VerticalOrigin.BOTTOM, // default: CENTER
-          scale: 2.0, // default: 1.0
-          color: Cesium.Color.LIME, // default: WHITE
-          rotation: Cesium.Math.PI_OVER_FOUR, // default: 0.0
-          alignedAxis: Cesium.Cartesian3.ZERO, // default
-          width: 118, // default: undefined
-          height: 30, // default: undefined
-        });
+      var facilityUrl = "./facility.gif";
 
-        billboardCollection.add({
-          position: Cesium.Cartesian3.fromDegrees(-76.59777, 40.03883),
-          image: "./facility.gif",
-        });
-      }
+      // center
+      billboards.add({
+        image: facilityUrl,
+        position: new Cesium.Cartesian3(0.0, 0.0, 0.0),
+      });
+      // east
+      billboards.add({
+        image: facilityUrl,
+        position: new Cesium.Cartesian3(1000000.0, 0.0, 0.0),
+      });
+      // north
+      billboards.add({
+        image: facilityUrl,
+        position: new Cesium.Cartesian3(0.0, 1000000.0, 0.0),
+      });
+      // up
+      billboards.add({
+        image: facilityUrl,
+        position: new Cesium.Cartesian3(0.0, 0.0, 1000000.0),
+      });
+    }
 
-      //Billboard   sizeInMeters + eyeOffset + heightReference +disableDepthTestDistance
-      function addBillboard2() {
-        billboardCollection.add({
-          position: Cesium.Cartesian3.fromDegrees(-78.59777, 40.03883),
-          image: "../4pick_events/Cesium_Logo_overlay.png", // default: undefined
-          show: true, // default
 
-          //  指定 billboard's 尺寸是否是米为单位（如果是，地球缩小，billboard不随之放大）.
-          sizeInMeters: true,
+    var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+    handler.setInputAction(function (movement) {
+      //scene.pickTranslucentDepth = true;
+      var pickedObject = scene.pick(movement.position);
+      console.log(pickedObject);
+      console.log(scene.pickPosition(movement.position))
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
-          //  Eye坐标系为左手坐标系, x朝向右方，y轴朝上，z朝向屏幕里面
-          // 比如，billboard 位于地球中心位置，但是eye offset使其出现在地球上方，而不论观察者或地球的方向
 
-          eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 30.0), //
-          width: 118, // default: undefined
-          height: 30, // default: undefined
 
-          // 高度参考：.CLAMP_TO_GROUND：附在地形上   RELATIVE_TO_GROUND ：相对地形   NONE ：位置是绝对的--可能被地形遮挡
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY, // 为0，开启深度检测；为 Number.POSITIVE_INFINITY,不使用深度检测.
-        });
+  </script>
+</body>
 
-        scene.camera.setView({
-          destination: Cesium.Cartesian3.fromDegrees(
-            -76.59777,
-            40.03883,
-            1500.0
-          ),
-        });
-      }
-
-      var billBoard = null;
-
-      // Billboard 随距离变透明、缩放
-      function addBillboard3() {
-        billBoard = billboardCollection.add({
-          position: Cesium.Cartesian3.fromDegrees(-80.59777, 40.03883),
-          image: "../4pick_events/Cesium_Logo_overlay.png", // default: undefined
-          show: true, // default
-          translucencyByDistance: new Cesium.NearFarScalar(
-            1.5e2,
-            2.0,
-            1.5e7,
-            0.5
-          ),
-          scaleByDistance: new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5),
-        });
-      }
-
-      function removeBillBoard() {
-        billboardCollection.remove(billBoard);
-        billBoard = null;
-      }
-
-      function addBillboard4() {
-        var canvas = document.createElement("canvas");
-        canvas.width = 16;
-        canvas.height = 16;
-        var context2D = canvas.getContext("2d");
-        context2D.beginPath();
-        context2D.arc(8, 8, 8, 0, Cesium.Math.TWO_PI, true);
-        context2D.closePath();
-        context2D.fillStyle = "rgb(255, 0, 0)";
-        context2D.fill();
-
-        billBoard = billboardCollection.add({
-          position: Cesium.Cartesian3.fromDegrees(-80.59777, 41.03883),
-          image: canvas, // default: undefined
-          show: true, // default
-          translucencyByDistance: new Cesium.NearFarScalar(
-            1.5e2,
-            2.0,
-            1.5e7,
-            0.5
-          ),
-          scaleByDistance: new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5),
-        });
-      }
-
-      function addBillboard5() {
-        var billboards = scene.primitives.add(new Cesium.BillboardCollection());
-        var center = Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883);
-        billboards.modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
-          center
-        );
-
-        var facilityUrl = "./facility.gif";
-
-        // center
-        billboards.add({
-          image: facilityUrl,
-          position: new Cesium.Cartesian3(0.0, 0.0, 0.0),
-        });
-        // east
-        billboards.add({
-          image: facilityUrl,
-          position: new Cesium.Cartesian3(1000000.0, 0.0, 0.0),
-        });
-        // north
-        billboards.add({
-          image: facilityUrl,
-          position: new Cesium.Cartesian3(0.0, 1000000.0, 0.0),
-        });
-        // up
-        billboards.add({
-          image: facilityUrl,
-          position: new Cesium.Cartesian3(0.0, 0.0, 1000000.0),
-        });
-      }
-    </script>
-  </body>
 </html>
