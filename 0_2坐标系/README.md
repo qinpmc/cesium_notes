@@ -2,7 +2,9 @@
 
 - https://www.cnblogs.com/telwanggs/p/11289954.html
 - https://www.cnblogs.com/CreateFree/p/11244512.html
-// todo
+- https://blog.csdn.net/qq_40043761/article/details/81020823?utm_source=blogxgwz3
+- https://blog.csdn.net/weixin_45782925/article/details/123365834
+  // todo
 
 - https://www.cnblogs.com/arxive/p/10256065.html
 - http://www.yanhuangxueyuan.com/doc/Three.js/MatrixRST.html
@@ -133,13 +135,11 @@ Cesium.Quaternion（四元数，用于描述围绕某个向量旋转一定角度
 ### 6 局部坐标系和世界坐标系转换
 
 见 ：
-- coordinate3_1局部-全球坐标转换.html
+
+- coordinate3_1 局部-全球坐标转换.html
 - coordinate3_2-局部-全球坐标转换(卡车移动).html
- 
-##  示例
 
-
-
+## 示例
 
 1. 计算两个三维坐标系之间的距离
 
@@ -148,11 +148,10 @@ Cesium.Quaternion（四元数，用于描述围绕某个向量旋转一定角度
 var d = Cesium.Cartesian3.distance(
 new Cesium.Cartesian3(pick1.x, pick1.y, pick1.z),
 new Cesium.Cartesian3(pick3.x, pick3.y, pick3.z)
-); 
+);
 ```
 
-
-2. 
+2.
 
 一个局部坐标为 p1(x,y,z)的点，将它的局部坐标原点放置到 loc(lng,lat,alt)上，局部坐标的 z 轴垂直于地表，局部坐标的 y 轴指向正北，
 并围绕这个 z 轴旋转 angle 度，求此时 p1(x,y,z)变换成全局坐标笛卡尔坐标 p2(x1,y1,z1)是多少？
@@ -175,67 +174,53 @@ var m1 = Cesium.Transforms.eastNorthUpToFixedFrame(cart3);
 m = Cesium.Matrix4.multiplyTransformation(m, m1);//m = m X m1
 var p2 = Cesium.Matrix4.getTranslation(m);//根据最终变换矩阵 m 得到 p2
 
- 
-
-
-
-//CESIUM空间中AB两点A绕B点的地面法向量旋转任意角度后新的A点坐标(A’)
-
+//CESIUM 空间中 AB 两点 A 绕 B 点的地面法向量旋转任意角度后新的 A 点坐标(A’)
 
 var A = new Cesium.Cartesian3(675679.994355399, 4532763.148054989, 4426298.210847025);
 var B = new Cesium.Cartesian3(675520.4303984543, 4532803.837842555, 4425994.113846752);
 
-
-// 计算B的地面法向量
+// 计算 B 的地面法向量
 var chicB = Cesium.Cartographic.fromCartesian(B);
 chicB.height = 0;
 var dB = Cesium.Cartographic.toCartesian(chicB);
 var normaB = Cesium.Cartesian3.normalize(Cesium.Cartesian3.subtract(dB, B, new Cesium.Cartesian3()), new Cesium.Cartesian3());
 
-// 构造基于B的法向量旋转90度的矩阵
+// 构造基于 B 的法向量旋转 90 度的矩阵
 var Q = Cesium.Quaternion.fromAxisAngle(normaB, Cesium.Math.toRadians(90));
 var m3 = Cesium.Matrix3.fromQuaternion(Q);
 var m4 = Cesium.Matrix4.fromRotationTranslation(m3);
 
-// 计算A点相对B点的坐标A1
+// 计算 A 点相对 B 点的坐标 A1
 var A1 = Cesium.Cartesian3.subtract(A, B, new Cesium.Cartesian3());
 
-//对A1应用旋转矩阵
+//对 A1 应用旋转矩阵
 var p = Cesium.Matrix4.multiplyByPoint(m4, A1, new Cesium.Cartesian3());
-// 新的A的坐标
+// 新的 A 的坐标
 var p2 = Cesium.Cartesian3.add(p, B, new Cesium.Cartesian3());
 
 viewer.entities.add({
-    polyline: {
-        positions: [B, A],
-        width: 5,
-        material: Cesium.Color.RED
-    },
+polyline: {
+positions: [B, A],
+width: 5,
+material: Cesium.Color.RED
+},
 });
-
 
 viewer.entities.add({
-    polyline: {
-        positions: [B, p2],
-        width: 5,
-        material: Cesium.Color.BLUE
-    },
+polyline: {
+positions: [B, p2],
+width: 5,
+material: Cesium.Color.BLUE
+},
 
 });
- 
 
-
-
-
-// Cesium 计算一个点正北方向x米的另一个点的坐标
+// Cesium 计算一个点正北方向 x 米的另一个点的坐标
 function getNorthPointByDistance(position, distance) {
-    //以点为原点建立局部坐标系（东方向为x轴,北方向为y轴,垂直于地面为z轴），得到一个局部坐标到世界坐标转换的变换矩阵
-    var localToWorld_Matrix = Cesium.Transforms.eastNorthUpToFixedFrame(position);
-    return Cesium.Matrix4.multiplyByPoint(localToWorld_Matrix, Cesium.Cartesian3.fromElements(0, distance, 0), new Cesium.Cartesian3())
+//以点为原点建立局部坐标系（东方向为 x 轴,北方向为 y 轴,垂直于地面为 z 轴），得到一个局部坐标到世界坐标转换的变换矩阵
+var localToWorld_Matrix = Cesium.Transforms.eastNorthUpToFixedFrame(position);
+return Cesium.Matrix4.multiplyByPoint(localToWorld_Matrix, Cesium.Cartesian3.fromElements(0, distance, 0), new Cesium.Cartesian3())
 }
-
- 
-
 
 var getModelMatrix = function(lon, lat, rotationZ) {
 // 1) create a translation position matrix
@@ -249,8 +234,6 @@ var result = new Cesium.Matrix4();
 // 5) multiply position by rotation
 return Cesium.Matrix4.multiply(posMat, rotMat4, result);  
 };
-
-
 
 Cesium.Transforms.eastNorthUpToFixedFrame(origin, ellipsoid, result) → Matrix4
 Cesium.SceneTransforms
