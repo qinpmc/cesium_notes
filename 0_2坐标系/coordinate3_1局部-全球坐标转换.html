@@ -1,86 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Coordinate</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-
-    <style>
-
-    </style>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
 
     <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
-    <link rel="stylesheet" href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" />
-</head>
+    <link
+      rel="stylesheet"
+      href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css"
+    />
+  </head>
 
-<body>
+  <body>
     <style>
-        html,
-        body,
-        #cesiumContainer {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
     </style>
 
-    <div id="cesiumContainer">
-    </div>
+    <div id="cesiumContainer"></div>
     <script>
-        // - https://www.cnblogs.com/CreateFree/p/11244512.html
-        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
-        var widget = new Cesium.CesiumWidget('cesiumContainer');
+      // - https://www.cnblogs.com/CreateFree/p/11244512.html
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var widget = new Cesium.CesiumWidget("cesiumContainer");
 
-        var lng = 114, lat = 30, height = 1000;
-        var local = new Cesium.Cartesian3(10, 0, 0);
+      var lng = 114,
+        lat = 30,
+        height = 1000;
+      var local = new Cesium.Cartesian3(10, 0, 0);
 
-        var worldCoordiante = test_local_to_worldCoordinate(lng, lat, height, local);
-        var localFromWorldCoordinate = test_worldCoordiante_to_local(worldCoordiante);
+      var worldCoordiante = test_local_to_worldCoordinate(
+        lng,
+        lat,
+        height,
+        local
+      );
+      var localFromWorldCoordinate =
+        test_worldCoordiante_to_local(worldCoordiante);
 
-        var localAndWorldTransform;
+      var localAndWorldTransform;
 
-        // 给定原点，基于原点平移后，计算平移后的世界坐标系
-        function test_local_to_worldCoordinate(lng, lat, height, local) {
-            localAndWorldTransform = new LocalAndWorldTransform(lng, lat, height);
-            console.log(Cesium.Cartesian3.fromDegrees(lng, lat, height));
-            /*
+      // 给定原点，基于原点平移后，计算平移后的世界坐标系
+      function test_local_to_worldCoordinate(lng, lat, height, local) {
+        localAndWorldTransform = new LocalAndWorldTransform(lng, lat, height);
+        console.log(Cesium.Cartesian3.fromDegrees(lng, lat, height));
+        /*
                 x: -2248896.791793027
                 y: 5051104.895082351
                 z: 3170873.7353836372
             */
 
-            var worldCoordinate = localAndWorldTransform.localToWorldCoordinates(local);
-            console.log(worldCoordinate);
-            /*
+        var worldCoordinate =
+          localAndWorldTransform.localToWorldCoordinates(local);
+        console.log(worldCoordinate);
+        /*
                 x: -2248905.9272476034
                 y: 5051100.82771592
                 z: 3170873.7353836372
             */
-            return worldCoordinate
-        }
+        return worldCoordinate;
+      }
 
-        function test_worldCoordiante_to_local(worldCoordiante) {
-            //var world = new Cesium.Cartesian3(-2248905.9272476034, 5051100.82771592, 3170873.7353836372);
-            var local = localAndWorldTransform.WorldCoordinatesTolocal(worldCoordiante);
-            console.log(local)
-            /*
+      function test_worldCoordiante_to_local(worldCoordiante) {
+        //var world = new Cesium.Cartesian3(-2248905.9272476034, 5051100.82771592, 3170873.7353836372);
+        var local =
+          localAndWorldTransform.WorldCoordinatesTolocal(worldCoordiante);
+        console.log(local);
+        /*
             x: 10
             y: -4.656612873077393e-10
             z: 0
             */
-        }
+      }
 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        /**
+      /**
 
          - https://www.cnblogs.com/CreateFree/p/11244512.html
 
@@ -96,30 +102,32 @@
         
          */
 
-        function LocalAndWorldTransform(longitude, latitude, height, direction) {
+      function LocalAndWorldTransform(longitude, latitude, height, direction) {
+        var RCSorigincenter = Cesium.Cartesian3.fromDegrees(
+          longitude,
+          latitude,
+          height
+        ); // → Cartesian3
 
-            var RCSorigincenter = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);  // → Cartesian3
+        if (direction == "northEastDown")
+          this.RCSMatrix =
+            Cesium.Transforms.northEastDownToFixedFrame(RCSorigincenter);
+        else if (direction == "northUpEast")
+          this.RCSMatrix =
+            Cesium.Transforms.northUpEastToFixedFrame(RCSorigincenter);
+        else if (direction == "northWestUp")
+          this.RCSMatrix =
+            Cesium.Transforms.northWestUpToFixedFrame(RCSorigincenter);
+        else
+          this.RCSMatrix =
+            Cesium.Transforms.eastNorthUpToFixedFrame(RCSorigincenter); // → Matrix4
 
-            if (direction == "northEastDown")
+        this.RCSmatrixInverse = Cesium.Matrix4.inverseTransformation(
+          this.RCSMatrix,
+          new Cesium.Matrix4()
+        );
 
-                this.RCSMatrix = Cesium.Transforms.northEastDownToFixedFrame(RCSorigincenter);
-
-            else if (direction == "northUpEast")
-
-                this.RCSMatrix = Cesium.Transforms.northUpEastToFixedFrame(RCSorigincenter);
-
-            else if (direction == "northWestUp")
-
-                this.RCSMatrix = Cesium.Transforms.northWestUpToFixedFrame(RCSorigincenter);
-
-            else
-
-                this.RCSMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(RCSorigincenter); // → Matrix4
-
-            this.RCSmatrixInverse = Cesium.Matrix4.inverseTransformation(this.RCSMatrix, new Cesium.Matrix4());
-
-
-            /**
+        /**
         
              * 相对坐标转换成对应的世界坐标
         
@@ -133,20 +141,20 @@
         
              */
 
-            this.localToWorldCoordinates = function (localCoordinates, result) {
+        this.localToWorldCoordinates = function (localCoordinates, result) {
+          if (!result) {
+            result = new Cesium.Cartesian3();
+          }
 
-                if (!result) {
-                    result = new Cesium.Cartesian3();
-                }
+          Cesium.Matrix4.multiplyByPoint(
+            this.RCSMatrix,
+            localCoordinates,
+            result
+          );
+          return result;
+        };
 
-                Cesium.Matrix4.multiplyByPoint(this.RCSMatrix, localCoordinates, result);
-                return result;
-
-            };
-
-
-
-            /**
+        /**
         
              * 世界坐标转换成对应的相对坐标
         
@@ -158,26 +166,20 @@
         
              */
 
-            this.WorldCoordinatesTolocal = function (WorldCoordinates, result) {
+        this.WorldCoordinatesTolocal = function (WorldCoordinates, result) {
+          if (!result) {
+            result = new Cesium.Cartesian3();
+          }
 
-                if (!result) {
-                    result = new Cesium.Cartesian3();
-                }
+          Cesium.Matrix4.multiplyByPoint(
+            this.RCSmatrixInverse,
+            WorldCoordinates,
+            result
+          );
 
-                Cesium.Matrix4.multiplyByPoint(this.RCSmatrixInverse, WorldCoordinates, result);
-
-                return result;
-
-            };
-
+          return result;
         };
-
-
-
-
-
-
+      }
     </script>
-</body>
-
+  </body>
 </html>

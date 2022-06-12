@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>tianditu</title>
+
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <link
+      rel="stylesheet"
+      href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css"
+    />
+    <style>
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer;
+      init();
+
+      function init() {
+        viewer = new Cesium.Viewer("cesiumContainer", {
+          animation: false, //是否显示动画控件
+          baseLayerPicker: false, //是否显示图层选择控件
+          geocoder: true, //是否显示地名查找控件
+          timeline: false, //是否显示时间线控件
+          sceneModePicker: true, //是否显示投影方式控件
+          navigationHelpButton: false, //是否显示帮助信息控件
+          infoBox: true, //是否显示点击要素之后显示的信息
+          imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+            url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            layer: "img",
+            style: "default",
+            format: "tiles",
+            tileMatrixSetID: "w",
+            /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+
+                  }),*/
+          }),
+          terrainProvider: Cesium.createWorldTerrain({
+            requestWaterMask: true,
+            requestVertexNormals: true,
+          }),
+        });
+
+        var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+        });
+
+        viewer.imageryLayers.addImageryProvider(imageryProvider);
+      }
+
+      // 解决线的锯齿问题
+      // viewer.scene.fxaa = false
+      viewer.scene.postProcessStages.fxaa.enabled = true;
+      // viewer._cesiumWidget._forceResize = true;
+      viewer.resolutionScale = window.devicePixelRatio;
+
+      /////////////////////////////////////////////////////////////////
+
+      var start = {
+        x: 80.21937006144049,
+        y: 32.83146820405586,
+        z: 4991.485051942769,
+      };
+      var end = {
+        x: 102.31074877555041,
+        y: 23.09089005759723,
+        z: 1268.0537180778522,
+      };
+      var startCartesian = Cesium.Cartesian3.fromDegrees(
+        start.x,
+        start.y,
+        start.z
+      );
+
+      var endCartesian = Cesium.Cartesian3.fromDegrees(end.x, end.y, end.z);
+
+      var dataSource = new Cesium.CustomDataSource("line");
+
+      function addGlowLineScan() {
+        // var entity = new Cesium.Entity({
+        //   id: "1",
+        //   polyline: new Cesium.PolylineGraphics({
+        //     positions: [startCartesian, endCartesian],
+        //     width: 30,
+        //     material: new Cesium.PolylineGlowMaterialProperty({
+        //       color: new Cesium.Color(0, 0, 1, 1),
+        //       glowPower: 0.2,
+        //       taperPower: 1,
+        //     }),
+        //   }),
+        // });
+
+        // dataSource.entities.add(entity);
+        // viewer.dataSources.add(dataSource);
+
+        const geometry = new Cesium.PolylineGeometry({
+          positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+            start.x,
+            start.y,
+            5000,
+            start.x,
+            start.y,
+            0,
+          ]),
+          width: 6,
+        });
+        const instance = new Cesium.GeometryInstance({
+          geometry: geometry,
+          // attributes: {
+          //   distanceDisplayCondition:
+          //     new Cesium.DistanceDisplayConditionGeometryInstanceAttribute(
+          //       0,
+          //       10000
+          //     ),
+          // },
+        });
+
+        const primitive = new Cesium.Primitive({
+          geometryInstances: instance,
+          appearance: new Cesium.PolylineMaterialAppearance({
+            material: new Cesium.Material({
+              fabric: {
+                uniforms: {
+                  color: new Cesium.Color(1.0, 1.0, 1.0, 1.0),
+                  centerColor: new Cesium.Color(1.0, 1.0, 1.0, 1.0),
+                  glowPower: 1,
+                  taperPower: 1,
+                  image: "./colors.png",
+                },
+                source: `uniform vec4 color;
+                uniform float glowPower;
+                uniform float taperPower;
+
+                czm_material czm_getMaterial(czm_materialInput materialInput)
+                {
+                    czm_material material = czm_getDefaultMaterial(materialInput);
+
+                    vec2 st = materialInput.st;
+                    float glow = glowPower / abs(st.t - 0.5) - (glowPower / 0.5);
+
+                   if (taperPower <= 0.99999) {
+                        glow *= min(1.0, taperPower / (0.5 - st.s * 0.5) - (taperPower / 0.5));
+                    }
+
+                    vec4 fragColor;
+                    float c = step(glow,1.0);
+                    fragColor.rgb = centerColor.rgb*c+color.rgb*(1.0-c);
+
+                    fragColor.a = clamp(0.0, 1.0, glow) * color.a;
+        
+                    fragColor = czm_gammaCorrect(fragColor);
+
+                    vec3 colorImage = texture2D(image, materialInput.st).rgb; 
+
+                    //material.emission = fragColor.rgb;
+                    material.emission = colorImage.rgb*(1.0-c)+color.rgb*(c);
+
+
+                    //fragColor.a = smoothstep(-0.5,0.5, (0.5-st.s));
+                    material.alpha = texture2D(image, materialInput.st).a;
+                    return material;
+                }`,
+              },
+            }),
+          }),
+        });
+
+        viewer.scene.primitives.add(primitive);
+
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(start.x, start.y, 900.0),
+          orientation: {
+            heading: Cesium.Math.toRadians(0.0),
+            pitch: Cesium.Math.toRadians(-18.25),
+            roll: 0.0,
+          },
+        });
+      }
+
+      addGlowLineScan();
+    </script>
+  </body>
+</html>

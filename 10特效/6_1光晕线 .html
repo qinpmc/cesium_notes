@@ -12,10 +12,12 @@
     />
     <title>tianditu</title>
 
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <link
+      rel="stylesheet"
+      href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css"
+    />
     <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
-
       html,
       body,
       #cesiumContainer {
@@ -26,7 +28,6 @@
         overflow: hidden;
       }
     </style>
- 
   </head>
   <body>
     <div id="cesiumContainer"></div>
@@ -46,8 +47,7 @@
           navigationHelpButton: false, //是否显示帮助信息控件
           infoBox: true, //是否显示点击要素之后显示的信息
           imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-            url:
-              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
             layer: "vec",
             style: "default",
             format: "tiles",
@@ -63,8 +63,7 @@
         });
 
         var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          url: "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
           layer: "cta",
           style: "default",
           format: "tiles",
@@ -132,9 +131,21 @@
           }),
         };
 
+        // var entity = new Cesium.Entity({
+        //   id: "1",
+        //   polyline: g,
+        // });
         var entity = new Cesium.Entity({
           id: "1",
-          polyline: g,
+          polyline: new Cesium.PolylineGraphics({
+            positions: [startCartesian, endCartesian],
+            width: 30,
+            material: new Cesium.PolylineGlowMaterialProperty({
+              color: new Cesium.Color(0, 0, 1, 1),
+              glowPower: 0.2,
+              taperPower: 1,
+            }),
+          }),
         });
 
         dataSource.entities.add(entity);

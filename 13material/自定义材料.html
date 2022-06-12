@@ -11,10 +11,12 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
     <title>线</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+    <link
+      rel="stylesheet"
+      href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css"
+    />
     <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
-
       html,
       body,
       #cesiumContainer {
@@ -44,8 +46,7 @@
         timeline: false,
         navigationHelpButton: false,
         imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
           layer: "vec",
           style: "default",
           format: "tiles",
@@ -130,7 +131,8 @@
             Property.equals(this._color, other._color))
         );
       };
-      Cesium.PolylineTrailLinkMaterialProperty = PolylineTrailLinkMaterialProperty;
+      Cesium.PolylineTrailLinkMaterialProperty =
+        PolylineTrailLinkMaterialProperty;
       Cesium.Material.PolylineTrailLinkType = "PolylineTrailLink";
       Cesium.Material.PolylineTrailLinkImage = "./colors.png";
       Cesium.Material.PolylineTrailLinkSource =
@@ -165,69 +167,22 @@
         name: "动态立体墙",
         wall: {
           positions: Cesium.Cartesian3.fromDegreesArray([
-            117.154815,
-            31.853495,
-            117.181255,
-            31.854257,
-            117.182284,
-            31.848255,
-            117.184748,
-            31.840141,
-            117.180557,
-            31.835556,
-            117.180023,
-            31.833741,
-            117.166846,
-            31.833737,
-            117.155531,
-            31.833151,
-            117.154787,
-            31.835978,
-            117.151994,
-            31.839036,
-            117.150691,
-            31.8416,
-            117.151215,
-            31.844734,
-            117.154457,
-            31.848152,
-            117.154815,
-            31.853495,
+            117.154815, 31.853495, 117.181255, 31.854257, 117.182284, 31.848255,
+            117.184748, 31.840141, 117.180557, 31.835556, 117.180023, 31.833741,
+            117.166846, 31.833737, 117.155531, 31.833151, 117.154787, 31.835978,
+            117.151994, 31.839036, 117.150691, 31.8416, 117.151215, 31.844734,
+            117.154457, 31.848152, 117.154815, 31.853495,
           ]),
           maximumHeights: [
-            600,
-            600,
-            600,
-            600,
-            600,
-            600,
-            600,
-            600,
-            600,
-            600,
-            600,
-            600,
-            600,
+            600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600,
             600,
           ],
           minimumHeights: [
-            43.9,
-            49.4,
-            38.7,
-            40,
-            54,
-            51,
-            66.7,
-            44.6,
-            41.2,
-            31.2,
-            50.1,
-            53.8,
-            46.9,
-            43.9,
+            43.9, 49.4, 38.7, 40, 54, 51, 66.7, 44.6, 41.2, 31.2, 50.1, 53.8,
+            46.9, 43.9,
           ],
           material: new Cesium.PolylineTrailLinkMaterialProperty(
-            Cesium.Color.ORANGE,
+            new Cesium.Color(1.0, 1.0, 0.0, 0.5),
             3000
           ),
         },
