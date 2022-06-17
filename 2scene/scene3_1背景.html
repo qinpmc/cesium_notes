@@ -1,133 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Use correct character set. -->
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
     <title>天空盒</title>
     <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
     <style>
-        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-        html,
-        body,
-        #cesiumContainer {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div>
-        <button onclick="showVec()">显示天地图矢量</button>
-        <button onclick="showCta()">显示天地图标注</button>
-        <button onclick="changeBackground()">改变背景</button>
-
+      <button onclick="showVec()">显示天地图矢量</button>
+      <button onclick="showCta()">显示天地图标注</button>
+      <button onclick="toggleSkybox()">显隐skybox</button>
+      <button onclick="setSceneBackgroundColor()">设置背景颜色透明</button>
+      <button onclick="setSceneBackgroundColor2()">设置背景颜色-红色</button>
+      <button onclick="changeBackground()">改变背景</button>
+      <button onclick="resetView()">重置视野</button>
     </div>
-    <div id="cesiumContainer" style="background-image: url(./宇宙.jpg);"></div>
+    <div id="cesiumContainer" style="background-image: url(./宇宙.jpg)"></div>
     <script>
-        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
-        viewer.scene.globe.depthTestAgainstTerrain = true
-        //4326坐标系从1开始
-        var tileMatrixLabels = [];
-        for (var i = 1; i < 18; i++) {
-            tileMatrixLabels.push("" + i);
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      //4326坐标系从1开始
+      var tileMatrixLabels = [];
+      for (var i = 1; i < 18; i++) {
+        tileMatrixLabels.push("" + i);
+      }
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: false, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: false, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: false, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+        //orderIndependentTransclucency:false, // -无用
+        contextOptions: {
+          webgl: {
+            alpha: true,
+          },
+        },
+      });
+
+      // 隐藏默认的图层，显示蓝色地球
+      viewer.imageryLayers.get(0).show = false;
+
+      var ctaLayer = new Cesium.ImageryLayer(
+        new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+        {
+          show: false,
         }
-        var viewer = new Cesium.Viewer("cesiumContainer", {
-            animation: false,  //是否显示动画控件
-            baseLayerPicker: false, //是否显示图层选择控件
-            geocoder: false, //是否显示地名查找控件
-            timeline: false, //是否显示时间线控件
-            sceneModePicker: false, //是否显示投影方式控件
-            navigationHelpButton: false, //是否显示帮助信息控件
-            infoBox: false,  //是否显示点击要素之后显示的信息
-            imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-                url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-                layer: "vec",
-                style: "default",
-                format: "tiles",
-                tileMatrixSetID: "c",
-                maximumLevel: "14",
-                tileMatrixLabels: tileMatrixLabels,
-                tilingScheme: new Cesium.GeographicTilingScheme({
-                    numberOfLevelZeroTilesX: 2,
-                    numberOfLevelZeroTilesY: 1
-                })
-            }),
-            //orderIndependentTransclucency:false, // -无用
-            contextOptions: {
-                webgl: {
-                    alpha: true
-                }
-            }
-        });
+      );
 
+      console.log(viewer.scene.imageryLayers === viewer.imageryLayers); // true
+      var layers = viewer.imageryLayers;
+      layers.add(ctaLayer);
+      console.log(viewer.imageryLayers.get(1)); // cta图层
 
+      viewer.scene.debugShowFramesPerSecond = true;
+      viewer.scene.globe.depthTestAgainstTerrain = true;
 
-        // 隐藏默认的图层，显示蓝色地球
-        viewer.imageryLayers.get(0).show = false;
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000),
+      });
 
-        var ctaLayer = new Cesium.ImageryLayer(
-            new Cesium.WebMapTileServiceImageryProvider({
-                url: "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-                layer: "cta",
-                style: "default",
-                format: "tiles",
-                tileMatrixSetID: "c",
-                maximumLevel: "14",
-                tileMatrixLabels: tileMatrixLabels,
-                tilingScheme: new Cesium.GeographicTilingScheme({
-                    numberOfLevelZeroTilesX: 2,
-                    numberOfLevelZeroTilesY: 1
-                }),
-            }), {
-                show: false
-            }
-        );
+      window.showVec = function () {
+        viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show;
+      };
 
-        console.log(viewer.scene.imageryLayers === viewer.imageryLayers); // true
-        var layers = viewer.imageryLayers;
-        layers.add(ctaLayer);
-        console.log(viewer.imageryLayers.get(1)); // cta图层
+      window.showCta = function () {
+        viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show;
+      };
 
-        viewer.scene.debugShowFramesPerSecond = true;
-        //
-
+      window.toggleSkybox = function () {
+        viewer.scene.skyBox.show = !viewer.scene.skyBox.show;
+      };
+      window.setSceneBackgroundColor = function () {
+        viewer.scene.backgroundColor = Cesium.Color.TRANSPARENT; // new Cesium.Color(0, 0, 0, 0)
+      };
+      window.setSceneBackgroundColor2 = function () {
+        viewer.scene.backgroundColor = new Cesium.Color(1, 0, 0, 0.2);
+      };
+      window.changeBackground = function () {
+        viewer.scene.globe.baseColor = new Cesium.Color(0, 0, 0, 0.0); // 改为黑色
+      };
+      window.resetView = function () {
+        //114.28548099424536 35.73162227748432
         viewer.camera.flyTo({
-            destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000)
-
+          destination: Cesium.Cartesian3.fromDegrees(-100, 35, 8000000),
+          orientation: {
+            heading: Cesium.Math.toRadians(0.01),
+            pitch: Cesium.Math.toRadians(-80),
+            roll: 0.01,
+          },
         });
+      };
 
-        viewer.scene.skyBox.show = false; //屏蔽天空盒
-        viewer.scene.backgroundColor = new Cesium.Color(1, 0, 0, 0.0); // 背景设为红色
+      //   https://mrdata.usgs.gov/mapcache/wmts?
+      //   layer=sgmc2&style=default&tilematrixset=GoogleMapsCompatible
+      //   &Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix=4&TileCol=4&TileRow=5
 
+      var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+        url: "https://mrdata.usgs.gov/mapcache/wmts",
+        layer: "sgmc2",
+        style: "default",
+        format: "image/png",
+        tileMatrixSetID: "GoogleMapsCompatible",
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+      });
 
-
-        window.showVec = function () {
-            viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show
-        }
-
-        window.showCta = function () {
-            viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show
-        }
-
-        window.changeBackground = function () {
-            viewer.scene.backgroundColor = new Cesium.Color(0, 1, 0, 0); // 背景设为透明
-            viewer.scene.globe.baseColor = new Cesium.Color(1, 1, 0, 0.0); // 改为黄色
-            viewer.scene.debugShowFrustums = true;
-        }
-
-
-
+      viewer.imageryLayers.addImageryProvider(imageryProvider);
     </script>
-</body>
-
+  </body>
 </html>
