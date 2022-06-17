@@ -1,260 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>聚类2</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-<head>
-  <!-- Use correct character set. -->
-  <meta charset="utf-8" />
-  <!-- Tell IE to use the latest, best version. -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <title>聚类2</title>
-  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
-  <style>
-    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
 
-    html,
-    body,
-    #cesiumContainer {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-  </style>
-</head>
+  <body>
+    <div>
+      <button onclick="addCluster()">添加聚合图层</button>
+      <button onclick="removeCluster()">移除聚合图层</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-<body>
-  <div>
-    <button onclick="addCluster()">添加聚合图层</button>
-    <button onclick="removeCluster()">移除聚合图层</button>
-  </div>
-  <div id="cesiumContainer"></div>
-  <script>
-    Cesium.Ion.defaultAccessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
-
-    //4326坐标系从1开始
-    var tileMatrixLabels = [];
-    for (var i = 1; i < 18; i++) {
-      tileMatrixLabels.push("" + i);
-    }
-    var viewer = new Cesium.Viewer("cesiumContainer", {
-      animation: false, //是否显示动画控件
-      baseLayerPicker: false, //是否显示图层选择控件
-      geocoder: true, //是否显示地名查找控件
-      timeline: false, //是否显示时间线控件
-      sceneModePicker: true, //是否显示投影方式控件
-      navigationHelpButton: false, //是否显示帮助信息控件
-      infoBox: true, //是否显示点击要素之后显示的信息
-      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-        url:
-          "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-        layer: "vec",
-        style: "default",
-        format: "tiles",
-        tileMatrixSetID: "c",
-        maximumLevel: "14",
-        tileMatrixLabels: tileMatrixLabels,
-        tilingScheme: new Cesium.GeographicTilingScheme({
-          numberOfLevelZeroTilesX: 2,
-          numberOfLevelZeroTilesY: 1,
+      //4326坐标系从1开始
+      var tileMatrixLabels = [];
+      for (var i = 1; i < 18; i++) {
+        tileMatrixLabels.push("" + i);
+      }
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
         }),
-      }),
-    });
+      });
 
-    var ctaLayer = new Cesium.ImageryLayer(
-      new Cesium.WebMapTileServiceImageryProvider({
-        url:
-          "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-        layer: "cta",
-        style: "default",
-        format: "tiles",
-        tileMatrixSetID: "c",
-        maximumLevel: "14",
-        tileMatrixLabels: tileMatrixLabels,
-        tilingScheme: new Cesium.GeographicTilingScheme({
-          numberOfLevelZeroTilesX: 2,
-          numberOfLevelZeroTilesY: 1,
-        }),
-      })
-    );
-    var layers = viewer.imageryLayers;
-    layers.add(ctaLayer);
-
-
-    function generatePosition(num) {
-      var list = []
-      for (var i = 0; i < num; i++) {
-        var lng = 120.38105869 + Math.random() * 0.5
-        var lat = 31.10115627 + Math.random() * 0.5
-        list.push({
-          lng, lat
+      var ctaLayer = new Cesium.ImageryLayer(
+        new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
         })
+      );
+      var layers = viewer.imageryLayers;
+      layers.add(ctaLayer);
+
+      function generatePosition(num) {
+        var list = [];
+        for (var i = 0; i < num; i++) {
+          var lng = 120.38105869 + Math.random() * 0.5;
+          var lat = 31.10115627 + Math.random() * 0.5;
+          list.push({
+            lng,
+            lat,
+          });
+        }
+        return list;
       }
-      return list
-    }
 
+      var datasource = new Cesium.CustomDataSource("clusterlayer");
 
-    var datasource = new Cesium.CustomDataSource("clusterlayer")
+      var _cache = {};
+      const options = {
+        size: 18,
+        pixelRange: 80,
+        gradient: {
+          0.0001: Cesium.Color.DEEPSKYBLUE,
+          0.001: Cesium.Color.GREEN,
+          0.01: Cesium.Color.ORANGE,
+          0.1: Cesium.Color.RED,
+        },
+        fontSize: 12,
+        fontColor: Cesium.Color.BLACK,
+        style: "circle",
+        minimumClusterSize: 2,
+      };
 
-    var _cache = {}
-    const options = {
-      size: 18,
-      pixelRange: 80,
-      gradient: {
-        0.0001: Cesium.Color.DEEPSKYBLUE,
-        0.001: Cesium.Color.GREEN,
-        0.01: Cesium.Color.ORANGE,
-        0.1: Cesium.Color.RED
-      },
-      fontSize: 12,
-      fontColor: Cesium.Color.BLACK,
-      style: 'circle',
-      minimumClusterSize: 2
-    }
-
-
-
-
-
-    function _clusterEventHandler(clusteredEntities, cluster) {
-      if (!datasource.clustering.enabled) {
-        return
-      }
-      cluster.billboard.show = true
-      cluster.label.font = `bold ${options.fontSize}px sans-serif`
-      cluster.label.fillColor = options.fontColor
-      cluster.label.disableDepthTestDistance = Number.POSITIVE_INFINITY
-      if (datasource.entities.values.length) {
-        let allCount = datasource.entities.values.length || 0
-        for (let key in options.gradient) {
-          if (clusteredEntities.length >= allCount * key) {
-            let numLength = String(clusteredEntities.length).length
-            if (options.style === 'circle') {
-              cluster.billboard.image = _drawCircle(
-                options.gradient[key],
-                numLength
-              )
-            } else {
-              cluster.billboard.image = _drawClustering(
-                options.gradient[key],
-                numLength
-              )
+      function _clusterEventHandler(clusteredEntities, cluster) {
+        if (!datasource.clustering.enabled) {
+          return;
+        }
+        cluster.billboard.show = true;
+        cluster.label.font = `bold ${options.fontSize}px sans-serif`;
+        cluster.label.fillColor = options.fontColor;
+        cluster.label.disableDepthTestDistance = Number.POSITIVE_INFINITY;
+        if (datasource.entities.values.length) {
+          let allCount = datasource.entities.values.length || 0;
+          for (let key in options.gradient) {
+            if (clusteredEntities.length >= allCount * key) {
+              let numLength = String(clusteredEntities.length).length;
+              if (options.style === "circle") {
+                cluster.billboard.image = _drawCircle(
+                  options.gradient[key],
+                  numLength
+                );
+              } else {
+                cluster.billboard.image = _drawClustering(
+                  options.gradient[key],
+                  numLength
+                );
+              }
+              cluster.label.show = true;
+              if (numLength === 1) {
+                cluster.label.pixelOffset = new Cesium.Cartesian2(-2, 3);
+              } else {
+                cluster.label.pixelOffset = new Cesium.Cartesian2(
+                  -5 * (numLength - 1),
+                  5
+                );
+              }
+            } else if (clusteredEntities.length <= 1) {
+              cluster.label.show = false;
             }
-            cluster.label.show = true
-            if (numLength === 1) {
-              cluster.label.pixelOffset = new Cesium.Cartesian2(-2, 3)
-            } else {
-              cluster.label.pixelOffset = new Cesium.Cartesian2(
-                -5 * (numLength - 1),
-                5
-              )
-            }
-          } else if (clusteredEntities.length <= 1) {
-            cluster.label.show = false
           }
         }
       }
-    }
 
-    function _drawCircle(color, numLength) {
-      let size = options.size * (numLength + 1)
-      let key = color.toCssColorString() + '-' + size
-      if (!_cache[key]) {
-        let canvas = document.createElement('canvas')
-        canvas.width = size
-        canvas.height = size
-        let context2D = canvas.getContext('2d')
-        context2D.save()
-        context2D.scale(size / 24, size / 24) //Added to auto-generated code to scale up to desired size.
-        context2D.fillStyle = color.withAlpha(0.2).toCssColorString() //Modified from auto-generated code.
-        context2D.beginPath()
-        context2D.arc(12, 12, 9, 0, 2 * Math.PI)
-        context2D.closePath()
-        context2D.fill()
-        context2D.beginPath()
-        context2D.arc(12, 12, 6, 0, 2 * Math.PI)
-        context2D.fillStyle = color.toCssColorString()
-        context2D.fill()
-        context2D.closePath()
-        context2D.restore()
-        this._cache[key] = canvas.toDataURL()
-      }
-      return _cache[key]
-    }
-
-    function _drawClustering(color, numLength) {
-      let size = options.size * (numLength + 1)
-      let key = color.toCssColorString() + '-' + size
-      let startAngle = -Math.PI / 12
-      let angle = Math.PI / 2
-      let intervalAngle = Math.PI / 6
-      if (!_cache[key]) {
-        let canvas = document.createElement('canvas')
-        canvas.width = size
-        canvas.height = size
-        let context2D = canvas.getContext('2d')
-        context2D.save()
-        context2D.scale(size / 24, size / 24) //Added to auto-generated code to scale up to desired size.
-        context2D.beginPath()
-        context2D.arc(12, 12, 6, 0, 2 * Math.PI)
-        context2D.fillStyle = color.toCssColorString()
-        context2D.fill()
-        context2D.closePath()
-        context2D.lineWidth = 2
-        for (let i = 0; i < 3; i++) {
-          context2D.beginPath()
-          context2D.arc(12, 12, 8, startAngle, startAngle + angle, false)
-          context2D.strokeStyle = color.withAlpha(0.4).toCssColorString()
-          context2D.stroke()
-          context2D.arc(12, 12, 11, startAngle, startAngle + angle, false)
-          context2D.strokeStyle = color.withAlpha(0.2).toCssColorString()
-          context2D.stroke()
-          context2D.closePath()
-          startAngle = startAngle + angle + intervalAngle
+      function _drawCircle(color, numLength) {
+        let size = options.size * (numLength + 1);
+        let key = color.toCssColorString() + "-" + size;
+        if (!_cache[key]) {
+          let canvas = document.createElement("canvas");
+          canvas.width = size;
+          canvas.height = size;
+          let context2D = canvas.getContext("2d");
+          context2D.save();
+          context2D.scale(size / 24, size / 24); //Added to auto-generated code to scale up to desired size.
+          context2D.fillStyle = color.withAlpha(0.2).toCssColorString(); //Modified from auto-generated code.
+          context2D.beginPath();
+          context2D.arc(12, 12, 9, 0, 2 * Math.PI);
+          context2D.closePath();
+          context2D.fill();
+          context2D.beginPath();
+          context2D.arc(12, 12, 6, 0, 2 * Math.PI);
+          context2D.fillStyle = color.toCssColorString();
+          context2D.fill();
+          context2D.closePath();
+          context2D.restore();
+          this._cache[key] = canvas.toDataURL();
         }
-        context2D.restore()
-        _cache[key] = canvas.toDataURL()
+        return _cache[key];
       }
-      return _cache[key]
-    }
 
-    window.addCluster = function () {
-
-
-      let positions = generatePosition(5000)
-      positions.forEach(item => {
-        var entity = datasource.entities.add({
-          position: Cesium.Cartesian3.fromDegrees(item.lng, item.lat),
-          billboard: {
-            image: './camera.png',
-            // width: 32, //必须添加，否则初始时不聚合
-            // height: 32 // 必须添加，否则初始时不聚合
+      function _drawClustering(color, numLength) {
+        let size = options.size * (numLength + 1);
+        let key = color.toCssColorString() + "-" + size;
+        let startAngle = -Math.PI / 12;
+        let angle = Math.PI / 2;
+        let intervalAngle = Math.PI / 6;
+        if (!_cache[key]) {
+          let canvas = document.createElement("canvas");
+          canvas.width = size;
+          canvas.height = size;
+          let context2D = canvas.getContext("2d");
+          context2D.save();
+          context2D.scale(size / 24, size / 24); //Added to auto-generated code to scale up to desired size.
+          context2D.beginPath();
+          context2D.arc(12, 12, 6, 0, 2 * Math.PI);
+          context2D.fillStyle = color.toCssColorString();
+          context2D.fill();
+          context2D.closePath();
+          context2D.lineWidth = 2;
+          for (let i = 0; i < 3; i++) {
+            context2D.beginPath();
+            context2D.arc(12, 12, 8, startAngle, startAngle + angle, false);
+            context2D.strokeStyle = color.withAlpha(0.4).toCssColorString();
+            context2D.stroke();
+            context2D.arc(12, 12, 11, startAngle, startAngle + angle, false);
+            context2D.strokeStyle = color.withAlpha(0.2).toCssColorString();
+            context2D.stroke();
+            context2D.closePath();
+            startAngle = startAngle + angle + intervalAngle;
           }
+          context2D.restore();
+          _cache[key] = canvas.toDataURL();
+        }
+        return _cache[key];
+      }
+
+      window.addCluster = function () {
+        let positions = generatePosition(5000);
+        positions.forEach((item) => {
+          var entity = datasource.entities.add({
+            position: Cesium.Cartesian3.fromDegrees(item.lng, item.lat),
+            billboard: {
+              image: "./camera.png",
+              width: 32, //必须添加，否则初始时不聚合
+              height: 32, // 必须添加，否则初始时不聚合
+            },
+          });
         });
-      })
-      datasource.clustering.enabled = true
-      datasource.clustering.clusterEvent.addEventListener(
-        _clusterEventHandler
-      )
-      datasource.clustering.pixelRange = options.pixelRange
-      datasource.clustering.minimumClusterSize = options.minimumClusterSize
+        datasource.clustering.enabled = true;
+        datasource.clustering.clusterEvent.addEventListener(
+          _clusterEventHandler
+        );
+        datasource.clustering.pixelRange = options.pixelRange;
+        datasource.clustering.minimumClusterSize = options.minimumClusterSize;
 
+        viewer.dataSources.add(datasource);
+      };
 
-      viewer.dataSources.add(datasource)
-    }
-
-    window.removeCluster = function () {
-      datasource.entities.removeAll()
-      viewer.dataSources.remove(datasource)
-
-    }
-
-
-  </script>
-</body>
-
+      window.removeCluster = function () {
+        datasource.entities.removeAll();
+        viewer.dataSources.remove(datasource);
+      };
+    </script>
+  </body>
 </html>
