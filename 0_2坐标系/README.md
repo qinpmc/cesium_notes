@@ -132,6 +132,15 @@ Cesium.Matrix3（3x3 矩阵，用于描述旋转变换）；
 Cesium.Matrix4（4x4 矩阵，用于描述旋转加平移变换）；  
 Cesium.Quaternion（四元数，用于描述围绕某个向量旋转一定角度的变换）；
 
+#### 5.3 椭球笛卡尔坐标与局部笛卡尔坐标
+
+```
+let cartesian3 = Cesium.Cartesian3.fromDegrees(longitude, latitude, height) ;
+let modelMatrix = Cesium.Transforms.esatNorthUpToFixedFrame(cartesian3);
+let offset = new Cesium.Cartesian3(10,0,0);
+const newCartesian3 = Cesium.Matrix4.multiplyByPoint(modelMatrix, offset, new Cesium.Cartesian3());
+```
+
 ### 6 局部坐标系和世界坐标系转换
 
 见 ：
