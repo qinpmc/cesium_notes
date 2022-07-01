@@ -1,84 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Use correct character set. -->
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
     <title>线</title>
     <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
     <style>
-        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-        html,
-        body,
-        #cesiumContainer {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div style="position: absolute;z-index: 9999;left: 10px;top:10px">
-        <button onclick="addPolyline1()">增加红色线1-不贴地</button>
-        <button onclick="addPolyline1_1()">增加黄色贴地线1</button>
-        <button onclick="addPolyline2()">增加RHUMB线2-恒向线贴地</button>
-        <button onclick="addPolyline3()">增加发光线3-透明度-贴地</button>
-        <button onclick="addPolyline3_2()">增加发光线3_2-透明度-贴地</button>
-        <button onclick="addPolyline4()">增加边框线4-不贴地</button>
-        <button onclick="addPolyline5()">增加箭头线5-不贴地</button>
-        <button onclick="addPolyline6()">增加虚线6-distanceDisplayCondition-不贴地</button>
-        <button onclick="addLine_development_Polyline_Material()">增加线7_随机样式-不贴地</button>
-        <button onclick="add_development_Polyline()">增加线8-develop</button>
-        <button onclick="test()">test</button>
-
-
+  <body>
+    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
+      <button onclick="addPolyline1()">增加红色线1-不贴地</button>
+      <button onclick="addPolyline1_1()">增加黄色贴地线1</button>
+      <button onclick="addPolyline2()">增加RHUMB线2-恒向线贴地</button>
+      <button onclick="addPolyline3()">增加发光线3-透明度-贴地</button>
+      <button onclick="addPolyline3_2()">增加发光线3_2-透明度-贴地</button>
+      <button onclick="addPolyline4()">增加边框线4-不贴地</button>
+      <button onclick="addPolyline5()">增加箭头线5-不贴地</button>
+      <button onclick="addPolyline6()">
+        增加虚线6-distanceDisplayCondition-不贴地
+      </button>
+      <button onclick="addLine_development_Polyline_Material()">
+        增加线7_随机样式-不贴地
+      </button>
+      <button onclick="add_development_Polyline()">增加线8-develop</button>
+      <button onclick="test()">test</button>
     </div>
     <div id="cesiumContainer"></div>
     <script>
-        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-        var widget = new Cesium.CesiumWidget("cesiumContainer", {
-            animation: false, //是否显示动画控件
-            baseLayerPicker: false, //是否显示图层选择控件
-            geocoder: true, //是否显示地名查找控件
-            timeline: false, //是否显示时间线控件
-            sceneModePicker: true, //是否显示投影方式控件
-            navigationHelpButton: false, //是否显示帮助信息控件
-            infoBox: true, //是否显示点击要素之后显示的信息
-            imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-                url:
-                    "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-                layer: "img",
-                style: "default",
-                format: "tiles",
-                tileMatrixSetID: "w",
-            }),
-        });
-        var scene = widget.scene;
-        scene.terrainProvider = Cesium.createWorldTerrain({
-            requestWaterMask: true,
-            requestVertexNormals: true,
-        });
+      var widget = new Cesium.CesiumWidget("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+        }),
+      });
+      var scene = widget.scene;
+      scene.terrainProvider = Cesium.createWorldTerrain({
+        requestWaterMask: true,
+        requestVertexNormals: true,
+      });
 
-        // var terrainLayer = new Cesium.CesiumTerrainProvider({
-        //     url: "http://data.marsgis.cn/terrain",
-        //     requestWaterMask: true,
-        //     requestVertexNormals: true,
-        // });
-        // scene.terrainProvider = terrainLayer;
+      // var terrainLayer = new Cesium.CesiumTerrainProvider({
+      //     url: "http://data.marsgis.cn/terrain",
+      //     requestWaterMask: true,
+      //     requestVertexNormals: true,
+      // });
+      // scene.terrainProvider = terrainLayer;
 
-
-        //普通红色线-不贴地
-        function addPolyline1() {
-            /*          viewer.entities.add({
+      //普通红色线-不贴地
+      function addPolyline1() {
+        /*          viewer.entities.add({
                           name : "红色普通线",
                           polyline : {
                               positions : Cesium.Cartesian3.fromDegreesArray([114, 30, 70, 30]),
@@ -88,410 +91,402 @@
                           }
                       });*/
 
-            scene.primitives.add(new Cesium.Primitive({
-                geometryInstances: new Cesium.GeometryInstance({
-                    geometry: new Cesium.PolylineGeometry({
-                        positions: Cesium.Cartesian3.fromDegreesArray([
-                            114, 30.0,
-                            70.0, 30.0
-                        ]),
-                        width: 5.0,
-                        vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT
-                    }),
-                    attributes: {
-                        color: Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(1.0, 0.0, 0.0, 1.0))
-                    }
-                }),
-                appearance: new Cesium.PolylineColorAppearance()
-            }));
-            scene.camera.setView({
-                destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000)
-            })
-        }
-
-        //普通黄色线-贴地
-        function addPolyline1_1() {
-            scene.primitives.add(new Cesium.GroundPolylinePrimitive({
-                geometryInstances: new Cesium.GeometryInstance({
-                    geometry: new Cesium.GroundPolylineGeometry({ // 使用 PolylineGeometry报错
-                        positions: Cesium.Cartesian3.fromDegreesArray([
-                            114, 31.5,
-                            70.0, 31.5
-                        ]),
-                        width: 5.0,
-                        vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT
-                    }),
-                    attributes: {
-                        color: Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(1.0, 1.0, 0.0, 1.0))
-                    }
-                }),
-                appearance: new Cesium.PolylineColorAppearance(),
-            }));
-            scene.camera.setView({
-                destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000)
-            })
-        }
-
-
-
-        //恒向线-贴地  GroundPolylinePrimitive -- GroundPolylineGeometry
-        //该线条则描述的是恒向线，任意位置的延伸方向都是恒定的。起点和终点的纬度都是30，所以线条是和30度纬度线是重合的。
-        function addPolyline2() {
-            scene.primitives.add(new Cesium.GroundPolylinePrimitive({
-                geometryInstances: new Cesium.GeometryInstance({
-                    geometry: new Cesium.GroundPolylineGeometry({
-                        positions: Cesium.Cartesian3.fromDegreesArray([
-                            114, 30,
-                            70.0, 30
-                        ]),
-                        arcType: Cesium.ArcType.RHUMB,
-                        width: 5.0,
-                        vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT
-                    }),
-                    attributes: {
-                        color: Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(0.0, 0.0, 1.0, 1.0))
-                    }
-                }),
-                appearance: new Cesium.PolylineColorAppearance(),
-            }));
-            scene.camera.setView({
-                destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000)
-            })
-
-
-        }
-
-        //发光线
-        function addPolyline3() {
-            scene.primitives.add(new Cesium.GroundPolylinePrimitive({
-                geometryInstances: new Cesium.GeometryInstance({
-                    geometry: new Cesium.GroundPolylineGeometry({
-                        positions: Cesium.Cartesian3.fromDegreesArray([
-                            114, 33,
-                            70.0, 33
-                        ]),
-                        width: 5.0,
-                        vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT
-                    })
-                }),
-                appearance: new Cesium.PolylineMaterialAppearance({
-                    material: new Cesium.Material({
-                        fabric: {
-                            type: 'PolylineGlow',
-                            uniforms: {
-                                glowPower: 0.6,  //发光强度，是线宽的百分比
-                                taperPower: 0.5, //变窄锥化效果
-                                color: Cesium.Color.CORNFLOWERBLUE
-                            }
-                        }
-                    })
-                })
-
-
-            }));
-            scene.camera.setView({
-                destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000)
-            })
-        }
-
-        //发光线2
-        function addPolyline3_2() {
-
-            var instance = new Cesium.GeometryInstance({
-                geometry: new Cesium.GroundPolylineGeometry({
-                    positions: Cesium.Cartesian3.fromDegreesArray([
-                        114, 34,
-                        70.0, 34
-                    ]),
-                    width: 5.0,
-                    vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT
-                })
-            })
-            var material = Cesium.Material.fromType(
-                Cesium.Material.PolylineGlowType
-            )
-
-            material.uniforms.glowPower = 0.6
-            material.uniforms.taperPower = 0.5
-            material.uniforms.color = Cesium.Color.CORNFLOWERBLUE
-
-            var appearance = new Cesium.PolylineMaterialAppearance({
-                material: material,
-            })
-
-            scene.primitives.add(new Cesium.GroundPolylinePrimitive({
-                geometryInstances: instance,
-                appearance: appearance,
-
-            }));
-            scene.camera.setView({
-                destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000)
-            })
-        }
-
-
-        //边框线
-        function addPolyline4() {
-
-            scene.primitives.add(new Cesium.Primitive({
-                geometryInstances: new Cesium.GeometryInstance({
-                    geometry: new Cesium.PolylineGeometry({
-                        positions: Cesium.Cartesian3.fromDegreesArrayHeights([
-                            114, 34, 250000,
-                            70.0, 34, 0
-                        ]),
-                        width: 8.0,
-                        //vertexFormat : Cesium.PolylineColorAppearance.VERTEX_FORMAT //增加此句没有边框
-                    })
-                }),
-                appearance: new Cesium.PolylineMaterialAppearance({
-                    material: new Cesium.Material({
-                        fabric: {
-                            type: 'PolylineOutline',
-                            uniforms: {
-                                color: Cesium.Color.ORANGE,
-                                outlineWidth: 4,
-                                outlineColor: Cesium.Color.RED
-                            }
-                        }
-                    })
-                })
-            }));
-            scene.camera.setView({
-                destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000)
-            })
-        }
-
-        //紫色箭头线
-        function addPolyline5() {
-            scene.primitives.add(new Cesium.Primitive({
-                geometryInstances: new Cesium.GeometryInstance({
-                    geometry: new Cesium.PolylineGeometry({
-                        positions: Cesium.Cartesian3.fromDegreesArrayHeights([
-                            114, 36, 250000,
-                            70.0, 36, 250000
-                        ]),
-                        width: 8.0,
-                        arcType: Cesium.ArcType.NONE,
-                        //vertexFormat : Cesium.PolylineColorAppearance.VERTEX_FORMAT //
-                    })
-                }),
-                appearance: new Cesium.PolylineMaterialAppearance({
-                    material: new Cesium.Material({
-                        fabric: {
-                            type: 'PolylineArrow',
-                            uniforms: {
-                                color: Cesium.Color.PURPLE
-                            }
-                        }
-                    })
-                })
-            }));
-            scene.camera.setView({
-                destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000)
-            })
-
-        }
-
-
-        //虚线
-        function addPolyline6() {
-
-            scene.primitives.add(new Cesium.Primitive({
-                geometryInstances: new Cesium.GeometryInstance({
-                    geometry: new Cesium.PolylineGeometry({
-                        positions: Cesium.Cartesian3.fromDegreesArrayHeights([
-                            114, 37, 500000,
-                            70.0, 37, 500000
-                        ]),
-                        width: 4.0,
-                        arcType: Cesium.ArcType.NONE,
-                        //vertexFormat : Cesium.PolylineColorAppearance.VERTEX_FORMAT //
-                    })
-                }),
-                appearance: new Cesium.PolylineMaterialAppearance({
-                    material: new Cesium.Material({
-                        fabric: {
-                            type: 'PolylineDash',
-                            uniforms: {
-                                color: Cesium.Color.CYAN,
-                                //gapColor: Cesium.Color.RED,
-                                dashLength: 6
-                            }
-                        }
-                    })
-                })
-            }));
-            scene.camera.setView({
-                destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000)
-            })
-
-        }
-
-
-        // development_Polyline_Material
-        function addLine_development_Polyline_Material() {
-            var types = [
-                Cesium.Material.PolylineGlowType,
-                Cesium.Material.PolylineArrowType,
-                Cesium.Material.PolylineOutlineType
-            ]
-
-            var line1 = new Cesium.Primitive({
-                geometryInstances: new Cesium.GeometryInstance({
-                    geometry: new Cesium.PolylineGeometry({
-                        positions: Cesium.Cartesian3.fromDegreesArray([
-                            -120.0,
-                            30.0,
-                            -80.0,
-                            30.0,
-                        ]),
-                        width: 10.0,
-                        vertexFormat: Cesium.PolylineMaterialAppearance.VERTEX_FORMAT,
-                    }),
-                }),
-                appearance: new Cesium.PolylineMaterialAppearance({
-                    material: Cesium.Material.fromType(
-                        types[parseInt(Math.random() * (2 - 0 + 1) + 0, 10)]
-                    ),
-                }),
-            })
-            scene.primitives.add(line1)
-            scene.camera.flyTo({
-                destination: new Cesium.Cartesian3.fromDegrees(-90, 35, 9933000)
-            })
-        }
-
-
-        // development_Polyline 
-        function add_development_Polyline() {
-            scene.primitives.add(
-                new Cesium.Primitive({
-                    geometryInstances: new Cesium.GeometryInstance({
-                        geometry: new Cesium.PolylineGeometry({
-                            positions: Cesium.Cartesian3.fromDegreesArray([
-                                -124.0,
-                                40.0,
-                                -80.0,
-                                40.0,
-                            ]),
-                            width: 5.0,
-                            vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
-                        }),
-                        attributes: {
-                            color: Cesium.ColorGeometryInstanceAttribute.fromColor(
-                                new Cesium.Color(1.0, 0.0, 0.0, 0.8)
-                            ),
-                        },
-                    }),
-                    appearance: new Cesium.PolylineColorAppearance(),
-                })
-            );
-            scene.camera.flyTo({
-                destination: new Cesium.Cartesian3.fromDegrees(-90, 40, 9933000)
-            })
-        }
-
-
-        function test() {
-            var polylinePositions = Cesium.Cartesian3.fromDegreesArray([
-                -112.1340164450331,
-                36.05494287836128,
-                -112.08821010582645,
-                36.097804071380715,
-                -112.13296079730024,
-                36.168769146801104,
-                -112.10828895143331,
-                36.20031318533197,
-                -112.138548165717,
-                36.1691100215289, // hairpins
-                -112.11482556496543,
-                36.20127524083297,
-                -112.15921333464016,
-                36.17876011207708,
-                -112.14700151155604,
-                36.21683132404626,
-                -112.20919883052926,
-                36.19475754001766,
-            ]);
-
-            var loopPositions = Cesium.Cartesian3.fromDegreesArray([
-                -111.94500779274114,
-                36.27638678884143,
-                -111.90983004392696,
-                36.07985366173454,
-                -111.80360100637773,
-                36.13694878292542,
-                -111.85510122419183,
-                36.26029588763386,
-                -111.69141601804614,
-                36.05128770351902,
-            ]);
-
-
-            var instance1 = new Cesium.GeometryInstance({
-                geometry: new Cesium.GroundPolylineGeometry({
-                    positions: polylinePositions,
-                    loop: false,
-                    width: 4.0,
-                }),
-                id: "polylineIds1",
-                attributes: {
-                    show: new Cesium.ShowGeometryInstanceAttribute(),
-                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(
-                        Cesium.Color.fromCssColorString("yellow").withAlpha(0.7)
-                    ),
-                },
-            });
-
-            var instance2 = new Cesium.GeometryInstance({
-                geometry: new Cesium.GroundPolylineGeometry({
-                    positions: loopPositions,
-                    loop: true,
-                    width: 8.0,
-                    vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
-                }),
-
-                id: "polylineIds2",
-                attributes: {
-                    show: new Cesium.ShowGeometryInstanceAttribute(),
-                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(
-                        Cesium.Color.fromCssColorString("pink").withAlpha(0.7)
-                    ),
-                }
-            })
-
-            var polylineOnTerrainPrimitive = new Cesium.GroundPolylinePrimitive({
-                geometryInstances: [instance1, instance2],
-                //debugShowShadowVolume: debugShowShadowVolume,
-            });
-            scene.groundPrimitives.add(polylineOnTerrainPrimitive);
-
-            // 2条线变成各自属性中颜色 --不设置该属性 2条线默认都是红色
-            //polylineOnTerrainPrimitive.appearance = new Cesium.PolylineColorAppearance();
-
-            // 2条线都变成蓝色
-            polylineOnTerrainPrimitive.appearance = new Cesium.PolylineMaterialAppearance(
-                {
-                    material: Cesium.Material.fromType("Color", {
-                        color: new Cesium.Color(0.0, 0.0, 1.0, 1.0),
-                    }),
-                }
-            )
-
-
-            scene.camera.flyTo({
-                destination: new Cesium.Cartesian3.fromDegrees(-111.94500779274114, 36.27638678884143, 2000)
-            })
-        }
-
-
+        scene.primitives.add(
+          new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.PolylineGeometry({
+                positions: Cesium.Cartesian3.fromDegreesArray([
+                  114, 30.0, 70.0, 30.0,
+                ]),
+                width: 15.0,
+                vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+              }),
+              attributes: {
+                color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+                  new Cesium.Color(1.0, 0.0, 0.0, 1.0)
+                ),
+              },
+            }),
+            appearance: new Cesium.PolylineColorAppearance(),
+          })
+        );
         scene.camera.setView({
-            destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000)
-        })
+          destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000),
+        });
+      }
 
+      //普通黄色线-贴地
+      function addPolyline1_1() {
+        scene.primitives.add(
+          new Cesium.GroundPolylinePrimitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.GroundPolylineGeometry({
+                // 使用 PolylineGeometry报错
 
+                positions: Cesium.Cartesian3.fromDegreesArray([
+                  114, 31.5, 70.0, 31.5,
+                ]),
+                width: 12.0,
+                vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+              }),
+              //   attributes: {
+              //     color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+              //       new Cesium.Color(1.0, 1.0, 0.0, 1.0)
+              //     ),
+              //   },
+            }),
+            appearance: new Cesium.PolylineMaterialAppearance({
+              material: new Cesium.Material({
+                fabric: {
+                  type: "Color",
+                  uniforms: {
+                    color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+                  },
+                },
+              }),
+            }),
+          })
+        );
+        scene.camera.setView({
+          destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000),
+        });
+      }
+
+      //恒向线-贴地  GroundPolylinePrimitive -- GroundPolylineGeometry
+      //该线条则描述的是恒向线，任意位置的延伸方向都是恒定的。起点和终点的纬度都是30，所以线条是和30度纬度线是重合的。
+      function addPolyline2() {
+        scene.primitives.add(
+          new Cesium.GroundPolylinePrimitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.GroundPolylineGeometry({
+                positions: Cesium.Cartesian3.fromDegreesArray([
+                  114, 30, 70.0, 30,
+                ]),
+                arcType: Cesium.ArcType.RHUMB,
+                width: 5.0,
+                vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+              }),
+              attributes: {
+                color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+                  new Cesium.Color(0.0, 0.0, 1.0, 1.0)
+                ),
+              },
+            }),
+            appearance: new Cesium.PolylineColorAppearance(),
+          })
+        );
+        scene.camera.setView({
+          destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000),
+        });
+      }
+
+      //发光线-贴地
+      function addPolyline3() {
+        scene.primitives.add(
+          new Cesium.GroundPolylinePrimitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.GroundPolylineGeometry({
+                positions: Cesium.Cartesian3.fromDegreesArray([
+                  114, 33, 70.0, 33,
+                ]),
+                width: 15.0,
+                vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+              }),
+            }),
+            appearance: new Cesium.PolylineMaterialAppearance({
+              material: new Cesium.Material({
+                fabric: {
+                  type: "PolylineGlow",
+                  uniforms: {
+                    glowPower: 0.6, //发光强度，是线宽的百分比
+                    taperPower: 0.5, //变窄锥化效果
+                    color: Cesium.Color.CORNFLOWERBLUE,
+                  },
+                },
+              }),
+            }),
+          })
+        );
+        scene.camera.setView({
+          destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000),
+        });
+      }
+
+      //发光线2
+      function addPolyline3_2() {
+        var instance = new Cesium.GeometryInstance({
+          geometry: new Cesium.GroundPolylineGeometry({
+            positions: Cesium.Cartesian3.fromDegreesArray([114, 34, 70.0, 34]),
+            width: 5.0,
+            vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+          }),
+        });
+        var material = Cesium.Material.fromType(
+          Cesium.Material.PolylineGlowType
+        );
+
+        material.uniforms.glowPower = 0.6;
+        material.uniforms.taperPower = 0.5;
+        material.uniforms.color = Cesium.Color.CORNFLOWERBLUE;
+
+        var appearance = new Cesium.PolylineMaterialAppearance({
+          material: material,
+        });
+
+        scene.primitives.add(
+          new Cesium.GroundPolylinePrimitive({
+            geometryInstances: instance,
+            appearance: appearance,
+          })
+        );
+        scene.camera.setView({
+          destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000),
+        });
+      }
+
+      //边框线
+      function addPolyline4() {
+        scene.primitives.add(
+          new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.PolylineGeometry({
+                positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+                  114, 34, 250000, 70.0, 34, 0,
+                ]),
+                width: 8.0,
+                //vertexFormat : Cesium.PolylineColorAppearance.VERTEX_FORMAT //增加此句没有边框
+              }),
+            }),
+            appearance: new Cesium.PolylineMaterialAppearance({
+              material: new Cesium.Material({
+                fabric: {
+                  type: "PolylineOutline",
+                  uniforms: {
+                    color: Cesium.Color.ORANGE,
+                    outlineWidth: 4,
+                    outlineColor: Cesium.Color.RED,
+                  },
+                },
+              }),
+            }),
+          })
+        );
+        scene.camera.setView({
+          destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000),
+        });
+      }
+
+      //紫色箭头线
+      function addPolyline5() {
+        scene.primitives.add(
+          new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.PolylineGeometry({
+                positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+                  114, 36, 250000, 70.0, 36, 250000,
+                ]),
+                width: 8.0,
+                arcType: Cesium.ArcType.NONE,
+                //vertexFormat : Cesium.PolylineColorAppearance.VERTEX_FORMAT //
+              }),
+            }),
+            appearance: new Cesium.PolylineMaterialAppearance({
+              material: new Cesium.Material({
+                fabric: {
+                  type: "PolylineArrow",
+                  uniforms: {
+                    color: Cesium.Color.PURPLE,
+                  },
+                },
+              }),
+            }),
+          })
+        );
+        scene.camera.setView({
+          destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000),
+        });
+      }
+
+      //虚线
+      function addPolyline6() {
+        scene.primitives.add(
+          new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.PolylineGeometry({
+                positions: Cesium.Cartesian3.fromDegreesArrayHeights([
+                  114, 37, 500000, 70.0, 37, 500000,
+                ]),
+                width: 4.0,
+                arcType: Cesium.ArcType.NONE,
+                //vertexFormat : Cesium.PolylineColorAppearance.VERTEX_FORMAT //
+              }),
+            }),
+            appearance: new Cesium.PolylineMaterialAppearance({
+              material: new Cesium.Material({
+                fabric: {
+                  type: "PolylineDash",
+                  uniforms: {
+                    color: Cesium.Color.CYAN,
+                    //gapColor: Cesium.Color.RED,
+                    dashLength: 6,
+                  },
+                },
+              }),
+            }),
+          })
+        );
+        scene.camera.setView({
+          destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000),
+        });
+      }
+
+      // development_Polyline_Material
+      function addLine_development_Polyline_Material() {
+        var types = [
+          Cesium.Material.PolylineGlowType,
+          Cesium.Material.PolylineArrowType,
+          Cesium.Material.PolylineOutlineType,
+        ];
+
+        var line1 = new Cesium.Primitive({
+          geometryInstances: new Cesium.GeometryInstance({
+            geometry: new Cesium.PolylineGeometry({
+              positions: Cesium.Cartesian3.fromDegreesArray([
+                -120.0, 30.0, -80.0, 30.0,
+              ]),
+              width: 10.0,
+              vertexFormat: Cesium.PolylineMaterialAppearance.VERTEX_FORMAT,
+            }),
+          }),
+          appearance: new Cesium.PolylineMaterialAppearance({
+            material: Cesium.Material.fromType(
+              types[parseInt(Math.random() * (2 - 0 + 1) + 0, 10)]
+            ),
+          }),
+        });
+        scene.primitives.add(line1);
+        scene.camera.flyTo({
+          destination: new Cesium.Cartesian3.fromDegrees(-90, 35, 9933000),
+        });
+      }
+
+      // development_Polyline
+      function add_development_Polyline() {
+        scene.primitives.add(
+          new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.PolylineGeometry({
+                positions: Cesium.Cartesian3.fromDegreesArray([
+                  -124.0, 40.0, -80.0, 40.0,
+                ]),
+                width: 5.0,
+                vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+              }),
+              attributes: {
+                color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+                  new Cesium.Color(1.0, 0.0, 0.0, 0.8)
+                ),
+              },
+            }),
+            appearance: new Cesium.PolylineColorAppearance(),
+          })
+        );
+        scene.camera.flyTo({
+          destination: new Cesium.Cartesian3.fromDegrees(-90, 40, 9933000),
+        });
+      }
+
+      function test() {
+        var polylinePositions = Cesium.Cartesian3.fromDegreesArray([
+          -112.1340164450331,
+          36.05494287836128,
+          -112.08821010582645,
+          36.097804071380715,
+          -112.13296079730024,
+          36.168769146801104,
+          -112.10828895143331,
+          36.20031318533197,
+          -112.138548165717,
+          36.1691100215289, // hairpins
+          -112.11482556496543,
+          36.20127524083297,
+          -112.15921333464016,
+          36.17876011207708,
+          -112.14700151155604,
+          36.21683132404626,
+          -112.20919883052926,
+          36.19475754001766,
+        ]);
+
+        var loopPositions = Cesium.Cartesian3.fromDegreesArray([
+          -111.94500779274114, 36.27638678884143, -111.90983004392696,
+          36.07985366173454, -111.80360100637773, 36.13694878292542,
+          -111.85510122419183, 36.26029588763386, -111.69141601804614,
+          36.05128770351902,
+        ]);
+
+        var instance1 = new Cesium.GeometryInstance({
+          geometry: new Cesium.GroundPolylineGeometry({
+            positions: polylinePositions,
+            loop: false,
+            width: 4.0,
+          }),
+          id: "polylineIds1",
+          attributes: {
+            show: new Cesium.ShowGeometryInstanceAttribute(),
+            color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+              Cesium.Color.fromCssColorString("yellow").withAlpha(0.7)
+            ),
+          },
+        });
+
+        var instance2 = new Cesium.GeometryInstance({
+          geometry: new Cesium.GroundPolylineGeometry({
+            positions: loopPositions,
+            loop: true,
+            width: 8.0,
+            vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+          }),
+
+          id: "polylineIds2",
+          attributes: {
+            show: new Cesium.ShowGeometryInstanceAttribute(),
+            color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+              Cesium.Color.fromCssColorString("pink").withAlpha(0.7)
+            ),
+          },
+        });
+
+        var polylineOnTerrainPrimitive = new Cesium.GroundPolylinePrimitive({
+          geometryInstances: [instance1, instance2],
+          //debugShowShadowVolume: debugShowShadowVolume,
+        });
+        scene.groundPrimitives.add(polylineOnTerrainPrimitive);
+
+        // 2条线变成各自属性中颜色 --不设置该属性 2条线默认都是红色
+        polylineOnTerrainPrimitive.appearance =
+          new Cesium.PolylineColorAppearance();
+
+        // 2条线都变成蓝色
+        // polylineOnTerrainPrimitive.appearance =
+        //   new Cesium.PolylineMaterialAppearance({
+        //     material: Cesium.Material.fromType("Color", {
+        //       color: new Cesium.Color(0.0, 0.0, 1.0, 1.0),
+        //     }),
+        //   });
+
+        scene.camera.flyTo({
+          destination: new Cesium.Cartesian3.fromDegrees(
+            -111.94500779274114,
+            36.27638678884143,
+            2000
+          ),
+        });
+      }
+
+      scene.camera.setView({
+        destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000),
+      });
     </script>
-</body>
-
+  </body>
 </html>

@@ -12,10 +12,10 @@
     />
     <title>tianditu</title>
 
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
 
     <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
       html,
       body,
@@ -53,8 +53,7 @@
           navigationHelpButton: false, //是否显示帮助信息控件
           infoBox: true, //是否显示点击要素之后显示的信息
           imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-            url:
-              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
             layer: "vec",
             style: "default",
             format: "tiles",
@@ -70,8 +69,7 @@
         });
 
         var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          url: "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
           layer: "cta",
           style: "default",
           format: "tiles",
@@ -81,7 +79,7 @@
 
         viewer.imageryLayers.addImageryProvider(imageryProvider);
 
-        console.log(viewer.clock === clock); // 
+        console.log(viewer.clock === clock); //
         viewer.clock.shouldAnimate = true; // viewer.cesiumWidget.clock.shouldAnimate = true  等同
         viewer.clock.multiplier = 1;
         console.log(viewer.clock);

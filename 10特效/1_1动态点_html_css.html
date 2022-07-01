@@ -1,106 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>tianditu</title>
 
-<head>
-  <!-- Use correct character set. -->
-  <meta charset="utf-8" />
-  <!-- Tell IE to use the latest, best version. -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <title>tianditu</title>
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+    <style>
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-  <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
-  <style>
-    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+    <link rel="stylesheet" href="./pointAnimation.css" />
+  </head>
 
-    html,
-    body,
-    #cesiumContainer {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-  </style>
-  <link rel="stylesheet" href="./pointAnimation.css" />
-</head>
+  <body>
+    <div id="cesiumContainer"></div>
+    <div
+      id="aniContainer"
+      style="position: absolute; z-index: 9; top: 0px; left: 0px"
+    >
+      ddd
+    </div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-<body>
-  <div id="cesiumContainer"></div>
-  <div id="aniContainer" style="position: absolute; z-index: 9; top: 0px; left: 0px">
-    ddd
-  </div>
-  <script>
-    Cesium.Ion.defaultAccessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          /*tilingScheme:new Cesium.WebMercatorTilingScheme({
 
-    var viewer = new Cesium.Viewer("cesiumContainer", {
-      animation: false, //是否显示动画控件
-      baseLayerPicker: false, //是否显示图层选择控件
-      geocoder: true, //是否显示地名查找控件
-      timeline: false, //是否显示时间线控件
-      sceneModePicker: true, //是否显示投影方式控件
-      navigationHelpButton: false, //是否显示帮助信息控件
-      infoBox: true, //是否显示点击要素之后显示的信息
-      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-        url:
-          "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-        layer: "vec",
+          }),*/
+        }),
+      });
+
+      var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+        url: "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "cta",
         style: "default",
         format: "tiles",
         tileMatrixSetID: "w",
-        /*tilingScheme:new Cesium.WebMercatorTilingScheme({
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+      });
 
-          }),*/
-      }),
-    });
+      viewer.imageryLayers.addImageryProvider(imageryProvider2);
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(114, 30, 0),
+      });
 
-    var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
-      url:
-        "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-      layer: "cta",
-      style: "default",
-      format: "tiles",
-      tileMatrixSetID: "w",
-      tilingScheme: new Cesium.WebMercatorTilingScheme({}),
-    });
+      var aniContainer = document.getElementById("aniContainer");
+      var content =
+        '<div class="animation-point" style="color:' +
+        "red" +
+        ';"><p></p></div>';
+      aniContainer.innerHTML = content;
+      var position = Cesium.Cartesian3.fromDegrees(113, 30, 0);
+      var windowPos = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
+        viewer.scene,
+        position
+      );
+      aniContainer.style.left = windowPos.x + "px";
+      aniContainer.style.top = windowPos.y + "px";
 
-    viewer.imageryLayers.addImageryProvider(imageryProvider2);
-    viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(114, 30, 0),
-    });
+      var camera = viewer.camera;
+      camera.moveEnd.addEventListener(function () {
+        console.log("moveEnd", arguments);
+        console.log("heading....." + camera.heading); //4.71238898038469 = 3.14 + 3.14/2
+        console.log("pitch....." + camera.pitch); //-0.7853981633974492  = -3.14/4
+        console.log("roll....." + camera.roll); //6.283185307179586
 
-    var aniContainer = document.getElementById("aniContainer");
-    var content =
-      '<div class="animation-point" style="color:' +
-      "red" +
-      ';"><p></p></div>';
-    aniContainer.innerHTML = content;
-    var position = Cesium.Cartesian3.fromDegrees(113, 30, 0);
-    var windowPos = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
-      viewer.scene,
-      position
-    );
-    aniContainer.style.left = windowPos.x + "px";
-    aniContainer.style.top = windowPos.y + "px";
-
-    var camera = viewer.camera;
-      // camera.moveEnd.addEventListener(function () {
-      //   console.log("moveEnd", arguments);
-      //   console.log("heading....." + camera.heading); //4.71238898038469 = 3.14 + 3.14/2
-      //   console.log("pitch....." + camera.pitch); //-0.7853981633974492  = -3.14/4
-      //   console.log("roll....." + camera.roll); //6.283185307179586
-
-      //   var newwindowPos = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
-      //     viewer.scene,
-      //     Cesium.Cartesian3.fromDegrees(113, 30, 0)
-      //   );
-      //   aniContainer.style.left = newwindowPos.x + "px";
-      //   aniContainer.style.top = newwindowPos.y + "px";
-      // });
-  </script>
-</body>
-
+        var newwindowPos = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
+          viewer.scene,
+          Cesium.Cartesian3.fromDegrees(113, 30, 0)
+        );
+        aniContainer.style.left = newwindowPos.x + "px";
+        aniContainer.style.top = newwindowPos.y + "px";
+      });
+    </script>
+  </body>
 </html>

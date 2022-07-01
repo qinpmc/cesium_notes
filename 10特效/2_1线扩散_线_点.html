@@ -11,12 +11,11 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
     <title>tianditu</title>
-
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <script src="./proj4.js"></script>
     <script src="./tool.js"></script>
     <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
       html,
       body,
@@ -28,7 +27,6 @@
         overflow: hidden;
       }
     </style>
- 
   </head>
   <body>
     <div id="cesiumContainer"></div>
@@ -48,8 +46,7 @@
           navigationHelpButton: false, //是否显示帮助信息控件
           infoBox: true, //是否显示点击要素之后显示的信息
           imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-            url:
-              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
             layer: "vec",
             style: "default",
             format: "tiles",
@@ -65,8 +62,7 @@
         });
 
         var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          url: "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
           layer: "cta",
           style: "default",
           format: "tiles",
