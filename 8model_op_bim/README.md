@@ -1,18 +1,16 @@
 - https://blog.csdn.net/xtfge0915/article/details/104653730
 - https://blog.csdn.net/xtfge0915/article/details/105277427
 
-
 - https://blog.csdn.net/qq_24641385/article/details/106085428
 - https://blog.csdn.net/xiaohuanhuandog/article/details/104037094
 - https://www.cxyzjd.com/article/d351064378/111998325
 
+//
 
-// 
 - https://xiaozhuanlan.com/topic/1425369780
 - https://www.cnblogs.com/onsummer/p/14059220.html
 
-
-- 
+-
 - https://its201.com/article/youlinhuanyan/104703870
 - https://daimajiaoliu.com/daima/6cba4d0e24a2804
 - https://www.codetd.com/article/1805831
@@ -21,7 +19,11 @@
 - https://www.jianshu.com/p/0b0df0eb791b
 - https://blog.katastros.com/a?ID=01700-4a590fde-d73d-4dc9-a60a-bfc7fcbdcf5d
 - https://www.cnblogs.com/mazhenyu/p/13856411.html
- 
+
+- https://blog.katastros.com/a?ID=01700-4a590fde-d73d-4dc9-a60a-bfc7fcbdcf5dystem
+- https://blog.actorsfit.com/a?ID=00650-4dd4c6b5-fff8-489d-b735-1eb3e6560660
+- https://blog.csdn.net/youlinhuanyan/article/details/103242162
+- https://programs.wiki/wiki/use-cesium-to-load-3dfiles-and-adjust-them.html
 
 ### Model 添加
 
@@ -71,7 +73,7 @@ var entity = viewer.entities.add({
     maximumScale: 20000,
   });
   var primitiveModel = primitives.add(model)
- 
+
 ```
 
 ## 创建平移、缩放、旋转矩阵
@@ -107,9 +109,7 @@ const mat4 = Cesium.Matrix4.fromRotationTranslation(mat3RoateX, translation)
 var mat4 = Cesium.Matrix4.fromScale(new Cesium.Cartesian3(7.0, 8.0, 9.0));
 ```
 
-
-
-## Cesium.HeightReference 
+## Cesium.HeightReference
 
 ```
 var longitude = 94.01;
@@ -131,12 +131,13 @@ var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
     //color: Cesium.Color.GREEN
 })
 ```
+
 - Cesium.HeightReference.NONE: 高度有用，需设置正确的高度，否则可能被地形遮盖
 - Cesium.HeightReference.CLAMP_TO_GROUND: 模型总是贴地，高度无用
 - Cesium.HeightReference.RELATIVE_TO_GROUND: 相对于地面的高度，高度是相对地面的高度值
 
+##
 
-## 
 3dtiles inspector
 
 Cesium.Cesium3DTileStyle(style)
