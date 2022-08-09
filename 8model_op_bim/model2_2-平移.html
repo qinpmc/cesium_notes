@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <!-- Use correct character set. -->
-  <meta charset="utf-8" />
-  <!-- Tell IE to use the latest, best version. -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <title>模型</title>
-  <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
-  <link rel="stylesheet" href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" />
-  <style>
-
-
-    html,
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>模型</title>
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+    <link
+      rel="stylesheet"
+      href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css"
+    />
+    <style>
+      html,
       body,
       #cesiumContainer {
         width: 100%;
@@ -28,168 +31,213 @@
         display: none;
       }
     </style>
-</head>
+  </head>
 
-<body>
-  <div>
-    高度：<input type="range" max="200" min="-200" step="20" id="heightEle" />
-    经度：<input type="range" max="0.0002" min="-0.0002" step="0.00005" id="lonEle" />
-    纬度：<input type="range" max="0.0002" min="-0.0002" step="0.00005" id="latEle" />
-    高度2：<input type="range" max="200" min="-200" step="20" id="heightEle2" />
-    经度2：<input type="range" max="400" min="-400" step="100" id="lonEle2" />
-    纬度2：<input type="range" max="400" min="-400" step="100" id="latEle2" />
-  </div>
-  <div id="cesiumContainer"></div>
-  <script>
-    Cesium.Ion.defaultAccessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+  <body>
+    <div>
+      高度：<input type="range" max="200" min="-200" step="20" id="heightEle" />
+      经度：<input
+        type="range"
+        max="0.0002"
+        min="-0.0002"
+        step="0.00005"
+        id="lonEle"
+      />
+      纬度：<input
+        type="range"
+        max="0.0002"
+        min="-0.0002"
+        step="0.00005"
+        id="latEle"
+      />
+      高度2：<input
+        type="range"
+        max="200"
+        min="-200"
+        step="20"
+        id="heightEle2"
+      />
+      经度2：<input type="range" max="400" min="-400" step="100" id="lonEle2" />
+      纬度2：<input type="range" max="400" min="-400" step="100" id="latEle2" />
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-    //4326坐标系从1开始
-    var tileMatrixLabels = [];
-    for (var i = 1; i < 18; i++) {
-      tileMatrixLabels.push("" + i);
-    }
-    var viewer = new Cesium.Viewer("cesiumContainer", {
-      animation: false, //是否显示动画控件
-      shouldAnimate: true, // 让
-      baseLayerPicker: false, //是否显示图层选择控件
-      geocoder: true, //是否显示地名查找控件
-      timeline: false, //是否显示时间线控件
-      sceneModePicker: true, //是否显示投影方式控件
-      navigationHelpButton: false, //是否显示帮助信息控件
-      infoBox: true, //是否显示点击要素之后显示的信息
-    });
+      //4326坐标系从1开始
+      var tileMatrixLabels = [];
+      for (var i = 1; i < 18; i++) {
+        tileMatrixLabels.push("" + i);
+      }
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        shouldAnimate: true, // 让
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+      });
 
-    var model;
-    var heading = 0.0;
-    var pitch = Cesium.Math.toRadians(0.0); // 10.0
-    var roll = Cesium.Math.toRadians(0.0); // -20.0
+      var model;
+      var heading = 0.0;
+      var pitch = Cesium.Math.toRadians(0.0); // 10.0
+      var roll = Cesium.Math.toRadians(0.0); // -20.0
 
-    var longitude = -123.0744619;
-    var latitude = 44.0503706;
-    var height = 5000;
-    var origin = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);
+      var longitude = -123.0744619;
+      var latitude = 44.0503706;
+      var height = 5000;
+      var origin = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);
 
-    //createModel("../sampleData/model/Cesium_Air.glb", origin, heading, pitch, roll);
-    createModel("../sampleData/model/duck.gltf", origin, heading, pitch, roll);
-    function createModel(url, origin, heading, pitch, roll) {
-      heading = Cesium.defaultValue(heading, 0.0);
-      pitch = Cesium.defaultValue(pitch, 0.0);
-      roll = Cesium.defaultValue(roll, 0.0);
-      var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-
-      var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+      //createModel("../sampleData/model/Cesium_Air.glb", origin, heading, pitch, roll);
+      createModel(
+        "../sampleData/model/duck.gltf",
         origin,
-        hpr
+        heading,
+        pitch,
+        roll
       );
+      function createModel(url, origin, heading, pitch, roll) {
+        heading = Cesium.defaultValue(heading, 0.0);
+        pitch = Cesium.defaultValue(pitch, 0.0);
+        roll = Cesium.defaultValue(roll, 0.0);
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
 
-      viewer.scene.primitives.removeAll(); // Remove previous model
-      model = viewer.scene.primitives.add(
-        Cesium.Model.fromGltf({
-          url: url,
-          modelMatrix: modelMatrix,
-          minimumPixelSize: 128,
-        })
-      );
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+          origin,
+          hpr
+        );
 
-      model.readyPromise
-        .then(function (model) {
-          // Play and loop all animations at half-speed
-          model.activeAnimations.addAll({
-            multiplier: 2.5,
-            loop: Cesium.ModelAnimationLoop.REPEAT,
+        viewer.scene.primitives.removeAll(); // Remove previous model
+        model = viewer.scene.primitives.add(
+          Cesium.Model.fromGltf({
+            url: url,
+            modelMatrix: modelMatrix,
+            minimumPixelSize: 128,
+          })
+        );
+
+        model.readyPromise
+          .then(function (model) {
+            // Play and loop all animations at half-speed
+            model.activeAnimations.addAll({
+              multiplier: 2.5,
+              loop: Cesium.ModelAnimationLoop.REPEAT,
+            });
+
+            viewer.scene.camera.lookAt(
+              origin,
+              new Cesium.Cartesian3(0.0, 0.0, 10.0)
+            );
+          })
+          .otherwise(function (error) {
+            window.alert(error);
           });
+      }
 
-          viewer.scene.camera.lookAt(
-            origin,
-            new Cesium.Cartesian3(0.0, 0.0, 10.0)
-          );
+      // 局部坐标系 -----调试看效果
+      // 东北  红色--x  绿色 --y  蓝色 ---z
+      var position = origin;
+      var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+      var hprRollZero = new Cesium.HeadingPitchRoll();
+      var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+        position,
+        hprRollZero,
+        Cesium.Ellipsoid.WGS84,
+        enUpConverter
+      );
+
+      viewer.scene.primitives.add(
+        new Cesium.DebugModelMatrixPrimitive({
+          modelMatrix: modelMatrix,
+          length: 3000.0,
+          width: 10.0,
         })
-        .otherwise(function (error) {
-          window.alert(error);
+      );
+
+      function calculateOffset(offsetX, offsetY, offsetZ, origin) {
+        //var center = Cesium.Cartographic.fromCartesian(cartesianCenter);
+        //var surface = Cesium.Cartesian3.fromRadians(center.longitude, center.latitude, 0.0);
+
+        //var lonInRadian = Cesium.Math.toRadians(longitude);
+        //var latInRadian = Cesium.Math.toRadians(latitude);
+
+        //var surface = Cesium.Cartesian3.fromRadians(lonInRadian, latInRadian, height);
+
+        var offsetXInDegree = Cesium.Math.toDegrees(offsetX);
+        var offsetYInDegree = Cesium.Math.toDegrees(offsetY);
+
+        // cartesian 相减
+        var offset = Cesium.Cartesian3.fromDegrees(
+          longitude + offsetXInDegree,
+          latitude + offsetYInDegree,
+          height + offsetZ
+        );
+        var translation = Cesium.Cartesian3.subtract(
+          offset,
+          origin,
+          new Cesium.Cartesian3()
+        );
+
+        console.log("translation", translation);
+
+        var transMatrix4 = Cesium.Matrix4.fromTranslation(translation);
+
+        var originMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(origin); // Matrix4
+
+        console.log(
+          Cesium.Matrix4.multiply(
+            transMatrix4,
+            originMatrix,
+            new Cesium.Matrix4()
+          )
+        );
+        console.log(
+          Cesium.Matrix4.multiply(
+            originMatrix,
+            transMatrix4,
+            new Cesium.Matrix4()
+          )
+        );
+
+        return Cesium.Matrix4.multiply(
+          transMatrix4,
+          originMatrix,
+          new Cesium.Matrix4()
+        ); // 正确？
+
+        // Batched3DModel3DTileContent.prototype.update
+        // content._contentModelMatrix = Matrix4.multiply(
+        //   tile.computedTransform,
+        //   content._rtcCenterTransform,
+        //   new Matrix4()
+        // );
+      }
+
+      //model 偏移量
+      model._offsetX = 0;
+      model._offsetY = 0;
+      model._offsetZ = 0;
+
+      document
+        .getElementById("heightEle")
+        .addEventListener("change", function () {
+          var height = parseFloat(this.value);
+          model._offsetZ = height;
+
+          model.modelMatrix = calculateOffset(
+            model._offsetX,
+            model._offsetY,
+            model._offsetZ,
+            origin
+          );
         });
-    }
 
-
-
-    // 局部坐标系 -----调试看效果
-    // 东北  红色--x  绿色 --y  蓝色 ---z
-    var position = origin;
-    var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
-    var hprRollZero = new Cesium.HeadingPitchRoll();
-    var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
-      position,
-      hprRollZero,
-      Cesium.Ellipsoid.WGS84,
-      enUpConverter
-    );
-
-    viewer.scene.primitives.add(
-      new Cesium.DebugModelMatrixPrimitive({
-        modelMatrix: modelMatrix,
-        length: 3000.0,
-        width: 10.0,
-      })
-    );
-
-
-    function calculateOffset(offsetX, offsetY, offsetZ, cartesianCenter) {
-      //var center = Cesium.Cartographic.fromCartesian(cartesianCenter);
-      //var surface = Cesium.Cartesian3.fromRadians(center.longitude, center.latitude, 0.0);
-
-      //var lonInRadian = Cesium.Math.toRadians(longitude);
-      //var latInRadian = Cesium.Math.toRadians(latitude);
-
-      //var surface = Cesium.Cartesian3.fromRadians(lonInRadian, latInRadian, height);
-
-      var offsetXInDegree = Cesium.Math.toDegrees(offsetX);
-      var offsetYInDegree = Cesium.Math.toDegrees(offsetY);
-
-      // cartesian 相减
-      var offset = Cesium.Cartesian3.fromDegrees(
-        longitude + offsetXInDegree,
-        latitude + offsetYInDegree,
-        height + offsetZ
-      );
-      var translation = Cesium.Cartesian3.subtract(
-        offset,
-        cartesianCenter,
-        new Cesium.Cartesian3()
-      );
-
-      console.log('translation', translation)
-
-      var transMatrix4 = Cesium.Matrix4.fromTranslation(translation);
-
-      var center = Cesium.Transforms.eastNorthUpToFixedFrame(cartesianCenter); // Matrix4
-
-      console.log(Cesium.Matrix4.multiply(transMatrix4, center, new Cesium.Matrix4()))
-      console.log(Cesium.Matrix4.multiply(center, transMatrix4, new Cesium.Matrix4()))
-
-      return Cesium.Matrix4.multiply(transMatrix4, center, new Cesium.Matrix4()); // 正确？
-
-      // Batched3DModel3DTileContent.prototype.update
-      // content._contentModelMatrix = Matrix4.multiply(
-      //   tile.computedTransform,
-      //   content._rtcCenterTransform,
-      //   new Matrix4()
-      // );
-
-
-
-    }
-
-    //model 偏移量
-    model._offsetX = 0;
-    model._offsetY = 0;
-    model._offsetZ = 0;
-
-    document
-      .getElementById("heightEle")
-      .addEventListener("change", function () {
-        var height = parseFloat(this.value);
-        model._offsetZ = height;
-
+      document.getElementById("lonEle").addEventListener("change", function () {
+        var lon = parseFloat(this.value);
+        model._offsetX = lon;
         model.modelMatrix = calculateOffset(
           model._offsetX,
           model._offsetY,
@@ -198,88 +246,98 @@
         );
       });
 
-    document.getElementById("lonEle").addEventListener("change", function () {
-      var lon = parseFloat(this.value);
-      model._offsetX = lon;
-      model.modelMatrix = calculateOffset(
-        model._offsetX,
-        model._offsetY,
-        model._offsetZ,
-        origin
-      );
-    });
-
-    document.getElementById("latEle").addEventListener("change", function () {
-      var lon = parseFloat(this.value);
-      model._offsetY = lon;
-      model.modelMatrix = calculateOffset(
-        model._offsetX,
-        model._offsetY,
-        model._offsetZ,
-        origin
-      );
-    });
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////
-    //model 偏移量
-    model._offsetX_inMeter = 0;
-    model._offsetY_inMeter = 0;
-    model._offsetZ_inMeter = 0;
-
-
-    document
-      .getElementById("heightEle2")
-      .addEventListener("change", function () {
-        var height = parseFloat(this.value);
-        model._offsetZ_inMeter = height;
-
-        model.modelMatrix = calculateOffset2(
-          model._offsetX_inMeter,
-          model._offsetY_inMeter,
-          model._offsetZ_inMeter,
+      document.getElementById("latEle").addEventListener("change", function () {
+        var lon = parseFloat(this.value);
+        model._offsetY = lon;
+        model.modelMatrix = calculateOffset(
+          model._offsetX,
+          model._offsetY,
+          model._offsetZ,
           origin
         );
       });
 
-    document.getElementById("lonEle2").addEventListener("change", function () {
-      var lon = parseFloat(this.value);
-      model._offsetX_inMeter = lon;
-      model.modelMatrix = calculateOffset2(
-        model._offsetX_inMeter,
-        model._offsetY_inMeter,
-        model._offsetZ_inMeter,
-        origin
-      );
-    });
+      /////////////////////////////////////////////////////////////////////////////////////////
+      //model 偏移量
+      model._offsetX_inMeter = 0;
+      model._offsetY_inMeter = 0;
+      model._offsetZ_inMeter = 0;
 
-    document.getElementById("latEle2").addEventListener("change", function () {
-      var lon = parseFloat(this.value);
-      model._offsetY_inMeter = lon;
-      model.modelMatrix = calculateOffset2(
-        model._offsetX_inMeter,
-        model._offsetY_inMeter,
-        model._offsetZ_inMeter,
-        origin
-      );
-    });
+      document
+        .getElementById("heightEle2")
+        .addEventListener("change", function () {
+          var height = parseFloat(this.value);
+          model._offsetZ_inMeter = height;
 
+          model.modelMatrix = calculateOffset2(
+            model._offsetX_inMeter,
+            model._offsetY_inMeter,
+            model._offsetZ_inMeter,
+            origin
+          );
+        });
 
-    function calculateOffset2(offsetX, offsetY, offsetZ, cartesianCenter) {
+      document
+        .getElementById("lonEle2")
+        .addEventListener("change", function () {
+          var lon = parseFloat(this.value);
+          model._offsetX_inMeter = lon;
+          model.modelMatrix = calculateOffset2(
+            model._offsetX_inMeter,
+            model._offsetY_inMeter,
+            model._offsetZ_inMeter,
+            origin
+          );
+        });
 
-      var transMatrix4 = Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(offsetX, offsetY, offsetZ));
+      document
+        .getElementById("latEle2")
+        .addEventListener("change", function () {
+          var lon = parseFloat(this.value);
+          model._offsetY_inMeter = lon;
+          model.modelMatrix = calculateOffset2(
+            model._offsetX_inMeter,
+            model._offsetY_inMeter,
+            model._offsetZ_inMeter,
+            origin
+          );
+        });
 
-      var center = Cesium.Transforms.eastNorthUpToFixedFrame(cartesianCenter); // Matrix4
+      function calculateOffset2(offsetX, offsetY, offsetZ, origin) {
+        var transMatrix4 = Cesium.Matrix4.fromTranslation(
+          new Cesium.Cartesian3(offsetX, offsetY, offsetZ)
+        );
 
-      return Cesium.Matrix4.multiply(center, transMatrix4, center);
+        var originMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(origin); // Matrix4
 
-      // https://blog.csdn.net/xtfge0915/article/details/104653730
-      //const translation = Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(offsetX, offsetY, offsetZ))
-      //return Cesium.Matrix4.multiply(model.modelMatrix, translation, model.modelMatrix)
+        return Cesium.Matrix4.multiply(
+          originMatrix,
+          transMatrix4,
+          originMatrix
+        );
 
+        // https://blog.csdn.net/xtfge0915/article/details/104653730
+        //const translation = Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(offsetX, offsetY, offsetZ))
+        //return Cesium.Matrix4.multiply(model.modelMatrix, translation, model.modelMatrix)
+      }
 
-    }
-  </script>
-</body>
-
+      // https://sandcastle.cesium.com/index.html#c=fVXtT9s4GP9XrN6HpVLqplC2XWHobuyFkzbGDcanSJOTPE0sHDuynUIP8b/vcey0CbCrVNXP6+95b66ksWTD4Q40eUck3JEzMLyt6U3Hi9JJ3tFnSlrGJeh0EpOHVBJiKlaoO7MiVrcQp/JxepzKVHpf1OQggZZCZUALaGx1Dcb+XaILY69Ba3wgnjPtrPJdHF9VAQJFHUYFvKzsiiTOf6cYoruVKr9VraVWs/w22hm6GAjx3hpluOXK4QSrM6Ytvpg8pGut6g9QagATORNCZouDQ5q8WS5fL/6MPWu5pMlRcvgmeY2MxPGG/itgBZfl3v1XZitq1XdkM2mixeHRKBxu8wqVkwFPKyGesKrmSSPOPcylM/+O+lHAjb3HuHMyBFKaAzZrnPq1xpDWSteGVk8c/tsyC1qieqhEX7hQBYyoT30PggjcbtF/6HdHczCUFUX0MPazeupxEOFqSARx7Tq5IsELIa3mK5JOKJ1fsboR8IFZNu+UzPyzVq0sbqDiuYAxhdOX4bT2Xmoued3Wl/wexBX/D1ZkcfB2L2X3TnqVM4GSgwQ/QfbY/T76Codsu6mD4mNfBF+N436OrVIiY66PhcrbGqW0BPtRgHu+3/5T4FoFnXTiHD+datY0YvueS9cns5/uuPfse/HCPrgYHda3zIDesEzA0Dqd+IVC0E7RtJnJNc8gWrcy7wYm8hrTvvqexEwu2jrDexDEx17K1yTi5oJd9PzpvmsabKtlUHz0pVHYFaHKyNcrTif+4Yvg9Hz9ctxTVWrWYB/H29tzu/3drXOY29AG+rMfN/pzw0QLxIvHGKbVa5bDb49Dv8V9OsOYMAdZctsWEL8sxmkeSROajGPY4HTgjp9jpKP7ofn9ktatsNwNwPZScWmj5ysMzNgLpW31o7lWn3Cii0+a1RCFpKY74P1ncFH2mUZJjLc1NHka/0Zp2kcd6rsrrwF74wochVS8XvgjmMSTE2O3Ak77YP7idYNB4z6LCJfZAi4znh4zz1rcJktzY3okQv7ol+hhn0uGW1d2K74iusxYtDyISf9N6Nu9NR4fPES4PSuybO4H7EzpAvRMY3dbMxY+PoPmsmntMIANaMvxRMyY4CXerpoXhYDnqDOrGrwiI+RelClrVT2WBuiT+bBgJwXfEF68e+EvmOSCGYOSdSu6Y5ZOTk/mqP/MVKju2H/DyAXbOrVqcfrFMymlJ3MkX7bcHahd/5zs9LyblaEJCnyh7LYBNMQxLTEgd3CRmi0SN/0Td2GR7CljoXEkPgs857MMjx3S3b6uwkDGpCN/NKiBzFcdyqthQCNcC/fWecZyIHX0f553PoZ5/AI
+      function calculateOffset3() {
+        const cartographic = Cesium.Cartographic.fromCartesian(
+          entity._position._value
+        );
+        const surface = Cesium.Cartesian3.fromRadians(
+          cartographic.longitude,
+          cartographic.latitude,
+          0.0
+        );
+        var newHpos = Cesium.Matrix4.multiplyByPoint(
+          Cesium.Transforms.eastNorthUpToFixedFrame(surface),
+          new Cesium.Cartesian3(0, 0, height),
+          new Cesium.Cartesian3()
+        );
+        entity.position.setValue(newHpos);
+      }
+    </script>
+  </body>
 </html>

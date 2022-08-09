@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>离线地形</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="cesiumContainer"></div>
+    <script>
+      //
+
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+        }),
+        terrainProvider: new Cesium.CesiumTerrainProvider({
+          url: "http://data.marsgis.cn/terrain/",
+          //url: "./qd"
+        }),
+
+        // terrainProvider: Cesium.createWorldTerrain({
+        //   requestVertexNormals: true, //Needed to visualize slope
+        // }),
+      });
+
+      var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+        url: "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "cta",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+      });
+
+      viewer.imageryLayers.addImageryProvider(imageryProvider2);
+
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(
+          114.292738,
+          35.710796,
+          200.0
+        ),
+        orientation: {
+          heading: 5.879396799354463,
+          pitch: -0.32149033016633055,
+          roll: 6.281861038176574,
+        },
+      });
+      var positions = [
+        Cesium.Cartographic.fromDegrees(114.292738, 35.710796, 0),
+      ];
+
+      viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(114.292738, 35.710796),
+        point: {
+          pixelSize: 10,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+          color: Cesium.Color.RED,
+        },
+      });
+
+      Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, positions).then(
+        function (cartographics) {
+          //sampledCartesians:<Array.<Cartographic>>
+          var heights = [];
+          for (var i = 0, len = cartographics.length; i < len; i++) {
+            heights.push(cartographics[i].height);
+          }
+          console.log(heights);
+        }
+      );
+    </script>
+  </body>
+</html>

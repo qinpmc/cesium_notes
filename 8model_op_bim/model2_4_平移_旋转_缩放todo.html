@@ -42,21 +42,16 @@
       <button onclick="addRoll(0.1)">增加Roll</button>
       <button onclick="addRoll(-0.1)">减小Roll</button>
       高度：<input type="range" max="200" min="-200" step="20" id="heightEle" />
-      经度：<input
+      经度：<input type="range" max="500" min="-500" step="50" id="lonEle" />
+      纬度：<input type="range" max="500" min="-500" step="50" id="latEle" />
+      缩放：<input
         type="range"
-        max="0.0001"
-        min="-0.0001"
-        step="0.00005"
-        id="lonEle"
+        max="1.5"
+        min="0.5"
+        step="0.1"
+        value="1"
+        id="scaleEle"
       />
-      纬度：<input
-        type="range"
-        max="0.0001"
-        min="-0.0001"
-        step="0.00005"
-        id="latEle"
-      />
-      缩放：<input type="range" max="5" min="1" step="1" id="scaleEle" />
     </div>
     <div id="cesiumContainer"></div>
     <script>
@@ -164,6 +159,8 @@
           },
         });
 
+        model._originModelMatrix = modelMatrix;
+
         model.readyPromise
           .then(function (model) {
             // Play and loop all animations at half-speed
@@ -217,26 +214,63 @@
           //   model._offsetZ,
           //   origin
           // );
-          translateModel(model);
+          model._translateMatrix = translateModel(model);
+          model.modelMatrix = model._translateMatrix;
         });
 
       document.getElementById("lonEle").addEventListener("change", function () {
         var lon = parseFloat(this.value);
         model._offsetX = lon;
-        translateModel(model);
+        model._translateMatrix = translateModel(model);
       });
 
       document.getElementById("latEle").addEventListener("change", function () {
         var lon = parseFloat(this.value);
         model._offsetY = lon;
-        translateModel(model);
+        model._translateMatrix = translateModel(model);
       });
       document
         .getElementById("scaleEle")
         .addEventListener("change", function () {
           var scale = parseFloat(this.value);
           // model.scale = scale; //只能在添加模型矩阵前有效
-          scaleModel(scale);
+          // model._scaleMatrix = scaleModel(scale);
+          // var mat41 = Cesium.Matrix4.multiply(
+          //   model._originModelMatrix,
+          //   model._scaleMatrix,
+          //   new Cesium.Matrix4()
+          // );
+          // var mat42 = Cesium.Matrix4.multiply(
+          //   model._translateMatrix,
+          //   mat41,
+          //   new Cesium.Matrix4()
+          // );
+
+          var scaleMatrix = Cesium.Matrix4.fromScale(
+            new Cesium.Cartesian3(scale, scale, scale),
+            new Cesium.Matrix4()
+          );
+
+          var transMatrix4 = Cesium.Matrix4.fromTranslation(
+            new Cesium.Cartesian3(
+              model._offsetX,
+              model._offsetY,
+              model._offsetZ
+            )
+          );
+
+          var mat41 = Cesium.Matrix4.multiply(
+            model._originModelMatrix,
+            scaleMatrix,
+            new Cesium.Matrix4()
+          );
+          var mat42 = Cesium.Matrix4.multiply(
+            transMatrix4,
+            mat41,
+            new Cesium.Matrix4()
+          );
+
+          model.modelMatrix = mat42;
         });
 
       function scaleModel(scale) {
@@ -244,33 +278,35 @@
           new Cesium.Cartesian3(scale, scale, scale),
           new Cesium.Matrix4()
         );
-        model.modelMatrix = Cesium.Matrix4.multiply(
-          model.modelMatrix,
+        return Cesium.Matrix4.multiply(
+          model._originModelMatrix,
           scaleMatrix,
-          model.modelMatrix
+          new Cesium.Matrix4()
         );
       }
 
       function translateModel(model) {
-        var offset = Cesium.Cartesian3.fromDegrees(
-          longitude + model._offsetX,
-          latitude + model._offsetY,
-          height + model._offsetZ
+        // var offset = Cesium.Cartesian3.fromDegrees(
+        //   longitude + model._offsetX,
+        //   latitude + model._offsetY,
+        //   height + model._offsetZ
+        // );
+
+        // var translation = Cesium.Cartesian3.subtract(
+        //   offset,
+        //   origin,
+        //   new Cesium.Cartesian3()
+        // );
+        // var transMatrix4 = Cesium.Matrix4.fromTranslation(translation);
+
+        var transMatrix4 = Cesium.Matrix4.fromTranslation(
+          new Cesium.Cartesian3(model._offsetX, model._offsetY, model._offsetZ)
         );
 
-        var translation = Cesium.Cartesian3.subtract(
-          offset,
-          origin,
-          new Cesium.Cartesian3()
-        );
-        var transMatrix4 = Cesium.Matrix4.fromTranslation(translation);
-        // const translation = Cesium.Matrix4.fromTranslation(
-        //   new Cesium.Cartesian3(model._offsetX, model._offsetY, model._offsetZ)
-        // );
-        Cesium.Matrix4.multiply(
-          model.modelMatrix,
+        return Cesium.Matrix4.multiply(
+          model._originModelMatrix, // model.modelMatrix, //无法连续更改
           transMatrix4,
-          model.modelMatrix
+          new Cesium.Matrix4()
         );
       }
 
