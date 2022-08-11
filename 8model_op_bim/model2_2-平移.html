@@ -83,8 +83,8 @@
 
       var model;
       var heading = 0.0;
-      var pitch = Cesium.Math.toRadians(0.0); // 10.0
-      var roll = Cesium.Math.toRadians(0.0); // -20.0
+      var pitch = 0; // 10.0
+      var roll = 0; // -20.0
 
       var longitude = -123.0744619;
       var latitude = 44.0503706;
@@ -103,7 +103,7 @@
         heading = Cesium.defaultValue(heading, 0.0);
         pitch = Cesium.defaultValue(pitch, 0.0);
         roll = Cesium.defaultValue(roll, 0.0);
-        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+        var hpr = Cesium.HeadingPitchRoll.fromDegrees(heading, pitch, roll);
 
         var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
           origin,
@@ -118,6 +118,15 @@
             minimumPixelSize: 128,
           })
         );
+
+        // //模型的位置(无姿态)，(https://blog.csdn.net/xtfge0915/article/details/104653730)
+        // const matrix = Cesium.Transforms.eastNorthUpToFixedFrame(origin);
+        // model = viewer.scene.primitives.add(
+        //   Cesium.Model.fromGltf({
+        //     url: url,
+        //     modelMatrix: matrix,
+        //   })
+        // );
 
         model.readyPromise
           .then(function (model) {
@@ -156,6 +165,47 @@
           width: 10.0,
         })
       );
+
+      //model 偏移量
+      model._offsetX = 0;
+      model._offsetY = 0;
+      model._offsetZ = 0;
+
+      document
+        .getElementById("heightEle")
+        .addEventListener("change", function () {
+          var height = parseFloat(this.value);
+          model._offsetZ = height;
+
+          model.modelMatrix = calculateOffset(
+            model._offsetX,
+            model._offsetY,
+            model._offsetZ,
+            origin
+          );
+        });
+
+      document.getElementById("lonEle").addEventListener("change", function () {
+        var lon = parseFloat(this.value);
+        model._offsetX = lon;
+        model.modelMatrix = calculateOffset(
+          model._offsetX,
+          model._offsetY,
+          model._offsetZ,
+          origin
+        );
+      });
+
+      document.getElementById("latEle").addEventListener("change", function () {
+        var lon = parseFloat(this.value);
+        model._offsetY = lon;
+        model.modelMatrix = calculateOffset(
+          model._offsetX,
+          model._offsetY,
+          model._offsetZ,
+          origin
+        );
+      });
 
       function calculateOffset(offsetX, offsetY, offsetZ, origin) {
         //var center = Cesium.Cartographic.fromCartesian(cartesianCenter);
@@ -216,47 +266,6 @@
         // );
       }
 
-      //model 偏移量
-      model._offsetX = 0;
-      model._offsetY = 0;
-      model._offsetZ = 0;
-
-      document
-        .getElementById("heightEle")
-        .addEventListener("change", function () {
-          var height = parseFloat(this.value);
-          model._offsetZ = height;
-
-          model.modelMatrix = calculateOffset(
-            model._offsetX,
-            model._offsetY,
-            model._offsetZ,
-            origin
-          );
-        });
-
-      document.getElementById("lonEle").addEventListener("change", function () {
-        var lon = parseFloat(this.value);
-        model._offsetX = lon;
-        model.modelMatrix = calculateOffset(
-          model._offsetX,
-          model._offsetY,
-          model._offsetZ,
-          origin
-        );
-      });
-
-      document.getElementById("latEle").addEventListener("change", function () {
-        var lon = parseFloat(this.value);
-        model._offsetY = lon;
-        model.modelMatrix = calculateOffset(
-          model._offsetX,
-          model._offsetY,
-          model._offsetZ,
-          origin
-        );
-      });
-
       /////////////////////////////////////////////////////////////////////////////////////////
       //model 偏移量
       model._offsetX_inMeter = 0;
@@ -316,6 +325,13 @@
           originMatrix
         );
 
+        // return Cesium.Matrix4.multiply(
+        //   transMatrix4,
+        //   originMatrix,
+        //   new Cesium.Matrix4()
+        // );
+
+        // 正确？
         // https://blog.csdn.net/xtfge0915/article/details/104653730
         //const translation = Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(offsetX, offsetY, offsetZ))
         //return Cesium.Matrix4.multiply(model.modelMatrix, translation, model.modelMatrix)

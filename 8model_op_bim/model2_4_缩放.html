@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>模型</title>
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+    <link
+      rel="stylesheet"
+      href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css"
+    />
+    <style>
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .cesium-viewer-bottom /* logo信息 */ {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      缩放：<input
+        type="range"
+        max="2"
+        min="0.5"
+        step="0.1"
+        value="1"
+        id="scaleEle"
+      />
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        shouldAnimate: true, // 让
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+        }),
+      });
+
+      var cvaLayer = new Cesium.ImageryLayer(
+        new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/cva_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cva",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+        })
+      );
+
+      console.log(viewer.scene.imageryLayers === viewer.imageryLayers); // true
+      var layers = viewer.imageryLayers;
+      layers.add(cvaLayer);
+      /////////////////////////////////////////////////////////////////////////////////////////////
+
+      var model;
+      var heading = 0.0;
+      var pitch = Cesium.Math.toRadians(0);
+      var roll = Cesium.Math.toRadians(0);
+
+      var longitude = -123.0744619;
+      var latitude = 44.0503706;
+      var height = 5000;
+      var origin = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);
+
+      createModel(
+        "../sampleData/model/Cesium_Air.glb",
+        origin,
+        heading,
+        pitch,
+        roll
+      );
+
+      function createModel(url, origin, heading, pitch, roll) {
+        height = Cesium.defaultValue(height, 0.0);
+        heading = Cesium.defaultValue(heading, 0.0);
+        pitch = Cesium.defaultValue(pitch, 0.0);
+        roll = Cesium.defaultValue(roll, 0.0);
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+          origin,
+          hpr
+        );
+
+        viewer.scene.primitives.removeAll(); // Remove previous model
+        model = viewer.scene.primitives.add(
+          Cesium.Model.fromGltf({
+            url: url,
+            scale: 5,
+            modelMatrix: modelMatrix,
+            minimumPixelSize: 128,
+          })
+        );
+
+        viewer.camera.flyToBoundingSphere(
+          new Cesium.BoundingSphere(origin, 50),
+          {
+            offset: new Cesium.HeadingPitchRange(
+              Cesium.Math.toRadians(0.01),
+              Cesium.Math.toRadians(-18.25),
+              1000
+            ),
+          }
+        );
+
+        // viewer.camera.flyTo({
+        //   destination: origin,
+        //   orientation: {
+        //     heading: Cesium.Math.toRadians(0.01),
+        //     pitch: Cesium.Math.toRadians(-18.25),
+        //     roll: 0.01,
+        //   },
+        // });
+
+        model._originModelMatrix = modelMatrix;
+
+        model.readyPromise
+          .then(function (model) {
+            // Play and loop all animations at half-speed
+            model.activeAnimations.addAll({
+              multiplier: 2.5,
+              loop: Cesium.ModelAnimationLoop.REPEAT,
+            });
+
+            // 局部坐标系 -----调试看效果
+            // 东北  红色--x  绿色 --y  蓝色 ---z
+            var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+            var hprRollZero = new Cesium.HeadingPitchRoll();
+            var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+              origin,
+              hprRollZero,
+              Cesium.Ellipsoid.WGS84,
+              enUpConverter
+            );
+
+            viewer.scene.primitives.add(
+              new Cesium.DebugModelMatrixPrimitive({
+                modelMatrix: modelMatrix,
+                length: 3000.0,
+                width: 10.0,
+              })
+            );
+          })
+          .otherwise(function (error) {
+            window.alert(error);
+          });
+      }
+
+      //model
+      model._scale = 1;
+      document
+        .getElementById("scaleEle")
+        .addEventListener("change", function () {
+          var scale = parseFloat(this.value);
+          // model.scale = scale; //只能在添加模型矩阵前有效
+          var scaleMatrix = Cesium.Matrix4.fromScale(
+            new Cesium.Cartesian3(scale, scale, scale),
+            new Cesium.Matrix4()
+          );
+          var res = Cesium.Matrix4.multiply(
+            model._originModelMatrix,
+            scaleMatrix,
+            new Cesium.Matrix4()
+          );
+          model.modelMatrix = res;
+        });
+    </script>
+  </body>
+</html>

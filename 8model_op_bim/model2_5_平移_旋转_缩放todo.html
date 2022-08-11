@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>模型</title>
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+    <link
+      rel="stylesheet"
+      href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css"
+    />
+    <style>
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .cesium-viewer-bottom /* logo信息 */ {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <button onclick="addHeading(4)">增加heading</button>
+      <button onclick="addHeading(-4)">减小heading</button>
+      <button onclick="addPitch(4)">增加Pitch</button>
+      <button onclick="addPitch(-4)">减小Pitch</button>
+      <button onclick="addRoll(4)">增加Roll</button>
+      <button onclick="addRoll(-4)">减小Roll</button>
+      高度：<input type="range" max="200" min="-200" step="20" id="heightEle" />
+      经度：<input type="range" max="500" min="-500" step="50" id="lonEle" />
+      纬度：<input type="range" max="500" min="-500" step="50" id="latEle" />
+      缩放：<input
+        type="range"
+        max="1.5"
+        min="0.5"
+        step="0.1"
+        value="1"
+        id="scaleEle"
+      />
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      //4326坐标系从1开始
+      var tileMatrixLabels = [];
+      for (var i = 1; i < 18; i++) {
+        tileMatrixLabels.push("" + i);
+      }
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        shouldAnimate: true, // 让
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+      });
+
+      var ciaLayer = new Cesium.ImageryLayer(
+        new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/cia_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cia",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+        {
+          show: false,
+        }
+      );
+
+      console.log(viewer.scene.imageryLayers === viewer.imageryLayers); // true
+      var layers = viewer.imageryLayers;
+      layers.add(ciaLayer);
+      /////////////////////////////////////////////////////////////////////////////////////////////
+
+      var model;
+      var heading = 0.0;
+      var pitch = Cesium.Math.toRadians(0);
+      var roll = Cesium.Math.toRadians(0);
+
+      var longitude = -123.0744619;
+      var latitude = 44.0503706;
+      var height = 5000;
+      var origin = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);
+
+      createModel(
+        "../sampleData/model/Cesium_Air.glb",
+        origin,
+        heading,
+        pitch,
+        roll
+      );
+
+      function createModel(url, origin, heading, pitch, roll) {
+        height = Cesium.defaultValue(height, 0.0);
+        heading = Cesium.defaultValue(heading, 0.0);
+        pitch = Cesium.defaultValue(pitch, 0.0);
+        roll = Cesium.defaultValue(roll, 0.0);
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+          origin,
+          hpr
+        );
+
+        viewer.scene.primitives.removeAll(); // Remove previous model
+        model = viewer.scene.primitives.add(
+          Cesium.Model.fromGltf({
+            url: url,
+            modelMatrix: modelMatrix,
+            minimumPixelSize: 128,
+          })
+        );
+
+        viewer.camera.flyTo({
+          destination: origin,
+          orientation: {
+            heading: Cesium.Math.toRadians(0.01),
+            pitch: Cesium.Math.toRadians(-18.25),
+            roll: 0.01,
+          },
+        });
+
+        model._originModelMatrix = modelMatrix;
+
+        model.readyPromise
+          .then(function (model) {
+            // Play and loop all animations at half-speed
+            model.activeAnimations.addAll({
+              multiplier: 2.5,
+              loop: Cesium.ModelAnimationLoop.REPEAT,
+            });
+
+            // 局部坐标系 -----调试看效果
+            // 东北  红色--x  绿色 --y  蓝色 ---z
+            var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+            var hprRollZero = new Cesium.HeadingPitchRoll();
+            var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+              origin,
+              hprRollZero,
+              Cesium.Ellipsoid.WGS84,
+              enUpConverter
+            );
+
+            viewer.scene.primitives.add(
+              new Cesium.DebugModelMatrixPrimitive({
+                modelMatrix: modelMatrix,
+                length: 3000.0,
+                width: 10.0,
+              })
+            );
+          })
+          .otherwise(function (error) {
+            window.alert(error);
+          });
+      }
+
+      //model 偏移量 旋转量 缩放量
+      model._offsetX = 0;
+      model._offsetY = 0;
+      model._offsetZ = 0;
+      model._heading = 0;
+      model._pitch = 0;
+      model._roll = 0;
+      model._$scale = 1;
+
+      document
+        .getElementById("heightEle")
+        .addEventListener("change", function () {
+          var height = parseFloat(this.value);
+          model._offsetZ = height;
+          translateRotateScaleModel();
+        });
+
+      document.getElementById("lonEle").addEventListener("change", function () {
+        var lon = parseFloat(this.value);
+        model._offsetX = lon;
+        translateRotateScaleModel();
+      });
+
+      document.getElementById("latEle").addEventListener("change", function () {
+        var lat = parseFloat(this.value);
+        model._offsetY = lat;
+        translateRotateScaleModel();
+      });
+
+      document
+        .getElementById("scaleEle")
+        .addEventListener("change", function () {
+          var scale = parseFloat(this.value);
+          model._$scale = scale;
+          translateRotateScaleModel();
+        });
+
+      window.addHeading = function (headingOffset) {
+        heading += headingOffset;
+        model._heading = heading;
+        translateRotateScaleModel();
+      };
+
+      window.addPitch = function (pitchOffset) {
+        pitch += pitchOffset;
+        model._pitch = pitch;
+        translateRotateScaleModel();
+      };
+
+      window.addRoll = function (rollOffset) {
+        roll += rollOffset;
+        model._roll = roll;
+        translateRotateScaleModel();
+      };
+
+      function calculateTRS() {
+        var headingPitchRoll = Cesium.HeadingPitchRoll.fromDegrees(
+          model._heading,
+          model._pitch, //
+          model._roll, //
+          new Cesium.HeadingPitchRoll()
+        );
+
+        var quaternion = Cesium.Quaternion.fromHeadingPitchRoll(
+          headingPitchRoll,
+          new Cesium.Quaternion()
+        );
+
+        var translateCartesian3 = new Cesium.Cartesian3(
+          model._offsetX,
+          model._offsetY,
+          model._offsetZ
+        );
+        var scaleCartesian3 = new Cesium.Cartesian3(
+          model._$scale,
+          model._$scale,
+          model._$scale
+        );
+
+        var trs = new Cesium.TranslationRotationScale(
+          translateCartesian3,
+          quaternion,
+          scaleCartesian3
+        );
+        var trsMatrix4 = Cesium.Matrix4.fromTranslationRotationScale(
+          trs,
+          new Cesium.Matrix4()
+        );
+        return trsMatrix4;
+      }
+
+      function translateRotateScaleModel() {
+        //const trsMatrix4 = calculateTRS(); //第一种计算trs方案
+        //onst trsMatrix4 = testMatrix(); //第二种计算trs方案
+        const trsMatrix4 = testMatrix2(); //第三种计算trs方案
+
+        var res = Cesium.Matrix4.multiply(
+          model._originModelMatrix,
+          trsMatrix4,
+          new Cesium.Matrix4()
+        );
+        model.modelMatrix = res;
+      }
+
+      function testMatrix() {
+        // model._$scale = 1.5;
+        // model._offsetX = 0;
+        // model._offsetY = 0;
+        // model._offsetZ = 120;
+        // model._heading = 0;
+        // model._pitch = 0;
+        // model._roll = 0;
+
+        //平移矩阵
+        var transMatrix4 = Cesium.Matrix4.fromTranslation(
+          new Cesium.Cartesian3(model._offsetX, model._offsetY, model._offsetZ)
+        );
+        // 旋转矩阵
+        //Cesium.Matrix4.fromRotationTranslation(rotation, translation, result)
+        var rotationMatrix4 =
+          Cesium.Matrix4.fromTranslationQuaternionRotationScale(
+            new Cesium.Cartesian3(0, 0, 0), //平移为0
+            Cesium.Quaternion.fromHeadingPitchRoll(
+              Cesium.HeadingPitchRoll.fromDegrees(
+                model._heading,
+                model._pitch, //
+                model._roll, //
+                new Cesium.HeadingPitchRoll()
+              ),
+              new Cesium.Quaternion()
+            ),
+            new Cesium.Cartesian3(1, 1, 1), //缩放为1
+            new Cesium.Matrix4()
+          );
+
+        //缩放矩阵
+        var scaleMatrix = Cesium.Matrix4.fromScale(
+          new Cesium.Cartesian3(model._$scale, model._$scale, model._$scale),
+          new Cesium.Matrix4()
+        );
+
+        var tempMatrix1 = Cesium.Matrix4.multiply(
+          rotationMatrix4,
+          scaleMatrix,
+          new Cesium.Matrix4()
+        );
+        var tempMatrix2 = Cesium.Matrix4.multiply(
+          transMatrix4,
+          tempMatrix1,
+          new Cesium.Matrix4()
+        );
+        console.log(tempMatrix2);
+
+        const trsMatrix4 = calculateTRS();
+        console.log(trsMatrix4);
+        return tempMatrix2;
+      }
+      //testMatrix();
+
+      ////////////////////////
+      function testMatrix2() {
+        // model._$scale = 1.5;
+        // model._offsetX = 0;
+        // model._offsetY = 0;
+        // model._offsetZ = 120;
+        // model._heading = 0;
+        // model._pitch = 0;
+        // model._roll = 0;
+
+        //平移矩阵
+        var transMatrix4 = Cesium.Matrix4.fromTranslation(
+          new Cesium.Cartesian3(model._offsetX, model._offsetY, model._offsetZ)
+        );
+        // 旋转矩阵
+        //Cesium.Matrix4.fromRotationTranslation(rotation, translation, result)
+        var roatationMatrix3 = Cesium.Matrix3.fromHeadingPitchRoll(
+          Cesium.HeadingPitchRoll.fromDegrees(
+            model._heading,
+            model._pitch, //
+            model._roll, //
+            new Cesium.HeadingPitchRoll()
+          ),
+          new Cesium.Matrix3()
+        );
+
+        var rotationMatrix4 = Cesium.Matrix4.fromRotationTranslation(
+          roatationMatrix3,
+          Cesium.Cartesian3.ZERO,
+          new Cesium.Matrix4()
+        );
+
+        //缩放矩阵
+        var scaleMatrix = Cesium.Matrix4.fromScale(
+          new Cesium.Cartesian3(model._$scale, model._$scale, model._$scale),
+          new Cesium.Matrix4()
+        );
+
+        var tempMatrix1 = Cesium.Matrix4.multiply(
+          rotationMatrix4,
+          scaleMatrix,
+          new Cesium.Matrix4()
+        );
+        var tempMatrix2 = Cesium.Matrix4.multiply(
+          transMatrix4,
+          tempMatrix1,
+          new Cesium.Matrix4()
+        );
+        console.log(tempMatrix2);
+
+        const trsMatrix4 = calculateTRS();
+        console.log(trsMatrix4);
+
+        return tempMatrix2;
+      }
+      testMatrix2();
+    </script>
+  </body>
+</html>
