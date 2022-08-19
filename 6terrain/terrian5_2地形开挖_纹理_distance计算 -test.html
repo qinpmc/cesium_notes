@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>开挖地形</title>
+  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+  <script src="../lib/turf5.min.js"></script>
+
+  <link href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" rel="stylesheet" />
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #000000;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    (function () {
+      /**
+       * @class
+       * @classdesc
+       * 三维向量类
+       * @alias g2.sfs.Vector3
+       * @param {Object} [options]
+       * @param {Number} [options.x = 0] 三维向量在x轴投影的长度
+       * @param {Number} [options.y = 0] 三维向量在y轴投影的长度
+       * @param {Number} [options.z = 0] 三维向量在z轴投影的长度
+       * @returns {g2.sfs.Vector3} 返回三维向量类
+       * @example  <caption>下面的代码片段主要是创建一个三维向量对象</caption>
+       * var vector3 = new g2.sfs.Vector3({
+       *     x: 1,
+       *     y: 1,
+       *     z: 1
+       * })
+       */
+      var vector3 = function (options) {
+        var opts = options || {};
+        /**
+         * 三维向量在x轴投影的长度,默认初始化为0
+         * @type {Number}
+         * @default 0
+         */
+        this.x = opts.x === undefined ? 0 : opts.x;
+        /**
+         * 三维向量在y轴投影的长度,默认初始化为0
+         * @type {Number}
+         * @default 0
+         */
+        this.y = opts.y === undefined ? 0 : opts.y;
+        /**
+         * 三维向量在z轴投影的长度,默认初始化为0
+         * @type {Number}
+         * @default 0
+         */
+        this.z = opts.z === undefined ? 0 : opts.z;
+      };
+      /**
+       * @ignore
+       * 转换为单位向量
+       */
+      vector3.prototype.normalize = function (result) {
+        /*var len = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
+          this.x = this.x / len;
+          this.y = this.y / len;
+          this.z = this.z / len;*/
+        var distance = Math.sqrt(
+          Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2)
+        );
+        result = result || new vector3();
+        result.x = this.x / distance;
+        result.y = this.y / distance;
+        result.z = this.z / distance;
+        return result;
+      };
+
+      /**
+       * 根据两点生成向量
+       * @param start {g2.sfs.Point} 起始点位
+       * @param end {g2.sfs.Point} 终止点位
+       * @returns {g2.sfs.Vector3}
+       */
+      vector3.fromPoint = function (start, end) {
+        return new vector3({
+          x: end.x - start.x,
+          y: end.y - start.y,
+          z: end.z - start.z,
+        });
+      };
+
+      /**
+       * 对向量取反
+       * @ignore
+       * @param {g2.sfs.Vector3} matrix 三维向量
+       * @returns {g2.sfs.Matrix4} 返回=取反后的向量
+       */
+      vector3.negate = function (vector) {
+        if (!vector) return new vector3();
+        var x = -vector.x;
+        var y = -vector.y;
+        var z = -vector.z;
+        return new vector3({ x: x, y: y, z: z });
+      };
+      /**
+       * 计算两个向量的和
+       * @param {g2.sfs.Vector3} left 第一个向量
+       * @param {g2.sfs.Vector3} right 第二个向量
+       * @returns {g2.sfs.Vector3} 返回两个向量的求和结果
+       */
+      vector3.add = function (left, right) {
+        if (!left) left = new vector3();
+        if (!right) right = new vector3();
+        var x = left.x + right.x;
+        var y = left.y + right.y;
+        var z = left.z + right.z;
+        return new vector3({ x: x, y: y, z: z });
+      };
+      /**
+       * 计算两个向量的差
+       * @param {g2.sfs.Vector3} left 第一个向量
+       * @param {g2.sfs.Vector3} right 第二个向量
+       * @returns {g2.sfs.Vector3} 返回两个向量的求差结果
+       */
+      vector3.subtract = function (left, right) {
+        right = vector3.negate(right);
+        return vector3.add(left, right);
+      };
+      /**
+       * 计算两个向量的点积
+       *
+       * @param {g2.sfs.Vector3} left 第一个向量
+       * @param {g2.sfs.Vector3} right 第二个向量
+       * @returns {Number} 返回两个向量的点积结果
+       */
+      vector3.dot = function (left, right) {
+        if (!left || !right) return 0;
+        return left.x * right.x + left.y * right.y + left.z * right.z;
+      };
+      /**
+       * 计算两个向量的叉积
+       *
+       * @param {g2.sfs.Vector3} left 第一个向量
+       * @param {g2.sfs.Vector3} right 第二个向量
+       * @returns {g2.sfs.Vector3} 返回两个向量的叉积结果
+       */
+      vector3.cross = function (left, right) {
+        if (!left || !right) return new vector3();
+        var leftX = left.x;
+        var leftY = left.y;
+        var leftZ = left.z;
+        var rightX = right.x;
+        var rightY = right.y;
+        var rightZ = right.z;
+        var x = leftY * rightZ - leftZ * rightY;
+        var y = leftZ * rightX - leftX * rightZ;
+        var z = leftX * rightY - leftY * rightX;
+        return new vector3({ x: x, y: y, z: z });
+      };
+      /**
+       * 计算两个向量的夹角
+       *
+       * @param {g2.sfs.Vector3} left 第一个向量
+       * @param {g2.sfs.Vector3} right 第二个向量
+       * @returns {Number} 返回两个向量的夹角，单位：弧度
+       */
+      vector3.angleBetween = function (left, right) {
+        var normal1 = left.normalize();
+        var normal2 = right.normalize();
+        var cosine = vector3.dot(normal1, normal2);
+        var sine = vector3.magnitude(vector3.cross(normal1, normal2));
+        return Math.atan2(sine, cosine);
+      };
+      /**
+       * 计算向量的模，即长度
+       * @param {g2.sfs.Vector3} vector 向量
+       * @returns {Number} 返回向量的模
+       */
+      vector3.magnitude = function (vector) {
+        if (!vector) return 0;
+        return Math.sqrt(
+          Math.pow(vector.x, 2) +
+          Math.pow(vector.y, 2) +
+          Math.pow(vector.z, 2)
+        );
+      };
+
+      vector3.applyMatrix3 = function (vector, matrix) {
+        var x = vector.x,
+          y = vector.y,
+          z = vector.z;
+        vector.x = matrix[0] * x + matrix[3] * y + matrix[6] * z;
+        vector.y = matrix[1] * x + matrix[4] * y + matrix[7] * z;
+        vector.z = matrix[2] * x + matrix[5] * y + matrix[8] * z;
+        return vector;
+      };
+
+      vector3.applyMatrix4 = function (vector, matrix) {
+        var x = vector.x,
+          y = vector.y,
+          z = vector.z;
+        vector.x = matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12];
+        vector.y = matrix[1] * x + matrix[5] * y + matrix[9] * z + matrix[13];
+        vector.z =
+          matrix[2] * x + matrix[6] * y + matrix[10] * z + matrix[14];
+        return vector;
+      };
+
+      window.Vector3 = vector3;
+    })();
+
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        url:
+          "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "img",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+      }),
+      terrainProvider: Cesium.createWorldTerrain({
+        requestVertexNormals: true,
+        requestWaterMask: true,
+      }),
+    });
+
+    viewer.scene.globe.depthTestAgainstTerrain = true; //添加后图片被遮挡
+
+    //构造开挖点
+
+
+
+    const coordinates = [[114.143958, 35.847147], [114.190661, 35.884209], [114.20165, 35.848519], [114.204398, 35.804593], [114.233244, 35.771649], [114.290936, 35.764785], [114.465388, 35.788121], [114.521706, 35.76753], [114.518959, 35.737331], [114.472256, 35.73184], [114.373354, 35.724977], [114.296431, 35.712623], [114.278574, 35.653597], [114.295057, 35.605553], [114.376102, 35.623398], [114.461267, 35.653597], [114.476377, 35.613789], [114.433794, 35.586335], [114.204398, 35.576726], [114.132969, 35.628888], [114.131595, 35.73184], [114.143958, 35.847147]]
+    const points = coordinates;
+
+
+
+
+    // 顺时针
+    //var points = [p0, p3, p2, p1];
+
+    var midPoint,
+      planes = [],
+      cartesian,
+      cartesian2;
+
+    function converPoints2Turfformat(points) {
+      var temp = [];
+      for (var i = 0; i < points.length; i++) {
+        temp.push([points[i].x, points[i].y]);
+        if (i == points.length - 1) {
+          temp.push([points[0].x, points[0].y]);
+        }
+      }
+      return temp;
+    }
+
+    //生成开挖plane
+    for (var i = 0; i < points.length; i++) {
+      var nextIndex = (i + 1) % points.length;
+      cartesian = convertPoint2Cartesian(points[i]);
+      cartesian2 = convertPoint2Cartesian(points[nextIndex]);
+      midPoint = new Vector3({
+        x: (cartesian.x + cartesian2.x) / 2,
+        y: (cartesian.y + cartesian2.y) / 2,
+        z: (cartesian.z + cartesian2.z) / 2,
+      });
+      var up = midPoint.normalize();
+      var right = new Vector3({
+        x: cartesian2.x - midPoint.x,
+        y: cartesian2.y - midPoint.y,
+        z: cartesian2.z - midPoint.z,
+      });
+      right = right.normalize(right);
+      var normal = Vector3.cross(right, up);
+      normal = normal.normalize(normal);
+
+      //判断开挖的面是顺时针还是逆时针
+      var turfPoints = converPoints2Turfformat(points);
+      if (isClockwise(turfPoints)) {
+        normal = Vector3.negate(normal);
+      }
+
+      var distance = getPointDistance(midPoint, normal);
+
+      var plane = new Cesium.ClippingPlane(
+        new Cesium.Cartesian3(normal.x, normal.y, normal.z),
+        distance
+      );
+      planes.push(plane);
+
+      function getPointDistance(point, normal) {
+        var right = new Vector3(point);
+        return Vector3.dot(normal, right);
+      }
+
+      function convertPoint2Cartesian(point) {
+        var cartesian = Cesium.Cartesian3.fromDegrees(
+          point.x,
+          point.y,
+          point.z
+        );
+        return cartesian;
+      }
+
+      function isClockwise(ring) {
+        return turf.booleanClockwise(ring);
+      }
+    }
+
+    console.log(planes);
+
+    viewer.scene.globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
+      planes: planes,
+      edgeWidth: 2.0,
+      edgeColor: Cesium.Color.RED,
+      enabled: true,
+    });
+
+    ////////////////////////////////////////////////////
+    //添加开挖纹理
+    var splitNum = 200;
+    var positions = [];
+    var excavateMinHeight = 9999;
+    var depth = 500;
+    for (var i = 0; i < points.length; ++i) {
+      positions.push(points[i]);
+    }
+
+    var point1, point2;
+    var pointArr = [];
+    for (var i = 0, len = positions.length; i < len; ++i) {
+      point1 = positions[i % len];
+      point2 = positions[(i + 1) % len];
+      if (excavateMinHeight >= point1.z) excavateMinHeight = point1.z;
+      /*   var points = this.globe.lerp(point1, point2, this.splitNum);
+              points.forEach(function (point) {
+                  //pointArr.push(point);
+              })*/
+      var lerpx = (point2.x - point1.x) / splitNum;
+      var lerpy = (point2.y - point1.y) / splitNum;
+      for (var j = 0; j < splitNum; j++) {
+        var x = point1.x + j * lerpx;
+        var y = point1.y + j * lerpy;
+        var point = {
+          spatialReference: 4326,
+          x: x,
+          y: y,
+        };
+
+        var pointCarto = Cesium.Cartographic.fromDegrees(point.x, point.y, 0);
+        pointArr.push(pointCarto);
+      }
+    }
+    pointArr.push(Cesium.Cartographic.fromDegrees(point2.x, point2.y, 0));
+    var bottomAtitude = excavateMinHeight - depth;
+    var minimumHeights = [],
+      maximumHeights = [];
+
+    Cesium.sampleTerrainMostDetailed(
+      viewer.scene.terrainProvider,
+      pointArr
+    ).then(function (updatedPositions) {
+      //构造底面
+      var bottomPolygon = [];
+      for (var i = 0; i < positions.length; i++) {
+        positions[i].z = bottomAtitude;
+        bottomPolygon.push(positions[i].x, positions[i].y, positions[i].z);
+      }
+
+      var updatedCartesians = [];
+      for (var i = 0; i < updatedPositions.length; ++i) {
+        maximumHeights.push(updatedPositions[i].height);
+        minimumHeights.push(bottomAtitude);
+        updatedCartesians.push(
+          Cesium.Cartographic.toCartesian(updatedPositions[i])
+        );
+      }
+
+      //侧面使用红色材质 - 测试
+      // var wall = viewer.entities.add({
+      //   name: "wall",
+      //   wall: {
+      //     positions: updatedCartesians,
+      //     minimumHeights: minimumHeights,
+      //     maximumHeights: maximumHeights,
+      //     //material: Cesium.Color.RED,
+      //     material: new Cesium.Material({
+      //       fabric: {
+      //         type: "Image",
+      //         uniforms: {
+      //           image: "./TerrainClipPlan/excavate_side_min.jpg",
+      //         },
+      //       },
+      //     }),
+      //   },
+      // });
+
+      var wall = new Cesium.WallGeometry({
+        positions: updatedCartesians,
+        maximumHeights: maximumHeights,
+        minimumHeights: minimumHeights,
+      });
+      var geometry = Cesium.WallGeometry.createGeometry(wall);
+      var a = new Cesium.Material({
+        fabric: {
+          type: "Image",
+          uniforms: {
+            image: "./TerrainClipPlan/excavate_side_min.jpg",
+          },
+        },
+      }),
+        n = new Cesium.MaterialAppearance({
+          translucent: !1,
+          flat: !0,
+          material: a,
+        });
+      var wellWall = new Cesium.Primitive({
+        geometryInstances: new Cesium.GeometryInstance({
+          geometry: geometry,
+          attributes: {
+            color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+              Cesium.Color.GREY
+            ),
+          },
+          id: "PitWall",
+        }),
+        appearance: n,
+        asynchronous: !1,
+      });
+      viewer.scene.primitives.add(wellWall);
+
+      //viewer.zoomTo(wall);
+
+      var polygon = new Cesium.PolygonGeometry({
+        polygonHierarchy: new Cesium.PolygonHierarchy(
+          Cesium.Cartesian3.fromDegreesArrayHeights(bottomPolygon)
+        ),
+        extrudedHeight: bottomAtitude,
+      });
+      var geometry2 = Cesium.PolygonGeometry.createGeometry(polygon);
+
+      var i = new Cesium.Material({
+        fabric: {
+          type: "Image",
+          uniforms: {
+            image: "./TerrainClipPlan/excavate_bottom_min.jpg",
+          },
+        },
+      }),
+        a = new Cesium.MaterialAppearance({
+          translucent: !1,
+          flat: !0,
+          material: i,
+        });
+      var bottomSurface = new Cesium.Primitive({
+        geometryInstances: new Cesium.GeometryInstance({
+          geometry: geometry2,
+        }),
+        appearance: a,
+        asynchronous: !1,
+      });
+      viewer.scene.primitives.add(bottomSurface);
+    });
+
+    viewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(
+        97.20928922925265,
+        29.26268123394501,
+        15052
+      ),
+    });
+  </script>
+</body>
+
+</html>
