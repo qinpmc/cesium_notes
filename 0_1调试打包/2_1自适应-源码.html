@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>鼠标</title>
+    <!-- <script src="../lib/cesium/Build/CesiumUnminified/Cesium.js"></script> -->
+    <style>
+      @import url(../lib/cesium1.89/Source/Widgets/widgets.css);
+      /* html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      } */
+      html,
+      body {
+        display: block;
+        margin: 0;
+        overflow: hidden;
+        user-select: none;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+      }
+      #map {
+        position: absolute;
+        z-index: 1;
+        width: 5408px;
+        height: 1638px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+
+    <script type="module">
+      const docWidth = document.documentElement.clientWidth;
+      const docHeight = document.documentElement.clientHeight;
+
+      const mapDom = document.getElementById("map");
+
+      document.getElementById("map").style.width = "50%";
+      document.getElementById("map").style.height = "50%";
+      document.getElementById("map").style.overflow = "hidden";
+      // const widthRatio = docWidth / 5408;
+      // const heightRatio = docHeight / 1638;
+
+      // window.widthRatio = widthRatio;
+      // window.heightRatio = heightRatio;
+
+      // mapDom.style =
+      //   "transform:scale(" +
+      //   widthRatio +
+      //   "," +
+      //   heightRatio +
+      //   ")translate3d(0,0,0);transform-origin:left top;";
+
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      window.CESIUM_BASE_URL = "../lib/cesium1.89/Source/";
+      import * as Cesium from "../lib/cesium1.89/Source/Cesium.js";
+
+      var viewer = new Cesium.Viewer("map", {
+        animation: true, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: true, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+        }),
+      });
+
+      var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+        url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        layer: "cia",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+      });
+
+      viewer.imageryLayers.addImageryProvider(imageryProvider2);
+      viewer._cesiumWidget._creditContainer.style.display = "none"; //去除水印
+
+      viewer.scene.screenSpaceCameraController.enableCollisionDetection = false;
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(
+          114.26698279133865,
+          35.67248475044601,
+          5000.0
+        ),
+        orientation: {
+          heading: Cesium.Math.toRadians(0.0),
+          pitch: Cesium.Math.toRadians(-40.0),
+          roll: 0.0,
+        },
+      });
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      var entity = viewer.entities.add({
+        label: {
+          show: false,
+          showBackground: true,
+          font: "44px monospace",
+          horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+          verticalOrigin: Cesium.VerticalOrigin.TOP,
+          pixelOffset: new Cesium.Cartesian2(0, 0),
+          backgroundColor: Cesium.Color.AQUAMARINE, //背景颜色
+          fillColor: Cesium.Color.BLACK, // 字体颜色，
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
+            10,
+            10000000
+          ),
+        },
+      });
+
+      // Mouse over the globe to see the cartographic position
+
+      viewer.screenSpaceEventHandler.setInputAction(function (movement) {
+        // movement.endPosition 屏幕坐标       movement.startPosition屏幕坐标
+
+        // cartesian   世界坐标系 in world coordinates
+        var cartesian = viewer.camera.pickEllipsoid(
+          movement.endPosition,
+          viewer.scene.globe.ellipsoid
+        );
+        if (cartesian) {
+          //Cesium.Cartographic(longitude, latitude, height) -----A position defined by longitude, latitude, and height. 弧度单位
+
+          var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+          var longitudeString = Cesium.Math.toDegrees(
+            cartographic.longitude
+          ).toFixed(2);
+          var latitudeString = Cesium.Math.toDegrees(
+            cartographic.latitude
+          ).toFixed(2);
+
+          entity.position = cartesian;
+          entity.label.show = true;
+          entity.label.text =
+            "cartesian: " +
+            cartesian.x.toFixed(1) +
+            ", " +
+            cartesian.y.toFixed(1) +
+            ", " +
+            cartesian.z.toFixed(1) +
+            "\nLon: " +
+            ("   " + longitudeString).slice(-7) +
+            "\u00B0" +
+            "\nLat: " +
+            ("   " + latitudeString).slice(-7) +
+            "\u00B0" +
+            "\nscreenX: " +
+            ("   " + movement.endPosition.x) +
+            "\u00B0" +
+            "\nscreenY: " +
+            ("   " + movement.endPosition.y) +
+            "\u00B0";
+        } else {
+          entity.label.show = false;
+        }
+      }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+      viewer.screenSpaceEventHandler.setInputAction(function (movement) {
+        //Cartesian3 --笛卡尔坐标
+        var position = viewer.scene.camera.pickEllipsoid(
+          movement.position,
+          viewer.scene.globe.ellipsoid
+        );
+        console.log(position);
+
+        //Cartographic --弧度
+        var coordinate = Cesium.Cartographic.fromCartesian(
+          position,
+          viewer.scene.globe.ellipsoid
+        );
+        console.log(
+          Cesium.Math.toDegrees(coordinate.longitude),
+          Cesium.Math.toDegrees(coordinate.latitude)
+        );
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    </script>
+  </body>
+</html>
