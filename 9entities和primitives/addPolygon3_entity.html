@@ -1,47 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <!-- Use correct character set. -->
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-    />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>面</title>
     <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
     <style>
-      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+        @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-      html,
-      body,
-      #cesiumContainer {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
     </style>
-  </head>
-  <body>
-    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
-      <button onclick="addPolygon1()">增加面1</button>
-      <button onclick="addPolygon2()">增加带边框面2</button>
-      <button onclick="addPolygon3()">增加带孔的面3</button>
-      <button onclick="addPolygon4()">增加perPositionHeight面 4</button>
-      <button onclick="addPolygon5()">增加perPositionHeight_垂直面5</button>
-      <button onclick="addPolygon6()">增加拉伸面6</button>
-      <button onclick="addPolygon7()">增加拉伸面7_恒向线</button>
-      <button onclick="addPolygon8()">增加面8-zIndex</button>
-    </div>
-    <div id="cesiumContainer"></div>
-    <script>
-      Cesium.Ion.defaultAccessToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
-      var viewer = new Cesium.Viewer("cesiumContainer", {
+</head>
+<body>
+<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
+    <button onclick="addPolygon1()">增加面1</button>
+    <button onclick="addPolygon2()">增加带边框面2</button>
+    <button onclick="addPolygon3()">增加带孔的面3</button>
+    <button onclick="addPolygon4()">增加perPositionHeight面 4</button>
+    <button onclick="addPolygon5()">增加perPositionHeight_垂直面5</button>
+    <button onclick="addPolygon6()">增加拉伸面6</button>
+    <button onclick="addPolygon7()">增加拉伸面7_恒向线</button>
+</div>
+<div id="cesiumContainer"></div>
+<script>
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+    var viewer = new Cesium.Viewer('cesiumContainer', {
         geocoder: false,
         baseLayerPicker: false,
         fullscreenButton: false,
@@ -50,14 +45,14 @@
         animation: false,
         timeline: false,
         navigationHelpButton: false,
-        terrainProvider: Cesium.createWorldTerrain({
-          requestWaterMask: true,
-          requestVertexNormals: true,
-        }),
-      });
+        // terrainProvider: Cesium.createWorldTerrain({
+        //     requestWaterMask: true,
+        //     requestVertexNormals: true
+        // })
+    });
 
-      // 增加3dTiles 数据后，面覆盖在3dTiles上
-      /*      var tileset = new Cesium.Cesium3DTileset({
+    // 增加3dTiles 数据后，面覆盖在3dTiles上
+    /*      var tileset = new Cesium.Cesium3DTileset({
               url: '../data/tileset/Tileset/tileset.json'
           });
 
@@ -84,187 +79,157 @@
               console.log(error);
           });*/
 
-      //普通面--贴地
-      function addPolygon1() {
+
+    //普通面--贴地
+    function addPolygon1() {
         var redPolygon = viewer.entities.add({
-          name: "红色面",
-          polygon: {
-            hierarchy: Cesium.Cartesian3.fromDegreesArray([
-              -76.61309, 40.04153, -76.61109, 40.04153, -76.61109, 42.04353,
-              -76.61309, 42.04353,
-            ]),
-            material: Cesium.Color.RED,
-            //classificationType:Cesium.ClassificationType.CESIUM_3D_TILE
-          },
+            name: '红色面',
+            polygon: {
+                hierarchy: Cesium.Cartesian3.fromDegreesArray([-76.61309, 40.04153,
+                    -76.61109, 40.04153,
+                    -76.61109, 42.04353,
+                    -76.61309, 42.04353,
+                ]),
+                material: Cesium.Color.RED,
+                //classificationType:Cesium.ClassificationType.CESIUM_3D_TILE
+            }
         });
-      }
 
-      //带边框面--默认贴地 ,边框在设置height后才会生效(此时会造成无法贴地)，而且宽度无法大于1，
-      function addPolygon2() {
+    }
+
+    //带边框面--默认贴地 ,边框在设置height后才会生效(此时会造成无法贴地)，而且宽度无法大于1，
+    function addPolygon2() {
+
         var orangePolygon = viewer.entities.add({
-          name: "Orange面-带边框 ",
-          polygon: {
-            hierarchy: Cesium.Cartesian3.fromDegreesArray([
-              -75.61309, 40.04453, -75.61109, 40.04453, -75.61109, 42.05653,
-              -75.61309, 42.05653,
-            ]),
-            //extrudedHeight: 0, // 增加此属性面不贴地形
-            //perPositionHeight : true,  // 增加此属性面不贴地形
-            material: Cesium.Color.BLUE.withAlpha(0.5),
-            outline: true,
-            outlineColor: Cesium.Color.RED,
-            height: 1,
-            outlineWidth: 12,
-          },
+            name: 'Orange面-带边框 ',
+            polygon: {
+                hierarchy: Cesium.Cartesian3.fromDegreesArray([-75.61309, 40.04453,
+                    -75.61109, 40.04453,
+                    -75.61109, 42.05653,
+                    -75.61309, 42.05653,
+                ]),
+                //extrudedHeight: 0, // 增加此属性面不贴地形
+                //perPositionHeight : true,  // 增加此属性面不贴地形
+                material: Cesium.Color.BLUE.withAlpha(0.5),
+                outline: true,
+                outlineColor: Cesium.Color.RED,
+                height:1,
+                outlineWidth:12
+            }
         });
-      }
 
-      //带孔的面
-      function addPolygon3() {
+
+    }
+
+
+    //带孔的面
+    function addPolygon3() {
+
         var bluePolygon = viewer.entities.add({
-          name: "Blue polygon with holes",
-          polygon: {
-            hierarchy: {
-              positions: Cesium.Cartesian3.fromDegreesArray([
-                -75.61609, 40.04153, -75.61409, 40.04153, -75.61409, 40.04353,
-                -75.61609, 40.04353,
-              ]),
-              holes: [
-                {
-                  positions: Cesium.Cartesian3.fromDegreesArray([
-                    -75.616, 40.04183, -75.6142, 40.04183, -75.6142, 40.04303,
-                    -75.616, 40.04303,
-                  ]),
+            name: 'Blue polygon with holes',
+            polygon: {
+                hierarchy: {
+                    positions: Cesium.Cartesian3.fromDegreesArray([-75.61609, 40.04153,
+                        -75.61409, 40.04153,
+                        -75.61409, 40.04353,
+                        -75.61609, 40.04353]),
+                    holes: [{
+                        positions: Cesium.Cartesian3.fromDegreesArray([-75.61600, 40.04183,
+                            -75.61420, 40.04183,
+                            -75.61420, 40.04303,
+                            -75.61600, 40.04303]),
+                    }]
                 },
-              ],
-            },
-            material: Cesium.Color.BLUE.withAlpha(0.5),
-            height: 0,
-            outline: true, // height is required for outline to display
-          },
+                material: Cesium.Color.BLUE.withAlpha(0.5),
+                height: 0,
+                outline: true // height is required for outline to display
+            }
         });
 
         viewer.camera.setView({
-          destination: new Cesium.Cartesian3.fromDegrees(
-            -75.61309,
-            40.04153,
-            1100
-          ),
-        });
-      }
+            destination: new Cesium.Cartesian3.fromDegrees(-75.61309, 40.04153, 1100)
+        })
+    }
 
-      //perPositionHeight 面
-      function addPolygon4() {
+    //perPositionHeight 面
+    function addPolygon4() {
         var greenPolygon = viewer.entities.add({
-          name: "polygon with per-position heights and outline",
-          polygon: {
-            hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights([
-              -108.0, 25.0, 100000, -100.0, 25.0, 100000, -100.0, 30.0, 100000,
-              -108.0, 30.0, 300000,
-            ]),
-            extrudedHeight: 0,
-            perPositionHeight: true,
-            material: Cesium.Color.GREEN,
-            outline: true,
-            outlineColor: Cesium.Color.BLACK,
-          },
+            name: 'polygon with per-position heights and outline',
+            polygon: {
+                hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights([-108.0, 25.0, 100000,
+                    -100.0, 25.0, 100000,
+                    -100.0, 30.0, 100000,
+                    -108.0, 30.0, 300000]),
+                extrudedHeight: 0,
+                perPositionHeight: true,
+                material: Cesium.Color.GREEN,
+                outline: true,
+                outlineColor: Cesium.Color.BLACK
+            }
         });
-      }
+    }
 
-      //perPositionHeight 垂直面
-      function addPolygon5() {
+
+    //perPositionHeight 垂直面
+    function addPolygon5() {
         var cyanPolygon = viewer.entities.add({
-          name: "Cyan vertical polygon with per-position heights and outline",
-          polygon: {
-            hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights([
-              -90.0, 41.0, 0.0, -85.0, 41.0, 500000.0, -80.0, 41.0, 0.0,
-            ]),
-            perPositionHeight: true,
-            material: Cesium.Color.CYAN.withAlpha(0.5),
-            outline: true,
-            outlineColor: Cesium.Color.BLACK,
-          },
+            name: 'Cyan vertical polygon with per-position heights and outline',
+            polygon: {
+                hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights([
+                    -90.0, 41.0, 0.0,
+                    -85.0, 41.0, 500000.0,
+                    -80.0, 41.0, 0.0
+                ]),
+                perPositionHeight: true,
+                material: Cesium.Color.CYAN.withAlpha(0.5),
+                outline: true,
+                outlineColor: Cesium.Color.BLACK
+            }
         });
-      }
+    }
 
-      //拉伸绿色面-------- 拉伸后实际的体的高度 为 extrudedHeight-height
-      function addPolygon6() {
+    //拉伸绿色面-------- 拉伸后实际的体的高度 为 extrudedHeight-height
+    function addPolygon6() {
         var greenPolygon = viewer.entities.add({
-          name: "Green extruded polygon",
-          polygon: {
-            hierarchy: Cesium.Cartesian3.fromDegreesArray([
-              -108.0, 42.0, -100.0, 42.0, -104.0, 40.0,
-            ]),
-            height: 20000,
-            //extrudedHeight: 20000.0,
-            material: Cesium.Color.GREEN,
-            closeTop: false,
-            closeBottom: true,
-          },
+            name: 'Green extruded polygon',
+            polygon: {
+                hierarchy: Cesium.Cartesian3.fromDegreesArray([-108.0, 42.0,
+                    -100.0, 42.0,
+                    -104.0, 40.0]),
+                height:20000,
+                //extrudedHeight: 20000.0,
+                material: Cesium.Color.GREEN,
+                closeTop: false,
+                closeBottom: true
+            }
         });
-      }
 
-      //拉伸紫色面-使用恒向线
-      function addPolygon7() {
+    }
+
+    //拉伸紫色面-使用恒向线
+    function addPolygon7() {
         var purplePolygonUsingRhumbLines = viewer.entities.add({
-          name: "Purple polygon using rhumb lines with outline",
-          polygon: {
-            hierarchy: Cesium.Cartesian3.fromDegreesArray([
-              -120.0, 45.0, -80.0, 45.0, -80.0, 55.0, -120.0, 55.0,
-            ]),
-            extrudedHeight: 50000,
-            material: Cesium.Color.PURPLE,
-            outline: true,
-            outlineColor: Cesium.Color.MAGENTA,
-            arcType: Cesium.ArcType.RHUMB, // 使用恒向线
-          },
-        });
-      }
-
-      viewer.camera.setView({
-        destination: new Cesium.Cartesian3.fromDegrees(-75.61309, 40.04153, 0),
-      });
-
-      function addPolygon8() {
-        const dataSource = new Cesium.CustomDataSource();
-        window.viewer.dataSources.add(dataSource);
-        var p1 = new Cesium.PolygonGraphics({
-          hierarchy: Cesium.Cartesian3.fromDegreesArray([
-            100.0, 45.0, 80.0, 45.0, 80.0, 55.0, 100.0, 55.0,
-          ]),
-          material: Cesium.Color.PURPLE,
-          zIndex: 19,
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
-            300000,
-            2.0e6
-          ),
-        });
-        var purplePolygon = dataSource.entities.add({
-          name: "Purple polygon ",
-          polygon: p1,
+            name: 'Purple polygon using rhumb lines with outline',
+            polygon: {
+                hierarchy: Cesium.Cartesian3.fromDegreesArray([-120.0, 45.0,
+                    -80.0, 45.0,
+                    -80.0, 55.0,
+                    -120.0, 55.0]),
+                extrudedHeight: 50000,
+                material: Cesium.Color.PURPLE,
+                outline: true,
+                outlineColor: Cesium.Color.MAGENTA,
+                arcType: Cesium.ArcType.RHUMB // 使用恒向线
+            }
         });
 
-        var redPolygon = viewer.entities.add({
-          name: "red polygon ",
-          polygon: {
-            hierarchy: Cesium.Cartesian3.fromDegreesArray([
-              90.0, 45.0, 98.0, 45.0, 98.0, 55.0, 90.0, 55.0,
-            ]),
-            material: Cesium.Color.RED,
-            zIndex: 22,
-            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-            distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
-              300000,
-              2.0e6
-            ),
-          },
-        });
-      }
+    }
 
-      viewer.camera.setView({
-        destination: new Cesium.Cartesian3.fromDegrees(90, 50, 10000),
-      });
-    </script>
-  </body>
+
+    viewer.camera.setView({
+        destination: new Cesium.Cartesian3.fromDegrees(-75.61309, 40.04153, 0)
+    })
+
+</script>
+</body>
 </html>
