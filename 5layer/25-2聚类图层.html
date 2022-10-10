@@ -1,254 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>聚类</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-<head>
-  <!-- Use correct character set. -->
-  <meta charset="utf-8" />
-  <!-- Tell IE to use the latest, best version. -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <title>聚类</title>
-  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
-  <style>
-    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
-
-    html,
-    body,
-    #cesiumContainer {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-  </style>
-</head>
-
-<body>
-  <div>
-    <button onclick="showVec()">显隐天地图矢量</button>
-    <button onclick="showCta()">显隐天地图标注</button>
-  </div>
-  <div id="cesiumContainer"></div>
-  <script>
-    Cesium.Ion.defaultAccessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
-
-    //4326坐标系从1开始
-    var tileMatrixLabels = [];
-    for (var i = 1; i < 18; i++) {
-      tileMatrixLabels.push("" + i);
-    }
-    var viewer = new Cesium.Viewer("cesiumContainer", {
-      animation: false, //是否显示动画控件
-      baseLayerPicker: false, //是否显示图层选择控件
-      geocoder: true, //是否显示地名查找控件
-      timeline: false, //是否显示时间线控件
-      sceneModePicker: true, //是否显示投影方式控件
-      navigationHelpButton: false, //是否显示帮助信息控件
-      infoBox: true, //是否显示点击要素之后显示的信息
-      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-        url:
-          "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-        layer: "vec",
-        style: "default",
-        format: "tiles",
-        tileMatrixSetID: "c",
-        maximumLevel: "14",
-        tileMatrixLabels: tileMatrixLabels,
-        tilingScheme: new Cesium.GeographicTilingScheme({
-          numberOfLevelZeroTilesX: 2,
-          numberOfLevelZeroTilesY: 1,
-        }),
-      }),
-    });
-
-    console.log(viewer.imageryLayers.get(0));
-    console.log(viewer.imageryLayers.get(1)); //undefined
-
-    // 隐藏默认的图层，显示蓝色地球
-    viewer.imageryLayers.get(0).show = false;
-
-    var ctaLayer = new Cesium.ImageryLayer(
-      new Cesium.WebMapTileServiceImageryProvider({
-        url:
-          "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-        layer: "cta",
-        style: "default",
-        format: "tiles",
-        tileMatrixSetID: "c",
-        maximumLevel: "14",
-        tileMatrixLabels: tileMatrixLabels,
-        tilingScheme: new Cesium.GeographicTilingScheme({
-          numberOfLevelZeroTilesX: 2,
-          numberOfLevelZeroTilesY: 1,
-        }),
-      }),
-      {
-        show: false,
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
       }
-    );
+    </style>
+  </head>
 
-    console.log(viewer.scene.imageryLayers === viewer.imageryLayers); // true
-    var layers = viewer.imageryLayers;
-    layers.add(ctaLayer);
-    console.log(viewer.imageryLayers.get(1)); // cta图层
+  <body>
+    <div>
+      <button onclick="showVec()">显隐天地图矢量</button>
+      <button onclick="showCta()">显隐天地图标注</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-    viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000),
-    });
+      //4326坐标系从1开始
+      var tileMatrixLabels = [];
+      for (var i = 1; i < 18; i++) {
+        tileMatrixLabels.push("" + i);
+      }
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+      });
 
-    var options = {
-      camera: viewer.scene.camera,
-      canvas: viewer.scene.canvas,
-    };
+      console.log(viewer.imageryLayers.get(0));
+      console.log(viewer.imageryLayers.get(1)); //undefined
 
-    var dataSourcePromise = viewer.dataSources.add(
-      Cesium.KmlDataSource.load("./kml/facilities/facilities.kml", options)
-    );
-    dataSourcePromise.then(function (dataSource) {
-      var pixelRange = 15;
-      var minimumClusterSize = 3;
-      var enabled = true;
+      // 隐藏默认的图层，显示蓝色地球
+      viewer.imageryLayers.get(0).show = false;
 
-      dataSource.clustering.enabled = enabled;
-      dataSource.clustering.pixelRange = pixelRange;
-      dataSource.clustering.minimumClusterSize = minimumClusterSize;
+      var ctaLayer = new Cesium.ImageryLayer(
+        new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+        {
+          show: false,
+        }
+      );
 
-      var removeListener;
+      console.log(viewer.scene.imageryLayers === viewer.imageryLayers); // true
+      var layers = viewer.imageryLayers;
+      layers.add(ctaLayer);
+      console.log(viewer.imageryLayers.get(1)); // cta图层
 
-      var pinBuilder = new Cesium.PinBuilder();
-      var pin50 = pinBuilder
-        .fromText("50+", Cesium.Color.RED, 48)
-        .toDataURL();
-      var pin40 = pinBuilder
-        .fromText("40+", Cesium.Color.ORANGE, 48)
-        .toDataURL();
-      var pin30 = pinBuilder
-        .fromText("30+", Cesium.Color.YELLOW, 48)
-        .toDataURL();
-      var pin20 = pinBuilder
-        .fromText("20+", Cesium.Color.GREEN, 48)
-        .toDataURL();
-      var pin10 = pinBuilder
-        .fromText("10+", Cesium.Color.BLUE, 48)
-        .toDataURL();
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(113, 30, 9000000),
+      });
 
-      var singleDigitPins = new Array(8);
-      for (var i = 0; i < singleDigitPins.length; ++i) {
-        singleDigitPins[i] = pinBuilder
-          .fromText("" + (i + 2), Cesium.Color.VIOLET, 48)
+      var options = {
+        camera: viewer.scene.camera,
+        canvas: viewer.scene.canvas,
+      };
+
+      var dataSourcePromise = viewer.dataSources.add(
+        Cesium.KmlDataSource.load(
+          "../sampleData/kml/facilities/facilities.kml",
+          options
+        )
+      );
+      dataSourcePromise.then(function (dataSource) {
+        var pixelRange = 15;
+        var minimumClusterSize = 3;
+        var enabled = true;
+
+        dataSource.clustering.enabled = enabled;
+        dataSource.clustering.pixelRange = pixelRange;
+        dataSource.clustering.minimumClusterSize = minimumClusterSize;
+
+        var removeListener;
+
+        var pinBuilder = new Cesium.PinBuilder();
+        var pin50 = pinBuilder
+          .fromText("50+", Cesium.Color.RED, 48)
           .toDataURL();
-      }
+        var pin40 = pinBuilder
+          .fromText("40+", Cesium.Color.ORANGE, 48)
+          .toDataURL();
+        var pin30 = pinBuilder
+          .fromText("30+", Cesium.Color.YELLOW, 48)
+          .toDataURL();
+        var pin20 = pinBuilder
+          .fromText("20+", Cesium.Color.GREEN, 48)
+          .toDataURL();
+        var pin10 = pinBuilder
+          .fromText("10+", Cesium.Color.BLUE, 48)
+          .toDataURL();
 
-
-      var img1 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAuCAYAAABNhcu5AAAAAXNSR0IArs4c6QAAB8hJREFUWAnVWWlsVFUUPu/NvOm+UFlaFss2pYAgodAOCoIJKBIEFYgsLRIlJCAKUROIltoAKphoYgyYENACpeLCUhQkNIGAIKUtCMTK0oJlsWVL92k7S9/znNu5r3deZ6HzzxNm7rnnfOec79133n13igTdkPJeK6KbGhqmg6bN0AAGSwBJmgZ9KYUkQTXaatB2EydHYuLijo58uLX5cdNjXHApURaNb9cgB0Cbhuiw4BEM4UB6RSYJ1qe79pQGiwlIpDhsiRXaXZ9qoM0NliiQXwLpZzApH9oceRX+cH6JFFsy54Cq7UQSUWJw5JhkSJg1DmImDQNL3wT89GBuZ3UdOKtroen3a1B7qAxaLt4SwwDJ2EGW3rA58/d5OTyTLkQ0TZPOhWXmIol1eM91f8Jr6TBg/TyIGMZaoksujMPWkLB9MAql7XoN3Mn5CWr3l+hYTKYhmQ0ZjvxcxHYAPV69EEcXWxau11RYx+dhA3vB0N1vQ3TGUG5io7EwJ0GjKM3nKqEyaws4qh7qZkmGDTZnAfZcp3hFFVuy5mtq+/fcHfNcKqT8uBrMCdHc1GVsvVrNbOHDkrxWRAS6a5uh4vWvoOnUVd0syaYFNufuvdygEzlryRoOqnoBVy+cnEQi9be1IJlNHOtzrN50iNn7rp3l5TeukOpyw9WXNglkpDaQ5bETnLuvUKCsR6vq55wEux1732Uk6Bbw+85HPQaVusJS9uE+jjeOYJLB+sMqoNwdghfManbMGJGz4ZlTkMRMDwIG71wOyhMxjABdmXh1YgHH7Udgv1DFPq67tQHxlMPUIwqG7FrBy+CozeyozVfErWVzLz0d1JhBrxADag+W8TBd50TJwXOIelT6EKAaurjVj0iXy2PfSsCQydzRL3cOV71GuiIScYXqfzmvY+pw7+AkOAE+6iCPYqgxhTjIza0OuiVmwtBmFWZN9EooJhd196MmaDp9zZMamE42kSjpYgzXqQbV8oiZOJhV0F7klviZY7kK9MjVH8IrppVgHxxkbCma4thcegNw09PxpFd/VgjR44eApqq4yPjPMyIbuk8QPytN3wqoFt99iQOthE6Ntm1iTUJ7h7lPHFQt2w50pY8jD7YWwQMo6gI194yBgduWsmbl+amWIMkyXqC+Z5sT43UfBcRNfxpGlG6E2KlP6fbuKhRLOSiXKGIt4iBjvSQOUJK8iZDd3DsWhha+DwM2LwBJCby58Tw0Erb/pvkslnLw/uCjdy1Ion2kUUzAgWQjnUuvlS9A6qkcoK08mBCGsL3f0duva4iQG52NMvbhPxxFr3J/RMgeMfpJsB5dw+F+R8KEjxqg5+I5xdFZU98ZL8EtWpEqbnHV1HFVXw0eTA7Sm052vrh0sEHxhTHuQ3R24YIPeRU2q3aOG5pPX+eq37F+f9BTHxCGSJPwCzGOYi1Jk0tlzRJZgHg3BdX/ii9fj/hK1G5vg4ZjlzkEO1KCxDUvsw/bazwewqgteGQNIA2H/2RefJOpYYpcINvs2+9jxqNkbb10m52sRBJirsajl0FrczGTgo/60MMfQGL2K+xDOtlICMOwQkOKOen0RrUYFrTjY1p3/Us9ApIJvmZW/KpZf8DncpK//kDHSy522ihI+eNjiJ6UqmNJJxv5RCybGL6oBhdZlreQzojYHHuOIR3mrcc3akvpTYbjDUaTdlzqpuPl0HfjPBi0bxUovTr2BvHdQjbyEYawFNOlN/DoSDVIcCMrynDmH/TozAZlEYufdLvar+AxKNKS3BOsJ7P19wIhWvDcgVkhYuxAmmJLdLzQRLLM4flqKcNdAR+FSA+ezOzIOHkjOG89olO9yywro8c589hjiKQ65ZySuVLVVHaboiamwODC94IeFXm0kRitBLcRRnO3w83ZX4Ld82RKIOfY3Pkb9Hiu8LFYWbQDk7xJcyKTvHu518pwnHE0FuYkaKSVuJX1jUBCKsxw5b+KPn3rZj0iJo1JsS7H2LNkI/aVUz4Be8mNLvea/FScCxUkoZE+nBjFshx8JSTp7/j4sCyRBItj0YavS9FZvVsd6glMNoK74manQZ/s2ezgxG2BRkfFPbi/sRAaCjtPccjwNv70nDyhLa/KGOvVI6KzOGppH3C2Epnhoj189ACInTEGop61Ar3KxZ+c7nv1YD9TAY1HLkLb5TtiGDXnXZNZmzy+raDjkfTysifIYBGmJVFLElWn67iRjAB5LJVIKCbp+TRHfqW/gC49IgLT7Xn3YiLCJ+KSnhHt3dIl6S9ZsTwTiATlC0iEACMbd9Qm9lOm4lXtp3l3BGNOKNFRE9Nbv/O+Tz6SBCVCMYOq8toysq3zsNO/8JHDpwmx38YMs04fV7etwSfAYPTbrAacPi2xZC5qV7Xt+PCy38i6w6PgKriwM1fbXHu2Gn2B5t0mQsmKlYVpoEkH8XXQX0yOJO7hqXbuePeebvfUY90asRjpNlfB+YhwOQ33rdPch7ei2GIJSwuFBOUIaUV48bK0ZYr7sp3eTTLuyCtHluc6ue9/O4a8IuUjcy3NFdfxz1zSYrp6SdZ2RVtTckJdFfbjO5RlJBL40xZ/W3gOyaijjVKtDSVfSM1KhfhKiEV92UR/ID1kIoGShuILmQj1hLGgL5sR428eMhFqTPwzyWbcxPA/AqQa0snmr1Aw+3+dxg8WqDDmrAAAAABJRU5ErkJggg=="
-
-      function customStyle() {
-        if (Cesium.defined(removeListener)) {
-          removeListener();
-          removeListener = undefined;
-        } else {
-          removeListener = dataSource.clustering.clusterEvent.addEventListener(
-            function (clusteredEntities, cluster) {
-              cluster.label.show = true;
-              cluster.label.font = `bold 16px sans-serif`
-              cluster.label.pixelOffset = new Cesium.Cartesian2(-12, -16)
-              cluster.label.fillColor = Cesium.Color.BLACK
-
-              cluster.billboard.show = true;
-              cluster.billboard.id = cluster.label.id;
-              cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
-
-              if (clusteredEntities.length >= 50) {
-                // cluster.billboard.image = pin50;
-                cluster.billboard.image = img1
-
-              } else if (clusteredEntities.length >= 40) {
-                cluster.billboard.image = pin40;
-              } else if (clusteredEntities.length >= 30) {
-
-                //cluster.billboard.image = pin30;
-                cluster.billboard.image = "./facility2.png";
-              } else if (clusteredEntities.length >= 20) {
-
-                //cluster.billboard.image = pin20;
-
-                var pin20 = pinBuilder
-                  .fromText(clusteredEntities.length, Cesium.Color.GREEN, 48)
-                  .toDataURL();
-                cluster.billboard.image = pin20;
-
-              } else if (clusteredEntities.length >= 10) {
-                cluster.billboard.image = pin10;
-              } else {
-                cluster.billboard.image =
-                  singleDigitPins[clusteredEntities.length - 2];
-              }
-            }
-          );
+        var singleDigitPins = new Array(8);
+        for (var i = 0; i < singleDigitPins.length; ++i) {
+          singleDigitPins[i] = pinBuilder
+            .fromText("" + (i + 2), Cesium.Color.VIOLET, 48)
+            .toDataURL();
         }
 
-        // force a re-cluster with the new styling
-        var pixelRange = dataSource.clustering.pixelRange;
-        dataSource.clustering.pixelRange = 0;
-        dataSource.clustering.pixelRange = pixelRange;
-      }
+        var img1 =
+          "data:image/png;base64,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";
 
-      // start with custom style
-      customStyle();
-    });
+        function customStyle() {
+          if (Cesium.defined(removeListener)) {
+            removeListener();
+            removeListener = undefined;
+          } else {
+            removeListener =
+              dataSource.clustering.clusterEvent.addEventListener(function (
+                clusteredEntities,
+                cluster
+              ) {
+                cluster.label.show = true;
+                cluster.label.font = `bold 16px sans-serif`;
+                cluster.label.pixelOffset = new Cesium.Cartesian2(-12, -16);
+                cluster.label.fillColor = Cesium.Color.BLACK;
 
-    var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-    handler.setInputAction(function (movement) {
-      var pickedLabel = viewer.scene.pick(movement.position);
-      if (Cesium.defined(pickedLabel)) {
-        var ids = pickedLabel.id;
-        if (Array.isArray(ids)) {
-          for (var i = 0; i < ids.length; ++i) {
-            ids[i].billboard.color = Cesium.Color.RED;
+                cluster.billboard.show = true;
+                cluster.billboard.id = cluster.label.id;
+                cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
+
+                if (clusteredEntities.length >= 50) {
+                  // cluster.billboard.image = pin50;
+                  cluster.billboard.image = img1;
+                } else if (clusteredEntities.length >= 40) {
+                  cluster.billboard.image = pin40;
+                } else if (clusteredEntities.length >= 30) {
+                  //cluster.billboard.image = pin30;
+                  cluster.billboard.image = "./facility2.png";
+                } else if (clusteredEntities.length >= 20) {
+                  //cluster.billboard.image = pin20;
+
+                  var pin20 = pinBuilder
+                    .fromText(clusteredEntities.length, Cesium.Color.GREEN, 48)
+                    .toDataURL();
+                  cluster.billboard.image = pin20;
+                } else if (clusteredEntities.length >= 10) {
+                  cluster.billboard.image = pin10;
+                } else {
+                  cluster.billboard.image =
+                    singleDigitPins[clusteredEntities.length - 2];
+                }
+              });
+          }
+
+          // force a re-cluster with the new styling
+          var pixelRange = dataSource.clustering.pixelRange;
+          dataSource.clustering.pixelRange = 0;
+          dataSource.clustering.pixelRange = pixelRange;
+        }
+
+        // start with custom style
+        customStyle();
+      });
+
+      var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+      handler.setInputAction(function (movement) {
+        var pickedLabel = viewer.scene.pick(movement.position);
+        if (Cesium.defined(pickedLabel)) {
+          var ids = pickedLabel.id;
+          if (Array.isArray(ids)) {
+            pickedLabel.primitive.show = false;
+
+            // pickedLabel.collection.show = false;
+
+            for (var i = 0; i < ids.length; ++i) {
+              ids[i].billboard.color = Cesium.Color.RED;
+            }
           }
         }
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+      function _drawCircle(color, numLength) {
+        let size = options.size * (numLength + 1);
+        let key = color.toCssColorString() + "-" + size;
+        if (!_cache[key]) {
+          let canvas = document.createElement("canvas");
+          canvas.width = size;
+          canvas.height = size;
+          let context2D = canvas.getContext("2d");
+          context2D.save();
+          context2D.scale(size / 24, size / 24); //Added to auto-generated code to scale up to desired size.
+          context2D.fillStyle = color.withAlpha(0.2).toCssColorString(); //Modified from auto-generated code.
+          context2D.beginPath();
+          context2D.arc(12, 12, 9, 0, 2 * Math.PI);
+          context2D.closePath();
+          context2D.fill();
+          context2D.beginPath();
+          context2D.arc(12, 12, 6, 0, 2 * Math.PI);
+          context2D.fillStyle = color.toCssColorString();
+          context2D.fill();
+          context2D.closePath();
+          context2D.restore();
+          this._cache[key] = canvas.toDataURL();
+        }
+        return _cache[key];
       }
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
+      window.showVec = function () {
+        viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show;
+      };
 
-    function _drawCircle(color, numLength) {
-      let size = options.size * (numLength + 1)
-      let key = color.toCssColorString() + '-' + size
-      if (!_cache[key]) {
-        let canvas = document.createElement('canvas')
-        canvas.width = size
-        canvas.height = size
-        let context2D = canvas.getContext('2d')
-        context2D.save()
-        context2D.scale(size / 24, size / 24) //Added to auto-generated code to scale up to desired size.
-        context2D.fillStyle = color.withAlpha(0.2).toCssColorString() //Modified from auto-generated code.
-        context2D.beginPath()
-        context2D.arc(12, 12, 9, 0, 2 * Math.PI)
-        context2D.closePath()
-        context2D.fill()
-        context2D.beginPath()
-        context2D.arc(12, 12, 6, 0, 2 * Math.PI)
-        context2D.fillStyle = color.toCssColorString()
-        context2D.fill()
-        context2D.closePath()
-        context2D.restore()
-        this._cache[key] = canvas.toDataURL()
-      }
-      return _cache[key]
-    }
-
-
-    window.showVec = function () {
-      viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show;
-    };
-
-    window.showCta = function () {
-      viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show;
-    };
-  </script>
-</body>
-
+      window.showCta = function () {
+        viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show;
+      };
+    </script>
+  </body>
 </html>

@@ -1,4 +1,5 @@
-参考资料：  
+参考资料：
+
 - https://blog.csdn.net/caozl1132/article/details/90257043
 - https://blog.csdn.net/weitaming1/article/details/95067688
 - https://zhuanlan.zhihu.com/p/44767866
@@ -88,7 +89,7 @@
 
 - drillPick：scene.drillPick(click.position)是从当前鼠标点击位置获取 entity 的集合，然后通过 for 循环可以获取当前坐标下的所有 entity；
 
-- pickPosition：通过 viewer.scene.pickPosition(movement.position)获取，可以获取场中任意点击处的对应的**世界坐标**。（高程不精确），返回  Cartesian3
+- pickPosition：通过 viewer.scene.pickPosition(movement.position)获取，可以获取场中任意点击处的对应的**世界坐标**。（高程不精确），返回 Cartesian3
 
 pick 与 drillPick 的区别：pick 只可获取一个 entity 对象（如该位置存在多个 entity，哪怕面点线不在同一高度，面 entity 都可能会盖住点线 entity），但 drillPick 可获取当前坐标下的多个对象；
 
@@ -112,20 +113,19 @@ pick 与 drillPick 的区别：pick 只可获取一个 entity 对象（如该位
 var ray = scene.camera.getPickRay(movement.endPosition, tempRay);
 
 //找出ray和地形的交点，即可求出三维世界坐标
-var cartesian2 = scene.globe.pick(ray, scene, tempPos);
+var cartesian3 = scene.globe.pick(ray, scene, tempPos);
 
 ```
 
 #### 结论
 
-- scene.pick、scene.drillPick主要用于拾取 Entity、Cesium3DTileFeature 等对象
+- scene.pick、scene.drillPick 主要用于拾取 Entity、Cesium3DTileFeature 等对象
 - scene.pickPosition，可获取地形，模型等高度
 - camera.pickEllipsoid(windowPosition, ellipsoid, result) → Cartesian3：获取鼠标点的对应椭球面位置，地形和模型等高度均获取不到
 - camera.getPickRay + globe.pick，可获取地形，但是模型等高度获取不到
 
-
 - globe.pick 的结果相对稳定准确，不论地形深度检测开启与否，不论加载的是默认地形还是别的地形数据；
-- scene.pickPosition(windowPosition, result)→ Cartesian3  只有在开启地形深度检测，且不使用默认地形时是准确的。
+- scene.pickPosition(windowPosition, result)→ Cartesian3 只有在开启地形深度检测，且不使用默认地形时是准确的。
 - globe.getHeight,镜头高度太高获取的高度会为错误的负数，镜头高度要足够低
 
 ```
