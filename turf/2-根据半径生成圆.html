@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>开挖地形</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <script src="../lib/turf5.min.js"></script>
+
+    <link
+      href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #000000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        // imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        //   url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        //   layer: "vec",
+        //   style: "default",
+        //   format: "tiles",
+        //   tileMatrixSetID: "w",
+        // }),
+        // terrainProvider: Cesium.createWorldTerrain({
+        //   requestVertexNormals: true,
+        //   requestWaterMask: true,
+        // }),
+      });
+
+      viewer.scene.globe.depthTestAgainstTerrain = true; //添加后图片被遮挡
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      const center = [114, 30];
+
+      var radius = 5;
+      var options = {
+        steps: 100,
+        units: "kilometers",
+        properties: { foo: "bar" },
+      };
+      var circle = turf.circle(center, radius, options);
+
+      console.log(circle);
+
+      viewer.entities.add({
+        polygon: {
+          material: Cesium.Color(1.0, 0.0, 0.0, 0.2),
+          hierarchy: new Cesium.PolygonHierarchy(
+            Cesium.Cartesian3.fromDegreesArray(
+              circle.geometry.coordinates[0].flat()
+            )
+          ),
+          heightReference: Cesium.HeightReference.CLMAP_TO_GROUND,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+        },
+      });
+
+      const first = circle.geometry.coordinates[0][0];
+      viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(...first),
+        point: {
+          color: Cesium.Color.RED,
+          pixelSize: 12,
+          heightReference: Cesium.HeightReference.CLMAP_TO_GROUND,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+        },
+      });
+
+      const p180 = circle.geometry.coordinates[0][(180 / 360) * options.steps];
+      viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(...p180),
+        point: {
+          color: Cesium.Color.GREEN,
+          pixelSize: 12,
+          heightReference: Cesium.HeightReference.CLMAP_TO_GROUND,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+        },
+      });
+
+      const p270 = circle.geometry.coordinates[0][(270 / 360) * options.steps];
+      viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(...p270),
+        point: {
+          color: Cesium.Color.BLUE,
+          pixelSize: 12,
+          heightReference: Cesium.HeightReference.CLMAP_TO_GROUND,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+        },
+      });
+
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(center[0], center[1], 15052),
+      });
+    </script>
+  </body>
+</html>
