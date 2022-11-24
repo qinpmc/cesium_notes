@@ -1,97 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <!-- Use correct character set. -->
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
     <title>圆形</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <script src="../lib/turf5.min.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-        html, body, #cesiumContainer {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
     </style>
-</head>
-<body>
-<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
-    <button onclick="addCircle1()">增加圆形1</button>
-    <button onclick="addCircle2()">增加圆形2</button>
-</div>
-<div id="cesiumContainer"></div>
-<script>
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
+  </head>
+  <body>
+    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
+      <button onclick="addCircle1()">增加圆形1</button>
+      <button onclick="addCircle2()">增加圆形2</button>
+      <button onclick="addCircle3()">增加圆形3</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-    var widget = new Cesium.CesiumWidget('cesiumContainer');
-    var scene = widget.scene;
-    scene.terrainProvider = Cesium.createWorldTerrain({
+      var widget = new Cesium.CesiumWidget("cesiumContainer");
+      var scene = widget.scene;
+      scene.terrainProvider = Cesium.createWorldTerrain({
         requestWaterMask: true,
-        requestVertexNormals: true
-    });
+        requestVertexNormals: true,
+      });
 
-
-
-    //普通圆CircleGeometry---默认不贴地
-    function addCircle1() {
-
+      //普通圆CircleGeometry---默认不贴地
+      function addCircle1() {
         var circle = new Cesium.CircleGeometry({
-            center : Cesium.Cartesian3.fromDegrees(-111.0, 40.0),
-            radius : 100000.0,
-            vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT // 省略此属性，圆形不是纯红色
+          center: Cesium.Cartesian3.fromDegrees(-111.0, 40.0),
+          radius: 100000.0,
+          vertexFormat: Cesium.PerInstanceColorAppearance.VERTEX_FORMAT, // 省略此属性，圆形不是纯红色
         });
         //var geometry = Cesium.CircleGeometry.createGeometry(circle);
 
-        scene.primitives.add(new Cesium.Primitive({
+        scene.primitives.add(
+          new Cesium.Primitive({
             geometryInstances: new Cesium.GeometryInstance({
-                geometry: circle,
-                attributes: {
-                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)
-                }
+              geometry: circle,
+              attributes: {
+                color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+                  Cesium.Color.RED
+                ),
+              },
             }),
             appearance: new Cesium.PerInstanceColorAppearance({
-                closed: true
-            })
+              closed: true,
+            }),
+          })
+        );
+      }
 
-        }));
-    }
-
-
-    function addCircle2() {
-
+      function addCircle2() {
         circleGeometry = new Cesium.CircleGeometry({
-            center : Cesium.Cartesian3.fromDegrees(-85.0, 40.0),
-            radius : 400000.0,
-            height : 150000.0,
-            extrudedHeight: 300000.0,
-            vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT
+          center: Cesium.Cartesian3.fromDegrees(-85.0, 40.0),
+          radius: 400000.0,
+          height: 150000.0,
+          extrudedHeight: 300000.0,
+          vertexFormat: Cesium.PerInstanceColorAppearance.VERTEX_FORMAT,
         });
         var blueCircleInstance = new Cesium.GeometryInstance({
-            geometry : circleGeometry,
-            attributes : {
-                color : Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.BLUE)
-            }
+          geometry: circleGeometry,
+          attributes: {
+            color: Cesium.ColorGeometryInstanceAttribute.fromColor(
+              Cesium.Color.BLUE
+            ),
+          },
         });
 
-        scene.primitives.add(new Cesium.Primitive({
+        scene.primitives.add(
+          new Cesium.Primitive({
             geometryInstances: blueCircleInstance,
             appearance: new Cesium.PerInstanceColorAppearance({
-                closed: true
-            })
+              closed: true,
+            }),
+          })
+        );
+      }
 
-        }));
-    }
+      function addCircle3() {
+        var center = [114, 30];
+        var radius = 15000;
+        var options = {
+          steps: 100,
+          units: "meters",
+          properties: { foo: "bar" },
+        };
+        var circle = turf.circle(center, radius, options);
 
+        let temp = [];
+        for (let i = 0; i < circle.geometry.coordinates[0].length; i++) {
+          temp.push(...circle.geometry.coordinates[0][i], 30000);
+        }
 
-</script>
-</body>
+        const appearance = new Cesium.PolylineMaterialAppearance({
+          material: new Cesium.Material({
+            fabric: {
+              type: "Color",
+              uniforms: {
+                color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+              },
+            },
+          }),
+        });
+        const appearance2 = new Cesium.PolylineMaterialAppearance({
+          material: new Cesium.Material({
+            fabric: {
+              type: "PolylineDash",
+              uniforms: {
+                color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+                gapColor: new Cesium.Color(1.0, 0.0, 0.0, 0.0),
+                dashLength: 8.0,
+                // dashPattern: 255,
+              },
+            },
+          }),
+        });
+        const instance = scene.primitives.add(
+          new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.PolylineGeometry({
+                positions: Cesium.Cartesian3.fromDegreesArrayHeights(temp),
+                width: 15.0,
+                //vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+              }),
+            }),
+            appearance: appearance2,
+          })
+        );
+      }
+    </script>
+  </body>
 </html>

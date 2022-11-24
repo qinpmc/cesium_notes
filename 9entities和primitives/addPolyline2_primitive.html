@@ -31,6 +31,9 @@
     <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
       <button onclick="addPolyline1()">增加红色线1-不贴地</button>
       <button onclick="addPolyline1_1()">增加黄色贴地线1</button>
+      <button onclick="addPolyline1_2()">
+        增加黄色线2-不贴地PolylineMaterialAppearance
+      </button>
       <button onclick="addPolyline2()">增加RHUMB线2-恒向线贴地</button>
       <button onclick="addPolyline3()">增加发光线3-透明度-贴地</button>
       <button onclick="addPolyline3_2()">增加发光线3_2-透明度-贴地</button>
@@ -59,7 +62,7 @@
         navigationHelpButton: false, //是否显示帮助信息控件
         infoBox: true, //是否显示点击要素之后显示的信息
         imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-          url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
           layer: "img",
           style: "default",
           format: "tiles",
@@ -134,6 +137,35 @@
               //       new Cesium.Color(1.0, 1.0, 0.0, 1.0)
               //     ),
               //   },
+            }),
+            appearance: new Cesium.PolylineMaterialAppearance({
+              material: new Cesium.Material({
+                fabric: {
+                  type: "Color",
+                  uniforms: {
+                    color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+                  },
+                },
+              }),
+            }),
+          })
+        );
+        scene.camera.setView({
+          destination: new Cesium.Cartesian3.fromDegrees(114, 30, 9933000),
+        });
+      }
+
+      function addPolyline1_2() {
+        scene.primitives.add(
+          new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+              geometry: new Cesium.PolylineGeometry({
+                positions: Cesium.Cartesian3.fromDegreesArray([
+                  114, 30.0, 70.0, 30.0,
+                ]),
+                width: 15.0,
+                //vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+              }),
             }),
             appearance: new Cesium.PolylineMaterialAppearance({
               material: new Cesium.Material({

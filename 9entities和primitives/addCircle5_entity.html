@@ -11,9 +11,10 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
     <title>圆形</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <script src="../lib/turf5.min.js"></script>
     <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
       html,
       body,
@@ -30,6 +31,7 @@
     <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
       <button onclick="addCircle1()">增加圆形(特殊椭圆)1</button>
       <button onclick="addCircle2()">增加圆形(特殊多边形)2</button>
+      <button onclick="addCircle3()">增加带孔圆形(特殊多边形)3</button>
     </div>
     <div id="cesiumContainer"></div>
     <script>
@@ -63,6 +65,15 @@
             outline: true,
           },
         });
+
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(-111.0, 40.0, 25000),
+          orientation: {
+            heading: Cesium.Math.toRadians(360.0),
+            pitch: Cesium.Math.toRadians(-32.25),
+            roll: 0.0,
+          },
+        });
       }
 
       //
@@ -92,6 +103,107 @@
             hierarchy: Cesium.Cartesian3.fromDegreesArray(coords),
             material: Cesium.Color.RED,
             //classificationType:Cesium.ClassificationType.CESIUM_3D_TILE
+          },
+        });
+
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(94.0, 30.0, 25000),
+          orientation: {
+            heading: Cesium.Math.toRadians(360.0),
+            pitch: Cesium.Math.toRadians(-32.25),
+            roll: 0.0,
+          },
+        });
+      }
+
+      function getColorRamp(val) {
+        if (val == null) {
+          val = {
+            0.0: "blue",
+            0.1: "cyan",
+            0.37: "lime",
+            0.54: "yellow",
+            1: "red",
+          };
+        }
+        var ramp = document.createElement("canvas");
+        ramp.width = 400;
+        ramp.height = 400;
+        var ctx = ramp.getContext("2d");
+        var grd = ctx.createRadialGradient(110, 110, 30, 110, 110, 100);
+
+        // ctx.createLinearGradient(0, 0, 0, 100);
+        for (var key in val) {
+          grd.addColorStop(1 - Number(key), val[key]);
+        }
+        ctx.fillStyle = grd;
+        // ctx.fillRect(10, 10, 200, 200);
+
+        document.body.appendChild(ramp);
+        return ramp;
+      }
+
+      var rgba = Cesium.Color.fromCssColorString("#00FF33");
+
+      function addCircle3() {
+        var center = [114, 30];
+        var radius = 15;
+        var options = {
+          steps: 100,
+          units: "meters",
+          properties: { foo: "bar" },
+        };
+        var circle = turf.circle(center, radius, options);
+
+        var radius2 = 10;
+        var options = {
+          steps: 100,
+          units: "meters",
+          properties: { foo: "bar" },
+        };
+        var circle2 = turf.circle(center, radius2, options);
+
+        var redPolygon = viewer.entities.add({
+          name: "红色面",
+          polygon: {
+            hierarchy: {
+              positions: Cesium.Cartesian3.fromDegreesArray(
+                circle.geometry.coordinates[0].flat()
+              ),
+              holes: [
+                {
+                  positions: Cesium.Cartesian3.fromDegreesArray(
+                    circle2.geometry.coordinates[0].flat()
+                  ),
+                },
+              ],
+            },
+
+            // material: Cesium.Color.RED,
+            material: new Cesium.ImageMaterialProperty({
+              transparent: true, //设置透明
+              image: getColorRamp({
+                0.0: rgba
+                  .withAlpha(1.0)
+                  .toCssColorString()
+                  .replace(")", ",1.0)"),
+                0.045: rgba.withAlpha(0.8).toCssColorString(),
+                0.1: rgba.withAlpha(0.6).toCssColorString(),
+                0.15: rgba.withAlpha(0.4).toCssColorString(),
+                0.37: rgba.withAlpha(0.2).toCssColorString(),
+                0.54: rgba.withAlpha(0.1).toCssColorString(),
+                1.0: rgba.withAlpha(0).toCssColorString(),
+              }), //Canvas
+            }),
+            //classificationType:Cesium.ClassificationType.CESIUM_3D_TILE
+          },
+        });
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(114, 30, 50),
+          orientation: {
+            heading: Cesium.Math.toRadians(360.0),
+            pitch: Cesium.Math.toRadians(-32.25),
+            roll: 0.0,
           },
         });
       }
