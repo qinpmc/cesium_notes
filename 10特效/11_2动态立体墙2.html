@@ -11,10 +11,9 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
     <title>tianditu</title>
-
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
       html,
       body,
@@ -45,8 +44,7 @@
           navigationHelpButton: false, //是否显示帮助信息控件
           infoBox: true, //是否显示点击要素之后显示的信息
           imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-            url:
-              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
             layer: "vec",
             style: "default",
             format: "tiles",
@@ -62,8 +60,7 @@
         });
 
         var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          url: "http://t0.tianditu.gov.cn/cta_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
           layer: "cta",
           style: "default",
           format: "tiles",
@@ -210,16 +207,7 @@
         name: "面",
         polygon: {
           hierarchy: Cesium.Cartesian3.fromDegreesArray([
-            -107.0,
-            43.0,
-            -97.0,
-            43.0,
-            -97.0,
-            40.0,
-            -107.0,
-            40.0,
-            -107.0,
-            43.0,
+            -107.0, 43.0, -97.0, 43.0, -97.0, 40.0, -107.0, 40.0, -107.0, 43.0,
           ]),
           material: Cesium.Color.DARKGOLDENROD,
         },
@@ -242,25 +230,14 @@
           }),
           positions: new Cesium.CallbackProperty(function () {
             return Cesium.Cartesian3.fromDegreesArray([
-              -107.0,
-              43.0,
-              -97.0,
-              43.0,
-              -97.0,
-              40.0,
-              -107.0,
-              40.0,
-              -107.0,
+              -107.0, 43.0, -97.0, 43.0, -97.0, 40.0, -107.0, 40.0, -107.0,
               43.0,
             ]);
           }),
           maximumHeights: new Cesium.CallbackProperty(function () {
             return [
-              40000.83934717414732,
-              56000.2429357709178,
-              42100.5641915098355,
-              50000.83934717414732,
-              40000.83934717414732,
+              40000.83934717414732, 56000.2429357709178, 42100.5641915098355,
+              50000.83934717414732, 40000.83934717414732,
             ];
           }),
           minimumHeights: new Cesium.CallbackProperty(function () {
@@ -307,7 +284,76 @@
         viewer.dataSources.add(dataSource);
       }
 
-      addWall();
+      //addWall();
+
+      function addCylinder() {
+        // const greenCylinder = viewer.entities.add({
+        //   name: "Green cylinder with black outline",
+        //   position: Cesium.Cartesian3.fromDegrees(-100.0, 40.0, 200000.0),
+        //   cylinder: {
+        //     length: 400000.0,
+        //     topRadius: 200000.0,
+        //     bottomRadius: 200000.0,
+        //     material: Cesium.Color.GREEN.withAlpha(0.5),
+        //     outline: true,
+        //     outlineColor: Cesium.Color.DARK_GREEN,
+        //   },
+        // });
+
+        var g = {
+          zIndex: new Cesium.CallbackProperty(function () {
+            return 0;
+          }),
+          show: new Cesium.CallbackProperty(function () {
+            return true;
+          }),
+          // position: Cesium.Cartesian3.fromDegrees(-100.0, 40.0, 200000.0),
+          length: 400000.0,
+          topRadius: 200000.0,
+          bottomRadius: 200000.0,
+          clampToGround: new Cesium.CallbackProperty(function () {
+            return false;
+          }),
+          material: new LineFlowMaterialProperty({
+            url: new Cesium.CallbackProperty(function () {
+              return "./fence.png";
+            }),
+            color: new Cesium.CallbackProperty(function () {
+              return new Cesium.Color(0, 0, 1, 1);
+            }),
+            repeat: new Cesium.CallbackProperty(function () {
+              return new Cesium.Cartesian2(10, 1);
+            }),
+            duration: new Cesium.CallbackProperty(function () {
+              return 1000;
+            }),
+            axisY: new Cesium.CallbackProperty(function () {
+              return true;
+            }),
+          }),
+          outline: new Cesium.CallbackProperty(function () {
+            return true;
+            // return true;
+          }),
+          outlineColor: new Cesium.CallbackProperty(function () {
+            return new Cesium.Color(1, 1, 0, 1);
+          }),
+          outlineWidth: new Cesium.CallbackProperty(function () {
+            return 6;
+          }),
+        };
+
+        var entity = new Cesium.Entity({
+          id: "1",
+          position: Cesium.Cartesian3.fromDegrees(-100.0, 40.0, 200000.0),
+          cylinder: g,
+        });
+
+        dataSource.entities.add(entity);
+        viewer.dataSources.add(dataSource);
+      }
+
+      addCylinder();
     </script>
   </body>
 </html>
