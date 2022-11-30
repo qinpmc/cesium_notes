@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>裁剪效果</title>
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+    <link href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" rel="stylesheet">
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <script>
+
+        // token
+        Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+
+        var viewer = new Cesium.Viewer('cesiumContainer');
+        var scene = viewer.scene;
+
+        viewer.scene.globe.depthTestAgainstTerrain = true;
+ //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // 改变tileset高度
+        function change(height) {
+            height = Number(height);
+            if (isNaN(height)) {
+                return;
+            }
+            var cartographic = Cesium.Cartographic.fromCartesian(tileset.boundingSphere.center);
+            var surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, 0.0);
+            var offset = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, height);
+            var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3());
+            tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
+        };
+
+        // 加载大雁塔模型
+        var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+            url: "http://resource.dvgis.cn/data/3dtiles/dayanta/tileset.json",
+        }));
+
+  
+
+        tileset.readyPromise.then(function () {
+
+            // 当模型加载完成后，改变高度，3dtile模型一般都会飘在空中
+            change(-410);
+
+            var boundingSphere = tileset.boundingSphere; // 模型的包围球范围
+            var radius = boundingSphere.radius; // 长度
+
+            viewer.zoomTo(tileset, new Cesium.HeadingPitchRange(0.0,0, radius * 1.0));
+
+            viewer.entities.add({
+                position: boundingSphere.center,
+                point:{
+                    pixelSize:12,
+                    color:Cesium.Color.RED
+                }
+            })
+
+            console.log(tileset.root.transform)
+            //tileset.root.transform
+
+            var transform = tileset.root.transform
+ 
+        });
+ //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//  var handler;
+
+// var labelEntity = viewer.entities.add({
+//     label: {
+//         show: false,
+//         showBackground: true,
+//         font: '14px monospace',
+//         horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+//         verticalOrigin: Cesium.VerticalOrigin.TOP,
+//         pixelOffset: new Cesium.Cartesian2(15, 0)
+//     }
+// });
+
+// var tempRay = new Cesium.Ray();
+// var tempPos = new Cesium.Cartesian3();
+
+// // Mouse over the globe to see the cartographic position
+// handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+// handler.setInputAction(function (movement) {
+
+//     var foundPosition = false;
+
+//     var scene = viewer.scene;
+//     if (scene.mode !== Cesium.SceneMode.MORPHING) {
+//         //var pickedObject = scene.pick(movement.endPosition);
+//         if (true) {
+//             labelEntity.label.text = 'scene.pickPosition -\n';
+
+//             //第一种：scene.pickPosition
+//             var cartesian = viewer.scene.pickPosition(movement.endPosition);
+
+//             if (Cesium.defined(cartesian)) {
+//                 var res1 = transCartesian2LonLatHeight(cartesian);
+
+//                 labelEntity.label.text +=
+//                     'Lon: ' + ('   ' + res1.lon) + '\u00B0' +
+//                     '\nLat: ' + ('   ' + res1.lat) + '\u00B0' +
+//                     '\nAlt: ' + ('   ' + res1.height)+ 'm';
+//             }
+
+//             // 第二种：camera.getPickRay + globe.pick  -- 不能拾取 CesiumMilkTruck-kmc.gltf 模型上高度，在模型上拾取时 cartesian2为undefined
+//             var ray = scene.camera.getPickRay(movement.endPosition, tempRay);
+//             var cartesian2 = scene.globe.pick(ray, scene, tempPos);
+
+//             if (Cesium.defined(cartesian2)) {
+//                 var res2 = transCartesian2LonLatHeight(cartesian2);
+
+//                 labelEntity.label.text += '\nglobe.pick -' +
+//                     '\nLon2: ' + ('   ' + res2.lon) + '\u00B0' +
+//                     '\nLat2: ' + ('   ' + res2.lat) + '\u00B0' +
+//                     '\nAlt2: ' + ('   ' + res2.height) + 'm';
+//             }
+ 
+//             if (cartesian || cartesian2    ) {
+//                 labelEntity.position = cartesian || cartesian2    ;
+//                 labelEntity.label.show = true;
+
+//                 labelEntity.label.eyeOffset = new Cesium.Cartesian3(0.0, 0.0, 0);
+//                 labelEntity.label.disableDepthTestDistance = Number.POSITIVE_INFINITY;
+
+//                 foundPosition = true;
+//             }
+//         }
+//     }
+
+//     if (!foundPosition) {
+//         labelEntity.label.show = false;
+//     }
+// }, Cesium.ScreenSpaceEventType.MOUSE_MOVE); /*Cesium.ScreenSpaceEventType.MOUSE_MOVE   Cesium.ScreenSpaceEventType.LEFT_CLICK*/
+
+// function transCartesian2LonLatHeight(cartesian) {
+//     var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+//     var longitudeString = Cesium.Math.toDegrees(cartographic.longitude) ;
+//     var latitudeString = Cesium.Math.toDegrees(cartographic.latitude) ;
+//     var heightString = cartographic.height.toFixed(2);
+
+//     return {
+//         lon: longitudeString,
+//         lat: latitudeString,
+//         height: heightString
+//     }
+// }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+var p1 = [108.958297,34.220846]
+var p2 = [108.958075,34.218971]
+var p3 = [108.960585,34.219438]
+
+viewer.entities.add({
+    polygon: {
+        hierarchy: Cesium.Cartesian3.fromDegreesArray([
+      ...p1,
+      ...p2,
+      ...p3
+    ]),
+    material: Cesium.Color.RED,
+    }
+})
+
+
+var polygons= [
+    p1,p2,p3
+]
+
+//https://blog.csdn.net/qq_36213352/article/details/122843291
+          /**
+     * 创建裁剪面
+     * @param p1 起始点
+     * @param p2 结束点
+     * @param inverseTransform 矩阵
+     * @returns {*} ClippingPlane裁剪面（面法向量，点到面的垂直距离）
+     */
+     function  createPlane(p1, p2, inverseTransform) {
+ 
+ // 将仅包含经纬度信息的p1,p2，转换为相应坐标系的cartesian3对象
+ let p1C3 = getOriginCoordinateSystemPoint(p1, inverseTransform)
+ let p2C3 = getOriginCoordinateSystemPoint(p2, inverseTransform)
+
+ // 定义一个垂直向上的向量up
+ let up = new Cesium.Cartesian3(0, 0, 10)
+ //  right 实际上就是由p1指向p2的向量 （这里是p2--》p1）
+ let right = Cesium.Cartesian3.subtract(p2C3, p1C3, new Cesium.Cartesian3())
+ // 计算normal， right叉乘up，得到平面法向量（垂直于两个向量），这个法向量指向right的右侧
+ let normal = Cesium.Cartesian3.cross(right, up, new Cesium.Cartesian3())
+ normal = Cesium.Cartesian3.normalize(normal, normal)
+
+ //由于已经获得了法向量和过平面的一点，因此可以直接构造Plane,并进一步构造ClippingPlane
+ let planeTmp = Cesium.Plane.fromPointNormal(p1C3, normal)
+ return Cesium.ClippingPlane.fromPlane(planeTmp)
+} 
+
+/**
+* 对点进行坐标转换
+* @param point 点坐标 数组形式
+* @param inverseTransform 转换举证
+* @returns {*} ClippingPlane 裁切面
+*/
+function   getOriginCoordinateSystemPoint(point, inverseTransform) {
+ let val = Cesium.Cartesian3.fromDegrees(point[0], point[1])
+ return Cesium.Matrix4.multiplyByPoint(
+     inverseTransform, val, new Cesium.Cartesian3(0, 0, 0))
+} 
+
+
+
+
+
+tileset.readyPromise.then(function () {
+
+ 
+
+var transform = tileset.root.transform
+let inverseTransform = Cesium.Matrix4.inverseTransformation(transform, new Cesium.Matrix4());
+
+let clippingPlanes1 = [];
+      for (let i = 0; i < polygons.length; i++) {
+
+        if(i===polygons.length-1){
+            let plane = createPlane(polygons[i], polygons[0], inverseTransform);
+             clippingPlanes1.push(plane);
+        }else{
+            let plane = createPlane(polygons[i], polygons[i + 1], inverseTransform);
+             clippingPlanes1.push(plane);
+        }
+
+
+        
+      }
+
+
+
+      // 创建裁剪平面
+      let clippingPlanes = new Cesium.ClippingPlaneCollection({
+        //一组ClippingPlane对象，用于选择性地禁用每个平面外部的渲染。
+        planes: clippingPlanes1,
+        //应用于裁剪对象的边缘的高光的宽度（以像素为单位）
+        edgeWidth: 1.0,
+      });
+
+      console.log(clippingPlanes)
+
+      tileset.clippingPlanes = clippingPlanes
+ 
+});
+
+
+    </script>
+</body>
+
+</html>

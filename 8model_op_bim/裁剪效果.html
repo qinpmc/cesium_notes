@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>裁剪效果</title>
-    <script src="https://cesiumjs.org/releases/1.57/Build/Cesium/Cesium.js"></script>
-    <link href="https://cesiumjs.org/releases/1.57/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+    <link href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" rel="stylesheet">
     <style>
         html,
         body,
@@ -26,12 +26,14 @@
     <script>
 
         // token
-        Cesium.Ion.defaultAccessToken = 'xxxx(换成自己的key)';
+        Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
 
         var viewer = new Cesium.Viewer('cesiumContainer', {
-            imageryProvider: new Cesium.UrlTemplateImageryProvider({
-                url: 'http://www.google.cn/maps/vt?lyrs=s@716&x={x}&y={y}&z={z}'
-            })
+            // imageryProvider: new Cesium.UrlTemplateImageryProvider({
+            //     url: 'http://www.google.cn/maps/vt?lyrs=s@716&x={x}&y={y}&z={z}'
+            // })
         });
         var scene = viewer.scene;
 
@@ -101,7 +103,8 @@
 
         // 加载大雁塔模型
         var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-            url: "http://localhost:90/dayanta/tileset.json",
+            // url: "../sampleData/tileset/tt/tileset.json",
+            url: "http://resource.dvgis.cn/data/3dtiles/dayanta/tileset.json",
             clippingPlanes: clippingPlanes
         }));
 
@@ -113,7 +116,15 @@
             var boundingSphere = tileset.boundingSphere; // 模型的包围球范围
             var radius = boundingSphere.radius; // 长度
 
-            viewer.zoomTo(tileset, new Cesium.HeadingPitchRange(0.5, -0.2, radius * 4.0));
+            viewer.zoomTo(tileset, new Cesium.HeadingPitchRange(0.0,0, radius * 1.0));
+
+            viewer.entities.add({
+                position: boundingSphere.center,
+                point:{
+                    pixelSize:12,
+                    color:Cesium.Color.RED
+                }
+            })
 
             // 加载plane可视化切面平面
             for (var i = 0; i < clippingPlanes.length; ++i) {
