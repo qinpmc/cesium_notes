@@ -53,24 +53,31 @@
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      const center = [114, 30];
+      const lineStr =
+        '{"coordinates":[[114.28691227037508,35.68991377975019],[114.29335898492717,35.69977002684201],[114.30614140409126,35.69974950872571],[114.30392027280237,35.68843116100352],[114.31237437359725,35.68895405734342],[114.31502057841399,35.691919953304904]],"type":"LineString"}';
+      const geometry = JSON.parse(lineStr);
+      const feature = turf.feature(geometry);
+      const buffered = turf.buffer(feature, 500, {
+        units: "meters",
+        steps: 16,
+      });
 
-      var radius = 5;
-      var options = {
-        steps: 100,
-        units: "kilometers",
-        properties: { foo: "bar" },
-      };
-      var circle = turf.circle(center, radius, options);
-
-      console.log(circle);
+      geometry.coordinates.forEach((element) => {
+        viewer.entities.add({
+          position: Cesium.Cartesian3.fromDegrees(...element),
+          point: {
+            color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+            pixelSize: 6,
+          },
+        });
+      });
 
       viewer.entities.add({
         polygon: {
-          material: new Cesium.Color(1.0, 0.0, 0.0, 0.2),
+          material: new Cesium.Color(1.0, 0.0, 0.0, 0.5),
           hierarchy: new Cesium.PolygonHierarchy(
             Cesium.Cartesian3.fromDegreesArray(
-              circle.geometry.coordinates[0].flat()
+              buffered.geometry.coordinates[0].flat()
             )
           ),
           heightReference: Cesium.HeightReference.CLMAP_TO_GROUND,
@@ -78,41 +85,12 @@
         },
       });
 
-      const first = circle.geometry.coordinates[0][0];
-      viewer.entities.add({
-        position: Cesium.Cartesian3.fromDegrees(...first),
-        point: {
-          color: Cesium.Color.RED,
-          pixelSize: 12,
-          heightReference: Cesium.HeightReference.CLMAP_TO_GROUND,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY,
-        },
-      });
-
-      const p180 = circle.geometry.coordinates[0][(180 / 360) * options.steps];
-      viewer.entities.add({
-        position: Cesium.Cartesian3.fromDegrees(...p180),
-        point: {
-          color: Cesium.Color.GREEN,
-          pixelSize: 12,
-          heightReference: Cesium.HeightReference.CLMAP_TO_GROUND,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY,
-        },
-      });
-
-      const p270 = circle.geometry.coordinates[0][(270 / 360) * options.steps];
-      viewer.entities.add({
-        position: Cesium.Cartesian3.fromDegrees(...p270),
-        point: {
-          color: Cesium.Color.BLUE,
-          pixelSize: 12,
-          heightReference: Cesium.HeightReference.CLMAP_TO_GROUND,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY,
-        },
-      });
-
       viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(center[0], center[1], 15052),
+        destination: Cesium.Cartesian3.fromDegrees(
+          114.28691227037508,
+          35.68991377975019,
+          15052
+        ),
       });
     </script>
   </body>
