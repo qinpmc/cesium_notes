@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>开挖地形</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <script src="../lib/turf5.min.js"></script>
+
+    <link
+      href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #000000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        // imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        //   url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        //   layer: "vec",
+        //   style: "default",
+        //   format: "tiles",
+        //   tileMatrixSetID: "w",
+        // }),
+        // terrainProvider: Cesium.createWorldTerrain({
+        //   requestVertexNormals: true,
+        //   requestWaterMask: true,
+        // }),
+      });
+
+      viewer.scene.globe.depthTestAgainstTerrain = true; //添加后图片被遮挡
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function testPolygon() {
+        //polygon with hole
+        const geometry = [
+          [
+            [-5, 52],
+            [-5, 56],
+            [-2, 56],
+            [-2, 52],
+            [-5, 52],
+          ],
+          [
+            [-4, 53],
+            [-4, 55],
+            [-3, 55],
+            [-3, 53],
+            [-4, 53],
+          ],
+        ];
+
+        var polygon = turf.polygon(geometry, { name: "poly1" });
+        const buffered = turf.buffer(polygon, 50000, {
+          units: "meters",
+          steps: 16,
+        });
+
+        geometry.forEach((g) => {
+          g.forEach((element) => {
+            viewer.entities.add({
+              position: Cesium.Cartesian3.fromDegrees(...element),
+              point: {
+                color: new Cesium.Color(1.0, 0.0, 0.0, 1.0),
+                pixelSize: 6,
+              },
+            });
+          });
+        });
+
+        buffered.geometry.coordinates[0].forEach((item) => {
+          viewer.entities.add({
+            position: Cesium.Cartesian3.fromDegrees(...item),
+            point: {
+              color: new Cesium.Color(0.0, 1.0, 0.0, 1.0),
+              pixelSize: 8,
+            },
+          });
+        });
+
+        viewer.entities.add({
+          polygon: {
+            material: new Cesium.Color(1.0, 1.0, 0.0, 0.25),
+            hierarchy: new Cesium.PolygonHierarchy(
+              Cesium.Cartesian3.fromDegreesArray(
+                buffered.geometry.coordinates[0].flat()
+              )
+            ),
+            heightReference: Cesium.HeightReference.CLMAP_TO_GROUND,
+            disableDepthTestDistance: Number.POSITIVE_INFINITY,
+          },
+        });
+
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(-5, 54, 15000),
+        });
+      }
+
+      //testPolygon();
+
+      /////////////////////////////////////////////////////////////////////////////////////////////
+      function testMultiPolygon() {
+        //polygon with hole
+        const geometry = [
+          [
+            [
+              [-5, 52],
+              [-5, 56],
+              [-2, 56],
+              [-2, 52],
+              [-5, 52],
+            ],
+            [
+              [-4, 53],
+              [-4, 55],
+              [-3, 55],
+              [-3, 53],
+              [-4, 53],
+            ],
+          ],
+          [
+            [
+              [-5, 58],
+              [-5, 59],
+              [-2, 59],
+              [-2, 58],
+              [-5, 58],
+            ],
+          ],
+        ];
+
+        // var polygon = turf.multiPolygon(geometry, { name: "poly1" });
+        const feature = turf.feature({
+          type: "MultiPolygon",
+          coordinates: geometry,
+        });
+        const buffered = turf.buffer(feature, 50000, {
+          units: "meters",
+          steps: 16,
+        });
+
+        geometry.forEach((polygon) => {
+          polygon.forEach((g) => {
+            g.forEach((element) => {
+              viewer.entities.add({
+                position: Cesium.Cartesian3.fromDegrees(...element),
+                point: {
+                  color: new Cesium.Color(1.0, 0.0, 0.0, 1.0),
+                  pixelSize: 6,
+                },
+              });
+            });
+          });
+        });
+
+        buffered.geometry.coordinates[0].forEach((item) => {
+          item.forEach((p) => {
+            viewer.entities.add({
+              position: Cesium.Cartesian3.fromDegrees(...p),
+              point: {
+                color: new Cesium.Color(0.0, 1.0, 0.0, 1.0),
+                pixelSize: 8,
+              },
+            });
+          });
+        });
+
+        buffered.geometry.coordinates.forEach((coordinates) => {
+          viewer.entities.add({
+            polygon: {
+              material: new Cesium.Color(1.0, 1.0, 0.0, 0.25),
+              hierarchy: new Cesium.PolygonHierarchy(
+                Cesium.Cartesian3.fromDegreesArray(coordinates[0].flat())
+              ),
+              heightReference: Cesium.HeightReference.CLMAP_TO_GROUND,
+              disableDepthTestDistance: Number.POSITIVE_INFINITY,
+            },
+          });
+        });
+
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(-5, 54, 15000),
+        });
+      }
+
+      testMultiPolygon();
+    </script>
+  </body>
+</html>
