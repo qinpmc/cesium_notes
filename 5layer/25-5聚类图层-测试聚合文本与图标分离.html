@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>聚类</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <button onclick="showVec()">显隐天地图矢量</button>
+      <button onclick="showCta()">显隐天地图标注</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+      //4326坐标系从1开始
+      var tileMatrixLabels = [];
+      for (var i = 1; i < 18; i++) {
+        tileMatrixLabels.push("" + i);
+      }
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/img_c/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        }),
+        terrainProvider: new Cesium.CesiumTerrainProvider({
+          url: "http://data.marsgis.cn/terrain/",
+        }),
+      });
+
+      console.log(viewer.imageryLayers.get(0));
+      console.log(viewer.imageryLayers.get(1)); //undefined
+
+      var ctaLayer = new Cesium.ImageryLayer(
+        new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/cta_c/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
+          layer: "cta",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          maximumLevel: "14",
+          tileMatrixLabels: tileMatrixLabels,
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 2,
+            numberOfLevelZeroTilesY: 1,
+          }),
+        })
+      );
+
+      console.log(viewer.scene.imageryLayers === viewer.imageryLayers); // true
+      var layers = viewer.imageryLayers;
+      layers.add(ctaLayer);
+
+      var options = {
+        camera: viewer.scene.camera,
+        canvas: viewer.scene.canvas,
+      };
+
+      var layer = new Cesium.CustomDataSource();
+      layer.clustering.enabled = true;
+      layer.clustering.pixelRange = 10;
+      layer.clustering.minimumClusterSize = 2;
+
+      viewer.dataSources.add(layer);
+
+      var res = {
+        success: true,
+        code: "00000",
+        message: "请求成功",
+        data: {
+          resourceType: "10013",
+          nodeId: "D4_3_4",
+          nodeName: "水罐消防车",
+          valueList: [
+            {
+              geometry: { coordinates: [114.21093, 35.903251], type: "Point" },
+              type: "Feature",
+              properties: {
+                tenant_id: "ff8080818123304e01814b7459c400e2",
+                leader: "姜刚宁",
+                geoupdatetime: "2019-05-01 00:00:00",
+                latitude: 35.903251,
+                equipnum: 1,
+                resprovincial: "410000",
+                geosourcedept: "烟台市应急管理局",
+                spmodel: "SXF5250GXFPM100ZZ",
+                equipname: "泡沫水罐消防车",
+                rescuename: "河南能源集团鹤壁煤化工有限公司消防队",
+                rescueorgname: "河南能源集团鹤壁煤化工有限公司",
+                equiptypename: "水罐消防车",
+                leadermtel: "13849377294",
+                id: "SGC0231",
+                districtcode: "410603000000",
+                longitude: 114.21093,
+                submittime: "2022-05-06 07:23:39",
+                batreadycode: "PARA395",
+                deleteflag: "0",
+                address: "河南省鹤壁市",
+                unitcode: "辆",
+                sourcedept: "烟台市应急管理局",
+                rescity: "410600",
+                rescueid: "RESQRR0147",
+                equipmentid: "SGC0231",
+                featurecode: "410040040000",
+                name: "水罐消防车",
+                updatetime: "2019-05-01 00:00:00",
+                equiptypecode: "1004004",
+                resourceType: "10013",
+              },
+            },
+            {
+              geometry: { coordinates: [114.18343, 35.979316], type: "Point" },
+              type: "Feature",
+              properties: {
+                tenant_id: "ff8080818123304e01814b7459c400e2",
+                leader: "张文斌",
+                geoupdatetime: "2019-05-01 00:00:00",
+                latitude: 35.979316,
+                equipnum: 1,
+                resprovincial: "410000",
+                geosourcedept: "烟台市应急管理局",
+                spmodel: "JDF5081GXFSG25",
+                equipname: "泡沫水罐消防车",
+                rescuename: "姬家山园区消防队",
+                rescueorgname: "姬家山产业园管理办公室",
+                equiptypename: "水罐消防车",
+                leadermtel: "15939863843",
+                id: "SGC0233",
+                districtcode: "410602000000",
+                longitude: 114.18343,
+                submittime: "2022-05-06 07:23:39",
+                batreadycode: "PARA395",
+                deleteflag: "0",
+                address: "河南省鹤壁市鹤山区姬家山产业园",
+                unitcode: "辆",
+                sourcedept: "烟台市应急管理局",
+                rescity: "410600",
+                rescueid: "RESQRR0149",
+                equipmentid: "SGC0233",
+                featurecode: "410040040000",
+                name: "水罐消防车",
+                updatetime: "2019-05-01 00:00:00",
+                equiptypecode: "1004004",
+                resourceType: "10013",
+              },
+            },
+            {
+              geometry: { coordinates: [114.21093, 35.903251], type: "Point" },
+              type: "Feature",
+              properties: {
+                tenant_id: "ff8080818123304e01814b7459c400e2",
+                leader: "姜刚宁",
+                geoupdatetime: "2019-05-01 00:00:00",
+                latitude: 35.903251,
+                equipnum: 1,
+                resprovincial: "410000",
+                geosourcedept: "烟台市应急管理局",
+                spmodel: "SXF5190GXFG70Z",
+                equipname: "泡沫水罐消防车",
+                rescuename: "河南能源集团鹤壁煤化工有限公司消防队",
+                rescueorgname: "河南能源集团鹤壁煤化工有限公司",
+                equiptypename: "水罐消防车",
+                leadermtel: "13849377294",
+                id: "SGC0230",
+                districtcode: "410603000000",
+                longitude: 114.21093,
+                submittime: "2022-05-06 07:23:39",
+                batreadycode: "PARA395",
+                deleteflag: "0",
+                address: "河南省鹤壁市",
+                unitcode: "辆",
+                sourcedept: "烟台市应急管理局",
+                rescity: "410600",
+                rescueid: "RESQRR0147",
+                equipmentid: "SGC0230",
+                featurecode: "410040040000",
+                name: "水罐消防车",
+                updatetime: "2019-05-01 00:00:00",
+                equiptypecode: "1004004",
+                resourceType: "10013",
+              },
+            },
+            {
+              geometry: { coordinates: [114.264094, 35.913105], type: "Point" },
+              type: "Feature",
+              properties: {
+                tenant_id: "ff8080818123304e01814b7459c400e2",
+                leader: "李济",
+                geoupdatetime: "2019-05-01 00:00:00",
+                latitude: 35.913105,
+                equipnum: 1,
+                resprovincial: "410000",
+                geosourcedept: "烟台市应急管理局",
+                spmodel: "联用消防车（泡沫、干粉、水）",
+                equipname: "泡沫水罐消防车",
+                rescuename: "鹤壁宝发能源科技股份有限公司专职消防队",
+                rescueorgname: "鹤壁宝发能源科技股份有限公司",
+                equiptypename: "水罐消防车",
+                leadermtel: "18639645154",
+                id: "SGC0232",
+                districtcode: "410603000000",
+                longitude: 114.264094,
+                submittime: "2022-05-06 07:23:39",
+                batreadycode: "PARA395",
+                deleteflag: "0",
+                address: "河南省鹤壁市山城区鹿楼",
+                unitcode: "辆",
+                sourcedept: "烟台市应急管理局",
+                rescity: "410600",
+                rescueid: "RESQRR0148",
+                equipmentid: "SGC0232",
+                featurecode: "410040040000",
+                name: "水罐消防车",
+                updatetime: "2019-05-01 00:00:00",
+                equiptypecode: "1004004",
+                resourceType: "10013",
+              },
+            },
+          ],
+          totalNum: 4,
+        },
+      };
+
+      res.data.valueList.forEach((f) => {
+        layer.entities.add({
+          position: Cesium.Cartesian3.fromDegrees(...f.geometry.coordinates),
+          billboard: {
+            image: "./水罐消防车.png",
+          },
+        });
+      });
+
+      layer.clustering.clusterEvent.addEventListener(function (
+        clusteredEntities,
+        cluster
+      ) {
+        cluster.billboard.show = true;
+        cluster.billboard.id = cluster.label.id;
+        cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
+        cluster.billboard.image = "./D-cluster-new.png";
+        cluster.billboard.disableDepthTestDistance = Number.POSITIVE_INFINITY;
+        cluster.billboard.heightReference =
+          Cesium.HeightReference.CLAMP_TO_GROUND;
+        cluster.billboard.scale = 1;
+
+        cluster.label.show = true;
+        cluster.label.font = `34px Microsoft YaHei`;
+        cluster.label.showBackground = true;
+        cluster.label.backgroundColor = new Cesium.Color(1, 1, 1, 0);
+        cluster.label.fillColor = new Cesium.Color(1, 1, 1, 1);
+
+        cluster.label.pixelOffset = new Cesium.Cartesian2(-16, -27);
+        cluster.label.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
+        cluster.label.disableDepthTestDistance = Number.POSITIVE_INFINITY;
+        cluster.label.eyeOffset = new Cesium.Cartesian3(0, 0, -1);
+      });
+
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(
+          114.21093,
+          35.903251,
+          1000000
+        ),
+      });
+
+      window.showVec = function () {
+        viewer.imageryLayers.get(0).show = !viewer.imageryLayers.get(0).show;
+      };
+
+      window.showCta = function () {
+        viewer.imageryLayers.get(1).show = !viewer.imageryLayers.get(1).show;
+      };
+    </script>
+  </body>
+</html>
