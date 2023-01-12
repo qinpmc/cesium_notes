@@ -144,3 +144,8 @@ Cesium.Cesium3DTileStyle(style)
 3D Tiles Styling language(https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling)
 
 ClassificationPrimitive(单体化？)
+
+- https://blog.csdn.net/Gua_guagua/article/details/126880738
+- https://blog.csdn.net/u013240519/article/details/121970561
+- http://events.jianshu.io/p/0b0df0eb791b
+- https://community.cesium.com/t/how-to-apply-model-orientation-rotation-then-use-velocityorientationproperty/4682
