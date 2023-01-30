@@ -75,8 +75,8 @@
       //设置初始位置
       viewer.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(
-          117.220108,
-          31.834937,
+          114.143958,
+          35.847147,
           10000
         ),
       });
@@ -91,14 +91,41 @@
         bottomImg: "./TerrainClipPlan/excavate_bottom_min.jpg",
       });
 
-      var positions = [
-        { x: -2480825.779644006, y: 4823039.348573122, z: 3344998.9734951435 },
-        { x: -2481057.6623671586, y: 4822939.719360245, z: 3344970.8291531955 },
-        { x: -2481026.5803391673, y: 4823096.907581604, z: 3344768.5949868727 },
-        { x: -2480854.0689538443, y: 4823168.905374106, z: 3344792.5711652176 },
+      const coordinates = [
+        [114.143958, 35.847147],
+        [114.190661, 35.884209],
+        [114.20165, 35.848519],
+        [114.204398, 35.804593],
+        [114.233244, 35.771649],
+        [114.290936, 35.764785],
+        [114.465388, 35.788121],
+        [114.521706, 35.76753],
+        [114.518959, 35.737331],
+        [114.472256, 35.73184],
+        [114.373354, 35.724977],
+        [114.296431, 35.712623],
+        [114.278574, 35.653597],
+        [114.295057, 35.605553],
+        [114.376102, 35.623398],
+        [114.461267, 35.653597],
+        [114.476377, 35.613789],
+        [114.433794, 35.586335],
+        [114.204398, 35.576726],
+        [114.132969, 35.628888],
+        [114.131595, 35.73184],
+        [114.143958, 35.847147],
       ];
+      const res = [];
+      coordinates.forEach((co) => {
+        const cartesian = Cesium.Cartesian3.fromDegrees(co[0], co[1]);
+        res.push({
+          x: cartesian.x,
+          y: cartesian.y,
+          z: cartesian.z,
+        });
+      });
 
-      terrainClipPlan.updateData(positions);
+      terrainClipPlan.updateData(res);
 
       var colors = [
         Cesium.Color.RED,
@@ -107,13 +134,13 @@
         Cesium.Color.YELLOW,
       ];
 
-      for (var i = 0; i < positions.length; i++) {
-        var position = positions[i];
+      for (var i = 0; i < res.length; i++) {
+        var position = res[i];
         viewer.entities.add({
           position: new Cesium.Cartesian3(position.x, position.y, position.z),
           point: {
             pixelSize: 10,
-            color: colors[i],
+            color: Cesium.Color.RED,
           },
         });
       }
