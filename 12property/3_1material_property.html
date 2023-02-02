@@ -12,9 +12,9 @@
     />
     <title>tianditu</title>
 
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
     <style>
-      @import url(../Build/Cesium/Widgets/widgets.css);
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
       html,
       body,
@@ -52,8 +52,7 @@
           //navigationHelpButton: false, //是否显示帮助信息控件
           infoBox: true, //是否显示点击要素之后显示的信息
           imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-            url:
-              "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+            url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
             layer: "vec",
             style: "default",
             format: "tiles",
@@ -65,8 +64,7 @@
         });
 
         var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          url: "http://t0.tianditu.gov.cn/cta_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
           layer: "cta",
           style: "default",
           format: "tiles",
@@ -99,8 +97,8 @@
       viewer.clock.startTime = start.clone();
       viewer.clock.stopTime = stop.clone();
       viewer.clock.currentTime = start.clone();
-      viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //Loop at the end
-      viewer.clock.multiplier = 10000;
+      // viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //Loop at the end
+      viewer.clock.multiplier = 1000;
       viewer.timeline.zoomTo(start, stop);
 
       var blueBox = viewer.entities.add({
@@ -111,6 +109,14 @@
           dimensions: new Cesium.Cartesian3(400000.0, 300000.0, 600000.0),
           material: Cesium.Color.BLUE,
           outline: true,
+        },
+
+        polyline: {
+          material: Cesium.Color.YELLOW,
+          positions: [
+            Cesium.Cartesian3.fromDegrees(114.0, 30.0, 300000.0),
+            Cesium.Cartesian3.fromDegrees(54.0, 30.0, 300000.0),
+          ],
         },
         path: {
           show: true,
@@ -126,7 +132,7 @@
 
       function change_constant_set() {
         // ColorMaterialProperty 没有setValue
-        blueBox.box.material.color.setValue(
+        blueBox.polyline.material.color.setValue(
           new Cesium.ColorMaterialProperty(new Cesium.Color(1, 0, 0))
         );
       }
@@ -144,9 +150,10 @@
           new Cesium.Color(0, 0, 1)
         );
 
-        blueBox.box.material = new Cesium.ColorMaterialProperty(colorProperty);
+        blueBox.polyline.material = new Cesium.ColorMaterialProperty(
+          colorProperty
+        );
       }
-
-      </script>
+    </script>
   </body>
 </html>

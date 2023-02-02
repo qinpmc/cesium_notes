@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>线</title>
+    <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+    <style>
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
+      <button onclick="changeColor()">改变颜色</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer = new Cesium.Viewer("cesiumContainer", {
+        geocoder: false,
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+          layer: "img",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          maximumLevel: "19",
+        }),
+        baseLayerPicker: false,
+        fullscreenButton: false,
+        homeButton: false,
+        sceneModePicker: false,
+        animation: false,
+        timeline: false,
+        navigationHelpButton: false,
+        terrainProvider: Cesium.createWorldTerrain({
+          requestWaterMask: true,
+          requestVertexNormals: true,
+        }),
+      });
+
+      let entity = null;
+      //普通线
+
+      entity = viewer.entities.add({
+        name: "红色普通线",
+        polyline: {
+          positions: Cesium.Cartesian3.fromDegreesArray([114, 30, 70, 30]),
+          width: 15,
+          material: Cesium.Color.RED,
+          clampToGround: true, //贴地形
+        },
+      });
+      viewer.scene.camera.flyTo({
+        destination: new Cesium.Cartesian3.fromDegrees(90, 35, 9933000),
+      });
+
+      viewer.zoomTo(viewer.entities);
+
+      const colors = [
+        new Cesium.Color(1, 0, 0, 1.0),
+        new Cesium.Color(0, 1, 0, 1.0),
+        new Cesium.Color(0, 0, 1, 1.0),
+        new Cesium.Color(1, 1, 0, 1.0),
+      ];
+
+      window.changeColor = function () {
+        // setInterval(() => {
+        //   entity.polyline.material = colors[Math.floor(Math.random() * 4)];
+        // }, 60); //闪烁 ，间隔时间太短时线消失?
+
+        //无效,线消失
+        viewer.scene.postRender.addEventListener(() => {
+          const color = colors[Math.floor(Math.random() * 4)];
+          console.log(color);
+          entity.polyline.material = color;
+        });
+      };
+    </script>
+  </body>
+</html>
