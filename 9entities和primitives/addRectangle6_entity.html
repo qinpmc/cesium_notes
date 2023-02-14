@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <!-- Use correct character set. -->
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
     <title>矩形</title>
-    <script src="../Build/Cesium/Cesium.js"></script>
+    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
     <style>
-        @import url(../Build/Cesium/Widgets/widgets.css);
+      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-        html, body, #cesiumContainer {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
     </style>
-</head>
-<body>
-<div style="position: absolute;z-index: 9999;left: 10px;top:10px">
-    <button onclick="addRectangle1()">增加矩形1</button>
-    <button onclick="addRectangle2()">增加拉伸矩形2</button>
-    <button onclick="addRectangle3()">增加材质变化矩形3</button>
-
-</div>
-<div id="cesiumContainer"></div>
-<script>
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js"
-    var viewer = new Cesium.Viewer('cesiumContainer', {
+  </head>
+  <body>
+    <div style="position: absolute; z-index: 9999; left: 10px; top: 10px">
+      <button onclick="addRectangle1()">增加矩形1</button>
+      <button onclick="addRectangle2()">增加拉伸矩形2</button>
+      <button onclick="addRectangle3()">增加材质变化矩形3</button>
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+      var viewer = new Cesium.Viewer("cesiumContainer", {
         geocoder: false,
         baseLayerPicker: false,
         fullscreenButton: false,
@@ -42,67 +45,75 @@
         animation: false,
         timeline: false,
         navigationHelpButton: false,
-        terrainProvider: Cesium.createWorldTerrain({
-            requestWaterMask: true,
-            requestVertexNormals: true
-        })
-    });
+        sceneMode: Cesium.SceneMode.SCENE2D, //二维的
+        // terrainProvider: Cesium.createWorldTerrain({
+        //   requestWaterMask: true,
+        //   requestVertexNormals: true,
+        // }),
+      });
 
-
-    //普通矩形---默认贴地
-    function addRectangle1() {
+      //普通矩形---默认贴地
+      function addRectangle1() {
         var redRectangle = viewer.entities.add({
-            name : 'Red translucent rectangle',
-            rectangle : {
-                coordinates : Cesium.Rectangle.fromDegrees(-110.0, 20.0, -80.0, 25.0),
-                material : Cesium.Color.RED.withAlpha(0.5)
-            }
+          name: "Red translucent rectangle",
+          rectangle: {
+            coordinates: Cesium.Rectangle.fromDegrees(
+              -110.0,
+              20.0,
+              -80.0,
+              25.0
+            ),
+            fill: true,
+            material: Cesium.Color.RED.withAlpha(0.5),
+            outline: true, // height must be set for outline to display
+            outlineColor: new Cesium.Color(0.0, 1.0, 0.0, 1.0),
+            outlineWidth: 20,
+          },
         });
+      }
 
-    }
-
-    //矩形拉伸
-    function addRectangle2() {
+      //矩形拉伸
+      function addRectangle2() {
         var greenRectangle = viewer.entities.add({
-            name : 'Green translucent, rotated, and extruded rectangle at height with outline',
-            rectangle : {
-                coordinates : Cesium.Rectangle.fromDegrees(-110.0, 30.0, -100.0, 40.0),
-                material : Cesium.Color.GREEN.withAlpha(0.5),
-                rotation : Cesium.Math.toRadians(45),
-                extrudedHeight : 300000.0,
-                height : 100000.0,
-                outline : true, // height must be set for outline to display
-                outlineColor : Cesium.Color.BLACK
-            }
+          name: "Green translucent, rotated, and extruded rectangle at height with outline",
+          rectangle: {
+            coordinates: Cesium.Rectangle.fromDegrees(
+              -110.0,
+              30.0,
+              -100.0,
+              40.0
+            ),
+            material: Cesium.Color.GREEN.withAlpha(0.5),
+            rotation: Cesium.Math.toRadians(45),
+            extrudedHeight: 300000.0,
+            height: 100000.0,
+            outline: true, // height must be set for outline to display
+            outlineColor: Cesium.Color.BLACK,
+          },
         });
-    }
+      }
 
-    //矩形--材质旋转
-    function addRectangle3() {
-
+      //矩形--材质旋转
+      function addRectangle3() {
         var rotation = Cesium.Math.toRadians(30);
 
         function getRotationValue() {
-            rotation += 0.005;
-            return rotation;
+          rotation += 0.005;
+          return rotation;
         }
         viewer.entities.add({
-            name: 'Rotating rectangle with rotating texture coordinate',
-            rectangle: {
-                coordinates: Cesium.Rectangle.fromDegrees(-92.0, 30.0, -76.0, 40.0),
-                material: '../4pick_events/Cesium_Logo_overlay.png',
-                rotation: new Cesium.CallbackProperty(getRotationValue, false),
-                stRotation: new Cesium.CallbackProperty(getRotationValue, false),
-                classificationType : Cesium.ClassificationType.TERRAIN
-            }
+          name: "Rotating rectangle with rotating texture coordinate",
+          rectangle: {
+            coordinates: Cesium.Rectangle.fromDegrees(-92.0, 30.0, -76.0, 40.0),
+            material: "../4pick_events/Cesium_Logo_overlay.png",
+            rotation: new Cesium.CallbackProperty(getRotationValue, false),
+            stRotation: new Cesium.CallbackProperty(getRotationValue, false),
+            classificationType: Cesium.ClassificationType.TERRAIN,
+          },
         });
-    }
+      }
 
-
-
-    viewer.zoomTo(viewer.entities);
-
-
-</script>
-</body>
+      viewer.zoomTo(viewer.entities);
+    </script>
+  </body>
 </html>
