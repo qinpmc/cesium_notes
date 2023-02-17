@@ -149,3 +149,69 @@ ClassificationPrimitive(单体化？)
 - https://blog.csdn.net/u013240519/article/details/121970561
 - http://events.jianshu.io/p/0b0df0eb791b
 - https://community.cesium.com/t/how-to-apply-model-orientation-rotation-then-use-velocityorientationproperty/4682
+
+```
+// https://gist.github.com/mramato/5146500e57d675fb1ee5
+var viewer = new Cesium.Viewer('cesiumContainer', {
+    infoBox : false,
+    selectionIndicator : false
+});
+
+var entity = viewer.entities.add({
+    position : Cesium.Cartesian3.fromDegrees(-123, 44, 10),
+    model : {
+        uri : '../../../Specs/Data/Models/Box-Textured/CesiumTexturedBoxTest.gltf',
+        minimumPixelSize : 128
+    }
+});
+viewer.zoomTo(entity, new Cesium.HeadingPitchRange(Math.PI / 4, -Math.PI / 4, 3));
+
+Cesium.loadImage('../images/checkerboard.png').then(function(image) {
+    //scene.context.createTexture2D is not part of the public API,
+    //so this code may have to change in the future.
+    var texture = viewer.scene.context.createTexture2D({
+        source : image
+    });
+
+    //Change color on mouse over.  This relies on the fact that given a primitive,
+    //you can retrieve an associted en
+    var originalTexture;
+    var lastPick;
+    var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+    var material;
+    handler.setInputAction(function(movement) {
+        var primitive;
+        var pickedObject = viewer.scene.pick(movement.endPosition);
+        if (pickedObject) {
+            primitive = pickedObject.primitive;
+            if (pickedObject !== lastPick && primitive instanceof Cesium.Model) {
+
+                //We don't use the entity here, but if you need to color based on
+                //some entity property, you can get to that data it here.
+                var entity = primitive.id;
+
+                material = primitive.getMaterial('Texture');
+                originalTexture = material.getValue('diffuse');
+                material.setValue('diffuse', texture);
+                lastPick = pickedObject;
+            }
+        } else if (lastPick) {
+            primitive = lastPick.primitive;
+            material = primitive.getMaterial('Texture');
+            material.setValue('diffuse', originalTexture);
+            lastPick = undefined;
+        }
+    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+});
+
+//Ability to look up the Model associated with an entity
+function getModelForEntity(entity) {
+    var primitives = viewer.scene.primitives;
+    for (var i = 0; i < primitives.length; i++) {
+        var primitive = primitives.get(i);
+        if (primitive instanceof Cesium.Model && primitive.id === entity) {
+            return primitive;
+        }
+    }
+}
+```
