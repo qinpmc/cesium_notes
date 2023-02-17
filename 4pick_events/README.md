@@ -165,3 +165,24 @@ var height = viewer.scene.globe.getHeight(cartographic);
     return ray;
   }
 ```
+
+```
+  var helper = new Cesium.EventHelper();
+      helper.add(map._map.scene.globe.tileLoadProgressEvent, function (queuedTileCount) {
+        console.log(queuedTileCount);
+        console.log("每次加载瓦片都会进入这个回调");
+        if (queuedTileCount == 0) {
+          console.log("加载瓦片片完成时进入这个回调");
+          const styleClassName = "mapRendercomplete";
+          var node = document.querySelector(`.${styleClassName}`);
+          if (node) {
+            node.parentNode.removeChild(node);
+          }
+          node = document.createElement("div"); //创建一个节点
+          node.className = styleClassName;
+          document.body.appendChild(node);
+        }
+      });
+
+      // allTilesLoaded; //Cesium3DTileset
+```
