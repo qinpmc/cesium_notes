@@ -51,6 +51,7 @@
         }),
       });
       var scene = widget.scene;
+      widget.scene.debugShowFramesPerSecond = true;
       // scene.terrainProvider = Cesium.createWorldTerrain({
       //   requestWaterMask: true,
       //   requestVertexNormals: true,
@@ -84,7 +85,7 @@
 
       //普通红色线-不贴地
       function addPolyline1() {
-        var randomPolylines = getRandomPolylines(10000);
+        var randomPolylines = getRandomPolylines(5000);
         for (var i = 0; i < randomPolylines.length; i++) {
           //不贴地
           var polyline = polylines.add({
