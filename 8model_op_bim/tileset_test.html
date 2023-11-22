@@ -1,173 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Use correct character set. -->
-    <meta charset="utf-8" />
-    <!-- Tell IE to use the latest, best version. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-    />
-    <title>模型</title>
-    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
-    <style>
-      @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-      html,
-      body,
-      #cesiumContainer {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-    </style>
-  </head>
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>模型</title>
+  <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+  <style>
+    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
 
-  <body>
-    <div class="tools">
-      Opacity:
-      <input
-        id="btnImageryAlpha"
-        type="range"
-        min="0"
-        max="1"
-        value="0.5"
-        step="0.01"
-        oninput="change()"
-      />
-    </div>
-    <input
-      id="offset"
-      type="range"
-      min="-500"
-      max="500"
-      step="10"
-      onclick="ajustHeight()"
-      style="width: 800px"
-    />
-    <div id="cesiumContainer"></div>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
 
-    <script>
-      Cesium.Ion.defaultAccessToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+<body>
+  <div class="tools">
+    旋转 :
+    <input id="btnX" type="range" min="0" max="90" value="45" step="10" oninput="rotateTilesets()" />
+    <button onclick="toggleTilesets()">显隐模型</button>
+  </div>
 
-      var viewer;
-      !(function () {
-        viewer = new Cesium.Viewer("cesiumContainer", {
-          animation: true, //是否显示动画控件
-          //baseLayerPicker: false, //是否显示图层选择控件
-          geocoder: true, //是否显示地名查找控件
-          timeline: true, //是否显示时间线控件
-          shouldAnimate: true,
-          sceneModePicker: true, //是否显示投影方式控件
-          //navigationHelpButton: false, //是否显示帮助信息控件
-          infoBox: true, //是否显示点击要素之后显示的信息
-          imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-            url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
-            layer: "img",
-            style: "default",
-            format: "tiles",
-            tileMatrixSetID: "w",
-            tilingScheme: new Cesium.WebMercatorTilingScheme({}),
-          }),
-        });
+  <div id="cesiumContainer"></div>
 
-        var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
-          url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
-          layer: "cia",
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+    var viewer;
+    !(function () {
+      viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: true, //是否显示动画控件
+        //baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: true, //是否显示时间线控件
+        shouldAnimate: true,
+        sceneModePicker: true, //是否显示投影方式控件
+        //navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
+          layer: "img",
           style: "default",
           format: "tiles",
           tileMatrixSetID: "w",
           tilingScheme: new Cesium.WebMercatorTilingScheme({}),
-        });
-
-        viewer.imageryLayers.addImageryProvider(imageryProvider2);
-      })();
-
-      viewer.scene.globe.depthTestAgainstTerrain = true;
-
-      // Load the NYC buildings tileset
-      var tileset = new Cesium.Cesium3DTileset({
-        url: "./3dtiles/tileset.json",
-        //url: "../dv_ljz/tileset.json",
-        //url: "http://resource.dvgis.cn/data/3dtiles/ljz/tileset.json"
-      });
-      viewer.scene.primitives.add(tileset);
-      viewer.zoomTo(tileset);
-
-      viewer.scene.globe.translucency.frontFaceAlphaByDistance =
-        new Cesium.NearFarScalar(400.0, 0.0, 800.0, 1.0);
-
-      window.change = function change() {
-        viewer.scene.screenSpaceCameraController.enableCollisionDetection = false;
-        viewer.scene.globe.translucency.enabled = true;
-        var alpha = parseFloat(
-          document.getElementById("btnImageryAlpha").value
-        );
-        viewer.scene.globe.translucency.frontFaceAlphaByDistance.nearValue =
-          alpha;
-        viewer.scene.globe.translucency.frontFaceAlphaByDistance.farValue =
-          false ? 1.0 : alpha;
-        console.log(alpha);
-      };
-
-      window.ajustHeight = function () {
-        var offsetHeight = document.getElementById("offset").value;
-        changeHeight(offsetHeight);
-        //changeHeight2(offsetHeight)
-      };
-      var center;
-      tileset.readyPromise.then(function (tileset) {
-        center = tileset.boundingSphere.center.clone();
+        }),
       });
 
-      function changeHeight(height) {
-        height = Number(height);
-        if (isNaN(height)) {
-          return;
-        }
-        var cartographic = Cesium.Cartographic.fromCartesian(center);
+      var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+        url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
+        layer: "cia",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+      });
 
-        console.log(center);
-        var surface = Cesium.Cartesian3.fromRadians(
-          cartographic.longitude,
-          cartographic.latitude,
-          cartographic.height
-        );
-        var offset = Cesium.Cartesian3.fromRadians(
-          cartographic.longitude,
-          cartographic.latitude,
-          height
-        );
-        console.log(height);
-        var translation = Cesium.Cartesian3.subtract(
-          offset,
-          surface,
-          new Cesium.Cartesian3()
-        );
-        tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
-      }
+      viewer.imageryLayers.addImageryProvider(imageryProvider2);
+    })();
 
-      function changeHeight2(height) {
-        //创建平移矩阵方法一
-        // m = Cesium.Matrix4.fromArray([
-        // 1.0, 0.0, 0.0, 0.0,
-        // 0.0, 1.0, 0.0, 0.0,
-        // 0.0, 0.0, 1.0, 0.0,
-        // x, y, z, 1.0
-        // ]);
+    // viewer.scene.globe.depthTestAgainstTerrain = true;
 
-        //创建平移矩阵方法二
-        var translation = Cesium.Cartesian3.fromArray([0, 0, height]);
-        m = Cesium.Matrix4.fromTranslation(translation);
+    // Load the NYC buildings tileset
+    var tileset = new Cesium.Cesium3DTileset({
+      // url: "../sampleData/tileset/obj_tilesets/tileset.json", //rotate(90, 0, 0, tileset)
+      // url: "../sampleData/tileset/farm_tileset/tileset.json", //rotate(0, 0, 90, tileset)
+      // url: "../sampleData/tileset/mountain/tileset.json",
+      url: "../sampleData/tileset/tz_shp_buildings/tileset.json",
+      /////////////////////////////////// 3dtiles切片工具切片  /////////////////////////////////// 
 
-        //生效
-        tileset._modelMatrix = m;
-      }
-    </script>
-  </body>
+      // url: "../sampleData/tileset/Tileset3/tileset.json",
+      // url: "http://resource.dvgis.cn/data/3dtiles/ljz/tileset.json"
+      // debugWireframe: true,
+      // debugShowBoundingVolume: true,
+      // debugShowViewerRequestVolume: true
+    });
+    viewer.scene.primitives.add(tileset);
+
+
+    //cesium ion上的测试数据
+    // const tileset = new Cesium.Cesium3DTileset({
+    //   url: Cesium.IonResource.fromAssetId(2347777),
+    // });
+    // viewer.scene.primitives.add(tileset);
+
+
+
+    viewer.zoomTo(tileset);
+    var center
+
+    tileset.readyPromise.then(function (tileset) {
+      center = tileset.boundingSphere.center.clone();
+      var m0 = tileset._root.transform;
+      var m3 = Cesium.Matrix4.getMatrix3(m0, new Cesium.Matrix3());
+      // var m3_1 = Cesium.Matrix4.getRotation(m0, new Cesium.Matrix3())
+      const scale = Cesium.Matrix4.getScale(m0, new Cesium.Cartesian3());
+      var hpr = Cesium.Transforms.fixedFrameToHeadingPitchRoll(m0);
+      console.log(hpr)
+      // rotate(0, 0, 90, tileset)
+    });
+
+    // let center = new Cesium.Cartesian3(-2998150.857898273, 4941731.363044754, 2687474.594037894)
+    // viewer.camera.flyTo({
+    //   destination: center,
+    //   orientation: {
+    //     heading: Cesium.Math.toRadians(0.0),
+    //     pitch: Cesium.Math.toRadians(0.0),
+    //     roll: 0.0,
+    //   },
+    // });
+
+
+
+    window.rotateTilesets = function () {
+      var btnEle = document.getElementById("btnX");
+      let angleX = parseFloat(btnEle.value);
+      btnEle.addEventListener("click", () => {
+        rotate(90, 0, 0, tileset)
+      })
+    }
+
+    function rotate(rx, ry, rz, tileset) {
+      var cartographic = Cesium.Cartographic.fromCartesian(center);
+      var x = Cesium.Math.toDegrees(cartographic.longitude);
+      var y = Cesium.Math.toDegrees(cartographic.latitude);
+      var z = cartographic.height;//cartographic.height;
+      //旋转矩阵 Matrix3
+      var mx = Cesium.Matrix3.fromRotationX(Cesium.Math.toRadians(rx));
+      var my = Cesium.Matrix3.fromRotationY(Cesium.Math.toRadians(ry));
+      var mz = Cesium.Matrix3.fromRotationZ(Cesium.Math.toRadians(rz));
+
+      var rotationX = Cesium.Matrix4.fromRotationTranslation(mx);
+      var rotationY = Cesium.Matrix4.fromRotationTranslation(my);
+      var rotationZ = Cesium.Matrix4.fromRotationTranslation(mz);
+      //转换原点
+      var position = Cesium.Cartesian3.fromDegrees(x, y, 0);
+      //var position = Cesium.Cartesian3.fromDegrees(cartographic.longitude+this._offsetX, cartographic.latitude+this._offsetY, cartographic.height+this._height);
+      var m = Cesium.Transforms.eastNorthUpToFixedFrame(position);
+      //矩阵相乘
+      Cesium.Matrix4.multiply(m, rotationX, m);
+      Cesium.Matrix4.multiply(m, rotationY, m);
+      Cesium.Matrix4.multiply(m, rotationZ, m);
+
+
+      //更新矩阵
+      tileset._root.transform = m;
+    }
+
+
+    window.toggleTilesets = function () {
+      tileset.show = !tileset.show
+    }
+
+
+  </script>
+</body>
+
 </html>

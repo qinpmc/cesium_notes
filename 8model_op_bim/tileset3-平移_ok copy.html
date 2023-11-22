@@ -33,20 +33,17 @@
         background: #fff;
       ">
     <button onclick="toggleData()">显隐</button>
-    高度：<input type="range" max="200" min="-200" step="20" id="heightEle" />
-    经度：<input type="range" max="0.0001" min="-0.0001" step="0.00005" id="lonEle" />
-    纬度：<input type="range" max="0.0001" min="-0.0001" step="0.00005" id="latEle" />
+    高度：<input type="text" id="heightEle" />
+    经度：<input type="text" id="lonEle" />
+    纬度：<input type="text" id="latEle" />
+    缩放：<input type="text" id="scaleEle" />
   </div>
   <div id="cesiumContainer"></div>
   <script>
     Cesium.Ion.defaultAccessToken =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
 
-    //4326坐标系从1开始
-    var tileMatrixLabels = [];
-    for (var i = 1; i < 18; i++) {
-      tileMatrixLabels.push("" + i);
-    }
+
     var viewer = new Cesium.Viewer("cesiumContainer", {
       animation: false, //是否显示动画控件
       shouldAnimate: true, // 让
@@ -57,41 +54,35 @@
       navigationHelpButton: false, //是否显示帮助信息控件
       infoBox: true, //是否显示点击要素之后显示的信息
       imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-        url: "http://t0.tianditu.gov.cn/img_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
+        url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
         layer: "img",
         style: "default",
         format: "tiles",
-        tileMatrixSetID: "c",
-        maximumLevel: "18",
-        tileMatrixLabels: tileMatrixLabels,
-        tilingScheme: new Cesium.GeographicTilingScheme({
-          numberOfLevelZeroTilesX: 2,
-          numberOfLevelZeroTilesY: 1,
-        }),
+        tileMatrixSetID: "w",
+        tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+      }),
+      terrainProvider: new Cesium.CesiumTerrainProvider({
+        url: "http://data.marsgis.cn/terrain/",
       }),
     });
 
-    var ctaLayer = new Cesium.ImageryLayer(
-      new Cesium.WebMapTileServiceImageryProvider({
-        url: "http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156",
-        layer: "cta",
-        style: "default",
-        format: "tiles",
-        tileMatrixSetID: "c",
-        maximumLevel: "14",
-        tileMatrixLabels: tileMatrixLabels,
-        tilingScheme: new Cesium.GeographicTilingScheme({
-          numberOfLevelZeroTilesX: 2,
-          numberOfLevelZeroTilesY: 1,
-        }),
-      })
-    );
+    var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+      url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
+      layer: "cia",
+      style: "default",
+      format: "tiles",
+      tileMatrixSetID: "w",
+      tilingScheme: new Cesium.WebMercatorTilingScheme({}),
+    });
 
-    var layers = viewer.imageryLayers;
-    layers.add(ctaLayer);
+    viewer.imageryLayers.addImageryProvider(imageryProvider2);
+    viewer.scene.globe.depthTestAgainstTerrain = true;
+
 
     var tileset = new Cesium.Cesium3DTileset({
-      url: "../sampleData/tileset/Tileset/tileset.json",
+      // url: "../sampleData/tileset/Tileset/tileset.json",
+      // url: "../sampleData/tileset/tz_buildings_obj_tilesets/tileset.json",
+      url: "../sampleData/tileset/tz_merge_tilesets/tileset.json", //scale 0.765, height 13
     });
 
     var collection = new Cesium.PrimitiveCollection();
@@ -103,15 +94,13 @@
       .then(function (tileset) {
         //viewer.scene.primitives.add(tileset);
         collection.add(tileset);
-
         center = tileset.boundingSphere.center.clone();
         console.log("origin center: ", center);
 
-        // x: 1215020.301129722;
-        // y: -4736341.968684441;
-        // z: 4081630.3111507166;
+
 
         console.log("origin modelMatrix: ", tileset.modelMatrix); //单位矩阵
+        console.log("tileset._root.transform: ", tileset._root.transform); // 
         viewer.zoomTo(
           tileset,
           new Cesium.HeadingPitchRange(
@@ -144,19 +133,79 @@
         console.log(error);
       });
 
-    //数据的 RTC_CENTER: [1215019.2111447915, -4736339.477299974, 4081627.9570209784]
+    //数据的 RTC_CENTER: [ ]
     // 增加位置为 RTC_CENTER 的点 用于调试
     viewer.entities.add({
       position: new Cesium.Cartesian3(
-        1215019.2111447915,
-        -4736339.477299974,
-        4081627.9570209784
+        0,
+        0,
+        0
       ),
       point: {
         pixelSize: 10,
         color: Cesium.Color.YELLOW,
       },
     });
+
+    /*
+    
+    tileset.modelMatrix * transform [root节点] * transform [根节点]
+
+
+    Cesium3DTile.prototype.updateVisibility = function (frameState) {
+      var parent = this.parent;
+      var tileset = this._tileset;
+      var parentTransform = defined(parent)
+        ? parent.computedTransform
+        : tileset.modelMatrix;
+      var parentVisibilityPlaneMask = defined(parent)
+        ? parent._visibilityPlaneMask
+        : CullingVolume.MASK_INDETERMINATE;
+      this.updateTransform(parentTransform); //Cesium3DTile.prototype.updateTransform
+
+      ....
+
+      --->
+        Cesium3DTile.prototype.updateTransform = function (parentTransform) {
+          parentTransform = defaultValue(parentTransform, Matrix4.IDENTITY);
+          var computedTransform = Matrix4.multiply(
+            parentTransform,
+            this.transform,
+            scratchTransform
+          );
+          ...
+
+------------
+      function Cesium3DTile(tileset, baseResource, header, parent) {
+        ...
+        this.transform = defined(header.transform)
+          ? Matrix4.unpack(header.transform)
+          : Matrix4.clone(Matrix4.IDENTITY);
+
+          //根节点parent为undefined,子节点parent.computedTransform一般为root的transform矩阵
+        var parentTransform = defined(parent)
+          ? parent.computedTransform
+          : tileset.modelMatrix;
+
+        var computedTransform = Matrix4.multiply(
+          parentTransform,
+          this.transform,
+          new Matrix4()
+        );
+
+        var parentInitialTransform = defined(parent)
+          ? parent._initialTransform
+          : Matrix4.IDENTITY;
+        this._initialTransform = Matrix4.multiply(
+          parentInitialTransform,
+          this.transform,
+          new Matrix4()
+        );
+
+        this.computedTransform = computedTransform; 
+        ...  
+    
+    */
 
     //3dTiles 偏移量
     tileset._offsetX = 0;
@@ -175,10 +224,12 @@
           tileset._offsetZ,
           tileset.boundingSphere.center
         );
-        var center = tileset.boundingSphere.center;
+        // var center = tileset.boundingSphere.center;
 
-        console.log("center: ", center); // x: 1215020.301129722  y: -4736341.968684441 z: 4081630.3111507166
+        // console.log("center: ", center); // x: 1215020.301129722  y: -4736341.968684441 z: 4081630.3111507166
         console.log("modelMatrix: ", tileset.modelMatrix);
+        console.log("tileset._root.transform: ", tileset._root.transform);
+        console.log(tileset._root.transform)
       });
 
     document.getElementById("lonEle").addEventListener("change", function () {
@@ -205,6 +256,37 @@
         tileset.boundingSphere.center
       );
     });
+
+    document.getElementById("scaleEle").addEventListener("change", function () {
+      var scale = parseFloat(this.value);
+      var scaleCartesian3 = new Cesium.Cartesian3(scale, scale, scale);
+      // var m0 = tileset.modelMatrix.clone(new Cesium.Matrix4());
+      var m0 = calculateOffset(
+        tileset._offsetX,
+        tileset._offsetY,
+        tileset._offsetZ,
+        tileset.boundingSphere.center
+      );
+
+      var scaleMatrix = Cesium.Matrix4.fromScale(scaleCartesian3, new Cesium.Matrix4());
+      // var m4New = Cesium.Matrix4.multiply(scaleMatrix, m0, new Cesium.Matrix4())
+      // tileset.modelMatrix = m4New
+
+      var cartographic = Cesium.Cartographic.fromCartesian(tileset.boundingSphere.center);
+      var x = Cesium.Math.toDegrees(cartographic.longitude);
+      var y = Cesium.Math.toDegrees(cartographic.latitude);
+      var z = cartographic.height;
+
+      //转换原点
+      var position = Cesium.Cartesian3.fromDegrees(x + tileset._offsetX, y + tileset._offsetY, 0 + tileset._offsetZ);
+      var m = Cesium.Transforms.eastNorthUpToFixedFrame(position);
+
+      //矩阵相乘
+      Cesium.Matrix4.multiply(m, scaleMatrix, m);
+
+      tileset._root.transform = m;
+    });
+
 
     // 官网：Adjust Height
     function calculateOffset(offsetX, offsetY, offsetZ, cartesianCenter) {
