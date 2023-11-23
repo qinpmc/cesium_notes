@@ -54,20 +54,21 @@
       navigationHelpButton: false, //是否显示帮助信息控件
       infoBox: true, //是否显示点击要素之后显示的信息
       imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-        url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
+        url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=46e6967270d80780ea65faa3c952233d",
         layer: "img",
         style: "default",
         format: "tiles",
         tileMatrixSetID: "w",
         tilingScheme: new Cesium.WebMercatorTilingScheme({}),
       }),
-      terrainProvider: new Cesium.CesiumTerrainProvider({
-        url: "http://data.marsgis.cn/terrain/",
-      }),
+      // terrainProvider: new Cesium.CesiumTerrainProvider({
+      //   // url: "http://data.marsgis.cn/terrain/",
+      //   url: "https://bncs.mem.gov.cn/egis/service/api/egis/3d/v1/terrain1?Authorization=Basic%20YjhlN2ZjNGY1ZDJiNGI0YWE3YzFjN2RjM2VkM2U2M2M6MjlhMjUyNDY2NzFhNDYwZDkwMGQ1N2M2ZDgzY2QzN2Y=",
+      // }),
     });
 
     var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
-      url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
+      url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=46e6967270d80780ea65faa3c952233d",
       layer: "cia",
       style: "default",
       format: "tiles",
@@ -79,10 +80,16 @@
     viewer.scene.globe.depthTestAgainstTerrain = true;
 
 
+    viewer.scene.debugShowFramesPerSecond = true;
     var tileset = new Cesium.Cesium3DTileset({
-      // url: "../sampleData/tileset/Tileset/tileset.json",
-      // url: "../sampleData/tileset/tz_buildings_obj_tilesets/tileset.json",
-      url: "../sampleData/tileset/tz_merge_tilesets/tileset.json", //scale 0.765, height 13
+      // url: "../sampleData/tileset/Tileset/tileset.json", 
+      url: "../sampleData/tileset/tz_merge_tilesets/tileset.json",
+      // url: "../sampleData/tileset/tz_tilesets/tileset.json", //scale 0.765, height 23？ egis地形 ； height 13 marsgis地形
+
+      maximumMemoryUsage: 100000,
+      skipLevelOfDetail: true,
+      immediatelyLoadDesiredLevelOfDetail: true,
+      debugShowBoundingVolume: true
     });
 
     var collection = new Cesium.PrimitiveCollection();
@@ -97,6 +104,8 @@
         center = tileset.boundingSphere.center.clone();
         console.log("origin center: ", center);
 
+
+        var translationCartesian3 = Cesium.Matrix4.getTranslation(tileset._root.transform, new Cesium.Cartesian3());
 
 
         console.log("origin modelMatrix: ", tileset.modelMatrix); //单位矩阵
@@ -149,7 +158,15 @@
 
     /*
     
-    tileset.modelMatrix * transform [root节点] * transform [根节点]
+    tileset.modelMatrix * transform [root节点 tileset._root.transform] * transform [根节点]
+
+
+    function Cesium3DTileset(options) {
+      ....
+      this._modelMatrix = defined(options.modelMatrix)
+    }
+    
+
 
 
     Cesium3DTile.prototype.updateVisibility = function (frameState) {
@@ -218,18 +235,31 @@
         var height = parseFloat(this.value);
         tileset._offsetZ = height;
 
-        tileset.modelMatrix = calculateOffset(
-          tileset._offsetX,
-          tileset._offsetY,
-          tileset._offsetZ,
-          tileset.boundingSphere.center
-        );
+        // tileset.modelMatrix = calculateOffset(
+        //   tileset._offsetX,
+        //   tileset._offsetY,
+        //   tileset._offsetZ,
+        //   tileset.boundingSphere.center
+        // );
         // var center = tileset.boundingSphere.center;
 
-        // console.log("center: ", center); // x: 1215020.301129722  y: -4736341.968684441 z: 4081630.3111507166
+        // console.log("center: ", center); //  
         console.log("modelMatrix: ", tileset.modelMatrix);
         console.log("tileset._root.transform: ", tileset._root.transform);
         console.log(tileset._root.transform)
+
+        var offsetMatrix4 = calculateOffset(
+          tileset._offsetX,
+          tileset._offsetY,
+          tileset._offsetZ,
+          center
+        );
+
+        //矩阵相乘
+        var res = Cesium.Matrix4.multiply(offsetMatrix4, tileset._root.transform, new Cesium.Matrix4());
+
+        tileset._root.transform = res;
+
       });
 
     document.getElementById("lonEle").addEventListener("change", function () {
@@ -239,10 +269,9 @@
         tileset._offsetX,
         tileset._offsetY,
         tileset._offsetZ,
-        tileset.boundingSphere.center
+        center
       );
-      var center = tileset.boundingSphere.center;
-      console.log("center: ", center); // x: 1215020.301129722  y: -4736341.968684441 z: 4081630.3111507166
+
       console.log("modelMatrix: ", tileset.modelMatrix);
     });
 
@@ -253,7 +282,7 @@
         tileset._offsetX,
         tileset._offsetY,
         tileset._offsetZ,
-        tileset.boundingSphere.center
+        center
       );
     });
 
@@ -265,7 +294,7 @@
         tileset._offsetX,
         tileset._offsetY,
         tileset._offsetZ,
-        tileset.boundingSphere.center
+        center
       );
 
       var scaleMatrix = Cesium.Matrix4.fromScale(scaleCartesian3, new Cesium.Matrix4());
@@ -329,11 +358,6 @@
     window.toggleData = function () {
       flag = !flag;
       flag ? collection.add(tileset) : collection.remove(tileset);
-      // if (flag) {
-      //   viewer.scene.primitives.add(tileset)
-      // } else {
-      //   viewer.scene.primitives.remove(tileset)
-      // }
     };
   </script>
 </body>
