@@ -1,267 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Coordinate</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-    />
-    <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
-    <link
-      rel="stylesheet"
-      href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css"
-    />
-  </head>
 
-  <body>
-    <style>
-      html,
-      body,
-      #cesiumContainer {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
+<head>
+  <meta charset="UTF-8" />
+  <title>Coordinate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+  <link rel="stylesheet" href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" />
+</head>
+
+<body>
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+  <div style="
+  position: absolute;
+  z-index: 9999;
+  left: 10px;
+  top: 10px;
+  background: #fff;
+">
+    <button onclick="toggleModel1()">显隐模型2</button>
+    <button onclick="toggleModel2()">显隐模型1</button>
+
+
+  </div>
+  <div id="cesiumContainer"></div>
+  <script>
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      shouldAnimate: true, // 开启此选项，例子效果才展示
+      animation: false, //是否显示动画控件
+      baseLayerPicker: false, //是否显示图层选择控件
+      geocoder: true, //是否显示地名查找控件
+      timeline: false, //是否显示时间线控件
+      sceneModePicker: true, //是否显示投影方式控件
+      navigationHelpButton: false, //是否显示帮助信息控件
+      infoBox: true, //是否显示点击要素之后显示的信息
+      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        url: "http://t0.tianditu.gov.cn/img_w/wmts?&tk=4c27d6e0e8a90715b23a989d42272fd8",
+        layer: "img",
+        style: "default",
+        format: "tiles",
+        maximumLevel: 18,
+        minimumLevel: 0,
+        tileMatrixSetID: "w",
+      }),
+    });
+
+    /////////////////////////////////  兼容低版本cesium fromRotation ////////////////////////////////////////
+    function fromRotation(rotation, result) {
+      if (!result) {
+        result = new Cesium.Matrix4();
       }
-    </style>
-    <div
-      style="
-        position: absolute;
-        z-index: 9999;
-        left: 10px;
-        top: 10px;
-        background: #fff;
-      "
-    >
-      <button onclick="toggleModel1()">显隐模型2</button>
-      <button onclick="toggleModel2()">显隐模型1</button>
-    </div>
-    <div id="cesiumContainer"></div>
-    <script>
-      var viewer = new Cesium.Viewer("cesiumContainer", {
-        shouldAnimate: true, // 开启此选项，例子效果才展示
-        animation: false, //是否显示动画控件
-        baseLayerPicker: false, //是否显示图层选择控件
-        geocoder: true, //是否显示地名查找控件
-        timeline: false, //是否显示时间线控件
-        sceneModePicker: true, //是否显示投影方式控件
-        navigationHelpButton: false, //是否显示帮助信息控件
-        infoBox: true, //是否显示点击要素之后显示的信息
-        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-          url: "http://t0.tianditu.gov.cn/img_w/wmts?&tk=4c27d6e0e8a90715b23a989d42272fd8",
-          layer: "img",
-          style: "default",
-          format: "tiles",
-          maximumLevel: 18,
-          minimumLevel: 0,
-          tileMatrixSetID: "w",
-        }),
-      });
+      result[0] = rotation[0];
+      result[1] = rotation[1];
+      result[2] = rotation[2];
+      result[3] = 0.0;
 
-      /////////////////////////////////  兼容低版本cesium fromRotation ////////////////////////////////////////
-      function fromRotation(rotation, result) {
-        if (!result) {
-          result = new Cesium.Matrix4();
-        }
-        result[0] = rotation[0];
-        result[1] = rotation[1];
-        result[2] = rotation[2];
-        result[3] = 0.0;
+      result[4] = rotation[3];
+      result[5] = rotation[4];
+      result[6] = rotation[5];
+      result[7] = 0.0;
 
-        result[4] = rotation[3];
-        result[5] = rotation[4];
-        result[6] = rotation[5];
-        result[7] = 0.0;
+      result[8] = rotation[6];
+      result[9] = rotation[7];
+      result[10] = rotation[8];
+      result[11] = 0.0;
 
-        result[8] = rotation[6];
-        result[9] = rotation[7];
-        result[10] = rotation[8];
-        result[11] = 0.0;
+      result[12] = 0.0;
+      result[13] = 0.0;
+      result[14] = 0.0;
+      result[15] = 1.0;
 
-        result[12] = 0.0;
-        result[13] = 0.0;
-        result[14] = 0.0;
-        result[15] = 1.0;
+      return result;
+    };
 
-        return result;
-      }
+    if (!Cesium.Matrix4.fromRotation) {
+      Cesium.Matrix4.fromRotation = fromRotation
+    }
 
-      if (!Cesium.Matrix4.fromRotation) {
-        Cesium.Matrix4.fromRotation = fromRotation;
-      }
+    ///////////////////////////////////////////////////////////////////////////////
 
-      ///////////////////////////////////////////////////////////////////////////////
+    // 1. 根据坐标, 方位角计算世界矩阵
+    // 假设当前模型的经纬度坐标为{114, 30, 1000} 方位角{heading: 30, pitch: 20, roll: 10} 都是角度来计算
+    // Cesium.Transforms.headingPitchRollToFixedFrame(origin, headingPitchRoll, ellipsoid, fixedFrameTransform, result) → Matrix4
 
-      // 1. 根据坐标, 方位角计算世界矩阵
-      // 假设当前模型的经纬度坐标为{114, 30, 1000} 方位角{heading: 30, pitch: 20, roll: 10} 都是角度来计算
-      // Cesium.Transforms.headingPitchRollToFixedFrame(origin, headingPitchRoll, ellipsoid, fixedFrameTransform, result) → Matrix4
+    var position = Cesium.Cartesian3.fromDegrees(114, 30, 1000);
+    var heading = 30;
+    var pitch = 20;
+    var roll = 10;
 
-      var position = Cesium.Cartesian3.fromDegrees(114, 30, 1000);
-      var heading = 30;
-      var pitch = 20;
-      var roll = 10;
+    var modelMatrix = createModelMatrix(heading, pitch, roll, position);
+    console.log(modelMatrix);
 
-      var modelMatrix = createModelMatrix(heading, pitch, roll, position);
-      console.log(modelMatrix);
+    var modelMatrix2 = createModelMatrix2(heading, pitch, roll, position)
+    console.log(modelMatrix2);
 
-      var modelMatrix2 = createModelMatrix2(heading, pitch, roll, position);
-      console.log(modelMatrix2);
 
-      // 2. 根据模型矩阵求方位角
 
-      var hpr = getHprFromModelMatrix(modelMatrix.clone());
-      var heading = Cesium.Math.toDegrees(hpr.heading);
-      var pitch = Cesium.Math.toDegrees(hpr.pitch);
-      var roll = Cesium.Math.toDegrees(hpr.roll);
+    // 2. 根据模型矩阵求方位角
 
-      console.log("heading : " + heading, "pitch : " + pitch, "roll : " + roll);
-      //heading : 30.000000000000004 pitch : 20.000000000000004 roll : 9.999999999999996
+    var hpr = getHprFromModelMatrix(modelMatrix);
+    var heading = Cesium.Math.toDegrees(hpr.heading);
+    var pitch = Cesium.Math.toDegrees(hpr.pitch);
+    var roll = Cesium.Math.toDegrees(hpr.roll);
 
-      var hpr2 = getHprFromModelMatrix2(modelMatrix.clone());
-      var heading2 = Cesium.Math.toDegrees(hpr2.heading);
-      var pitch2 = Cesium.Math.toDegrees(hpr2.pitch);
-      var roll2 = Cesium.Math.toDegrees(hpr2.roll);
+    console.log("heading : " + heading, "pitch : " + pitch, "roll : " + roll);
+    //heading : 30.000000000000004 pitch : 20.000000000000004 roll : 9.999999999999996
 
-      console.log(
-        "heading2 : " + heading2,
-        "pitch2: " + pitch2,
-        "roll2 : " + roll2
+
+
+    /////////////////////////////////add debug model////////////////////////////////////////////
+    var model1 = addModel(modelMatrix)
+    var model2 = addModel(modelMatrix2)
+    viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(position, 10 * 10));
+
+    function addModel(modelMatrix) {
+      var id = new Date().getTime()
+      return viewer.scene.primitives.add(
+        Cesium.Model.fromGltf({
+          id,
+          url: "../sampleData/model/Cesium_Air.glb", // 模型地址
+          modelMatrix: modelMatrix,
+          minimumPixelSize: 48,
+        })
       );
-      //heading : 30.000000000000004 pitch : 20.000000000000004 roll : 9.999999999999996
+    }
 
-      /////////////////////////////////add debug model start////////////////////////////////////////////
-      var model1 = addModel(modelMatrix);
-      var model2 = addModel(modelMatrix2);
-      viewer.camera.flyToBoundingSphere(
-        new Cesium.BoundingSphere(position, 10 * 10)
+    window.toggleModel1 = function () {
+      model1.show = !model1.show
+    }
+
+    window.toggleModel2 = function () {
+      model2.show = !model2.show
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+
+    // 根据 hpr角度，和原点(Cesium.Cartesian3),计算模型矩阵modelMatrix
+    function createModelMatrix(heading, pitch, roll, origin) {
+      heading = Cesium.Math.toRadians(heading);
+      pitch = Cesium.Math.toRadians(pitch);
+      roll = Cesium.Math.toRadians(roll);
+      var headingPitchRoll = new Cesium.HeadingPitchRoll(
+        heading,
+        pitch,
+        roll
+      );
+      var modelMatrix4 = Cesium.Transforms.headingPitchRollToFixedFrame(
+        origin,
+        headingPitchRoll,
+        Cesium.Ellipsoid.WGS84,
+        Cesium.Transforms.eastNorthUpToFixedFrame,
+        new Cesium.Matrix4()
+      );
+      return modelMatrix4;
+    }
+
+    function createModelMatrix2(heading, pitch, roll, origin) {
+      var originMatrix4 = Cesium.Transforms.eastNorthUpToFixedFrame(origin)
+
+      // !!! originMatrix4_2 不同于originMatrix4，仅平移部分相同，originMatrix4中包含有旋转，而originMatrix4_2中仅有平移
+      var originMatrix4_2 = Cesium.Matrix4.fromTranslation(origin, new Cesium.Matrix4())//
+
+      heading = Cesium.Math.toRadians(heading);
+      pitch = Cesium.Math.toRadians(pitch);
+      roll = Cesium.Math.toRadians(roll);
+      var headingPitchRoll = new Cesium.HeadingPitchRoll(
+        heading,
+        pitch,
+        roll
+      );
+      var rotationMatrix3 = Cesium.Matrix3.fromHeadingPitchRoll(headingPitchRoll, new Cesium.Matrix3())
+      //旋转
+      var rotationMatrix4 = Cesium.Matrix4.fromRotation(rotationMatrix3, new Cesium.Matrix4())
+
+      //缩放
+      var sacleMatrix4 = Cesium.Matrix4.fromScale(new Cesium.Cartesian3(1, 1, 1), new Cesium.Matrix4())
+
+      var scratchMatrix4 = new Cesium.Matrix4();
+      scratchMatrix4 = Cesium.Matrix4.multiply(rotationMatrix4, sacleMatrix4, scratchMatrix4)
+      var res = Cesium.Matrix4.multiply(originMatrix4, scratchMatrix4, scratchMatrix4)
+      return res;
+    }
+
+
+
+
+    // 根据模型矩阵modelMatrix, 计算 hpr角度
+    function getHprFromModelMatrix(modelMatrix) {
+      // 计算中心处的变换矩阵
+      // 1. Cesium.Matrix4.getTranslation(modelMatrix, new Cesium.Cartesian3()),从模型矩阵中得到Cartesian3 坐标
+      // 2. Cesium.Transforms.eastNorthUpToFixedFrame(origin, ellipsoid, result) → Matrix4 , origin:Cartesian3
+
+      var cartesian3 = Cesium.Matrix4.getTranslation(
+        modelMatrix,
+        new Cesium.Cartesian3()
+      );
+      var carto = Cesium.Cartographic.fromCartesian(cartesian3);
+      var lng = Cesium.Math.toDegrees(carto.longitude);
+      var lat = Cesium.Math.toDegrees(carto.latitude);
+      var height = carto.height;
+      console.log("lng,lat,height from modelMatrix", lng, lat, height);
+
+      var m4_1 = Cesium.Transforms.eastNorthUpToFixedFrame(
+        Cesium.Matrix4.getTranslation(modelMatrix, new Cesium.Cartesian3()),
+        Cesium.Ellipsoid.WGS84,
+        new Cesium.Matrix4()
+      );
+      // 矩阵相除, m4_1的逆矩阵 乘以 模型矩阵，
+      var m4_2 = Cesium.Matrix4.multiply(
+        Cesium.Matrix4.inverse(m4_1, new Cesium.Matrix4()),
+        modelMatrix,
+        new Cesium.Matrix4()
       );
 
-      function addModel(modelMatrix) {
-        var id = new Date().getTime();
-        return viewer.scene.primitives.add(
-          Cesium.Model.fromGltf({
-            id,
-            url: "../sampleData/model/Cesium_Air.glb", // 模型地址
-            modelMatrix: modelMatrix,
-            minimumPixelSize: 48,
-          })
-        );
-      }
-
-      window.toggleModel1 = function () {
-        model1.show = !model1.show;
-      };
-
-      window.toggleModel2 = function () {
-        model2.show = !model2.show;
-      };
-
-      /////////////////////////////////////add debug model end/////////////////////////////////////////
-
-      // 根据 hpr角度，和原点(Cesium.Cartesian3),计算模型矩阵modelMatrix
-      function createModelMatrix(heading, pitch, roll, origin) {
-        heading = Cesium.Math.toRadians(heading);
-        pitch = Cesium.Math.toRadians(pitch);
-        roll = Cesium.Math.toRadians(roll);
-        var headingPitchRoll = new Cesium.HeadingPitchRoll(
-          heading,
-          pitch,
-          roll
-        );
-        var modelMatrix4 = Cesium.Transforms.headingPitchRollToFixedFrame(
-          origin,
-          headingPitchRoll,
-          Cesium.Ellipsoid.WGS84,
-          Cesium.Transforms.eastNorthUpToFixedFrame,
-          new Cesium.Matrix4()
-        );
-        return modelMatrix4;
-      }
-
-      function createModelMatrix2(heading, pitch, roll, origin) {
-        var originMatrix4 = Cesium.Transforms.eastNorthUpToFixedFrame(origin);
-
-        // !!! originMatrix4_2 不同于originMatrix4，仅平移部分相同，originMatrix4中包含有旋转，而originMatrix4_2中仅有平移
-        var originMatrix4_2 = Cesium.Matrix4.fromTranslation(
-          origin,
-          new Cesium.Matrix4()
-        ); //
-
-        heading = Cesium.Math.toRadians(heading);
-        pitch = Cesium.Math.toRadians(pitch);
-        roll = Cesium.Math.toRadians(roll);
-        var headingPitchRoll = new Cesium.HeadingPitchRoll(
-          heading,
-          pitch,
-          roll
-        );
-        var rotationMatrix3 = Cesium.Matrix3.fromHeadingPitchRoll(
-          headingPitchRoll,
-          new Cesium.Matrix3()
-        );
-        //旋转
-        var rotationMatrix4 = Cesium.Matrix4.fromRotation(
-          rotationMatrix3,
-          new Cesium.Matrix4()
-        );
-
-        //缩放
-        var sacleMatrix4 = Cesium.Matrix4.fromScale(
-          new Cesium.Cartesian3(1, 1, 1),
-          new Cesium.Matrix4()
-        );
-
-        var scratchMatrix4 = new Cesium.Matrix4();
-        scratchMatrix4 = Cesium.Matrix4.multiply(
-          rotationMatrix4,
-          sacleMatrix4,
-          scratchMatrix4
-        );
-        var res = Cesium.Matrix4.multiply(
-          originMatrix4,
-          scratchMatrix4,
-          scratchMatrix4
-        );
-        return res;
-      }
-
-      // 根据模型矩阵modelMatrix, 计算 hpr角度
-      function getHprFromModelMatrix(modelMatrix) {
-        // 计算中心处的变换矩阵
-        // 1. Cesium.Matrix4.getTranslation(modelMatrix, new Cesium.Cartesian3()),从模型矩阵中得到Cartesian3 坐标
-        // 2. Cesium.Transforms.eastNorthUpToFixedFrame(origin, ellipsoid, result) → Matrix4 , origin:Cartesian3
-
-        var cartesian3 = Cesium.Matrix4.getTranslation(
-          modelMatrix,
-          new Cesium.Cartesian3()
-        );
-        var carto = Cesium.Cartographic.fromCartesian(cartesian3);
-        var lng = Cesium.Math.toDegrees(carto.longitude);
-        var lat = Cesium.Math.toDegrees(carto.latitude);
-        var height = carto.height;
-        console.log("lng,lat,height from modelMatrix", lng, lat, height);
-
-        // var m4_1 = Cesium.Transforms.eastNorthUpToFixedFrame(
-        //   Cesium.Matrix4.getTranslation(modelMatrix, new Cesium.Cartesian3()),
-        //   Cesium.Ellipsoid.WGS84,
-        //   new Cesium.Matrix4()
-        // );
-        var m4_1 = Cesium.Transforms.eastNorthUpToFixedFrame(
-          Cesium.Cartesian3.fromDegrees(lng, lat, height),
-          Cesium.Ellipsoid.WGS84,
-          new Cesium.Matrix4()
-        );
-
-        // 矩阵相除, m4_1的逆矩阵 乘以 模型矩阵，
-        var m4_2 = Cesium.Matrix4.multiply(
-          Cesium.Matrix4.inverse(m4_1, new Cesium.Matrix4()),
-          modelMatrix,
-          new Cesium.Matrix4()
-        );
-
-        /* 
+      /* 
        
       modelMatrix = translationMatrix * rotationMatrix * scaleMatrix
       m4_1 = translationMatrix
@@ -271,39 +234,31 @@
       = rotationMatrix * scaleMatrix
       **/
 
-        // 得到旋转-缩放矩阵
-        //var mat3 = Cesium.Matrix4.getRotation(m4_2, new Cesium.Matrix3()); //新版cesium无该方法
-        var mat3 = Cesium.Matrix4.getMatrix3(m4_2, new Cesium.Matrix3());
-        var rmat3 = Cesium.Matrix3.getRotation(mat3, new Cesium.Matrix3());
-        // 计算四元数
-        var q = Cesium.Quaternion.fromRotationMatrix(rmat3);
-        // 计算旋转角(弧度)
-        var hpr = Cesium.HeadingPitchRoll.fromQuaternion(q);
 
-        // 以下代码为验证使用
-        var headingPitchRoll = new Cesium.HeadingPitchRoll(
-          Cesium.Math.toRadians(30),
-          Cesium.Math.toRadians(20),
-          Cesium.Math.toRadians(10)
-        );
-        var testq = Cesium.Quaternion.fromHeadingPitchRoll(
-          headingPitchRoll,
-          new Cesium.Quaternion()
-        );
-        console.log(q, testq);
+      // 得到旋转-缩放矩阵
+      //var mat3 = Cesium.Matrix4.getRotation(m4_2, new Cesium.Matrix3()); //新版cesium无该方法
+      var mat3 = Cesium.Matrix4.getMatrix3(m4_2, new Cesium.Matrix3());
+      var rmat3 = Cesium.Matrix3.getRotation(mat3, new Cesium.Matrix3());
+      // 计算四元数
+      var q = Cesium.Quaternion.fromRotationMatrix(rmat3);
+      // 计算旋转角(弧度)
+      var hpr = Cesium.HeadingPitchRoll.fromQuaternion(q);
 
-        return hpr;
-      }
+      // 以下代码为验证使用
+      var headingPitchRoll = new Cesium.HeadingPitchRoll(
+        Cesium.Math.toRadians(30),
+        Cesium.Math.toRadians(20),
+        Cesium.Math.toRadians(10)
+      );
+      var testq = Cesium.Quaternion.fromHeadingPitchRoll(
+        headingPitchRoll,
+        new Cesium.Quaternion()
+      );
+      console.log(q, testq);
 
-      function getHprFromModelMatrix2(modelMatrix) {
-        const rotation = Cesium.Matrix4.getMatrix3(
-          modelMatrix,
-          new Cesium.Matrix3()
-        );
-        const quaternion = Cesium.Quaternion.fromRotationMatrix(rotation);
-        const hpr = Cesium.HeadingPitchRoll.fromQuaternion(quaternion);
-        return hpr;
-      }
-    </script>
-  </body>
+      return hpr;
+    }
+  </script>
+</body>
+
 </html>
