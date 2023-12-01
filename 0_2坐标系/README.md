@@ -2,7 +2,7 @@
 
 - https://www.cnblogs.com/telwanggs/p/11289954.html
 - https://www.cnblogs.com/CreateFree/p/11244512.html
-- https://blog.csdn.net/qq_40043761/article/details/81020823?utm_source=blogxgwz3
+- https://blog.csdn.net/qq_40043761/article/details/81020823
 - https://blog.csdn.net/weixin_45782925/article/details/123365834
   // todo
 
@@ -10,6 +10,11 @@
 - http://www.yanhuangxueyuan.com/doc/Three.js/MatrixRST.html
 - https://blog.csdn.net/xtfge0915/article/details/104653730
 - https://www.jianshu.com/p/5839f615bb94
+- https://stackoverflow.com/questions/69045207/cesium-cartesian3-move-vertically-up
+  https://www.bilibili.com/read/cv20394941/
+  https://blog.csdn.net/u010447508/article/details/105562542
+
+https://www.cnblogs.com/LJXXXX/p/17169296.html
 
 ## 准备知识
 
@@ -338,3 +343,156 @@ console.log(m4);
 // Matrix4 {0: 1, 1: 0, 2: 0, 3: 0, 4: 0, 5: 1, 6: 0, 7: 0, 8: 0, 9: 0, 10: 1, 11: 0, 12: 0, 13: -0.4, 14: 2.7, 15: 1}
 // 注意数组ary 和 矩阵m4 中元素的对应关系
 ```
+
+https://sandcastle.cesium.com/index.html?#c=zVVdb9owFP0rFi8JUmRCO1UrpdVWxtpKbHSUUVXLHkxiwJpjR7YDpFX/+2xsCAGmlZdpkSrV177nnnvuB3MkwJzgBRbgEjC8AB0sSZ7C0crme/Hq2OFMIcKw8OoXEYvYXHtxQaaEVb06SCj9H2KncCJ4+glPBcbSb54F4J3+Ow3D0AAYd4XEFKs3usP3BgCeBODMQUSs0QB9SyHjhCmNuqIMMVNEESwhShL/JWJAfxmX2sZZy7EO1mbtCFrAvTJfzCkXrQ0hc4K9u5vb4XXvezco32VkiekDecYtcBJu2XmuqBaqcwDm8fZu2N1/+kgSNdMo9uLVPaBojGmFmcJL1QKezdnbpdKfTCTW9y9g2QJhAArDa4NmvjkWisSIWoANt1HFDIf9e0ckYq8boYe2WMcIbet7nNA3g27361O31+s//g9S26z/sdR61DCQM57TxMmmOPCsmh4wYwE828SeHaSECBwbzfUs7c+RzMdKoFj5rh7rATg8dn7d8NhHYVykiOoS+JtoQRm43AmCK2QsX5ASZFkSGgrE5ESDSFh98lnnc+96ZoQpj4kq/DXFSgAHfx6WqBbC7oqBg33yy8sZVHyAEp2B9M/D7dTWnmlOFclo4VdZBTZSsJOPy/PoNaMP+jWyN47BtxwpLJg2VejbQH7ZSlUG1l53uHGhmzrBotK7FLOpafKmXpTb06J4ZrTIpenZ0jzmSunw7ua06pMajgTRP+1DuCBq9pFmM+SH8H39QDePiMxXjVMWc6drB6g42Ljr0lwXD3pkkNjuvFVu4ZE9bOq011k6evX0hhpTIzuuiL4uvJbwx6EYP7dEXdgl1Py7zqsttiuqo/bMeTrk/g7R+kUtqLWlKii+so4fSJpxoUAuqA9hQ+E0ozqabIzz+BdWMJbS4LYba6d2QuaAJJdRbeenP6qBmCIp9c0kp6uFHNWu2g39vuJGuW4mNu3rJUhRYZ7Mmlc9a4QQthv6uO+lOKdjJLYQfwM
+
+https://blog.csdn.net/u010447508/article/details/105562542
+
+var viewer = new Cesium.Viewer('cesiumContainer');
+
+var origin = new Cesium.Cartesian3.fromDegrees(16, 46, 3000);
+var target = new Cesium.Cartesian3.fromDegrees(16.8, 46.2, 6000);
+
+// Origin point
+viewer.entities.add({
+position: origin,
+point : {
+color: Cesium.Color.LIGHTBLUE,
+pixelSize: 20,
+outlineColor: Cesium.Color.WHITE,
+outlineWidth: 2
+},
+label: {
+text: 'Origin',
+pixelOffset: { x: 0, y: 20 },
+verticalOrigin: Cesium.VerticalOrigin.TOP
+}
+});
+
+// Target point
+viewer.entities.add({
+position: target,
+point : {
+color: Cesium.Color.GREENYELLOW,
+pixelSize: 20,
+outlineColor: Cesium.Color.WHITE,
+outlineWidth: 2
+},
+label: {
+text: 'Target',
+pixelOffset: { x: 0, y: 20 },
+verticalOrigin: Cesium.VerticalOrigin.TOP
+}
+});
+
+// Cone should point to 'target' from 'origin'
+var direction = Cesium.Cartesian3.subtract(target, origin, new Cesium.Cartesian3());
+Cesium.Cartesian3.normalize(direction, direction);
+
+var rotationMatrix = Cesium.Transforms.rotationMatrixFromPositionVelocity(origin, direction);
+var rot90 = Cesium.Matrix3.fromRotationY(Cesium.Math.toRadians(90));
+Cesium.Matrix3.multiply(rotationMatrix, rot90, rotationMatrix);
+
+viewer.entities.add({
+position: origin,
+orientation: Cesium.Quaternion.fromRotationMatrix(
+rotationMatrix
+),
+cylinder: {
+length: 10000,
+topRadius: 0,
+bottomRadius: 3000,
+material: Cesium.Color.LIGHTBLUE.withAlpha(0.8)
+}
+});
+
+// Visualize direction
+var directionRay = Cesium.Cartesian3.multiplyByScalar(direction, 100000, new Cesium.Cartesian3());
+Cesium.Cartesian3.add(origin, directionRay, directionRay);
+
+viewer.entities.add({
+polyline: {
+positions: [origin, directionRay],
+width: 1,
+material: Cesium.Color.WHITE
+}
+});
+
+viewer.zoomTo(viewer.entities);
+
+---
+
+https://www.henggetec.com/?mod=news_detail&id=31
+完整的核心代码如下：
+
+//vec1 Cartesian3 vec2 Cartesian3
+
+function vec1ToVec2Mat(vec1,vec2){
+
+       //求旋转轴
+
+       var axis = Cesium.Cartesian3.cross( vec1,vec2, new Cesium.Cartesian3(0,0,0));
+
+       //求夹角
+
+       var angle = Cesium.Math.acosClamped(Cesium.Cartesian3.dot(vec1, vec2)/
+
+(Cesium.Cartesian3.magnitude(vec1) \*Cesium.Cartesian3.magnitude(vec2) ) ) ;
+
+       //求四元数
+
+       var  quaternion = Cesium.Quaternion.fromAxisAngle(axis, angle, new Cesium.Quaternion(0, 0, 0, 0));
+
+       //旋转矩阵
+
+       var  rotMat3 = Cesium.Matrix3.fromQuaternion(quaternion, new Cesium.Matrix3());
+
+
+
+       return rotMat3;
+
+}
+
+mat41 = = Cesium.Transforms.eastNorthUpToFixedFrame(pos1);
+
+var resQua = Cesium.Quaternion.clone(Cesium.Quaternion.IDENTITY);
+
+var quaMatrix = Cesium.Matrix3.clone(Cesium.Matrix3.IDENTITY);
+
+var roatMat3 = Cesium.Matrix3.clone(Cesium.Matrix3.IDENTITY);
+
+var inveRoatMat3 = Cesium.Matrix3.clone(Cesium.Matrix3.IDENTITY);
+
+var curAxis = new Cesium.Cartesian3(0,0,0);
+
+roatMat3 = Cesium.Matrix4.getRotation(mat41, roatMat3) ;
+
+var orientMat;
+
+var hpr;
+
+function computerOrient(){
+
+       curAxis = Cesium.Cartesian3.subtract(pos2, pos1, curAxis);
+
+       inveRoatMat3 = Cesium.Matrix3.inverse(roatMat3, inveRoatMat3)
+
+       curAxis = Cesium.Matrix3.multiplyByVector(inveRoatMat3,curAxis,curAxis);
+
+       orientMat = vec1ToVec2Mat(Cesium.Cartesian3.UNIT_X,
+
+                   Cesium.Cartesian3.normalize(curAxis,curAxis));
+
+       resQua = Cesium.Quaternion.fromRotationMatrix(orientMat, resQua);
+
+       var tHpr = Cesium.HeadingPitchRoll.fromQuaternion(resQua, tHpr);
+
+       hpr = [Cesium.Math.toDegrees(tHpr.heading), Cesium.Math.toDegrees(tHpr.pitch),
+
+                                               Cesium.Math.toDegrees(tHpr.roll)];
+
+}
+
+computerOrient();
+
+model2.modelMatrix = Cesium.Matrix4.multiplyByMatrix3(model2.modelMatrix,orientMat,model2.modelMatrix);

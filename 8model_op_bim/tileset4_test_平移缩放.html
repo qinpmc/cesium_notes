@@ -81,6 +81,10 @@
 
 
     viewer.scene.debugShowFramesPerSecond = true;
+
+    viewer.extend(Cesium.viewerCesiumInspectorMixin);
+
+
     var tileset = new Cesium.Cesium3DTileset({
       // url: "../sampleData/tileset/Tileset/tileset.json", 
       url: "../sampleData/tileset/tz_merge_tilesets/tileset.json",
@@ -89,7 +93,7 @@
       maximumMemoryUsage: 100000,
       skipLevelOfDetail: true,
       immediatelyLoadDesiredLevelOfDetail: true,
-      debugShowBoundingVolume: true
+      // debugShowBoundingVolume: true
     });
 
     var collection = new Cesium.PrimitiveCollection();

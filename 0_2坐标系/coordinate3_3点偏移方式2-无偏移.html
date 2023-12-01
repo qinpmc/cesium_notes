@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8" />
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>tianditu</title>
+  <script src="../lib/cesium1.89/Build/Cesium/Cesium.js"></script>
+  <style>
+    @import url(../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css);
+
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      animation: false, //是否显示动画控件
+      baseLayerPicker: false, //是否显示图层选择控件
+      geocoder: true, //是否显示地名查找控件
+      timeline: false, //是否显示时间线控件
+      sceneModePicker: true, //是否显示投影方式控件
+      navigationHelpButton: false, //是否显示帮助信息控件
+      infoBox: true, //是否显示点击要素之后显示的信息
+      imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+        url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
+        layer: "img",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+      }),
+    });
+
+    var imageryProvider2 = new Cesium.WebMapTileServiceImageryProvider({
+      url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=686c72bbbee7c6fcb81d27aba2216cb3",
+      layer: "cia",
+      style: "default",
+      format: "tiles",
+      tileMatrixSetID: "w",
+    });
+
+    viewer.imageryLayers.addImageryProvider(imageryProvider2);
+
+    // viewer.camera.flyTo({
+    //   destination: Cesium.Cartesian3.fromDegrees(114, 32, 10000),
+    // });
+
+    //////////////////////////////////////////////////////////////////////////
+
+
+    // https://stackoverflow.com/questions/69045207/cesium-cartesian3-move-vertically-up
+    // https://sandcastle.cesium.com/#c=rZRtb9owEMe/yok3CxI4VEOaxiiaYLSbRtdJpZuQ8sYkF7Dq+CLbCaVTv/tsh4eKdRIv+s4+38Pv/ndJzTXUAjeo4RIUbmCCRlQF+xVsUdJKw31CynKhUCet9qdEJSqO4Rot2DWC1VyZnHQBuaYCJKVcAnJju4q0XXerErgFDg+KNgpKMsIKUmAJpty9vzOQi0fMXDQvkCWqdkgpKhuQdjgT5+lOXL1nvsgXXGlEE3U/fGS9DvR7rOexfOSR5hA835sM81g/PNV9OacrX/bKV42aesfWXHYFGVlP3ry57EES5m6uATSMZ1n0J1FwaGmwc+00RqHsAIIDQEqS9ODQjb+x2bebaad5Lh2JvBNPOICLnjc9J+r5QLNAKWkTcPo9KNCVMMCXVGPTcjge273hVovHPisqaUUpt+PtT88SHZTZFX0x7aO8kZNzr2jnPy7thuwMPQLZmXIsprPZ7e+zBBnLCk/kmLrBQmRcj2K1tiDdrjY2yvdTAeUicvJaCrVqlg/SStfcVhrbjZZ+Qd5KSi9iUPMtpPRgZy/W9df53ffFeHZ/xoLtaj8RFXOKTki8S6vTGhq7lThqcgF8FkXpPiKotIwYiy0WpeSupXhZpQ9oWWpCoHcdxi9Dh5moQWSXr/xWIJXcGPeSVzKQJq3RMHb+/4RK4pkb4G2NWvKtd1tfjGaNkTE2jN319UhLJJdcn2T+Cw
+
+
+
+    const lon = 114.0
+    const lat = 32.0
+    const height = 10
+
+    const center = Cesium.Cartesian3.fromDegrees(lon, lat, height);
+
+    // Get the transform from local east-north-up at a known position to Earth's fixed frame.
+    var transform = Cesium.Transforms.eastNorthUpToFixedFrame(center);
+    // Green dot at center
+    viewer.entities.add({
+      position: center,
+      point: {
+        color: Cesium.Color.RED,
+        pixelSize: 10
+      }
+    });
+
+
+
+    //debug
+    // 东北  红色--x  绿色 --y  蓝色 ---z
+    var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+    var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+      center,
+      new Cesium.HeadingPitchRoll(0, 0, 0),
+      Cesium.Ellipsoid.WGS84,
+      enUpConverter
+    );
+    viewer.scene.primitives.add(
+      new Cesium.DebugModelMatrixPrimitive({
+        modelMatrix: modelMatrix,
+        length: 41000.0,
+        width: 4.0,
+      })
+    );
+
+
+
+    //添加偏移的点
+
+    // Yellow dot 40000 meters above
+    var aboveOffset = 40000.0
+    var above = Cesium.Matrix4.multiplyByPoint(transform,
+      new Cesium.Cartesian3(0, 0, aboveOffset), new Cesium.Cartesian3());
+
+    viewer.entities.add({
+      position: above,
+      point: {
+        color: Cesium.Color.GREEN,
+        pixelSize: 10
+      }
+    });
+
+    // Blue dot 40000 meters East (straight line East of center, not following Earth curvature)
+    var eastOffset = 40000.0
+    var east = Cesium.Matrix4.multiplyByPoint(transform,
+      new Cesium.Cartesian3(eastOffset, 0, 0), new Cesium.Cartesian3());
+
+    viewer.entities.add({
+      position: east,
+      point: {
+        color: Cesium.Color.BLUE,
+        pixelSize: 10
+      }
+    });
+
+    viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(east, 10 * 10));
+
+  </script>
+</body>
+
+</html>
