@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Coordinate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+
+  <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+  <link rel="stylesheet" href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" />
+</head>
+
+<body>
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      shouldAnimate: true, // 开启此选项，例子效果才展示
+      animation: false, //是否显示动画控件
+      baseLayerPicker: false, //是否显示图层选择控件
+      geocoder: true, //是否显示地名查找控件
+      timeline: false, //是否显示时间线控件
+      sceneModePicker: true, //是否显示投影方式控件
+      navigationHelpButton: false, //是否显示帮助信息控件
+      infoBox: true, //是否显示点击要素之后显示的信息
+    });
+
+    /////////////////////////////////////////  debug /////////////////////////////////////////////////
+    // x、y、z 角度
+    function addDebug(x, y, z) {
+      // 东北  红色--x  绿色 --y  蓝色 ---z
+      var position = Cesium.Cartesian3.fromDegrees(x, y, z);
+      var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+      var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+        position,
+        Cesium.HeadingPitchRoll.fromDegrees(0, 0, 0),
+        Cesium.Ellipsoid.WGS84,
+        enUpConverter
+      );
+
+      viewer.scene.primitives.add(
+        new Cesium.DebugModelMatrixPrimitive({
+          modelMatrix: modelMatrix,
+          length: 300.0,
+          width: 2.0,
+        })
+      );
+      viewer.scene.camera.lookAt(
+        position,
+        new Cesium.HeadingPitchRange(6.28, -0.9178004108422004, z + 500)
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    var center = {
+      x: 114,
+      y: 30,
+      z: 0,
+    };
+
+    // 添加调试坐标轴和点
+    addDebug(center.x, center.y, center.z);
+    viewer.entities.add({
+      position: Cesium.Cartesian3.fromDegrees(center.x, center.y, center.z),
+      point: {
+        pixelSize: 10,
+        color: Cesium.Color.RED,
+      },
+    });
+
+
+    // 获取原点 正北方(y方向) 100的点
+    const point2 = getNorthPointByDistance(center, 100);
+    viewer.entities.add({
+      position: Cesium.Cartesian3.fromDegrees(point2.x, point2.y, point2.z),
+      point: {
+        pixelSize: 10,
+        color: Cesium.Color.YELLOW,
+      },
+    });
+    var dis = distance(center, point2); //100.00000000044335  
+    console.log(dis, "------------------------------------------距离");
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Cesium 计算一个点正北方向x米的另一个点的坐标 
+    function getNorthPointByDistance(center, distance) {
+      var cart3 = new Cesium.Cartesian3.fromDegrees(
+        center.x,
+        center.y,
+        center.z
+      );
+      //以点为原点建立局部坐标系（东方向为x轴,北方向为y轴,垂直于地面为z轴），得到一个局部坐标到世界坐标转换的变换矩阵
+      var localToWorld_Matrix =
+        Cesium.Transforms.eastNorthUpToFixedFrame(cart3);
+      var offsetCar3 = Cesium.Matrix4.multiplyByPoint(
+        localToWorld_Matrix,
+        Cesium.Cartesian3.fromElements(0, distance, 0),
+        new Cesium.Cartesian3()
+      );
+      var carto = Cesium.Cartographic.fromCartesian(offsetCar3);
+      var lng = Cesium.Math.toDegrees(carto.longitude);
+      var lat = Cesium.Math.toDegrees(carto.latitude);
+      return { x: lng, y: lat, z: carto.height };
+    }
+
+    function distance(p1, p2) {
+      var dis = Cesium.Cartesian3.distance(
+        Cesium.Cartesian3.fromDegrees(p1.x, p1.y, p1.z),
+        Cesium.Cartesian3.fromDegrees(p2.x, p2.y, p2.z)
+      );
+      return dis;
+    }
+
+
+
+
+  </script>
+</body>
+
+</html>

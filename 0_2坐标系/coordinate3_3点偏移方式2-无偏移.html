@@ -106,6 +106,21 @@
       })
     );
 
+    var weUpConverter = Cesium.Transforms.northWestUpToFixedFrame;
+    var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+      center,
+      new Cesium.HeadingPitchRoll(0, 0, 0),
+      Cesium.Ellipsoid.WGS84,
+      weUpConverter
+    );
+    viewer.scene.primitives.add(
+      new Cesium.DebugModelMatrixPrimitive({
+        modelMatrix: modelMatrix,
+        length: 41000.0,
+        width: 4.0,
+      })
+    );
+
 
 
     //添加偏移的点
@@ -133,6 +148,24 @@
       point: {
         color: Cesium.Color.BLUE,
         pixelSize: 10
+      }
+    });
+
+    var eastOffset2 = 40001.0;
+    var east2Mtrix4 = Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(eastOffset2, 0, 0), new Cesium.Matrix4());
+    //效果同上行
+    //var east2Mtrix4 = Cesium.Matrix4.setTranslation(Cesium.Matrix4.IDENTITY, new Cesium.Cartesian3(eastOffset2, 0, 0), new Cesium.Matrix4())
+
+
+    //https://zhuanlan.zhihu.com/p/571157642?utm_id=0
+    var east2Mtrix4_2 = Cesium.Matrix4.multiply(transform, east2Mtrix4, new Cesium.Matrix4());
+    // var east2Mtrix4_2 = Cesium.Matrix4.multiply(east2Mtrix4, transform, new Cesium.Matrix4());
+    var east2 = Cesium.Matrix4.getTranslation(east2Mtrix4_2, new Cesium.Cartesian3())
+    viewer.entities.add({
+      position: east2,
+      point: {
+        color: Cesium.Color.YELLOW,
+        pixelSize: 8
       }
     });
 

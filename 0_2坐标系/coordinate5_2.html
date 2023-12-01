@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Coordinate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+
+  <script src="../lib/cesium1.89/Build/CesiumUnminified/Cesium.js"></script>
+  <link rel="stylesheet" href="../lib/cesium1.89/Build/CesiumUnminified/Widgets/widgets.css" />
+</head>
+
+<body>
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZDBlZWVlNi0wODY2LTQ5ZTctODI4MS0wZjQ4NWU5OGVhODUiLCJpZCI6NjA3Niwic2NvcGVzIjpbImFzbCIsImFzciIsImFzdyIsImdjIl0sImlhdCI6MTU2MzE2MzkxOX0.aE3JBR8xqVtCDSbPl7uQLk57mae8ICqIlfwWfjuv8js";
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+      shouldAnimate: true, // 开启此选项，例子效果才展示
+      animation: false, //是否显示动画控件
+      baseLayerPicker: false, //是否显示图层选择控件
+      geocoder: true, //是否显示地名查找控件
+      timeline: false, //是否显示时间线控件
+      sceneModePicker: true, //是否显示投影方式控件
+      navigationHelpButton: false, //是否显示帮助信息控件
+      infoBox: true, //是否显示点击要素之后显示的信息
+    });
+
+
+    /////////////////////////////////////////  debug /////////////////////////////////////////////////
+    // x、y、z 角度
+    function addDebug(x, y, z) {
+      // 东北  红色--x  绿色 --y  蓝色 ---z
+      var position = Cesium.Cartesian3.fromDegrees(x, y, z);
+      var enUpConverter = Cesium.Transforms.eastNorthUpToFixedFrame;
+      var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+        position,
+        Cesium.HeadingPitchRoll.fromDegrees(0, 0, 0),
+        Cesium.Ellipsoid.WGS84,
+        enUpConverter
+      );
+
+      viewer.scene.primitives.add(
+        new Cesium.DebugModelMatrixPrimitive({
+          modelMatrix: modelMatrix,
+          length: 300.0,
+          width: 2.0,
+        })
+      );
+      viewer.scene.camera.lookAt(
+        position,
+        new Cesium.HeadingPitchRange(6.28, -0.9178004108422004, z + 500)
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    var center = {
+      x: 114,
+      y: 30,
+      z: 0,
+    };
+
+    //调试坐标轴--------------------
+    addDebug(center.x, center.y, center.z);
+    viewer.entities.add({
+      position: Cesium.Cartesian3.fromDegrees(center.x, center.y, center.z),
+      point: {
+        pixelSize: 10,
+        color: Cesium.Color.RED,
+      },
+    });
+    //调试结束--------------------
+
+    var offset = {
+      x: 100,
+      y: 0,
+      z: 0,
+    };
+    // var rotateZAngles = [0]
+    var rotateZAngles = [0, 30, 45, 60, 90]
+
+    rotateZAngles.forEach(angle => {
+      let point = getTranslateRotateZPoint(center, offset, angle);
+      console.log(point);
+      viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(point.x, point.y, point.z),
+        point: {
+          pixelSize: 12,
+          color: Cesium.Color.WHITE,
+        },
+      });
+      let dis = distance(center, point);
+      console.log("计算的距离distance----------------------", dis);
+    })
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // https://www.cnblogs.com/arxive/p/10256065.html
+    // 1. 根据坐标, 方位角计算世界矩阵
+    function getTranslateRotateZPoint(origin, offset, rotateZAngle) {
+      // 计算旋转矩阵
+      var rotate = Cesium.Math.toRadians(rotateZAngle); //转成弧度
+      var quaternion = Cesium.Quaternion.fromAxisAngle(
+        Cesium.Cartesian3.UNIT_Z,
+        rotate
+      );
+      var rot_mat3 = Cesium.Matrix3.fromQuaternion(quaternion); //rot_mat3 为根据四元数求得的旋转矩阵
+
+      //
+      var offsetCartesian3 = new Cesium.Cartesian3(offset.x, offset.y, offset.z); //p1 的局部坐标
+      // 旋转加平移的 4x4 变换矩阵，这里平移为(0,0,0)，故填个 Cesium.Cartesian3.ZERO
+      var rot_mat4 = Cesium.Matrix4.fromRotationTranslation(
+        rot_mat3,
+        Cesium.Cartesian3.ZERO
+      );
+      let tsMatrix4 = Cesium.Matrix4.multiplyByTranslation(rot_mat4, offsetCartesian3, new Cesium.Matrix4());
+
+      //得到局部坐标原点的全局坐标
+      var cart3 = viewer.scene.globe.ellipsoid.cartographicToCartesian(
+        Cesium.Cartographic.fromDegrees(origin.x, origin.y, origin.z)
+      );
+      // 为局部坐标的 z 轴垂直于地表，局部坐标的 y 轴指向正北的 4x4 变换矩阵
+      var originMatrix4 = Cesium.Transforms.eastNorthUpToFixedFrame(cart3);
+
+
+      //！！！原文为： let resMatrix4 = Cesium.Matrix4.multiplyTransformation( tsMatrix4, originMatrix4,new Cesium.Matrix4());
+      let resMatrix4 = Cesium.Matrix4.multiplyTransformation(originMatrix4, tsMatrix4, new Cesium.Matrix4());
+      //let resMatrix4 = Cesium.Matrix4.multiply(originMatrix4, tsMatrix4, new Cesium.Matrix4()); //效果同上行
+      var c3 = Cesium.Matrix4.getTranslation(resMatrix4, new Cesium.Cartesian3()); //根据最终变换矩阵 m 得到 c3
+
+      var carto = Cesium.Cartographic.fromCartesian(c3);
+      var lng = Cesium.Math.toDegrees(carto.longitude);
+      var lat = Cesium.Math.toDegrees(carto.latitude);
+      return { x: lng, y: lat, z: carto.height };
+    }
+
+    //计算两点距离
+    function distance(p1, p2) {
+      var d = Cesium.Cartesian3.distance(
+        Cesium.Cartesian3.fromDegrees(p1.x, p1.y, p1.z),
+        Cesium.Cartesian3.fromDegrees(p2.x, p2.y, p2.z)
+      );
+      return d;
+    }
+
+
+  </script>
+</body>
+
+</html>
